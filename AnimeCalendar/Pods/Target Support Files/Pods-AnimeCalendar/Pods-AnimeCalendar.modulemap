@@ -1,0 +1,6 @@
+framework module Pods_AnimeCalendar {
+  umbrella header "Pods-AnimeCalendar-umbrella.h"
+
+  export *
+  module * { export * }
+}
