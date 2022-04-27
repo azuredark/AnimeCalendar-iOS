@@ -195,6 +195,13 @@
 			path = Contracts;
 			sourceTree = "<group>";
 		};
+		A7CD0D4B2817BD0F00109B8D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		A7E7989928149B4900973881 = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +228,7 @@
 				A74F98622816103C003A1073 /* RequestsLayer */,
 				A74F984D2815F954003A1073 /* AppBoot */,
 				A74F98552815FF6E003A1073 /* Scenes */,
+				A7CD0D4B2817BD0F00109B8D /* Utils */,
 				A7E798AE28149B4900973881 /* Assets.xcassets */,
 				A7E798B028149B4900973881 /* LaunchScreen.storyboard */,
 				A7E798B328149B4900973881 /* Info.plist */,
