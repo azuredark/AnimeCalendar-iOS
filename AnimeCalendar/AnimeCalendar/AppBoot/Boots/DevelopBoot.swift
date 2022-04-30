@@ -10,11 +10,16 @@ import UIKit.UIViewController
 
 final class DevelopBoot: Boot {
   internal lazy var requestsManager: RequestProtocol = RequestsManager()
-  internal lazy var rootVC: ScreenProtocol = HomeScreenVC(requestsManager: requestsManager)
+  internal lazy var rootVC: ScreenProtocol = HomeScreen(requestsManager: requestsManager)
 
-  func createRootScreen() -> UIViewController {
-    let wrapper = RootScreenWrapper(rootVC: rootVC)
-    let wrappedVC = wrapper.wrapRootVC()
-    return wrappedVC
+  func createRootScreen() -> UITabBarController {
+    let tabBarManager = TabBarManager(requestsManager)
+    return tabBarManager.getConfiguredTabBar()
   }
+
+//  func createRootScreen() -> UIViewController {
+//    let wrapper = RootScreenWrapper(rootVC: rootVC)
+//    let wrappedVC = wrapper.wrapRootVC()
+//    return wrappedVC
+//  }
 }

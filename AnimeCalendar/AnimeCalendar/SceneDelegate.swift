@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let bootManager = BootManager()
     let boot: Boot = bootManager.getBootMethod(.develop)
-    let rootVC: UIViewController = boot.createRootScreen()
+    let rootVC = boot.createRootScreen()
 
     window = UIWindow(frame: windowScene.coordinateSpace.bounds)
     window?.windowScene = windowScene
