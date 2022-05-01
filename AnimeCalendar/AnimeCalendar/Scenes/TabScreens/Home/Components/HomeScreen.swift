@@ -24,15 +24,45 @@ final class HomeScreen: UIViewController, ScreenProtocol {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureNavigationItems()
+    configureScreen()
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    print("Screen dimensions")
+    print("height: \(view.frame.size.height)")
+    print("width: \(view.frame.size.width)")
   }
 }
 
 extension HomeScreen {
   func configureScreen() {
     configureNavigationItems()
+    configureScreenComponents()
+  }
+}
+
+extension HomeScreen {
+  func configureScreenComponents() {
+    let homeHeaderComponent = HomeHeaderComponent()
+    addChildVC(homeHeaderComponent)
+    configureComponentsConstraints(homeHeaderComponent)
   }
 
+  func configureComponentsConstraints(_ homeHeader: UIViewController) {
+    // HomeHeaderComponent
+    let homeHeaderView: UIView = homeHeader.view
+    homeHeaderView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      homeHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
+      homeHeaderView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+      homeHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+      homeHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+    ])
+  }
+}
+
+extension HomeScreen {
   func configureNavigationItems() {
     configureLeftNavigationItems()
     configureRightNavigationItems()
