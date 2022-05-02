@@ -8,8 +8,17 @@
 import Foundation
 import UIKit
 
-struct Color {
-  public static func hex(_ hex: String) -> UIColor {
+public enum Color {
+  static var cream: UIColor { UIColor(named: "App Cream")! }
+  static var pink: UIColor { UIColor(named: "App Pink")! }
+  static var cobalt: UIColor { UIColor(named: "App Cobalt")! }
+  static var gray: UIColor { UIColor(named: "App Gray")! }
+  static var black: UIColor { UIColor(named: "App Black")! }
+  static var white: UIColor { UIColor(named: "App White")! }
+}
+
+private extension Color {
+  static func hex(_ hex: String) -> UIColor {
     var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
     if cString.hasPrefix("#") {

@@ -24,8 +24,8 @@ public struct Shadow {
   /// #  Default shadow
   init() {
     self.radius = 10
-    self.offset = CGSize(width: 0.0, height: 10.0)
-    self.opacity = 0.2
-    self.color = UIColor.black
+    self.offset = CGSize(width: 0, height: 0)
+    self.opacity = 0.4
+    self.color = UIColor.darkGray
   }
 }

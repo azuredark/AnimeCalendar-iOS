@@ -22,4 +22,19 @@ public extension UIView {
     shadowLayer.rasterizationScale = 0.8
     self.layer.insertSublayer(shadowLayer, at: 0)
   }
+
+  func addShadowLayer(shadow: Shadow, layerRadius: CGFloat) {
+    self.backgroundColor = UIColor.systemPink
+    self.layer.cornerRadius = layerRadius
+    self.layer.shadowColor = shadow.color.cgColor
+    self.layer.shadowOffset = shadow.offset
+    self.layer.shadowRadius = shadow.radius
+    self.layer.shadowOpacity = shadow.opacity
+    self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: layerRadius).cgPath
+  }
+
+  func addCornerRadius(radius: CGFloat) {
+    self.layer.cornerRadius = radius
+    self.clipsToBounds = true
+  }
 }

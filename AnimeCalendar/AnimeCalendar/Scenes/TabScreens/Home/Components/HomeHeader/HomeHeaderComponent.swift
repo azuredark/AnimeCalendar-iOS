@@ -13,12 +13,12 @@ final class HomeHeaderComponent: UIViewController {
   @IBOutlet private weak var animesToWatchLabel: UILabel!
   @IBOutlet private weak var dateLabel: UILabel!
   @IBOutlet private weak var pictureImage: UIImageView!
-//  @IBOutlet private weak var pictureView: UIView!
+  @IBOutlet private weak var pictureView: UIView!
 
   /// # Flags
   private var shadowFlag: Bool = false
 
-  let backgroundColor: UIColor = Color.hex("#F7F5F2")
+  let cornerRadius: CGFloat = 15
 
   init() {
     super.init(nibName: Xibs.homeHeaderComponentView, bundle: Bundle.main)
@@ -52,36 +52,30 @@ extension HomeHeaderComponent {
 
 private extension HomeHeaderComponent {
   func configureView() {
-    view.backgroundColor = backgroundColor
+    view.backgroundColor = Color.cream
     configureSubviews()
-
-//    pictureView.clipsToBounds = true
-//    pictureView.layer.cornerRadius = 15
-//    view.layer.cornerRadius = 15
   }
 
   func configureSubviews() {
     /// # Working with 2 UIViews
+    configurePictureView()
+    configurePictureImage()
+  }
+
+  func configurePictureView() {
+    // PictureView
+    let pictureViewShadow = Shadow()
+    pictureView.addShadowLayer(shadow: pictureViewShadow, layerRadius: cornerRadius)
+  }
+
+  func configurePictureImage() {
     // PictureImage
-    pictureImage.isHidden = false
-    pictureImage.image
-//    pictureImage.image = nil
-//    pictureImage.clipsToBounds = true
-//    pictureImage.layer.cornerRadius = 15
-//
-//    // PictureView
-//    pictureView.backgroundColor = UIColor.systemPink
-//    pictureView.layer.cornerRadius = 15
-//    pictureView.layer.shadowColor = UIColor.darkGray.cgColor
-//    pictureView.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
-//    pictureView.layer.shadowRadius = 5
-//    pictureView.layer.shadowOpacity = 0.5
-//    pictureView.layer.shadowPath = UIBezierPath(roundedRect: pictureImage.bounds, cornerRadius: 15).cgPath
+    pictureImage.addCornerRadius(radius: cornerRadius)
   }
 
   func configureShadows() {
-    let pictureViewShadow = Shadow()
-    pictureImage.superview?.layoutIfNeeded()
-    pictureImage.addShadowAndCornerRadius(shadow: pictureViewShadow, cornerRadius: 15, fillColor: .systemPink)
+//    let pictureViewShadow = Shadow()
+//    pictureView.superview?.layoutIfNeeded()
+//    pictureView.addShadowAndCornerRadius(shadow: pictureViewShadow, cornerRadius: 15, fillColor: .clear)
   }
 }

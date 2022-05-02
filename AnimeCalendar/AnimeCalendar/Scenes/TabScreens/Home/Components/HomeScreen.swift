@@ -8,9 +8,11 @@
 import UIKit
 
 final class HomeScreen: UIViewController, ScreenProtocol {
-  let backgroundColor: UIColor = Color.hex("#F7F5F2")
   // Protocol properties
   var requestsManager: RequestProtocol
+
+  /// # NavigationBar
+  lazy var navigationBar: ScreenNavigationBar = HomeScreenNavigationBar(self)
 
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
@@ -55,7 +57,7 @@ extension HomeScreen {
     homeHeaderView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       homeHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
-      homeHeaderView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+      homeHeaderView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.09),
       homeHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
       homeHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
     ])
@@ -69,18 +71,10 @@ extension HomeScreen {
   }
 
   func configureLeftNavigationItems() {
-    let settingsImage = UIImage(systemName: "text.alignleft")!
-    settingsImage.withTintColor(.black)
-    let settingsItem = UIBarButtonItem(image: settingsImage, style: .plain, target: self, action: nil)
-    settingsItem.image?.withTintColor(.black)
-    let items: [UIBarButtonItem] = [settingsItem]
-    navigationItem.leftBarButtonItems = items
+    navigationBar.configureLeftNavigationItems()
   }
 
   func configureRightNavigationItems() {
-    let image = UIImage(systemName: "circle.righthalf.filled")!
-    let darkModeItem = UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
-    let items: [UIBarButtonItem] = [darkModeItem]
-    navigationItem.rightBarButtonItems = items
+    navigationBar.configureRightNavigationItems()
   }
 }

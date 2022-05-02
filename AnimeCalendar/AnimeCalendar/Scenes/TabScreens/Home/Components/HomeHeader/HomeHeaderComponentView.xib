@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +15,8 @@
                 <outlet property="animesToWatchLabel" destination="eGZ-7E-9kg" id="msI-Ma-Bgq"/>
                 <outlet property="dateLabel" destination="cdw-Sh-xlo" id="vB9-JH-o12"/>
                 <outlet property="nameLabel" destination="ekM-4V-svk" id="vji-1m-SQ2"/>
-                <outlet property="pictureImage" destination="o4v-q3-um4" id="RIc-5j-TPv"/>
+                <outlet property="pictureImage" destination="bFV-4D-SSu" id="usT-7q-38D"/>
+                <outlet property="pictureView" destination="yuL-Zc-pVb" id="QoU-pQ-jsV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -33,43 +35,44 @@
                                     <rect key="frame" x="0.0" y="0.0" width="331" height="90"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi Leonardo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekM-4V-svk">
-                                            <rect key="frame" x="0.0" y="0.0" width="331" height="54"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="331" height="31.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" name="App Black"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EnC-w4-2ad">
+                                            <rect key="frame" x="0.0" y="31.5" width="331" height="13.5"/>
+                                        </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="PH5-7I-GUW">
-                                            <rect key="frame" x="0.0" y="54" width="331" height="36"/>
+                                            <rect key="frame" x="0.0" y="45" width="331" height="45"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've got 2 animes to watch!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGZ-7E-9kg">
-                                                    <rect key="frame" x="0.0" y="0.0" width="331" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                                    <nil key="textColor"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="331" height="22.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                    <color key="textColor" name="App Black"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="April 22, 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdw-Sh-xlo">
-                                                    <rect key="frame" x="0.0" y="18" width="331" height="18"/>
+                                                    <rect key="frame" x="0.0" y="22.5" width="331" height="22.5"/>
                                                     <color key="tintColor" systemColor="systemGrayColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" systemColor="systemGrayColor"/>
+                                                    <color key="textColor" name="App Gray"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ekM-4V-svk" firstAttribute="height" secondItem="0Gb-7g-A0U" secondAttribute="height" multiplier="0.6" id="KK9-HR-RK6"/>
+                                        <constraint firstItem="ekM-4V-svk" firstAttribute="height" secondItem="0Gb-7g-A0U" secondAttribute="height" multiplier="0.35" id="KK9-HR-RK6"/>
+                                        <constraint firstItem="EnC-w4-2ad" firstAttribute="height" secondItem="0Gb-7g-A0U" secondAttribute="height" multiplier="0.15" id="lcw-Th-dZW"/>
                                     </constraints>
                                 </stackView>
                             </subviews>
                         </stackView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample-home-profile" translatesAutoresizingMaskIntoConstraints="NO" id="o4v-q3-um4">
-                            <rect key="frame" x="331" y="0.0" width="83" height="90"/>
-                        </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yuL-Zc-pVb">
                             <rect key="frame" x="331" y="0.0" width="83" height="90"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="sample-home-profile" translatesAutoresizingMaskIntoConstraints="NO" id="bFV-4D-SSu">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample-home-profile" translatesAutoresizingMaskIntoConstraints="NO" id="bFV-4D-SSu">
                                     <rect key="frame" x="0.0" y="0.0" width="83" height="90"/>
                                 </imageView>
                             </subviews>
@@ -81,18 +84,14 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <color key="backgroundColor" name="App Cream"/>
                     <constraints>
                         <constraint firstItem="Les-pC-206" firstAttribute="width" secondItem="LJX-j8-vLu" secondAttribute="width" multiplier="0.8" id="Cj8-Nm-Faw"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="subviews">
-                            <exclude reference="yuL-Zc-pVb"/>
-                        </mask>
-                    </variation>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="App Cream"/>
             <constraints>
                 <constraint firstItem="LJX-j8-vLu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1Lk-ee-tGG"/>
                 <constraint firstAttribute="trailing" secondItem="LJX-j8-vLu" secondAttribute="trailing" id="Q1L-VY-ipi"/>
@@ -105,9 +104,15 @@
     </objects>
     <resources>
         <image name="sample-home-profile" width="368" height="368"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="App Black">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="App Cream">
+            <color red="0.96862745098039216" green="0.96078431372549022" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="App Gray">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
