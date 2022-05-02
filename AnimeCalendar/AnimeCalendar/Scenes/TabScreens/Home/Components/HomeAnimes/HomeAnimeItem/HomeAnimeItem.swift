@@ -8,9 +8,5 @@
 import UIKit
 
 final class HomeAnimeItem: UICollectionViewCell {
-  var anime: HomeAnime? {
-    didSet {
-      print("item anime: \(anime?.name ?? "")")
-    }
-  }
+  var anime: HomeAnime?
 }

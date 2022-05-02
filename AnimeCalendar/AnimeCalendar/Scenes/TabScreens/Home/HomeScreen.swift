@@ -92,8 +92,8 @@ extension HomeScreen {
     NSLayoutConstraint.activate([
       homeAnimesView.topAnchor.constraint(equalTo: homeDateView.bottomAnchor, constant: 20),
       homeAnimesView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.56),
-      homeAnimesView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-      homeAnimesView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+      homeAnimesView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+      homeAnimesView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
     ])
   }
 }

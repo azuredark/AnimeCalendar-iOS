@@ -18,7 +18,6 @@ final class HomeAnimesComponent: UIViewController {
     [
       HomeAnime(name: "Spy x Family", cover: "www"),
       HomeAnime(name: "Dr. Stone", cover: "www"),
-      HomeAnime(name: "Komi can't communicate", cover: "www"),
     ]
   lazy var animesObservable: Observable<[HomeAnime]> = Observable.create { [unowned self] observer in
     observer.onNext(self.animesDummy)
