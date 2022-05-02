@@ -8,7 +8,7 @@
 import UIKit
 
 final class HomeScreen: UIViewController, ScreenProtocol {
-  // Protocol properties
+  /// # Protocol properties
   var requestsManager: RequestProtocol
 
   /// # NavigationBar
@@ -46,13 +46,27 @@ extension HomeScreen {
 
 extension HomeScreen {
   func configureScreenComponents() {
-    let homeHeaderComponent = HomeHeaderComponent()
+    let homeHeaderComponent: ScreenComponent = HomeHeaderComponent()
+    let homeDateComponent: ScreenComponent = HomeDateComponent()
+    let homeAnimesComponent: ScreenComponent = HomeAnimesComponent()
+
     addChildVC(homeHeaderComponent)
-    configureComponentsConstraints(homeHeaderComponent)
+    addChildVC(homeDateComponent)
+    addChildVC(homeAnimesComponent)
+
+    configureComponentsConstraints(
+      homeHeaderComponent,
+      homeDateComponent,
+      homeAnimesComponent
+    )
   }
 
-  func configureComponentsConstraints(_ homeHeader: UIViewController) {
-    // HomeHeaderComponent
+  func configureComponentsConstraints(
+    _ homeHeader: ScreenComponent,
+    _ homeDate: ScreenComponent,
+    _ homeAnimes: ScreenComponent
+  ) {
+    /// # HomeHeaderComponent
     let homeHeaderView: UIView = homeHeader.view
     homeHeaderView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
@@ -60,6 +74,26 @@ extension HomeScreen {
       homeHeaderView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.09),
       homeHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
       homeHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+    ])
+
+    /// # HomeDateComponent
+    let homeDateView: UIView = homeDate.view
+    homeDateView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      homeDateView.topAnchor.constraint(equalTo: homeHeaderView.bottomAnchor, constant: 20),
+      homeDateView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+      homeDateView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+      homeDateView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+    ])
+
+    /// # HomeAnimesComponent
+    let homeAnimesView: UIView = homeAnimes.view
+    homeAnimesView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      homeAnimesView.topAnchor.constraint(equalTo: homeDateView.bottomAnchor, constant: 20),
+      homeAnimesView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.56),
+      homeAnimesView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+      homeAnimesView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
     ])
   }
 }

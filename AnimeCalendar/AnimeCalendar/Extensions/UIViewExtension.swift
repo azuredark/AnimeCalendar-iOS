@@ -24,7 +24,6 @@ public extension UIView {
   }
 
   func addShadowLayer(shadow: Shadow, layerRadius: CGFloat) {
-    self.backgroundColor = UIColor.systemPink
     self.layer.cornerRadius = layerRadius
     self.layer.shadowColor = shadow.color.cgColor
     self.layer.shadowOffset = shadow.offset

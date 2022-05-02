@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeDateComponent" customModule="AnimeCalendar" customModuleProvider="target">
+            <connections>
+                <outlet property="currentDateLabel" destination="SZC-63-u7e" id="LZI-Aq-ojs"/>
+                <outlet property="currentDateView" destination="MHn-hG-06E" id="umI-Gf-lCI"/>
+                <outlet property="dayAfterImage" destination="T1I-ku-1Su" id="HT3-hM-bES"/>
+                <outlet property="dayAfterView" destination="jy4-21-oda" id="Ns8-fw-yzQ"/>
+                <outlet property="dayBeforeImage" destination="hQh-c7-tYj" id="ZZK-AP-OoX"/>
+                <outlet property="dayBeforeView" destination="Goo-XB-czD" id="0z6-2L-Fbg"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="MGc-aa-JBi">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Goo-XB-czD">
+                            <rect key="frame" x="0.0" y="0.0" width="83" height="45"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hQh-c7-tYj">
+                                    <rect key="frame" x="0.0" y="-0.5" width="83" height="46"/>
+                                    <color key="tintColor" name="App Cobalt"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" name="App Cream"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="hQh-c7-tYj" secondAttribute="bottom" id="3Qp-jo-doy"/>
+                                <constraint firstItem="hQh-c7-tYj" firstAttribute="top" secondItem="Goo-XB-czD" secondAttribute="top" id="RGF-um-t27"/>
+                                <constraint firstItem="hQh-c7-tYj" firstAttribute="leading" secondItem="Goo-XB-czD" secondAttribute="leading" id="nN1-D2-rzc"/>
+                                <constraint firstAttribute="trailing" secondItem="hQh-c7-tYj" secondAttribute="trailing" id="psh-XB-2yh"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbR-PF-DmX">
+                            <rect key="frame" x="86" y="0.0" width="41" height="45"/>
+                            <color key="backgroundColor" name="App Cream"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MHn-hG-06E">
+                            <rect key="frame" x="130" y="0.0" width="166" height="45"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZC-63-u7e">
+                                    <rect key="frame" x="43.5" y="6" width="79" height="33.5"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                    <color key="textColor" name="App White"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" name="App Pink"/>
+                            <constraints>
+                                <constraint firstItem="SZC-63-u7e" firstAttribute="centerX" secondItem="MHn-hG-06E" secondAttribute="centerX" id="3kx-06-ftc"/>
+                                <constraint firstItem="SZC-63-u7e" firstAttribute="centerY" secondItem="MHn-hG-06E" secondAttribute="centerY" id="FDr-JN-ngl"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pm6-Yq-TOL">
+                            <rect key="frame" x="299" y="0.0" width="41" height="45"/>
+                            <color key="backgroundColor" name="App Cream"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-21-oda">
+                            <rect key="frame" x="343" y="0.0" width="71" height="45"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="T1I-ku-1Su">
+                                    <rect key="frame" x="0.0" y="-0.5" width="71" height="46"/>
+                                    <color key="tintColor" name="App Cobalt"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" name="App Cream"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="T1I-ku-1Su" secondAttribute="trailing" id="111-Ny-r85"/>
+                                <constraint firstItem="T1I-ku-1Su" firstAttribute="leading" secondItem="jy4-21-oda" secondAttribute="leading" id="P1W-1m-pvP"/>
+                                <constraint firstItem="T1I-ku-1Su" firstAttribute="top" secondItem="jy4-21-oda" secondAttribute="top" id="wq4-Fr-awL"/>
+                                <constraint firstAttribute="bottom" secondItem="T1I-ku-1Su" secondAttribute="bottom" id="yIr-R4-QQX"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" name="App Cream"/>
+                    <constraints>
+                        <constraint firstItem="MHn-hG-06E" firstAttribute="width" secondItem="MGc-aa-JBi" secondAttribute="width" multiplier="0.4" id="0aG-qp-bTB"/>
+                        <constraint firstItem="tbR-PF-DmX" firstAttribute="width" secondItem="MGc-aa-JBi" secondAttribute="width" multiplier="0.1" id="fJp-1z-vAL"/>
+                        <constraint firstItem="Pm6-Yq-TOL" firstAttribute="width" secondItem="MGc-aa-JBi" secondAttribute="width" multiplier="0.1" id="mOT-un-6vd"/>
+                        <constraint firstItem="Goo-XB-czD" firstAttribute="width" secondItem="MGc-aa-JBi" secondAttribute="width" multiplier="0.2" id="rpB-Rx-b6R"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="App White"/>
+            <constraints>
+                <constraint firstItem="MGc-aa-JBi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1ji-lS-uy3"/>
+                <constraint firstItem="MGc-aa-JBi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="3th-bC-x8r"/>
+                <constraint firstAttribute="trailing" secondItem="MGc-aa-JBi" secondAttribute="trailing" id="R42-t8-CmJ"/>
+                <constraint firstAttribute="bottom" secondItem="MGc-aa-JBi" secondAttribute="bottom" id="tLR-KS-ggl"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="338" y="123"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow.left.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="arrow.right.circle.fill" catalog="system" width="128" height="121"/>
+        <namedColor name="App Cobalt">
+            <color red="0.55294117647058827" green="0.55294117647058827" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="App Cream">
+            <color red="0.96862745098039216" green="0.96078431372549022" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="App Pink">
+            <color red="0.96078431372549022" green="0.42745098039215684" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="App White">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

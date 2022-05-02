@@ -7,9 +7,15 @@
 
 import Foundation
 
-struct Xibs {
-  public static let homeScreenView: String = "HomeScreenView"
-  public static let newScheduledAnimeScreenView: String = "NewScheduledAnimeScreenView"
-  public static let animeCalendarScreenView: String = "AnimeCalendarScreenView"
-  public static let homeHeaderComponentView: String = "HomeHeaderComponentView"
+enum Xibs {
+  /// # Views
+  public static var homeScreenView: String { "HomeScreenView" }
+  public static var newScheduledAnimeScreenView: String { "NewScheduledAnimeScreenView" }
+  public static var animeCalendarScreenView: String { "AnimeCalendarScreenView" }
+  /// #  Components
+  public static var homeHeaderComponentView: String { "HomeHeaderComponentView" }
+  public static var homeDateComponentView: String { "HomeDateComponentView" }
+  public static var homeAnimesComponentView: String { "HomeAnimesComponentView" }
+  /// # Cells
+  public static var homeAnimeItemView: String { "HomeAnimeItemView" }
 }

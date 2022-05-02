@@ -15,10 +15,7 @@ final class HomeHeaderComponent: UIViewController {
   @IBOutlet private weak var pictureImage: UIImageView!
   @IBOutlet private weak var pictureView: UIView!
 
-  /// # Flags
-  private var shadowFlag: Bool = false
-
-  let cornerRadius: CGFloat = 15
+  private let cornerRadius: CGFloat = 15
 
   init() {
     super.init(nibName: Xibs.homeHeaderComponentView, bundle: Bundle.main)
@@ -35,22 +32,9 @@ extension HomeHeaderComponent {
     super.viewDidLoad()
     configureView()
   }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    if !shadowFlag {
-      configureShadows()
-      shadowFlag = true
-    }
-  }
-
-  override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(animated)
-    shadowFlag = false
-  }
 }
 
-private extension HomeHeaderComponent {
+extension HomeHeaderComponent: ScreenComponent {
   func configureView() {
     view.backgroundColor = Color.cream
     configureSubviews()
@@ -71,11 +55,5 @@ private extension HomeHeaderComponent {
   func configurePictureImage() {
     // PictureImage
     pictureImage.addCornerRadius(radius: cornerRadius)
-  }
-
-  func configureShadows() {
-//    let pictureViewShadow = Shadow()
-//    pictureView.superview?.layoutIfNeeded()
-//    pictureView.addShadowAndCornerRadius(shadow: pictureViewShadow, cornerRadius: 15, fillColor: .clear)
   }
 }
