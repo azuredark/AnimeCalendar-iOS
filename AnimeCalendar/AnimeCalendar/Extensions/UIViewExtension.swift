@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// TODO: Create common private methods? To avoid so much DRY
 public extension UIView {
   func addShadowAndCornerRadius(shadow: Shadow, cornerRadius: CGFloat, fillColor: UIColor) {
     let shadowLayer = CAShapeLayer()

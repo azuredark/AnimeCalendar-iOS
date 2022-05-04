@@ -18,7 +18,32 @@ protocol TabBarItem {
 }
 
 extension TabBarItem {
-  func wrapNavigation() -> UINavigationController {
-    return UINavigationController(rootViewController: screen)
+  func wrapNavigation() -> CustomNavigationController {
+//    return UINavigationController(rootViewController: screen)
+    return CustomNavigationController(screen)
   }
+}
+
+// TODO: REFACTOR INTO SEPARATE MODULE
+final class CustomNavigationController: UINavigationController, CustomNavigation {
+  var rootViewController: ScreenProtocol
+
+  /// # Only for NON-DARKMODE approach, should eventually be removed or kept until there is a custom dark mode configured
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    .darkContent
+  }
+
+  init(_ rootViewController: ScreenProtocol) {
+    self.rootViewController = rootViewController
+    super.init(rootViewController: rootViewController)
+  }
+
+  @available(*, unavailable)
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+}
+
+protocol CustomNavigation: UINavigationController {
+  var rootViewController: ScreenProtocol { get set }
 }

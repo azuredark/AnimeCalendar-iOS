@@ -28,13 +28,6 @@ final class HomeScreen: UIViewController, ScreenProtocol {
     super.viewDidLoad()
     configureScreen()
   }
-
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    print("Screen dimensions")
-    print("height: \(view.frame.size.height)")
-    print("width: \(view.frame.size.width)")
-  }
 }
 
 extension HomeScreen {

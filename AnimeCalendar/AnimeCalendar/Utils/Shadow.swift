@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// TODO: REFACTOR most of the reused logic
 public struct Shadow {
   var radius: CGFloat
   var offset: CGSize
