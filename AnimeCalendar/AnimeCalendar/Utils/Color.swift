@@ -18,6 +18,7 @@ public enum Color {
 }
 
 private extension Color {
+  // Not used
   static func hex(_ hex: String) -> UIColor {
     var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 

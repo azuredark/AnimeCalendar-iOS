@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,14 +22,36 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Cd-gj-hO2">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="470"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ral-UG-Bos">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Ral-UG-Bos">
                                 <rect key="frame" x="10" y="10" width="280" height="450"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample-home-anime" translatesAutoresizingMaskIntoConstraints="NO" id="sIi-tU-vIW">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="405"/>
-                                    </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mgJ-IH-ICM">
-                                        <rect key="frame" x="0.0" y="415" width="280" height="35"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nfF-lf-zKV">
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="360"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample-home-anime" translatesAutoresizingMaskIntoConstraints="NO" id="sIi-tU-vIW">
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="360"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="15"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="sIi-tU-vIW" secondAttribute="bottom" id="MuM-fZ-QVG"/>
+                                            <constraint firstItem="sIi-tU-vIW" firstAttribute="top" secondItem="nfF-lf-zKV" secondAttribute="top" id="Ods-O5-xhV"/>
+                                            <constraint firstAttribute="trailing" secondItem="sIi-tU-vIW" secondAttribute="trailing" id="YEJ-yd-d1b"/>
+                                            <constraint firstItem="sIi-tU-vIW" firstAttribute="leading" secondItem="nfF-lf-zKV" secondAttribute="leading" id="fro-QV-gTy"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="15"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="mgJ-IH-ICM">
+                                        <rect key="frame" x="0.0" y="375" width="280" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spy x Family" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9R3-dg-Hog">
                                                 <rect key="frame" x="0.0" y="0.0" width="280" height="20.5"/>
@@ -37,16 +60,67 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Every Monday at 11:00 am" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7el-rU-f41">
-                                                <rect key="frame" x="0.0" y="20.5" width="280" height="14.5"/>
+                                                <rect key="frame" x="0.0" y="22.5" width="280" height="14.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" name="App Gray"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0xO-xS-rdo">
+                                                <rect key="frame" x="0.0" y="39" width="280" height="14.5"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tv" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="CBB-00-DOr">
+                                                        <rect key="frame" x="0.0" y="0.5" width="28" height="13.5"/>
+                                                        <color key="tintColor" name="App Gray"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode 7" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ath-U4-FCs">
+                                                        <rect key="frame" x="28" y="0.0" width="70" height="14.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" name="App Gray"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(13)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFC-wC-ROX">
+                                                        <rect key="frame" x="98" y="0.0" width="182" height="14.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                        <color key="textColor" name="App Gray"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="Ath-U4-FCs" firstAttribute="width" secondItem="0xO-xS-rdo" secondAttribute="width" multiplier="0.25" id="3wR-7l-X9k"/>
+                                                    <constraint firstItem="CBB-00-DOr" firstAttribute="width" secondItem="0xO-xS-rdo" secondAttribute="width" multiplier="0.1" id="Tip-2U-mtA"/>
+                                                </constraints>
+                                            </stackView>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t0j-VP-UpU">
+                                                <rect key="frame" x="0.0" y="55.5" width="280" height="19.5"/>
+                                                <subviews>
+                                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T7E-sn-TTh">
+                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="19.5"/>
+                                                        <color key="backgroundColor" name="App Cobalt"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" name="App Gray"/>
+                                                <constraints>
+                                                    <constraint firstItem="T7E-sn-TTh" firstAttribute="top" secondItem="t0j-VP-UpU" secondAttribute="top" id="7G4-ky-WN3"/>
+                                                    <constraint firstItem="T7E-sn-TTh" firstAttribute="leading" secondItem="t0j-VP-UpU" secondAttribute="leading" id="E5t-iO-x6f"/>
+                                                    <constraint firstAttribute="trailing" secondItem="T7E-sn-TTh" secondAttribute="trailing" id="l6D-yH-vp3"/>
+                                                    <constraint firstAttribute="bottom" secondItem="T7E-sn-TTh" secondAttribute="bottom" id="oN7-0M-yNu"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="sIi-tU-vIW" firstAttribute="height" secondItem="Ral-UG-Bos" secondAttribute="height" multiplier="0.9" id="5YK-Gs-sew"/>
+                                    <constraint firstItem="nfF-lf-zKV" firstAttribute="height" secondItem="Ral-UG-Bos" secondAttribute="height" multiplier="0.8" id="PbM-ib-12M"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -78,13 +152,22 @@
                     <integer key="value" value="15"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="animeContainerView" destination="3Cd-gj-hO2" id="n8t-nz-SVA"/>
+                <outlet property="animeCoverPicture" destination="sIi-tU-vIW" id="pzW-cM-R8t"/>
+                <outlet property="animeCoverView" destination="nfF-lf-zKV" id="KaV-7j-556"/>
+            </connections>
             <point key="canvasLocation" x="15.942028985507248" y="-216.29464285714286"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="sample-home-anime" width="760.5" height="1075"/>
+        <image name="tv" catalog="system" width="128" height="97"/>
         <namedColor name="App Black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="App Cobalt">
+            <color red="0.55294117647058827" green="0.55294117647058827" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="App Gray">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -92,5 +175,8 @@
         <namedColor name="App White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

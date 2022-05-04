@@ -28,4 +28,19 @@ public struct Shadow {
     self.opacity = 0.3
     self.color = UIColor.darkGray
   }
+
+  /// # Custom Shadows init (bottom, top, etc)
+  init(_ type: ShadowType, color: UIColor = Color.black) {
+    switch type {
+      case .bottom:
+        self.init(radius: 10, offset: .zero, opacity: 0.6, color: color)
+    }
+  }
+}
+
+extension Shadow {
+  enum ShadowType {
+    // Bottom shadow
+    case bottom
+  }
 }

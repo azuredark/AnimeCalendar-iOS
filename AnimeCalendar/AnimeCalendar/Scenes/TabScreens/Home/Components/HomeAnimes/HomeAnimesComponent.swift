@@ -9,6 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+/// # Home animes collection
 final class HomeAnimesComponent: UIViewController {
   /// # Outlets
   @IBOutlet private weak var animesCollection: UICollectionView!
@@ -54,9 +55,12 @@ extension HomeAnimesComponent: ScreenComponent {
   func configureSubviews() {}
 }
 
-private extension HomeAnimesComponent {
+extension HomeAnimesComponent: UICollectionViewDelegateFlowLayout {
   func configureCollection() {
+    // Register item from Xib
     animesCollection.register(UINib(nibName: Xibs.homeAnimeItemView, bundle: Bundle.main), forCellWithReuseIdentifier: Xibs.homeAnimeItemView)
+    // Set delegate
+    animesCollection.rx.setDelegate(self).disposed(by: disposeBag)
   }
 
   func bindCollection() {
@@ -65,5 +69,11 @@ private extension HomeAnimesComponent {
         item.anime = anime
       }
       .disposed(by: disposeBag)
+  }
+
+  // Set CollectionViewItem (HomeAnimeItem) size
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    print("ITEM SIZE")
+    return CGSize(width: animesCollection.bounds.width * 0.7, height: animesCollection.bounds.height * 1)
   }
 }
