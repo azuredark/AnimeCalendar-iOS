@@ -18,7 +18,7 @@ protocol TabBarItem {
 }
 
 extension TabBarItem {
-  func wrapNavigation() -> CustomNavigationController {
+  func wrapNavigation() -> CustomNavigation {
 //    return UINavigationController(rootViewController: screen)
     return CustomNavigationController(screen)
   }
