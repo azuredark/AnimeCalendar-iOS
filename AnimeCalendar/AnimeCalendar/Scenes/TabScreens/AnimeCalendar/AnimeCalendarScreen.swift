@@ -21,6 +21,16 @@ final class AnimeCalendarScreen: UIViewController, ScreenProtocol {
     fatalError("init(coder:) has not been implemented")
   }
 
+}
+
+extension AnimeCalendarScreen {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    print("\(self) didLoad")
+  }
+}
+
+extension AnimeCalendarScreen {
   func configureNavigationItems() {}
 
   func configureRightNavigationItems() {}

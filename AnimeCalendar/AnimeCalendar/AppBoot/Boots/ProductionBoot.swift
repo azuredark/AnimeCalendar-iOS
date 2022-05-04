@@ -12,7 +12,7 @@ final class ProductionBoot: Boot {
   internal lazy var requestsManager: RequestProtocol = RequestsManager()
   internal lazy var rootVC: ScreenProtocol = HomeScreen(requestsManager: requestsManager)
 
-  // Should not depend on a concrete type, make a RootControllerFactory or some sort of builder
+  // TODO: Should not depend on a concrete type, make a RootControllerFactory or some sort of builder
   func createRootScreen() -> UITabBarController {
     let tabBarManager = TabBarManager(requestsManager)
     return tabBarManager.getConfiguredTabBar()

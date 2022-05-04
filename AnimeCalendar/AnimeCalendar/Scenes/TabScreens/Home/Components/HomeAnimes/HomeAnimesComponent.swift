@@ -76,4 +76,9 @@ extension HomeAnimesComponent: UICollectionViewDelegateFlowLayout {
     print("ITEM SIZE")
     return CGSize(width: animesCollection.bounds.width * 0.7, height: animesCollection.bounds.height * 1)
   }
+
+  // Set CollectionViewItem "header" (left first item padding)
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return CGSize(width: 15, height: 0)
+  }
 }
