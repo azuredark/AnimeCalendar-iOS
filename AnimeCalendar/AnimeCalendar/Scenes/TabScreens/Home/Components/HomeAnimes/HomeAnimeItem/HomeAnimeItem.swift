@@ -20,7 +20,6 @@ final class HomeAnimeItem: UICollectionViewCell {
 extension HomeAnimeItem {
   override func awakeFromNib() {
     super.awakeFromNib()
-    print("AWOKE FROM NIB")
     configureCollectionItem()
   }
 }
