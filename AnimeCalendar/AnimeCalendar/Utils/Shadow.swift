@@ -34,7 +34,7 @@ public struct Shadow {
   init(_ type: ShadowType, color: UIColor = Color.black) {
     switch type {
       case .bottom:
-        self.init(radius: 10, offset: .zero, opacity: 0.6, color: color)
+        self.init(radius: 5, offset: .zero, opacity: 0.6, color: color)
     }
   }
 }

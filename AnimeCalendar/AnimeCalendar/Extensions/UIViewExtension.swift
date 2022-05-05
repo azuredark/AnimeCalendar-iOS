@@ -40,7 +40,7 @@ public extension UIView {
     self.layer.shadowRadius = shadow.radius
     self.layer.shadowOpacity = shadow.opacity
     self.layer.shadowPath = UIBezierPath(
-      rect: CGRect(x: self.bounds.minX * 1.03,
+      rect: CGRect(x: self.bounds.minX + self.bounds.width * 0.02,
                    y: self.bounds.maxY * 1.05,
                    width: self.bounds.width * 0.9,
                    height: self.bounds.height * 0.04)).cgPath

@@ -26,6 +26,9 @@ final class HomeAnimesComponent: UIViewController {
     return Disposables.create()
   }
 
+  // Flag to pass for the AnimateItem
+  let componentDidAppear: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+
   let disposeBag = DisposeBag()
 
   init() {
@@ -42,6 +45,16 @@ extension HomeAnimesComponent {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureView()
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    componentDidAppear.onNext(true)
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    componentDidAppear.onNext(false)
   }
 }
 
@@ -65,15 +78,15 @@ extension HomeAnimesComponent: UICollectionViewDelegateFlowLayout {
 
   func bindCollection() {
     animesObservable
-      .bind(to: animesCollection.rx.items(cellIdentifier: Xibs.homeAnimeItemView, cellType: HomeAnimeItem.self)) { _, anime, item in
+      .bind(to: animesCollection.rx.items(cellIdentifier: Xibs.homeAnimeItemView, cellType: HomeAnimeItem.self)) { [weak self] _, anime, item in
         item.anime = anime
+        item.componentDidAppear = self?.componentDidAppear
       }
       .disposed(by: disposeBag)
   }
 
   // Set CollectionViewItem (HomeAnimeItem) size
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    print("ITEM SIZE")
     return CGSize(width: animesCollection.bounds.width * 0.7, height: animesCollection.bounds.height * 1)
   }
 
