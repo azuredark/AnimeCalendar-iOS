@@ -33,11 +33,11 @@ final class TabBarManager {
   }
 
   fileprivate func configureTabItems() {
-    guard let items = tabBarController.tabBar.items else { return }
-    for (tabBarItem, item) in zip(tabBarItems, items) {
-      item.badgeValue = tabBarItem.tabBadge
-      item.title = tabBarItem.tabTitle
-      item.image = tabBarItem.tabImage
+    guard let tabBarControllerItems = tabBarController.tabBar.items else { return }
+    for (tabBarControllerItem, tabBarItem) in zip(tabBarControllerItems, tabBarItems) {
+      tabBarControllerItem.badgeValue = tabBarItem.tabBadge
+      tabBarControllerItem.title = tabBarItem.tabTitle
+      tabBarControllerItem.image = tabBarItem.tabImage
     }
   }
 

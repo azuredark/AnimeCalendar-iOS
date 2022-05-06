@@ -10,6 +10,8 @@ import UIKit
 
 // TODO: Create common private methods? To avoid so much DRY
 public extension UIView {
+  /// # For UIImageViews with Shadows and CornerRadius
+  /// Requires 2 Views: UIView (Container) & UIImageView (Image)
   func addShadowAndCornerRadius(shadow: Shadow, cornerRadius: CGFloat, fillColor: UIColor) {
     let shadowLayer = CAShapeLayer()
     shadowLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius).cgPath
@@ -24,6 +26,7 @@ public extension UIView {
     self.layer.insertSublayer(shadowLayer, at: 0)
   }
 
+  /// # For Views without requiring an Image with shadow
   func addShadowLayer(shadow: Shadow, layerRadius: CGFloat) {
     self.layer.cornerRadius = layerRadius
     self.layer.shadowColor = shadow.color.cgColor
