@@ -13,6 +13,7 @@ public enum Color {
   static var pink: UIColor { UIColor(named: "App Pink")! }
   static var cobalt: UIColor { UIColor(named: "App Cobalt")! }
   static var gray: UIColor { UIColor(named: "App Gray")! }
+  static var lightGray: UIColor { UIColor(named: "App Light Gray")! }
   static var black: UIColor { UIColor(named: "App Black")! }
   static var white: UIColor { UIColor(named: "App White")! }
 }

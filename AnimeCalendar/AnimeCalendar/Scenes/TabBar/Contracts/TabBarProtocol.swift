@@ -5,4 +5,8 @@
 //  Created by Leonardo  on 5/05/22.
 //
 
-import Foundation
+import UIKit
+
+protocol TabBarProtocol: UITabBarController {
+  func configureTabBar()
+}

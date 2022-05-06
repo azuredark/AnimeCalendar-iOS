@@ -5,7 +5,6 @@
 //  Created by Leonardo  on 1/05/22.
 //
 
-import Foundation
 import UIKit
 
 final class HomeScreenNavigationBar: ScreenNavigationBar {
@@ -20,7 +19,7 @@ extension HomeScreenNavigationBar {
     // Item's image
     let configuration = UIImage.SymbolConfiguration(weight: .heavy)
     var settingsImage = UIImage(systemName: "text.alignleft", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
-    settingsImage = settingsImage.withTintColor(UIColor(named: "App Black")!)
+    settingsImage = settingsImage.withTintColor(Color.black)
 
     // Navigation item
     let settingsItem = UIBarButtonItem(image: settingsImage, style: .plain, target: self, action: nil)
@@ -33,7 +32,7 @@ extension HomeScreenNavigationBar {
     // Item's image
     let configuration = UIImage.SymbolConfiguration(weight: .heavy)
     var darkModeImage = UIImage(systemName: "circle.righthalf.filled", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
-    darkModeImage = darkModeImage.withTintColor(UIColor(named: "App Black")!)
+    darkModeImage = darkModeImage.withTintColor(Color.black)
 
     // Navigation item
     let darkModeItem = UIBarButtonItem(image: darkModeImage, style: .plain, target: self, action: nil)

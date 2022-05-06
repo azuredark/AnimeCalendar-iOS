@@ -10,7 +10,7 @@ import UIKit
 
 final class TabBarManager {
   private let requestsManager: RequestProtocol
-  private let tabBarController = UITabBarController()
+  private let tabBarController: TabBarProtocol = CustomTabBarController()
 
   private var tabBarItems = [TabBarItem]()
 
@@ -22,9 +22,9 @@ final class TabBarManager {
   fileprivate func configureTabScreens() {
     let tabFactory = TabBarFactory(requestsManager)
 
-    let homeTabItem = tabFactory.getTabBarScreen(.homeTab)
-    let newScheduledAnimeTabItem = tabFactory.getTabBarScreen(.newAnimeTab)
-    let animeCalendarTabItem = tabFactory.getTabBarScreen(.animeCalendarTab)
+    let homeTabItem: TabBarItem = tabFactory.getTabBarScreen(.homeTab)
+    let newScheduledAnimeTabItem: TabBarItem = tabFactory.getTabBarScreen(.newAnimeTab)
+    let animeCalendarTabItem: TabBarItem = tabFactory.getTabBarScreen(.animeCalendarTab)
     tabBarItems = [homeTabItem, newScheduledAnimeTabItem, animeCalendarTabItem]
   }
 

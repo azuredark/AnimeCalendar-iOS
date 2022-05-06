@@ -11,9 +11,14 @@ import UIKit.UIImage
 final class HomeScreenTabItem: TabBarItem {
   public private(set) var requestsManager: RequestProtocol
   public private(set) lazy var screen: ScreenProtocol = HomeScreen(requestsManager: requestsManager)
-  public private(set) var tabBadge: String? = "1"
-  public private(set) var tabImage = UIImage(systemName: "house")!
-  public private(set) var tabTitle: String? = nil
+  public private(set) var tabBadge: String?
+  public private(set) var tabImage: UIImage = {
+    let configuration = UIImage.SymbolConfiguration(weight: UIImage.SymbolWeight.bold)
+    let image = UIImage(systemName: "house", withConfiguration: configuration)!.withBaselineOffset(fromBottom: UIFont.systemFontSize * 1.5)
+    return image
+  }()
+
+  public private(set) var tabTitle: String?
 
   init(_ requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
