@@ -38,6 +38,7 @@ final class TabBarManager {
       tabBarControllerItem.badgeValue = tabBarItem.tabBadge
       tabBarControllerItem.title = tabBarItem.tabTitle
       tabBarControllerItem.image = tabBarItem.tabImage
+      tabBarControllerItem.isEnabled = tabBarItem.enabled
     }
   }
 

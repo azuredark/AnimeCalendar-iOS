@@ -42,7 +42,6 @@ extension HomeDateComponent: ScreenComponent {
       color: Color.pink)
 
     currentDateView.addShadowLayer(shadow: currentDateShadow, layerRadius: 15)
-//    configureSubviews()
   }
 
   func configureSubviews() {}

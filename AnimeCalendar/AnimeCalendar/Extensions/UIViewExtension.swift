@@ -26,14 +26,16 @@ public extension UIView {
     self.layer.insertSublayer(shadowLayer, at: 0)
   }
 
-  /// # For Views without requiring an Image with shadow
+  /// - Description: For Views without requiring an Image with shadow
+  /// - Parameter shadow: Shadow object to use inside the layer
+  /// - Parameter layerRadius: Radius of the layer
   func addShadowLayer(shadow: Shadow, layerRadius: CGFloat) {
+    self.clipsToBounds = false
     self.layer.cornerRadius = layerRadius
     self.layer.shadowColor = shadow.color.cgColor
     self.layer.shadowOffset = shadow.offset
     self.layer.shadowRadius = shadow.radius
     self.layer.shadowOpacity = shadow.opacity
-    self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: layerRadius).cgPath
   }
 
   func addBottomShadow(shadow: Shadow, layerRadius: CGFloat) {

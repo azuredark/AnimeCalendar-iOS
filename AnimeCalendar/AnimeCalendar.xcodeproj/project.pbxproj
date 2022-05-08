@@ -31,6 +31,7 @@
 		A78685CE2824D6AE00321415 /* TabBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78685CD2824D6AE00321415 /* TabBarProtocol.swift */; };
 		A7933BF2281E35DD00D4E1B4 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7933BF1281E35DD00D4E1B4 /* Shadow.swift */; };
 		A7933BF4281E3AA100D4E1B4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7933BF3281E3AA100D4E1B4 /* UIViewExtension.swift */; };
+		A7AD0B0628275F6500367A1B /* NewScheduledAnimeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AD0B0528275F6500367A1B /* NewScheduledAnimeButton.swift */; };
 		A7B0E329281F534900A13CD6 /* HomeScreenNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B0E328281F534900A13CD6 /* HomeScreenNavigationBar.swift */; };
 		A7B0E32B281F553A00A13CD6 /* ScreenNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B0E32A281F553A00A13CD6 /* ScreenNavigationBar.swift */; };
 		A7B0E32F281F761300A13CD6 /* HomeDateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B0E32D281F761300A13CD6 /* HomeDateComponent.swift */; };
@@ -89,6 +90,7 @@
 		A78685CD2824D6AE00321415 /* TabBarProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarProtocol.swift; sourceTree = "<group>"; };
 		A7933BF1281E35DD00D4E1B4 /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		A7933BF3281E3AA100D4E1B4 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		A7AD0B0528275F6500367A1B /* NewScheduledAnimeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewScheduledAnimeButton.swift; sourceTree = "<group>"; };
 		A7B0E328281F534900A13CD6 /* HomeScreenNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenNavigationBar.swift; sourceTree = "<group>"; };
 		A7B0E32A281F553A00A13CD6 /* ScreenNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenNavigationBar.swift; sourceTree = "<group>"; };
 		A7B0E32D281F761300A13CD6 /* HomeDateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDateComponent.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				A7F91E0B28190F4B00FF59C0 /* TabBarFactory.swift */,
 				A7F91E0528190EC700FF59C0 /* TabItems */,
 				A7F91E0628190EF000FF59C0 /* Contracts */,
+				A7AD0B0528275F6500367A1B /* NewScheduledAnimeButton.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				A70FF51428238E42007D4F64 /* NSLayoutConstraintExtension.swift in Sources */,
 				A731E003281D12FA00036077 /* Xibs.swift in Sources */,
 				A78685CE2824D6AE00321415 /* TabBarProtocol.swift in Sources */,
+				A7AD0B0628275F6500367A1B /* NewScheduledAnimeButton.swift in Sources */,
 				A74F984B2815F8EF003A1073 /* HomeScreen.swift in Sources */,
 				A7B0E337281F8E8B00A13CD6 /* HomeAnimesComponent.swift in Sources */,
 				A7F91DFD28190CAE00FF59C0 /* AnimeCalendarTabItem.swift in Sources */,

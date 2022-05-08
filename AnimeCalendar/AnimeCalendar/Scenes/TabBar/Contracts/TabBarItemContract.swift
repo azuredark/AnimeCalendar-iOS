@@ -13,14 +13,13 @@ protocol TabBarItem {
   var requestsManager: RequestProtocol { get }
   var screen: ScreenProtocol { get }
   var tabBadge: String? { get }
-  var tabImage: UIImage { get }
+  var tabImage: UIImage? { get }
   var tabTitle: String? { get }
+  var enabled: Bool { get }
 }
 
 extension TabBarItem {
   func wrapNavigation() -> CustomNavigation {
-//    return UINavigationController(rootViewController: screen)
     return CustomNavigationController(screen)
   }
 }
-

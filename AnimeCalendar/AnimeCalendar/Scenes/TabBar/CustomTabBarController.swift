@@ -28,25 +28,10 @@ extension CustomTabBarController: TabBarProtocol {
     tabBar.unselectedItemTintColor = Color.lightGray
     tabBar.tintColor = Color.cobalt
 
-    // TODO: MODULARIZE, CLEAN
-    /// # Custom TabBar Button
-    middleButton = UIButton()
-
-    middleButton.frame.size = CGSize(width: 48, height: 48)
-
-    let image = UIImage(systemName: "plus")!
-    middleButton.setImage(image, for: .normal)
-    middleButton.backgroundColor = Color.pink
-    middleButton.tintColor = .white
-//    middleButton.layer.cornerRadius = 23
-    
-    var shadow = Shadow()
-    shadow.color = Color.pink
-    shadow.radius = 10
-    middleButton.addShadowLayer(shadow: shadow, layerRadius: 23)
-    tabBar.addSubview(middleButton)
+    let scheduledAnimeButton = NewScheduledAnimeButton(tabBar)
+    scheduledAnimeButton.configureScheduledAnimeButton()
   }
-  
+
   override func awakeFromNib() {
     super.awakeFromNib()
     print("DID AWAKE FROM NIB")
@@ -54,6 +39,6 @@ extension CustomTabBarController: TabBarProtocol {
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    middleButton.center = CGPoint(x: self.tabBar.frame.width / 2, y: -5)
+//    middleButton.center = CGPoint(x: tabBar.frame.width / 2, y: -5)
   }
 }
