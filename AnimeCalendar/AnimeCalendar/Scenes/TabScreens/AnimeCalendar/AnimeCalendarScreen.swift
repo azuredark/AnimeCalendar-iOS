@@ -10,7 +10,7 @@ import UIKit.UIViewController
 
 final class AnimeCalendarScreen: UIViewController, ScreenProtocol {
   var requestsManager: RequestProtocol
-
+  
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
     super.init(nibName: Xibs.animeCalendarScreenView, bundle: Bundle.main)
@@ -20,7 +20,6 @@ final class AnimeCalendarScreen: UIViewController, ScreenProtocol {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
 }
 
 extension AnimeCalendarScreen {
@@ -37,3 +36,5 @@ extension AnimeCalendarScreen {
 
   func configureLeftNavigationItems() {}
 }
+
+extension AnimeCalendarScreen: PresentsNewScreen {}

@@ -18,7 +18,6 @@ final class HomeAnimeItem: UICollectionViewCell {
 
   var anime: HomeAnime? {
     didSet {
-      print("Anime didSet")
       updateEpisodeProgress()
     }
   }
@@ -38,7 +37,6 @@ extension HomeAnimeItem {
   override func awakeFromNib() {
     super.awakeFromNib()
     configureCollectionItem()
-    print("Configured Item")
   }
 }
 

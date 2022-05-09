@@ -10,7 +10,7 @@ import UIKit
 
 final class TabBarManager {
   private let requestsManager: RequestProtocol
-  private let tabBarController: TabBarProtocol = CustomTabBarController()
+  private var tabBarController: TabBarWithMiddleButton = CustomTabBarController()
 
   private var tabBarItems = [TabBarItem]()
 
@@ -32,6 +32,17 @@ final class TabBarManager {
     tabBarController.viewControllers = tabBarItems.map { $0.wrapNavigation() }
   }
 
+  fileprivate func configureTabBarMiddleButton() {
+    let tabBarScreens = tabBarItems.map { $0.screen }
+    let tabBarView = tabBarController.tabBar
+
+    /// # Will only run ONCE, as there is just one NewScheduledAnimeScreen in tabarBarItems
+    for case let screen as NewScheduledAnimeScreen in tabBarScreens {
+      tabBarController.configureMiddleButton(in: tabBarView)
+      tabBarController.configureButtonPresentingView(presents: screen)
+    }
+  }
+
   fileprivate func configureTabItems() {
     guard let tabBarControllerItems = tabBarController.tabBar.items else { return }
     for (tabBarControllerItem, tabBarItem) in zip(tabBarControllerItems, tabBarItems) {
@@ -45,6 +56,7 @@ final class TabBarManager {
   fileprivate func configureTabManager() {
     configureTabScreens()
     configureTabController()
+    configureTabBarMiddleButton()
     configureTabItems()
   }
 

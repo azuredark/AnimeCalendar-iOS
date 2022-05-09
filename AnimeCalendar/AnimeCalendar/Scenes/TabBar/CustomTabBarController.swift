@@ -7,10 +7,10 @@
 
 import UIKit
 
+/// # Override tabbar and configure hittest
 final class CustomTabBarController: UITabBarController {
-  /// # Overriding properties
-  var middleButton = UIButton()
-
+  // TODO: TabBarButton IS CREATED TWICE, ONCE HERE AND THEN @HomeScreen
+  private lazy var newScheduledAnimeButton: TabBarButton = NewScheduledAnimeButton()
   init() {
     super.init(nibName: nil, bundle: nil)
     configureTabBar()
@@ -22,23 +22,19 @@ final class CustomTabBarController: UITabBarController {
   }
 }
 
-extension CustomTabBarController: TabBarProtocol {
+extension CustomTabBarController: TabBarWithMiddleButton {
   func configureTabBar() {
     tabBar.backgroundColor = Color.white
     tabBar.unselectedItemTintColor = Color.lightGray
     tabBar.tintColor = Color.cobalt
-
-    let scheduledAnimeButton = NewScheduledAnimeButton(tabBar)
-    scheduledAnimeButton.configureScheduledAnimeButton()
+    tabBar.itemPositioning = .fill
   }
 
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    print("DID AWAKE FROM NIB")
+  func configureMiddleButton(in tabBarView: UITabBar) {
+    newScheduledAnimeButton.createButton(in: tabBarView)
   }
 
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-//    middleButton.center = CGPoint(x: tabBar.frame.width / 2, y: -5)
+  func configureButtonPresentingView(presents screen: ScreenProtocol) {
+    newScheduledAnimeButton.configureButtonPresentingView(presents: screen)
   }
 }

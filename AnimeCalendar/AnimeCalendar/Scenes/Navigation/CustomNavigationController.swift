@@ -17,7 +17,7 @@ final class CustomNavigationController: UINavigationController, CustomNavigation
 
   init(_ rootViewController: ScreenProtocol) {
     self.rootViewController = rootViewController
-    super.init(rootViewController: rootViewController)
+    super.init(rootViewController: self.rootViewController)
   }
 
   @available(*, unavailable)

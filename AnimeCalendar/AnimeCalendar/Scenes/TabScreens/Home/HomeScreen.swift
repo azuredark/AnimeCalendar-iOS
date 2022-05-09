@@ -14,9 +14,14 @@ final class HomeScreen: UIViewController, ScreenProtocol {
   /// # NavigationBar
   lazy var navigationBar: ScreenNavigationBar = HomeScreenNavigationBar(self)
 
+  /// # Presents the NewScheduledAnimeScreen
+  let newScheduledAnimeButton = NewScheduledAnimeButton()
+
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
     super.init(nibName: Xibs.homeScreenView, bundle: Bundle.main)
+    print("VIEW INITTTED")
+    newScheduledAnimeButton.presentsNewScreenDelegate = self
   }
 
   @available(*, unavailable)
@@ -26,11 +31,17 @@ final class HomeScreen: UIViewController, ScreenProtocol {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    print("VIEW DIDD LOAD")
+    configureDelegates()
     configureScreen()
   }
 }
 
 extension HomeScreen {
+  func configureDelegates() {
+//    newScheduledAnimeButton.presentsNewScreenDelegate = self
+  }
+
   func configureScreen() {
     configureNavigationItems()
     configureScreenComponents()
@@ -103,5 +114,36 @@ extension HomeScreen {
 
   func configureRightNavigationItems() {
     navigationBar.configureRightNavigationItems()
+  }
+}
+
+extension HomeScreen: PresentsNewScreen {}
+
+// TODO: DELETE
+final class CustomScreen: UIViewController {
+  init() {
+    super.init(nibName: nil, bundle: nil)
+    view.backgroundColor = Color.cream
+    modalPresentationStyle = .formSheet
+    configureScreen()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func configureScreen() {
+    let button = UIButton(type: .system)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("WOF", for: .normal)
+    button.backgroundColor = UIColor.systemGreen
+    view.addSubview(button)
+    NSLayoutConstraint.activate([
+      button.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      button.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      button.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
+    ])
   }
 }

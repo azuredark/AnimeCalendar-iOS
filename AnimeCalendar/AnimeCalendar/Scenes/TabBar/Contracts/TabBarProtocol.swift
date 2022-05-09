@@ -10,3 +10,8 @@ import UIKit
 protocol TabBarProtocol: UITabBarController {
   func configureTabBar()
 }
+
+protocol TabBarWithMiddleButton: TabBarProtocol {
+  func configureMiddleButton(in tabBarView: UITabBar)
+  func configureButtonPresentingView(presents screen: ScreenProtocol)
+}
