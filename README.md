@@ -19,5 +19,5 @@ Small Todo's yet to complete, will be filling out periodically.
 - [x] HomeScreen UI
 - [x] Make TabBar's View custom middle button work, presenting NewScheduledAnime screen.
 - [x] Refactor BootManager
-- [] Animate NewScheduledAnime presentation when its TabBar button is pressed
+- [ ] Animate NewScheduledAnime presentation when its TabBar button is pressed
 
