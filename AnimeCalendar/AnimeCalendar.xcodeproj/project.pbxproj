@@ -51,14 +51,8 @@
 		A7E798A828149B4900973881 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E798A728149B4900973881 /* SceneDelegate.swift */; };
 		A7E798AF28149B4900973881 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7E798AE28149B4900973881 /* Assets.xcassets */; };
 		A7E798B228149B4900973881 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7E798B028149B4900973881 /* LaunchScreen.storyboard */; };
-		A7F91DF928190C8100FF59C0 /* HomeScreenTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91DF828190C8100FF59C0 /* HomeScreenTabItem.swift */; };
-		A7F91DFB28190C9E00FF59C0 /* NewScheduledAnimeTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91DFA28190C9E00FF59C0 /* NewScheduledAnimeTabItem.swift */; };
-		A7F91DFD28190CAE00FF59C0 /* AnimeCalendarTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91DFC28190CAE00FF59C0 /* AnimeCalendarTabItem.swift */; };
 		A7F91E0128190E6000FF59C0 /* AnimeCalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91E0028190E6000FF59C0 /* AnimeCalendarScreen.swift */; };
 		A7F91E0328190E8600FF59C0 /* NewScheduledAnimeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91E0228190E8600FF59C0 /* NewScheduledAnimeScreen.swift */; };
-		A7F91E0828190F0600FF59C0 /* TabBarItemContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91E0728190F0600FF59C0 /* TabBarItemContract.swift */; };
-		A7F91E0A28190F2F00FF59C0 /* TabBarItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91E0928190F2F00FF59C0 /* TabBarItemTypes.swift */; };
-		A7F91E0C28190F4B00FF59C0 /* TabBarFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91E0B28190F4B00FF59C0 /* TabBarFactory.swift */; };
 		A7F91E0F28190F6D00FF59C0 /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F91E0E28190F6D00FF59C0 /* TabBarManager.swift */; };
 		A7FDF609281E025E006057D7 /* HomeHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FDF607281E025E006057D7 /* HomeHeaderComponent.swift */; };
 		A7FDF60A281E025E006057D7 /* HomeHeaderComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7FDF608281E025E006057D7 /* HomeHeaderComponentView.xib */; };
@@ -114,14 +108,8 @@
 		A7E798AE28149B4900973881 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7E798B128149B4900973881 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A7E798B328149B4900973881 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A7F91DF828190C8100FF59C0 /* HomeScreenTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenTabItem.swift; sourceTree = "<group>"; };
-		A7F91DFA28190C9E00FF59C0 /* NewScheduledAnimeTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewScheduledAnimeTabItem.swift; sourceTree = "<group>"; };
-		A7F91DFC28190CAE00FF59C0 /* AnimeCalendarTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeCalendarTabItem.swift; sourceTree = "<group>"; };
 		A7F91E0028190E6000FF59C0 /* AnimeCalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeCalendarScreen.swift; sourceTree = "<group>"; };
 		A7F91E0228190E8600FF59C0 /* NewScheduledAnimeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewScheduledAnimeScreen.swift; sourceTree = "<group>"; };
-		A7F91E0728190F0600FF59C0 /* TabBarItemContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemContract.swift; sourceTree = "<group>"; };
-		A7F91E0928190F2F00FF59C0 /* TabBarItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemTypes.swift; sourceTree = "<group>"; };
-		A7F91E0B28190F4B00FF59C0 /* TabBarFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFactory.swift; sourceTree = "<group>"; };
 		A7F91E0E28190F6D00FF59C0 /* TabBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarManager.swift; sourceTree = "<group>"; };
 		A7FDF607281E025E006057D7 /* HomeHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderComponent.swift; sourceTree = "<group>"; };
 		A7FDF608281E025E006057D7 /* HomeHeaderComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeHeaderComponentView.xib; sourceTree = "<group>"; };
@@ -338,8 +326,6 @@
 				A7AD0B0528275F6500367A1B /* NewScheduledAnimeButton.swift */,
 				A78685CB2824D67100321415 /* CustomTabBarController.swift */,
 				A7F91E0E28190F6D00FF59C0 /* TabBarManager.swift */,
-				A7F91E0B28190F4B00FF59C0 /* TabBarFactory.swift */,
-				A7F91E0528190EC700FF59C0 /* TabItems */,
 				A7F91E0628190EF000FF59C0 /* Contracts */,
 			);
 			path = TabBar;
@@ -363,21 +349,9 @@
 			path = AnimeCalendar;
 			sourceTree = "<group>";
 		};
-		A7F91E0528190EC700FF59C0 /* TabItems */ = {
-			isa = PBXGroup;
-			children = (
-				A7F91DF828190C8100FF59C0 /* HomeScreenTabItem.swift */,
-				A7F91DFA28190C9E00FF59C0 /* NewScheduledAnimeTabItem.swift */,
-				A7F91DFC28190CAE00FF59C0 /* AnimeCalendarTabItem.swift */,
-			);
-			path = TabItems;
-			sourceTree = "<group>";
-		};
 		A7F91E0628190EF000FF59C0 /* Contracts */ = {
 			isa = PBXGroup;
 			children = (
-				A7F91E0728190F0600FF59C0 /* TabBarItemContract.swift */,
-				A7F91E0928190F2F00FF59C0 /* TabBarItemTypes.swift */,
 				A78685CD2824D6AE00321415 /* TabBarProtocol.swift */,
 				A7D4F6CC2828D6AA004622A4 /* TabBarButton.swift */,
 			);
@@ -543,19 +517,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7F91E0A28190F2F00FF59C0 /* TabBarItemTypes.swift in Sources */,
 				A7E44A972829CBEB005C0AB5 /* ScreenType.swift in Sources */,
 				A7E44A912829CAB7005C0AB5 /* RootControllerType.swift in Sources */,
 				A74F986428161279003A1073 /* NetworkManager.swift in Sources */,
 				A7FDF60E281E038D006057D7 /* UIViewControllerExtension.swift in Sources */,
 				A74F986A2816129D003A1073 /* CacheManager.swift in Sources */,
-				A7F91DFB28190C9E00FF59C0 /* NewScheduledAnimeTabItem.swift in Sources */,
 				A7E798A628149B4900973881 /* AppDelegate.swift in Sources */,
 				A7933BF4281E3AA100D4E1B4 /* UIViewExtension.swift in Sources */,
 				A7F91E0F28190F6D00FF59C0 /* TabBarManager.swift in Sources */,
 				A78685CC2824D67100321415 /* CustomTabBarController.swift in Sources */,
 				A7B0E333281F88F800A13CD6 /* ScreenComponent.swift in Sources */,
-				A7F91E0828190F0600FF59C0 /* TabBarItemContract.swift in Sources */,
 				A70FF51628239D77007D4F64 /* Constraints.swift in Sources */,
 				A78685CA2824D5CE00321415 /* CustomNavigationController.swift in Sources */,
 				A731E009281D1B0D00036077 /* Color.swift in Sources */,
@@ -564,7 +535,6 @@
 				A7E798A828149B4900973881 /* SceneDelegate.swift in Sources */,
 				A7E44A932829CAF1005C0AB5 /* RootViewController.swift in Sources */,
 				A7B0E32B281F553A00A13CD6 /* ScreenNavigationBar.swift in Sources */,
-				A7F91E0C28190F4B00FF59C0 /* TabBarFactory.swift in Sources */,
 				A70FF51428238E42007D4F64 /* NSLayoutConstraintExtension.swift in Sources */,
 				A731E003281D12FA00036077 /* Xibs.swift in Sources */,
 				A78685CE2824D6AE00321415 /* TabBarProtocol.swift in Sources */,
@@ -572,7 +542,6 @@
 				A7AD0B0628275F6500367A1B /* NewScheduledAnimeButton.swift in Sources */,
 				A74F984B2815F8EF003A1073 /* HomeScreen.swift in Sources */,
 				A7B0E337281F8E8B00A13CD6 /* HomeAnimesComponent.swift in Sources */,
-				A7F91DFD28190CAE00FF59C0 /* AnimeCalendarTabItem.swift in Sources */,
 				A7D4F6CB2828C3A7004622A4 /* PresentsNewScreen.swift in Sources */,
 				A7FDF609281E025E006057D7 /* HomeHeaderComponent.swift in Sources */,
 				A74F986628161285003A1073 /* RequestsManager.swift in Sources */,
@@ -586,7 +555,6 @@
 				A7CD0D4A2817A31100109B8D /* RequestProtocol.swift in Sources */,
 				A7B0E32F281F761300A13CD6 /* HomeDateComponent.swift in Sources */,
 				A7CD0D482817A16000109B8D /* ScreenProtocol.swift in Sources */,
-				A7F91DF928190C8100FF59C0 /* HomeScreenTabItem.swift in Sources */,
 				A7933BF2281E35DD00D4E1B4 /* Shadow.swift in Sources */,
 				A7B0E33F281F9B8800A13CD6 /* HomeAnime.swift in Sources */,
 			);
