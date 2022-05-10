@@ -13,12 +13,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let bootManager = BootManager()
-    let boot: Boot = bootManager.getBootMethod(.develop)
-    let rootVC = boot.createRootScreen()
+    let rootController = bootManager.getRootController(.rootTabBar)
+    let rootViewController = rootController.getRootViewController()
 
     window = UIWindow(frame: windowScene.coordinateSpace.bounds)
     window?.windowScene = windowScene
-    window?.rootViewController = rootVC
+    window?.rootViewController = rootViewController
     window?.makeKeyAndVisible()
   }
 

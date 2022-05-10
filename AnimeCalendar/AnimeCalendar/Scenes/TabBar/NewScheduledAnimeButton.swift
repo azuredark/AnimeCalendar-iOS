@@ -23,11 +23,13 @@ extension NewScheduledAnimeButton {
   }
 
   // TODO: FIX PRESENTING NewScheduledAnimeScreen
-  func configureButtonPresentingView(presents screen: ScreenProtocol) {
-    guard let newScheduledAnimeScreen = screen as? NewScheduledAnimeScreen else { return }
-    print("Presenting: \(presentsNewScreenDelegate)")
-    presentsNewScreenDelegate?.presentNewScheduledAnime(screen: newScheduledAnimeScreen)
+  func configureButtonPresentingView(presents screenToPresent: ScreenProtocol) {
+//    guard let newScheduledAnimeScreen = screen as? NewScheduledAnimeScreen else { return }
+//    print("Presenting: \(presentsNewScreenDelegate)")
+//    presentsNewScreenDelegate?.presentNewScheduledAnime(screen: newScheduledAnimeScreen)
   }
+
+  @objc func presentScreensOnTap() {}
 }
 
 private extension NewScheduledAnimeButton {
@@ -52,7 +54,6 @@ private extension NewScheduledAnimeButton {
 
     // Add as subview
     tabBarView.addSubview(button)
-//    button.addTarget(self, action: #selector(configureButtonPresentingView(presents:)), for: )
   }
 
   func configureConstraints(_ tabBarView: UIView) {

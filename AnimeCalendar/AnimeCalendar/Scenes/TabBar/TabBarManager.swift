@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class TabBarManager {
+final class TabBarManager: RootViewController {
   private let requestsManager: RequestProtocol
   private var tabBarController: TabBarWithMiddleButton = CustomTabBarController()
 
@@ -19,48 +19,59 @@ final class TabBarManager {
     configureTabManager()
   }
 
-  fileprivate func configureTabScreens() {
-    let tabFactory = TabBarFactory(requestsManager)
-
-    let homeTabItem: TabBarItem = tabFactory.getTabBarScreen(.homeTab)
-    let newScheduledAnimeTabItem: TabBarItem = tabFactory.getTabBarScreen(.newAnimeTab)
-    let animeCalendarTabItem: TabBarItem = tabFactory.getTabBarScreen(.animeCalendarTab)
-    tabBarItems = [homeTabItem, newScheduledAnimeTabItem, animeCalendarTabItem]
-  }
+//  fileprivate func configureTabScreens() {
+//    let tabFactory = TabBarFactory(requestsManager)
+//
+//    let homeTabItem: TabBarItem = tabFactory.getTabBarScreen(.homeTab)
+//    let newScheduledAnimeTabItem: TabBarItem = tabFactory.getTabBarScreen(.newAnimeTab)
+//    let animeCalendarTabItem: TabBarItem = tabFactory.getTabBarScreen(.animeCalendarTab)
+//    tabBarItems = [homeTabItem, newScheduledAnimeTabItem, animeCalendarTabItem]
+//  }
 
   fileprivate func configureTabController() {
-    tabBarController.viewControllers = tabBarItems.map { $0.wrapNavigation() }
+    let screenFactory = ScreenFactory(requestsManager)
+
+    let homeScreen = screenFactory.getRootScreen(.homeScreen).getRootViewController()
+    let newAnimeScreen = screenFactory.getRootScreen(.newAnimeScreen).getRootViewController()
+    let animeCalendarScreen = screenFactory.getRootScreen(.animeCalendarScreen).getRootViewController()
+
+    tabBarController.viewControllers = [homeScreen, newAnimeScreen, animeCalendarScreen]
+//    tabBarController.viewControllers = [tabBarItems[0].wrapNavigation(), tabBarItems[2].wrapNavigation()]
   }
 
   fileprivate func configureTabBarMiddleButton() {
-    let tabBarScreens = tabBarItems.map { $0.screen }
-    let tabBarView = tabBarController.tabBar
-
     /// # Will only run ONCE, as there is just one NewScheduledAnimeScreen in tabarBarItems
-    for case let screen as NewScheduledAnimeScreen in tabBarScreens {
-      tabBarController.configureMiddleButton(in: tabBarView)
-      tabBarController.configureButtonPresentingView(presents: screen)
-    }
+    tabBarController.configureMiddleButton(in: tabBarController.tabBar)
+//    for case let screen as NewScheduledAnimeScreen in tabBarScreens {
+//      tabBarController.configureButtonPresentingView(presents: screen)
+//      tabBarController.present(screen, animated: true)
+//      tabBarController.viewControllers![0].present(screen, animated: true)
+//    }
+//    tabBarController.viewControllers![0].present(tabBarItems[1].screen, animated: true)
+//    let customScreen = CustomScreen()
+//    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self]  in
+//      print("PRESENT VC")
+//    }
   }
 
-  fileprivate func configureTabItems() {
-    guard let tabBarControllerItems = tabBarController.tabBar.items else { return }
-    for (tabBarControllerItem, tabBarItem) in zip(tabBarControllerItems, tabBarItems) {
-      tabBarControllerItem.badgeValue = tabBarItem.tabBadge
-      tabBarControllerItem.title = tabBarItem.tabTitle
-      tabBarControllerItem.image = tabBarItem.tabImage
-      tabBarControllerItem.isEnabled = tabBarItem.enabled
-    }
-  }
+//  fileprivate func configureTabItems() {
+//    guard let tabBarControllerItems = tabBarController.tabBar.items else { return }
+//    for (tabBarControllerItem, tabBarItem) in zip(tabBarControllerItems, tabBarItems) {
+//      tabBarControllerItem.badgeValue = tabBarItem.tabBadge
+//      tabBarControllerItem.title = tabBarItem.tabTitle
+//      tabBarControllerItem.image = tabBarItem.tabImage
+//      tabBarControllerItem.isEnabled = tabBarItem.enabled
+//    }
+//  }
 
   fileprivate func configureTabManager() {
-    configureTabScreens()
+//    configureTabScreens()
     configureTabController()
     configureTabBarMiddleButton()
-    configureTabItems()
+//    configureTabItems()
   }
 
-  public func getConfiguredTabBar() -> UITabBarController {
+  func getRootViewController() -> UIViewController {
     return tabBarController
   }
 }

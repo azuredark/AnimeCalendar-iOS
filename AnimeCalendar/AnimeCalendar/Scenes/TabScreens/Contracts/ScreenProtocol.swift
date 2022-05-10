@@ -8,10 +8,14 @@
 import Foundation
 import UIKit.UIViewController
 
-protocol ScreenProtocol: UIViewController {
+protocol ScreenProtocol: UIViewController, RootViewController {
   var requestsManager: RequestProtocol { get set }
 
   func configureNavigationItems()
   func configureRightNavigationItems()
   func configureLeftNavigationItems()
+}
+
+protocol ScreenWithTabItem: ScreenProtocol {
+  func configureTabItem()
 }

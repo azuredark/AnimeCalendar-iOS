@@ -14,14 +14,11 @@ final class HomeScreen: UIViewController, ScreenProtocol {
   /// # NavigationBar
   lazy var navigationBar: ScreenNavigationBar = HomeScreenNavigationBar(self)
 
-  /// # Presents the NewScheduledAnimeScreen
-  let newScheduledAnimeButton = NewScheduledAnimeButton()
-
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
     super.init(nibName: Xibs.homeScreenView, bundle: Bundle.main)
-    print("VIEW INITTTED")
-    newScheduledAnimeButton.presentsNewScreenDelegate = self
+    configureTabItem()
+    print("\(self) inited")
   }
 
   @available(*, unavailable)
@@ -32,16 +29,11 @@ final class HomeScreen: UIViewController, ScreenProtocol {
   override func viewDidLoad() {
     super.viewDidLoad()
     print("VIEW DIDD LOAD")
-    configureDelegates()
     configureScreen()
   }
 }
 
 extension HomeScreen {
-  func configureDelegates() {
-//    newScheduledAnimeButton.presentsNewScreenDelegate = self
-  }
-
   func configureScreen() {
     configureNavigationItems()
     configureScreenComponents()
@@ -117,7 +109,20 @@ extension HomeScreen {
   }
 }
 
-extension HomeScreen: PresentsNewScreen {}
+extension HomeScreen: RootViewController {
+  func getRootViewController() -> UIViewController {
+    return CustomNavigationController(self)
+  }
+}
+
+extension HomeScreen: ScreenWithTabItem {
+  func configureTabItem() {
+    view.autoresizingMask = .flexibleHeight
+    let configuration = UIImage.SymbolConfiguration(weight: UIImage.SymbolWeight.bold)
+    let tabImage = UIImage(systemName: "house", withConfiguration: configuration)!.withBaselineOffset(fromBottom: UIFont.systemFontSize * 1.5)
+    tabBarItem = UITabBarItem(title: nil, image: tabImage, selectedImage: tabImage)
+  }
+}
 
 // TODO: DELETE
 final class CustomScreen: UIViewController {

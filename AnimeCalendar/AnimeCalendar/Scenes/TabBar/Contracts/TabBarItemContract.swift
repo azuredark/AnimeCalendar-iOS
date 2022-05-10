@@ -17,9 +17,3 @@ protocol TabBarItem {
   var tabTitle: String? { get }
   var enabled: Bool { get }
 }
-
-extension TabBarItem {
-  func wrapNavigation() -> CustomNavigation {
-    return CustomNavigationController(screen)
-  }
-}

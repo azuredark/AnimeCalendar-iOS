@@ -10,10 +10,11 @@ import UIKit.UIViewController
 
 final class AnimeCalendarScreen: UIViewController, ScreenProtocol {
   var requestsManager: RequestProtocol
-  
+
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
     super.init(nibName: Xibs.animeCalendarScreenView, bundle: Bundle.main)
+    configureTabItem()
   }
 
   @available(*, unavailable)
@@ -26,15 +27,38 @@ extension AnimeCalendarScreen {
   override func viewDidLoad() {
     super.viewDidLoad()
     print("\(self) didLoad")
+    configureScreen()
   }
 }
 
 extension AnimeCalendarScreen {
-  func configureNavigationItems() {}
+  func configureScreen() {
+    configureNavigationItems()
+  }
+}
+
+extension AnimeCalendarScreen {
+  func configureNavigationItems() {
+    configureRightNavigationItems()
+    configureLeftNavigationItems()
+  }
 
   func configureRightNavigationItems() {}
 
   func configureLeftNavigationItems() {}
 }
 
-extension AnimeCalendarScreen: PresentsNewScreen {}
+extension AnimeCalendarScreen: RootViewController {
+  func getRootViewController() -> UIViewController {
+    return CustomNavigationController(self)
+  }
+}
+
+extension AnimeCalendarScreen: ScreenWithTabItem {
+  func configureTabItem() {
+    view.autoresizingMask = .flexibleHeight
+    let configuration = UIImage.SymbolConfiguration(weight: UIImage.SymbolWeight.bold)
+    let tabImage = UIImage(systemName: "calendar", withConfiguration: configuration)!.withBaselineOffset(fromBottom: UIFont.systemFontSize * 1.5)
+    tabBarItem = UITabBarItem(title: nil, image: tabImage, selectedImage: tabImage)
+  }
+}

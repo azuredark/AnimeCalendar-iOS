@@ -13,16 +13,47 @@ final class NewScheduledAnimeScreen: UIViewController, ScreenProtocol {
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
     super.init(nibName: Xibs.newScheduledAnimeScreenView, bundle: Bundle.main)
+    configureTabItem()
   }
 
   @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+}
 
-  func configureNavigationItems() {}
+extension NewScheduledAnimeScreen {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    configureScreen()
+  }
+}
+
+extension NewScheduledAnimeScreen {
+  func configureScreen() {
+    configureNavigationItems()
+  }
+}
+
+extension NewScheduledAnimeScreen {
+  func configureNavigationItems() {
+    configureLeftNavigationItems()
+    configureRightNavigationItems()
+  }
 
   func configureRightNavigationItems() {}
 
   func configureLeftNavigationItems() {}
+}
+
+extension NewScheduledAnimeScreen: RootViewController {
+  func getRootViewController() -> UIViewController {
+    return CustomNavigationController(self)
+  }
+}
+
+extension NewScheduledAnimeScreen: ScreenWithTabItem {
+  func configureTabItem() {
+    tabBarItem = UITabBarItem(title: nil, image: nil, selectedImage: nil)
+  }
 }

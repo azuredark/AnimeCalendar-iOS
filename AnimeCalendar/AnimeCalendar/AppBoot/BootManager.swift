@@ -8,12 +8,11 @@
 import Foundation
 
 final class BootManager {
-  func getBootMethod(_ bootType: BootType) -> Boot {
-    switch bootType {
-      case .develop:
-        return DevelopBoot()
-      case .production:
-        return ProductionBoot()
-    }
+  private let requestsManager: RequestProtocol = RequestsManager()
+
+  func getRootController(_ rootViewControllerType: RootControllerType) -> RootViewController {
+    let rootControllerFactory = RootControllerFactory(requestsManager)
+    let rootController = rootControllerFactory.getRootController(rootViewControllerType)
+    return rootController
   }
 }
