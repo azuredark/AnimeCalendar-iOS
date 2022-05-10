@@ -23,7 +23,8 @@ final class RootControllerFactory {
       // For individual screens
       case .rootScreen(let screen):
         let screenFactory = ScreenFactory(requestsManager)
-        return screenFactory.getRootScreen(screen)
+        let selectedScreen: ScreenProtocol = screenFactory.getRootScreen(screen)
+        return selectedScreen
     }
   }
 }

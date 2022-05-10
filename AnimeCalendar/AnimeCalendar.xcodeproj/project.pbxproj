@@ -40,13 +40,13 @@
 		A7CD0D452817A06700109B8D /* RequetsMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D442817A06700109B8D /* RequetsMethods.swift */; };
 		A7CD0D482817A16000109B8D /* ScreenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D472817A16000109B8D /* ScreenProtocol.swift */; };
 		A7CD0D4A2817A31100109B8D /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D492817A31100109B8D /* RequestProtocol.swift */; };
-		A7D4F6CB2828C3A7004622A4 /* PresentsNewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D4F6CA2828C3A7004622A4 /* PresentsNewScreen.swift */; };
 		A7D4F6CD2828D6AA004622A4 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D4F6CC2828D6AA004622A4 /* TabBarButton.swift */; };
 		A7E44A912829CAB7005C0AB5 /* RootControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A902829CAB7005C0AB5 /* RootControllerType.swift */; };
 		A7E44A932829CAF1005C0AB5 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A922829CAF1005C0AB5 /* RootViewController.swift */; };
 		A7E44A952829CB37005C0AB5 /* RootControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A942829CB37005C0AB5 /* RootControllerFactory.swift */; };
 		A7E44A972829CBEB005C0AB5 /* ScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A962829CBEB005C0AB5 /* ScreenType.swift */; };
 		A7E44A992829CC56005C0AB5 /* ScreenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A982829CC56005C0AB5 /* ScreenFactory.swift */; };
+		A7E44A9B282A25D9005C0AB5 /* DummyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A9A282A25D9005C0AB5 /* DummyScreen.swift */; };
 		A7E798A628149B4900973881 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E798A528149B4900973881 /* AppDelegate.swift */; };
 		A7E798A828149B4900973881 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E798A728149B4900973881 /* SceneDelegate.swift */; };
 		A7E798AF28149B4900973881 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7E798AE28149B4900973881 /* Assets.xcassets */; };
@@ -95,13 +95,13 @@
 		A7CD0D442817A06700109B8D /* RequetsMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequetsMethods.swift; sourceTree = "<group>"; };
 		A7CD0D472817A16000109B8D /* ScreenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProtocol.swift; sourceTree = "<group>"; };
 		A7CD0D492817A31100109B8D /* RequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
-		A7D4F6CA2828C3A7004622A4 /* PresentsNewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentsNewScreen.swift; sourceTree = "<group>"; };
 		A7D4F6CC2828D6AA004622A4 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		A7E44A902829CAB7005C0AB5 /* RootControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootControllerType.swift; sourceTree = "<group>"; };
 		A7E44A922829CAF1005C0AB5 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		A7E44A942829CB37005C0AB5 /* RootControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootControllerFactory.swift; sourceTree = "<group>"; };
 		A7E44A962829CBEB005C0AB5 /* ScreenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenType.swift; sourceTree = "<group>"; };
 		A7E44A982829CC56005C0AB5 /* ScreenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenFactory.swift; sourceTree = "<group>"; };
+		A7E44A9A282A25D9005C0AB5 /* DummyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyScreen.swift; sourceTree = "<group>"; };
 		A7E798A228149B4900973881 /* AnimeCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimeCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7E798A528149B4900973881 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7E798A728149B4900973881 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -268,7 +268,6 @@
 			children = (
 				A7CD0D472817A16000109B8D /* ScreenProtocol.swift */,
 				A7B0E32A281F553A00A13CD6 /* ScreenNavigationBar.swift */,
-				A7D4F6CA2828C3A7004622A4 /* PresentsNewScreen.swift */,
 				A7E44A962829CBEB005C0AB5 /* ScreenType.swift */,
 			);
 			path = Contracts;
@@ -281,6 +280,7 @@
 				A7933BF1281E35DD00D4E1B4 /* Shadow.swift */,
 				A731E008281D1B0D00036077 /* Color.swift */,
 				A70FF51528239D77007D4F64 /* Constraints.swift */,
+				A7E44A9A282A25D9005C0AB5 /* DummyScreen.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -518,6 +518,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7E44A972829CBEB005C0AB5 /* ScreenType.swift in Sources */,
+				A7E44A9B282A25D9005C0AB5 /* DummyScreen.swift in Sources */,
 				A7E44A912829CAB7005C0AB5 /* RootControllerType.swift in Sources */,
 				A74F986428161279003A1073 /* NetworkManager.swift in Sources */,
 				A7FDF60E281E038D006057D7 /* UIViewControllerExtension.swift in Sources */,
@@ -542,7 +543,6 @@
 				A7AD0B0628275F6500367A1B /* NewScheduledAnimeButton.swift in Sources */,
 				A74F984B2815F8EF003A1073 /* HomeScreen.swift in Sources */,
 				A7B0E337281F8E8B00A13CD6 /* HomeAnimesComponent.swift in Sources */,
-				A7D4F6CB2828C3A7004622A4 /* PresentsNewScreen.swift in Sources */,
 				A7FDF609281E025E006057D7 /* HomeHeaderComponent.swift in Sources */,
 				A74F986628161285003A1073 /* RequestsManager.swift in Sources */,
 				A7E44A952829CB37005C0AB5 /* RootControllerFactory.swift in Sources */,

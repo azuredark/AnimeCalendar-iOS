@@ -8,6 +8,7 @@
 import Foundation
 import UIKit.UIViewController
 
+/// # All Screens must conform to `RootViweController`
 protocol ScreenProtocol: UIViewController, RootViewController {
   var requestsManager: RequestProtocol { get set }
 

@@ -8,12 +8,8 @@
 import UIKit
 
 final class NewScheduledAnimeButton: TabBarButton {
-  weak var presentsNewScreenDelegate: PresentsNewScreen?
-
   internal var button = UIButton(type: .system)
-  init() {
-    print("INITED: \(self)")
-  }
+  var configureButtonAction: (() -> Void)?
 }
 
 extension NewScheduledAnimeButton {
@@ -22,14 +18,11 @@ extension NewScheduledAnimeButton {
     configureConstraints(tabBarView)
   }
 
-  // TODO: FIX PRESENTING NewScheduledAnimeScreen
-  func configureButtonPresentingView(presents screenToPresent: ScreenProtocol) {
-//    guard let newScheduledAnimeScreen = screen as? NewScheduledAnimeScreen else { return }
-//    print("Presenting: \(presentsNewScreenDelegate)")
-//    presentsNewScreenDelegate?.presentNewScheduledAnime(screen: newScheduledAnimeScreen)
+  // Button's action
+  @objc func presentNewScheduledAnimeScreen() {
+    print("Button + pressed")
+    configureButtonAction?()
   }
-
-  @objc func presentScreensOnTap() {}
 }
 
 private extension NewScheduledAnimeButton {
@@ -45,15 +38,14 @@ private extension NewScheduledAnimeButton {
     button.tintColor = Color.white
 
     // Button shadow
-    let shadow = Shadow(
-      radius: 3,
-      offset: CGSize(width: -0.5, height: 5),
-      opacity: 0.8,
-      color: Color.pink)
+    let shadow = Shadow(radius: 3, offset: CGSize(width: -0.5, height: 5), opacity: 0.8, color: Color.pink)
     button.addShadowLayer(shadow: shadow, layerRadius: 15)
 
     // Add as subview
     tabBarView.addSubview(button)
+
+    // Add button's target
+    button.addTarget(self, action: #selector(presentNewScheduledAnimeScreen), for: .touchUpInside)
   }
 
   func configureConstraints(_ tabBarView: UIView) {

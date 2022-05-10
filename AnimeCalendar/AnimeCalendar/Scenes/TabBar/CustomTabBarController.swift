@@ -8,12 +8,12 @@
 import UIKit
 
 /// # Override tabbar and configure hittest
-final class CustomTabBarController: UITabBarController {
-  // TODO: TabBarButton IS CREATED TWICE, ONCE HERE AND THEN @HomeScreen
+final class CustomTabBarController: UITabBarController, TabBarProtocol {
   private lazy var newScheduledAnimeButton: TabBarButton = NewScheduledAnimeButton()
   init() {
     super.init(nibName: nil, bundle: nil)
     configureTabBar()
+    delegate = self
   }
 
   @available(*, unavailable)
@@ -32,9 +32,24 @@ extension CustomTabBarController: TabBarWithMiddleButton {
 
   func configureMiddleButton(in tabBarView: UITabBar) {
     newScheduledAnimeButton.createButton(in: tabBarView)
+    newScheduledAnimeButton.configureButtonAction = { [weak self] in
+      self?.selectedIndex = 1
+    }
+  }
+}
+
+// MARK: - Configure NewScheduledAnime "present" animation
+
+extension CustomTabBarController: UITabBarControllerDelegate {
+  func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+//    animateTabBarChange(tabBarController: tabBarController, to: viewController)
+    print("Selected VC: \(viewController)")
+    return true
   }
 
-  func configureButtonPresentingView(presents screen: ScreenProtocol) {
-    newScheduledAnimeButton.configureButtonPresentingView(presents: screen)
+  func animateTabBarChange(tabBarController: UITabBarController, to viewController: UIViewController) {
+//    guard let newAnimeScreen = tabBarController.viewControllers?[1] as? NewScheduledAnimeScreen else { return }
+//    let fromView = newAnimeScreen.getRootViewController().view
+//    let toView = viewController.view
   }
 }

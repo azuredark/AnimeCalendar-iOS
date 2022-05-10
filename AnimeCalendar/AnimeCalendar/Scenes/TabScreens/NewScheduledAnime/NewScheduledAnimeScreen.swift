@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UIKit.UIViewController
+import UIKit
 
 final class NewScheduledAnimeScreen: UIViewController, ScreenProtocol {
   var requestsManager: RequestProtocol
@@ -55,5 +55,6 @@ extension NewScheduledAnimeScreen: RootViewController {
 extension NewScheduledAnimeScreen: ScreenWithTabItem {
   func configureTabItem() {
     tabBarItem = UITabBarItem(title: nil, image: nil, selectedImage: nil)
+    tabBarItem.isEnabled = false
   }
 }

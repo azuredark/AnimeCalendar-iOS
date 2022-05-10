@@ -11,5 +11,5 @@ import UIKit
 protocol TabBarButton {
   var button: UIButton { get set }
   func createButton(in tabBarView: UITabBar)
-  func configureButtonPresentingView(presents screenToPresent: ScreenProtocol)
+  var configureButtonAction: (() -> Void)? { get set }
 }
