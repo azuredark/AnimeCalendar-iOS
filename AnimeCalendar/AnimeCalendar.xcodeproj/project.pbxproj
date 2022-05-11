@@ -150,9 +150,9 @@
 		A74F98552815FF6E003A1073 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				A7B6EE20282C444B00319259 /* Screens */,
 				A78685C82824D5B300321415 /* Navigation */,
 				A7F91DF728190C7000FF59C0 /* TabBar */,
-				A74F987328161DC3003A1073 /* TabScreens */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -178,18 +178,6 @@
 				A7FDF606281E0226006057D7 /* Components */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		A74F987328161DC3003A1073 /* TabScreens */ = {
-			isa = PBXGroup;
-			children = (
-				A7E44A982829CC56005C0AB5 /* ScreenFactory.swift */,
-				A74F986B281615CC003A1073 /* Home */,
-				A7F91DFE28190DFE00FF59C0 /* NewScheduledAnime */,
-				A7F91DFF28190E3200FF59C0 /* AnimeCalendar */,
-				A7CD0D462817A11B00109B8D /* Contracts */,
-			);
-			path = TabScreens;
 			sourceTree = "<group>";
 		};
 		A78685C82824D5B300321415 /* Navigation */ = {
@@ -252,6 +240,18 @@
 				A7B0E33E281F9B8800A13CD6 /* HomeAnime.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A7B6EE20282C444B00319259 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				A7E44A982829CC56005C0AB5 /* ScreenFactory.swift */,
+				A74F986B281615CC003A1073 /* Home */,
+				A7F91DFE28190DFE00FF59C0 /* NewScheduledAnime */,
+				A7F91DFF28190E3200FF59C0 /* AnimeCalendar */,
+				A7CD0D462817A11B00109B8D /* Contracts */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		A7CD0D432817A04800109B8D /* Contracts */ = {

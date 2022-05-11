@@ -37,6 +37,7 @@ extension NewScheduledAnimeScreen {
 
 extension NewScheduledAnimeScreen {
   func configureNavigationItems() {
+    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
     configureLeftNavigationItems()
     configureRightNavigationItems()
   }
@@ -54,7 +55,7 @@ extension NewScheduledAnimeScreen: RootViewController {
 
 extension NewScheduledAnimeScreen: ScreenWithTabItem {
   func configureTabItem() {
-    tabBarItem = UITabBarItem(title: nil, image: nil, selectedImage: nil)
-    tabBarItem.isEnabled = false
+//    tabBarItem = UITabBarItem(title: nil, image: nil, selectedImage: nil)
+//    tabBarItem.isEnabled = false
   }
 }

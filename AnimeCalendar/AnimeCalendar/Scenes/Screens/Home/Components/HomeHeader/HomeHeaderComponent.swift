@@ -42,8 +42,27 @@ extension HomeHeaderComponent: ScreenComponent {
 
   func configureSubviews() {
     /// # Working with 2 UIViews
+    configureAnimesToWatchLabel()
     configurePictureView()
     configurePictureImage()
+  }
+}
+
+extension HomeHeaderComponent {
+  func configureAnimesToWatchLabel() {
+    guard let text = animesToWatchLabel.text else { fatalError("AnimesToWatchLabel is empty") }
+
+    let animesCountColorAttribute: UIColor = Color.pink
+    let animesCountFontAttribute = UIFont.systemFont(ofSize: 14, weight: .heavy)
+
+    let animesCountAttributes: [NSAttributedString.Key: Any] = [
+      .foregroundColor: animesCountColorAttribute,
+      .font: animesCountFontAttribute
+    ]
+
+    let animesCountMutableText = NSMutableAttributedString(string: text)
+    animesCountMutableText.addAttributes(animesCountAttributes, range: NSRange(location: 11, length: 8))
+    animesToWatchLabel.attributedText = animesCountMutableText
   }
 
   func configurePictureView() {

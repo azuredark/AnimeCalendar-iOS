@@ -13,4 +13,5 @@ protocol TabBarProtocol: UITabBarController {
 
 protocol TabBarWithMiddleButton: TabBarProtocol {
   func configureMiddleButton(in tabBarView: UITabBar)
+  func configureMiddleButtonAction(using request: RequestProtocol)
 }

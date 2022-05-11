@@ -11,6 +11,7 @@ import UIKit
 final class TabBarManager {
   private let requestsManager: RequestProtocol
   private lazy var tabBarController: TabBarWithMiddleButton = CustomTabBarController()
+  private lazy var screenFactory = ScreenFactory(requestsManager)
 
   init(_ requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
@@ -18,21 +19,19 @@ final class TabBarManager {
   }
 
   fileprivate func configureTabController() {
-    let screenFactory = ScreenFactory(requestsManager)
-
+    // Presented by the tapping the TabBarItem
     let homeVC = screenFactory.getRootScreen(.homeScreen).getRootViewController()
-    let newAnimeVC = screenFactory.getRootScreen(.newAnimeScreen).getRootViewController()
     let animeCalendarVC = screenFactory.getRootScreen(.animeCalendarScreen).getRootViewController()
 
-    let tabBarViewControllers = [homeVC, newAnimeVC, animeCalendarVC]
+    // TabBar items (ViewControllers)
+    let tabBarViewControllers = [homeVC, animeCalendarVC]
     tabBarController.setViewControllers(tabBarViewControllers, animated: false)
   }
 
   fileprivate func configureTabBarMiddleButton() {
-    // Disabling NewScheduledAnime's TabBarItem interaction, so it only works when the button is pressed
-    tabBarController.tabBar.items?[1].isEnabled = false
-    // Configuring middle tabbar button (Inside TabBar's view but with it's TabBarItem interaction disabled)
+    // Configuring the Middle Button, alonside it's press-action
     tabBarController.configureMiddleButton(in: tabBarController.tabBar)
+    tabBarController.configureMiddleButtonAction(using: requestsManager)
   }
 
   fileprivate func configureTabManager() {

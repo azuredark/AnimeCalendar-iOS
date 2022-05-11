@@ -109,6 +109,9 @@ extension HomeScreen {
   }
 }
 
+extension HomeScreen {
+}
+
 extension HomeScreen: RootViewController {
   func getRootViewController() -> UIViewController {
     return CustomNavigationController(self)
@@ -123,4 +126,3 @@ extension HomeScreen: ScreenWithTabItem {
     tabBarItem = UITabBarItem(title: nil, image: tabImage, selectedImage: tabImage)
   }
 }
-
