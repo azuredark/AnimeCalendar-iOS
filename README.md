@@ -14,12 +14,18 @@ Current dependencies used, not planning to add more
 | --- | --- |
 | <img src="images/ui/home/figma.png" width=200 /> | <img src="images/ui/home/ios.png" width=200 /> |
 
+#### Schedule new anime
+| Figma | iOS |
+| --- | --- |
+| <img src="images/ui/new-anime/figma.png" width=200 /> | Todo :] |
+
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 
 - [x] HomeScreen UI
 - [x] Make TabBar's View custom middle button work, presenting NewScheduledAnime screen.
 - [x] Refactor BootManager
 - [ ] ~~Animate NewScheduledAnime presentation when its TabBar button is pressed~~
+	- It's no longer a TabItem inside the TabBar
 - [x] Middle button presenting NewScheduledAnimeScreen
 - [ ] NewScheduledAnimeScreen design
 

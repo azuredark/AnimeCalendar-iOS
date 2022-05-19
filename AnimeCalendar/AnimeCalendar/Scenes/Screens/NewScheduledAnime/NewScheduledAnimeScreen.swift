@@ -10,10 +10,10 @@ import UIKit
 
 final class NewScheduledAnimeScreen: UIViewController, ScreenProtocol {
   var requestsManager: RequestProtocol
+
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
     super.init(nibName: Xibs.newScheduledAnimeScreenView, bundle: Bundle.main)
-    configureTabItem()
   }
 
   @available(*, unavailable)
@@ -50,12 +50,5 @@ extension NewScheduledAnimeScreen {
 extension NewScheduledAnimeScreen: RootViewController {
   func getRootViewController() -> UIViewController {
     return CustomNavigationController(self)
-  }
-}
-
-extension NewScheduledAnimeScreen: ScreenWithTabItem {
-  func configureTabItem() {
-//    tabBarItem = UITabBarItem(title: nil, image: nil, selectedImage: nil)
-//    tabBarItem.isEnabled = false
   }
 }
