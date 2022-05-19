@@ -27,5 +27,7 @@ Small Todo's yet to complete, will be filling out periodically.
 - [ ] ~~Animate NewScheduledAnime presentation when its TabBar button is pressed~~
 	- It's no longer a TabItem inside the TabBar
 - [x] Middle button presenting NewScheduledAnimeScreen
-- [ ] NewScheduledAnimeScreen design
+- [x] NewScheduledAnimeScreen design, for live anime
+- [ ] NewScheduledAnimeScreen design, for live ended anime
+- [ ] NewScheduledAnimeScreen design, for live custom anime
 
