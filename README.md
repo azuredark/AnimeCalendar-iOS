@@ -17,7 +17,7 @@ Current dependencies used, not planning to add more
 #### Schedule new anime
 | Figma | iOS |
 | --- | --- |
-| <img src="images/ui/new-anime/figma.png" width=250 /> | Todo :] |
+| <img src="images/ui/new-anime/figma1.png" width=250 /> | Todo :] |
 
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 
