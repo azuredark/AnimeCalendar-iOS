@@ -9,8 +9,13 @@ import Foundation
 import UIKit
 
 final class NewScheduledAnimeScreen: UIViewController, ScreenProtocol {
+  /// # Properties
   var requestsManager: RequestProtocol
 
+  /// # NavigationBar
+  lazy var navigationBar: ScreenNavigationBar = NewAnimeNavigationBar(self)
+
+  /// # Init
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
     super.init(nibName: Xibs.newScheduledAnimeScreenView, bundle: Bundle.main)
@@ -37,14 +42,17 @@ extension NewScheduledAnimeScreen {
 
 extension NewScheduledAnimeScreen {
   func configureNavigationItems() {
-    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
     configureLeftNavigationItems()
     configureRightNavigationItems()
   }
 
-  func configureRightNavigationItems() {}
+  func configureLeftNavigationItems() {
+    navigationBar.configureLeftNavigationItems()
+  }
 
-  func configureLeftNavigationItems() {}
+  func configureRightNavigationItems() {
+    navigationBar.configureRightNavigationItems()
+  }
 }
 
 extension NewScheduledAnimeScreen: RootViewController {

@@ -14,6 +14,7 @@ final class HomeScreen: UIViewController, ScreenProtocol {
   /// # NavigationBar
   lazy var navigationBar: ScreenNavigationBar = HomeScreenNavigationBar(self)
 
+  /// # Init
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
     super.init(nibName: Xibs.homeScreenView, bundle: Bundle.main)

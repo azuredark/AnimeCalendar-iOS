@@ -16,6 +16,7 @@ enum Xibs {
   public static var homeHeaderComponentView: String { "HomeHeaderComponentView" }
   public static var homeDateComponentView: String { "HomeDateComponentView" }
   public static var homeAnimesComponentView: String { "HomeAnimesComponentView" }
+  public static var newAnimeSearchBarView: String { "NewAnimeSearchBarView" }
   /// # Cells
   public static var homeAnimeItemView: String { "HomeAnimeItemView" }
 }
