@@ -12,12 +12,12 @@ Current dependencies used, not planning to add more
 #### Home
 | Figma | iOS |
 | --- | --- |
-| <img src="images/ui/home/figma.png" width=200 /> | <img src="images/ui/home/ios.png" width=200 /> |
+| <img src="images/ui/home/figma.png" width=250 /> | <img src="images/ui/home/ios.png" width=250 /> |
 
 #### Schedule new anime
 | Figma | iOS |
 | --- | --- |
-| <img src="images/ui/new-anime/figma1.png" width=250 /> | Todo :] |
+| <img src="images/ui/new-anime/figma1.png" width=250 /> | <img src="images/ui/new-anime/ios.png" width=250 /> |
 
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 
