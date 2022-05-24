@@ -30,4 +30,5 @@ Small Todo's yet to complete, will be filling out periodically.
 - [x] NewScheduledAnimeScreen design, for live anime
 - [ ] NewScheduledAnimeScreen design, for live ended anime
 - [ ] NewScheduledAnimeScreen design, for live custom anime
+- [x] Cancel (dismiss NewAnime screen) attributed string title and functionality
 

@@ -18,7 +18,7 @@ final class ScreenFactory {
       case .homeScreen:
         return HomeScreen(requestsManager: requestsManager)
       case .newAnimeScreen:
-        return NewScheduledAnimeScreen(requestsManager: requestsManager)
+        return NewAnimeScreen(requestsManager: requestsManager)
       case .animeCalendarScreen:
         return AnimeCalendarScreen(requestsManager: requestsManager)
     }

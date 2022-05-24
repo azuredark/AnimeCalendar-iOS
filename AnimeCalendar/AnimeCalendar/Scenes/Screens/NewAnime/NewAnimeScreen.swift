@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class NewScheduledAnimeScreen: UIViewController, ScreenProtocol {
+final class NewAnimeScreen: UIViewController, ScreenProtocol {
   /// # Properties
   var requestsManager: RequestProtocol
 
@@ -18,7 +18,7 @@ final class NewScheduledAnimeScreen: UIViewController, ScreenProtocol {
   /// # Init
   init(requestsManager: RequestProtocol) {
     self.requestsManager = requestsManager
-    super.init(nibName: Xibs.newScheduledAnimeScreenView, bundle: Bundle.main)
+    super.init(nibName: Xibs.newAnimeScreenView, bundle: Bundle.main)
   }
 
   @available(*, unavailable)
@@ -27,20 +27,20 @@ final class NewScheduledAnimeScreen: UIViewController, ScreenProtocol {
   }
 }
 
-extension NewScheduledAnimeScreen {
+extension NewAnimeScreen {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureScreen()
   }
 }
 
-extension NewScheduledAnimeScreen {
+extension NewAnimeScreen {
   func configureScreen() {
     configureNavigationItems()
   }
 }
 
-extension NewScheduledAnimeScreen {
+extension NewAnimeScreen {
   func configureNavigationItems() {
     configureLeftNavigationItems()
     configureRightNavigationItems()
@@ -55,7 +55,7 @@ extension NewScheduledAnimeScreen {
   }
 }
 
-extension NewScheduledAnimeScreen: RootViewController {
+extension NewAnimeScreen: RootViewController {
   func getRootViewController() -> UIViewController {
     return CustomNavigationController(self)
   }

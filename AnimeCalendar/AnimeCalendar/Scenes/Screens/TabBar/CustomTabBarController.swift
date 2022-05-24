@@ -37,7 +37,7 @@ extension CustomTabBarController: TabBarWithMiddleButton {
 
   func configureMiddleButtonAction(using request: RequestProtocol) {
     newScheduledAnimeButton.configureButtonAction = { [weak self] in
-      let newAnimeVC = NewScheduledAnimeScreen(requestsManager: request).getRootViewController()
+      let newAnimeVC = NewAnimeScreen(requestsManager: request).getRootViewController()
       self?.present(newAnimeVC, animated: true)
     }
   }
