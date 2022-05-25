@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 final class NewAnimeScreen: UIViewController, ScreenProtocol {
+  /// # IBOutlets
+  @IBOutlet private weak var newAnimeContainerView: UIView!
+
   /// # Properties
   var requestsManager: RequestProtocol
 
@@ -31,12 +34,44 @@ extension NewAnimeScreen {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureScreen()
+    print("Height: \(view.frame.size.height)")
   }
 }
 
 extension NewAnimeScreen {
   func configureScreen() {
     configureNavigationItems()
+    configureScreenComponents()
+  }
+}
+
+private extension NewAnimeScreen {
+  // TODO: Configure UIScrollView
+  func configureScreenComponents() {
+    /// # Components
+    let newAnimeSearchBarComponent: ScreenComponent = NewAnimeSearchBarComponent()
+
+    /// # Add Screen's Components
+    addChildVC(newAnimeSearchBarComponent)
+
+    /// # Configure Component's constraints
+    configureComponentsConstraints(
+      newAnimeSearchBarComponent
+    )
+  }
+
+  func configureComponentsConstraints(
+    _ newAnimeSearchBar: ScreenComponent
+  ) {
+    /// # NewAnimeSearchBarComponent
+    let newAnimeSearchBarView: UIView = newAnimeSearchBar.view
+    newAnimeSearchBarView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      newAnimeSearchBarView.topAnchor.constraint(equalTo: newAnimeContainerView.topAnchor),
+      newAnimeSearchBarView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.09),
+      newAnimeSearchBarView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
+      newAnimeSearchBarView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
+    ])
   }
 }
 

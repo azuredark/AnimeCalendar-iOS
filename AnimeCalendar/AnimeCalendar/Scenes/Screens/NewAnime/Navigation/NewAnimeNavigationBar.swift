@@ -21,7 +21,6 @@ final class NewAnimeNavigationBar: ScreenNavigationBar {
 extension NewAnimeNavigationBar {
   func configureLeftNavigationItems() {
     // Item configuration
-//    let configuration = UIImage.SymbolConfiguration(weight: .heavy)
     let attributedText: [NSAttributedString.Key: Any] = itemTitleAttributes()
 
     // NavigationItem

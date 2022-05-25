@@ -9,6 +9,7 @@ import UIKit
 
 final class NewAnimeSearchBarComponent: UIViewController {
   /// # Outlets
+  @IBOutlet private weak var newAnimeSearchBar: UISearchBar!
   /// # Properties
   /// # Observables
 
@@ -26,11 +27,14 @@ final class NewAnimeSearchBarComponent: UIViewController {
 extension NewAnimeSearchBarComponent {
   override func viewDidLoad() {
     super.viewDidLoad()
+    configureView()
   }
 }
 
 extension NewAnimeSearchBarComponent: ScreenComponent {
-  func configureView() {}
+  func configureView() {
+    newAnimeSearchBar.placeholder = "shingeki no kyojin, dr. stone"
+  }
 
   func configureSubviews() {}
 }

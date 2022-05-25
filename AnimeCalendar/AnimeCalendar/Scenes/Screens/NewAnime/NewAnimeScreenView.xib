@@ -6,11 +6,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewAnimeScreen" customModule="AnimeCalendar" customModuleProvider="target">
             <connections>
+                <outlet property="newAnimeContainerView" destination="7xb-XF-aMb" id="Dfj-cp-Hh9"/>
                 <outlet property="view" destination="iN0-l3-epB" id="oWf-uk-SBl"/>
             </connections>
         </placeholder>
@@ -19,19 +21,47 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Scheduled Anime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKA-OJ-bjL">
-                    <rect key="frame" x="70" y="431.5" width="274" height="33.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4r-QT-XCC">
+                    <rect key="frame" x="20" y="44" width="374" height="832"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xb-XF-aMb">
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="896"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="7xb-XF-aMb" firstAttribute="bottom" secondItem="2ba-Kz-3VM" secondAttribute="bottom" id="7rZ-kV-ck4"/>
+                        <constraint firstItem="7xb-XF-aMb" firstAttribute="leading" secondItem="2ba-Kz-3VM" secondAttribute="leading" id="9yK-Oo-OM7"/>
+                        <constraint firstItem="7xb-XF-aMb" firstAttribute="trailing" secondItem="2ba-Kz-3VM" secondAttribute="trailing" id="cOp-fN-hVm"/>
+                        <constraint firstItem="7xb-XF-aMb" firstAttribute="top" secondItem="2ba-Kz-3VM" secondAttribute="top" id="gnT-Yu-Qnu"/>
+                        <constraint firstItem="7xb-XF-aMb" firstAttribute="width" secondItem="kaj-Jd-RvK" secondAttribute="width" id="sEd-WL-nlV"/>
+                    </constraints>
+                    <viewLayoutGuide key="contentLayoutGuide" id="2ba-Kz-3VM"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="kaj-Jd-RvK"/>
+                </scrollView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meB-db-ncq">
+                    <rect key="frame" x="20" y="59" width="374" height="817"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="App Cream"/>
             <constraints>
-                <constraint firstItem="XKA-OJ-bjL" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="X1g-ta-XMI"/>
-                <constraint firstItem="XKA-OJ-bjL" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="lBc-yL-xCj"/>
+                <constraint firstItem="7xb-XF-aMb" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="2Mp-0m-Tae"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="top" secondItem="o4r-QT-XCC" secondAttribute="top" id="2RI-RQ-NSV"/>
+                <constraint firstAttribute="bottom" secondItem="meB-db-ncq" secondAttribute="bottom" constant="20" id="Si3-oE-inJ"/>
+                <constraint firstAttribute="trailing" secondItem="o4r-QT-XCC" secondAttribute="trailing" constant="20" id="WAf-YZ-SY2"/>
+                <constraint firstItem="meB-db-ncq" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="aU1-7G-Cj0"/>
+                <constraint firstAttribute="trailing" secondItem="meB-db-ncq" secondAttribute="trailing" constant="20" id="hhw-3y-h6a"/>
+                <constraint firstItem="meB-db-ncq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="lHN-wF-OEb"/>
+                <constraint firstItem="o4r-QT-XCC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="ps1-wk-vMj"/>
+                <constraint firstAttribute="bottom" secondItem="o4r-QT-XCC" secondAttribute="bottom" constant="20" id="zTo-OW-Tcb"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="meB-db-ncq"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="332" y="108"/>
         </view>
     </objects>
@@ -39,5 +69,8 @@
         <namedColor name="App Cream">
             <color red="0.96862745098039216" green="0.96078431372549022" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
