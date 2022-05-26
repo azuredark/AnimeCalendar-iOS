@@ -67,7 +67,7 @@ private extension NewAnimeScreen {
     let newAnimeSearchBarView: UIView = newAnimeSearchBar.view
     newAnimeSearchBarView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      newAnimeSearchBarView.topAnchor.constraint(equalTo: newAnimeContainerView.topAnchor),
+      newAnimeSearchBarView.topAnchor.constraint(equalTo: newAnimeContainerView.topAnchor, constant: 20),
       newAnimeSearchBarView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.09),
       newAnimeSearchBarView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
       newAnimeSearchBarView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
