@@ -15,6 +15,13 @@ final class NewAnimeNavigationBar: ScreenNavigationBar {
   /// # Init
   init(_ screen: ScreenProtocol) {
     self.screen = screen
+    configureNavigationBar()
+  }
+}
+
+private extension NewAnimeNavigationBar {
+  func configureNavigationBar() {
+    screen?.navigationController?.navigationBar.barTintColor = Color.cream
   }
 }
 

@@ -21,14 +21,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4r-QT-XCC">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="o4r-QT-XCC">
                     <rect key="frame" x="20" y="44" width="374" height="832"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xb-XF-aMb">
                             <rect key="frame" x="0.0" y="0.0" width="374" height="896"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" name="App Cream"/>
                         </view>
                     </subviews>
+                    <color key="backgroundColor" name="App Cream"/>
                     <constraints>
                         <constraint firstItem="7xb-XF-aMb" firstAttribute="bottom" secondItem="2ba-Kz-3VM" secondAttribute="bottom" id="7rZ-kV-ck4"/>
                         <constraint firstItem="7xb-XF-aMb" firstAttribute="leading" secondItem="2ba-Kz-3VM" secondAttribute="leading" id="9yK-Oo-OM7"/>
