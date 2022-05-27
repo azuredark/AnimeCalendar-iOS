@@ -14,6 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let bootManager = BootManager()
     let rootController = bootManager.getRootController(.rootScreen(screen: .newAnimeScreen))
+//    let rootController = bootManager.getRootController(.rootTabBar)
     let rootViewController = rootController.getRootViewController()
 
     window = UIWindow(frame: windowScene.coordinateSpace.bounds)

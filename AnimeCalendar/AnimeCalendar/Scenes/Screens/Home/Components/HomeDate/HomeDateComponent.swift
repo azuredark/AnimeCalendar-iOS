@@ -29,11 +29,15 @@ final class HomeDateComponent: UIViewController {
 extension HomeDateComponent {
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureView()
+    configureComponent()
   }
 }
 
 extension HomeDateComponent: ScreenComponent {
+  func configureComponent() {
+    configureView()
+  }
+
   func configureView() {
     let currentDateShadow = Shadow(
       radius: 3,
@@ -42,6 +46,7 @@ extension HomeDateComponent: ScreenComponent {
       color: Color.pink)
 
     currentDateView.addShadowLayer(shadow: currentDateShadow, layerRadius: 15)
+    configureSubviews()
   }
 
   func configureSubviews() {}

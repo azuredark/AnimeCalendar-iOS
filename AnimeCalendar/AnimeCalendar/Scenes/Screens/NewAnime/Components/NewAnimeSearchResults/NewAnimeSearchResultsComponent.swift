@@ -1,19 +1,18 @@
 //
-//  HomeAnimesComponent.swift
+//  NewAnimeSearchResults.swift
 //  AnimeCalendar
 //
-//  Created by Leonardo  on 1/05/22.
+//  Created by Leonardo  on 23/05/22.
 //
 
 import RxCocoa
 import RxSwift
 import UIKit
 
-/// # Home animes collection
-final class HomeAnimesComponent: UIViewController {
-  /// # Outlets
-  @IBOutlet private weak var animesCollection: UICollectionView!
-
+final class NewAnimeSearchResultsComponent: UIViewController {
+  /// # IBOutlets
+  @IBOutlet private weak var newAnimeSearchResults: UICollectionView!
+  /// # Properties
   /// # Observables
   private let animesDummy: [HomeAnime] =
     [
@@ -26,13 +25,12 @@ final class HomeAnimesComponent: UIViewController {
     return Disposables.create()
   }
 
-  // Flag to pass for the AnimateItem
-  let componentDidAppear: BehaviorSubject<Bool> = BehaviorSubject(value: false)
-
+  // TODO: Components should CompositeDisposable bags
   let disposeBag = DisposeBag()
 
+  /// # Init
   init() {
-    super.init(nibName: Xibs.homeAnimesComponentView, bundle: Bundle.main)
+    super.init(nibName: Xibs.newAnimeSearchResultsView, bundle: Bundle.main)
   }
 
   @available(*, unavailable)
@@ -41,24 +39,14 @@ final class HomeAnimesComponent: UIViewController {
   }
 }
 
-extension HomeAnimesComponent {
+extension NewAnimeSearchResultsComponent {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureComponent()
   }
-
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    componentDidAppear.onNext(true)
-  }
-
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    componentDidAppear.onNext(false)
-  }
 }
 
-extension HomeAnimesComponent: ScreenComponent {
+extension NewAnimeSearchResultsComponent: ScreenComponent {
   func configureComponent() {
     configureView()
     configureCollection()
@@ -66,42 +54,51 @@ extension HomeAnimesComponent: ScreenComponent {
   }
 
   func configureView() {
+    // Color and radius
+    view.backgroundColor = Color.white
+    view.addCornerRadius(radius: 15)
     configureSubviews()
   }
 
-  func configureSubviews() {}
+  func configureSubviews() {
+    // Color and radius
+    newAnimeSearchResults.backgroundColor = Color.white
+    newAnimeSearchResults.addCornerRadius(radius: 15)
+  }
 }
 
-extension HomeAnimesComponent: ComponentCollection {
+extension NewAnimeSearchResultsComponent: ComponentCollection {
   func configureCollection() {
     // Register item from Xib
-    animesCollection.register(UINib(nibName: Xibs.homeAnimeItemView, bundle: Bundle.main), forCellWithReuseIdentifier: Xibs.homeAnimeItemView)
+    newAnimeSearchResults.register(UINib(nibName: Xibs.newAnimeSearchResultItemView, bundle: Bundle.main), forCellWithReuseIdentifier: Xibs.newAnimeSearchResultItemView)
     // Set delegate
-    animesCollection.rx.setDelegate(self).disposed(by: disposeBag)
+    newAnimeSearchResults.rx.setDelegate(self).disposed(by: disposeBag)
   }
 
   func bindCollection() {
     animesObservable
-      .bind(to: animesCollection.rx.items(cellIdentifier: Xibs.homeAnimeItemView, cellType: HomeAnimeItem.self)) { [weak self] _, anime, item in
+      .bind(to: newAnimeSearchResults.rx.items(cellIdentifier: Xibs.newAnimeSearchResultItemView, cellType: NewAnimeSearchResultItem.self)) { _, anime, item in
         item.anime = anime
-        item.componentDidAppear = self?.componentDidAppear
       }
       .disposed(by: disposeBag)
   }
 }
 
-extension HomeAnimesComponent: UICollectionViewDelegateFlowLayout {
+extension NewAnimeSearchResultsComponent: UICollectionViewDelegateFlowLayout {
   // Set CollectionViewItem (HomeAnimeItem) size
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let width = animesCollection.bounds.width * 0.7
-    let height = animesCollection.bounds.height * 1
+    let width = newAnimeSearchResults.bounds.width * 0.90
+    let height = newAnimeSearchResults.bounds.height * 0.5
+
+    print("Cell width \(width)")
+    print("Cell height \(height)")
     return CGSize(width: width, height: height)
   }
 
   // Set CollectionViewItem "header" (left first item padding)
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    let height: Int = 0
-    let width: Int = 15
+    let height: Int = 15
+    let width: Int = 0
     return CGSize(width: width, height: height)
   }
 }

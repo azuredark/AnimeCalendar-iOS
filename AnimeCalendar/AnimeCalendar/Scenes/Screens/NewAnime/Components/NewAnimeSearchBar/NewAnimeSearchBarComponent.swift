@@ -27,15 +27,15 @@ final class NewAnimeSearchBarComponent: UIViewController {
 extension NewAnimeSearchBarComponent {
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureView()
-  }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
+    configureComponent()
   }
 }
 
 extension NewAnimeSearchBarComponent: ScreenComponent {
+  func configureComponent() {
+    configureView()
+  }
+
   // TODO: Searchbar background color changes in DarkMode
   func configureView() {
     newAnimeSearchBar.becomeFirstResponder()

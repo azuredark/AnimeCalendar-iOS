@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NewAnimeSearchResultItemView" id="Gp7-Gj-ZTJ" customClass="NewAnimeSearchResultItem" customModule="AnimeCalendar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="336" height="179"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uGh-b7-4Kt">
+                <rect key="frame" x="0.0" y="0.0" width="336" height="179"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfB-xM-Gum">
+                        <rect key="frame" x="10" y="10" width="316" height="159"/>
+                        <color key="backgroundColor" name="App Black"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="jfB-xM-Gum" firstAttribute="top" secondItem="uGh-b7-4Kt" secondAttribute="top" constant="10" id="5Uu-5e-Tn5"/>
+                    <constraint firstItem="jfB-xM-Gum" firstAttribute="leading" secondItem="uGh-b7-4Kt" secondAttribute="leading" constant="10" id="7fa-2C-KEJ"/>
+                    <constraint firstAttribute="trailing" secondItem="jfB-xM-Gum" secondAttribute="trailing" constant="10" id="Axj-2u-l03"/>
+                    <constraint firstAttribute="bottom" secondItem="jfB-xM-Gum" secondAttribute="bottom" constant="10" id="lWp-t5-ouN"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <connections>
+                <outlet property="animeContainerView" destination="jfB-xM-Gum" id="Eqq-zO-xuD"/>
+            </connections>
+            <point key="canvasLocation" x="134.78260869565219" y="131.91964285714286"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="App Black">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

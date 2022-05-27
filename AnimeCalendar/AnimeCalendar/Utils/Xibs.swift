@@ -20,4 +20,5 @@ enum Xibs {
   public static var newAnimeSearchResultsView: String { "NewAnimeSearchResultsView" }
   /// # Cells
   public static var homeAnimeItemView: String { "HomeAnimeItemView" }
+  public static var newAnimeSearchResultItemView: String { "NewAnimeSearchResultItemView" }
 }

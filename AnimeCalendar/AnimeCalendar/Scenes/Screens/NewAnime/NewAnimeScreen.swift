@@ -35,6 +35,7 @@ extension NewAnimeScreen {
     super.viewDidLoad()
     configureScreen()
     print("Height: \(view.frame.size.height)")
+    print("Width: \(view.frame.size.width)")
   }
 }
 
@@ -50,27 +51,44 @@ private extension NewAnimeScreen {
   func configureScreenComponents() {
     /// # Components
     let newAnimeSearchBarComponent: ScreenComponent = NewAnimeSearchBarComponent()
+    let newAnimeSearchResultsComponent: ScreenComponent = NewAnimeSearchResultsComponent()
 
     /// # Add Screen's Components
     addChildVC(newAnimeSearchBarComponent)
+    addChildVC(newAnimeSearchResultsComponent)
+    print("Child VCs: \(children)")
 
     /// # Configure Component's constraints
     configureComponentsConstraints(
-      newAnimeSearchBarComponent
+      newAnimeSearchBarComponent,
+      newAnimeSearchResultsComponent
     )
   }
 
   func configureComponentsConstraints(
-    _ newAnimeSearchBar: ScreenComponent
+    _ newAnimeSearchBar: ScreenComponent,
+    _ newAnimeSearchResults: ScreenComponent
   ) {
     /// # NewAnimeSearchBarComponent
     let newAnimeSearchBarView: UIView = newAnimeSearchBar.view
     newAnimeSearchBarView.translatesAutoresizingMaskIntoConstraints = false
+    /// Constraints
     NSLayoutConstraint.activate([
       newAnimeSearchBarView.topAnchor.constraint(equalTo: newAnimeContainerView.topAnchor, constant: 20),
       newAnimeSearchBarView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.09),
       newAnimeSearchBarView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
       newAnimeSearchBarView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
+    ])
+
+    /// # NewAnimeSearchResultsComponent
+    let newAnimeSearchResultsView: UIView = newAnimeSearchResults.view
+    newAnimeSearchResultsView.translatesAutoresizingMaskIntoConstraints = false
+    /// Constraints
+    NSLayoutConstraint.activate([
+      newAnimeSearchResultsView.topAnchor.constraint(equalTo: newAnimeSearchBarView.bottomAnchor, constant: 20),
+      newAnimeSearchResultsView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.4),
+      newAnimeSearchResultsView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
+      newAnimeSearchResultsView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
     ])
   }
 }

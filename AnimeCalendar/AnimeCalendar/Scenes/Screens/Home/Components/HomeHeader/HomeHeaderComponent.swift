@@ -30,11 +30,15 @@ final class HomeHeaderComponent: UIViewController {
 extension HomeHeaderComponent {
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureView()
+    configureComponent()
   }
 }
 
 extension HomeHeaderComponent: ScreenComponent {
+  func configureComponent() {
+    configureView()
+  }
+
   func configureView() {
     view.backgroundColor = Color.cream
     configureSubviews()
