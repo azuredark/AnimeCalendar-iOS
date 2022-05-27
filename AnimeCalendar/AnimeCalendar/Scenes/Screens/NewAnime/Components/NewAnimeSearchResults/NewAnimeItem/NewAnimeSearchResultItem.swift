@@ -29,7 +29,8 @@ private extension NewAnimeSearchResultItem {
   func configureView() {
     contentView.backgroundColor = Color.white
     animeContainerView.backgroundColor = Color.white
-    let shadow = Shadow(.bottom)
+    var shadow = Shadow(.bottom)
+    shadow.color = Color.gray
     animeContainerView.addShadowLayer(shadow: shadow, layerRadius: 15)
   }
 }

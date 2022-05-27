@@ -87,7 +87,7 @@ extension NewAnimeSearchResultsComponent: ComponentCollection {
 extension NewAnimeSearchResultsComponent: UICollectionViewDelegateFlowLayout {
   // Set CollectionViewItem (HomeAnimeItem) size
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let width = newAnimeSearchResults.bounds.width * 0.90
+    let width = newAnimeSearchResults.bounds.width * 0.95
     let height = newAnimeSearchResults.bounds.height * 0.5
 
     print("Cell width \(width)")
