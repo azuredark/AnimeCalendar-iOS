@@ -37,11 +37,14 @@ extension NewAnimeSearchBarComponent: ScreenComponent {
   }
 
   // TODO: Searchbar background color changes in DarkMode
+  // TODO: Searchbar background color is NOT fully Color.white
   func configureView() {
     newAnimeSearchBar.searchBarStyle = .minimal
     newAnimeSearchBar.autocapitalizationType = .none
     newAnimeSearchBar.placeholder = "shingeki no kyojin, dr. stone"
     newAnimeSearchBar.searchTextField.backgroundColor = Color.white
+    newAnimeSearchBar.searchTextField.isOpaque = true
+    newAnimeSearchBar.searchTextField.layer.opacity = 1
     newAnimeSearchBar.searchTextField.font = UIFont.boldSystemFont(ofSize: 16)
     newAnimeSearchBar.searchTextField.textColor = Color.cobalt
     newAnimeSearchBar.searchTextField.leftView?.tintColor = Color.cobalt
