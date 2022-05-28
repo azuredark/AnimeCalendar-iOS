@@ -33,6 +33,7 @@ final class HomeAnimeItem: UICollectionViewCell {
   private let cornerRadius: CGFloat = 15
 }
 
+// TODO: Configure ComponentCollectionItem
 extension HomeAnimeItem {
   override func awakeFromNib() {
     super.awakeFromNib()

@@ -16,8 +16,9 @@ final class NewAnimeSearchResultsComponent: UIViewController {
   /// # Observables
   private let animesDummy: [HomeAnime] =
     [
-      HomeAnime(name: "Spy x Family", cover: "www"),
-      HomeAnime(name: "Dr. Stone", cover: "www"),
+      HomeAnime(name: "Komi can't communicate", cover: "new-anime-item-komicantcommunicate"),
+      HomeAnime(name: "Dr. Stone: Stone Wars", cover: "new-anime-item-drstone"),
+      HomeAnime(name: "Spy x Family", cover: "new-anime-item-spyxfamily"),
     ]
   private lazy var animesObservable: Observable<[HomeAnime]> = Observable.create { [unowned self] observer in
     observer.onNext(self.animesDummy)
@@ -87,8 +88,8 @@ extension NewAnimeSearchResultsComponent: ComponentCollection {
 extension NewAnimeSearchResultsComponent: UICollectionViewDelegateFlowLayout {
   // Set CollectionViewItem (HomeAnimeItem) size
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let width = newAnimeSearchResults.bounds.width * 0.95
-    let height = newAnimeSearchResults.bounds.height * 0.5
+    let width = newAnimeSearchResults.bounds.width * 1
+    let height = newAnimeSearchResults.bounds.height * 0.45
 
     print("Cell width \(width)")
     print("Cell height \(height)")
@@ -97,7 +98,7 @@ extension NewAnimeSearchResultsComponent: UICollectionViewDelegateFlowLayout {
 
   // Set CollectionViewItem "header" (left first item padding)
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    let height: Int = 15
+    let height: Int = 5
     let width: Int = 0
     return CGSize(width: width, height: height)
   }

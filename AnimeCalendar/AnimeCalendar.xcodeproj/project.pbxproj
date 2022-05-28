@@ -29,6 +29,8 @@
 		A78685CE2824D6AE00321415 /* TabBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78685CD2824D6AE00321415 /* TabBarProtocol.swift */; };
 		A7933BF2281E35DD00D4E1B4 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7933BF1281E35DD00D4E1B4 /* Shadow.swift */; };
 		A7933BF4281E3AA100D4E1B4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7933BF3281E3AA100D4E1B4 /* UIViewExtension.swift */; };
+		A7A883D02841E25300DA8AAE /* ComponentCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A883CF2841E25300DA8AAE /* ComponentCollectionItem.swift */; };
+		A7A883D22841F94E00DA8AAE /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A883D12841F94E00DA8AAE /* UIImageViewExtension.swift */; };
 		A7AAAA30283C8A1700878BEC /* NewAnimeSearchResultsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AAAA2E283C8A1700878BEC /* NewAnimeSearchResultsComponent.swift */; };
 		A7AAAA31283C8A1700878BEC /* NewAnimeSearchResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7AAAA2F283C8A1700878BEC /* NewAnimeSearchResultsView.xib */; };
 		A7AD0B0628275F6500367A1B /* NewScheduledAnimeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AD0B0528275F6500367A1B /* NewScheduledAnimeButton.swift */; };
@@ -92,6 +94,8 @@
 		A78685CD2824D6AE00321415 /* TabBarProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarProtocol.swift; sourceTree = "<group>"; };
 		A7933BF1281E35DD00D4E1B4 /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		A7933BF3281E3AA100D4E1B4 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		A7A883CF2841E25300DA8AAE /* ComponentCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentCollectionItem.swift; sourceTree = "<group>"; };
+		A7A883D12841F94E00DA8AAE /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		A7AAAA2E283C8A1700878BEC /* NewAnimeSearchResultsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSearchResultsComponent.swift; sourceTree = "<group>"; };
 		A7AAAA2F283C8A1700878BEC /* NewAnimeSearchResultsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeSearchResultsView.xib; sourceTree = "<group>"; };
 		A7AD0B0528275F6500367A1B /* NewScheduledAnimeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewScheduledAnimeButton.swift; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 				A7E44A962829CBEB005C0AB5 /* ScreenType.swift */,
 				A7B0E332281F88F800A13CD6 /* ScreenComponent.swift */,
 				A772E9252840A68D0095FE4F /* ComponentCollection.swift */,
+				A7A883CF2841E25300DA8AAE /* ComponentCollectionItem.swift */,
 			);
 			path = Contracts;
 			sourceTree = "<group>";
@@ -455,6 +460,7 @@
 			children = (
 				A7FDF60D281E038D006057D7 /* UIViewControllerExtension.swift */,
 				A7933BF3281E3AA100D4E1B4 /* UIViewExtension.swift */,
+				A7A883D12841F94E00DA8AAE /* UIImageViewExtension.swift */,
 				A70FF51328238E42007D4F64 /* NSLayoutConstraintExtension.swift */,
 			);
 			path = Extensions;
@@ -597,6 +603,7 @@
 				A7E44A912829CAB7005C0AB5 /* RootControllerType.swift in Sources */,
 				A74F986428161279003A1073 /* NetworkManager.swift in Sources */,
 				A7FDF60E281E038D006057D7 /* UIViewControllerExtension.swift in Sources */,
+				A7A883D22841F94E00DA8AAE /* UIImageViewExtension.swift in Sources */,
 				A74F986A2816129D003A1073 /* CacheManager.swift in Sources */,
 				A7E798A628149B4900973881 /* AppDelegate.swift in Sources */,
 				A7933BF4281E3AA100D4E1B4 /* UIViewExtension.swift in Sources */,
@@ -624,6 +631,7 @@
 				A74F986628161285003A1073 /* RequestsManager.swift in Sources */,
 				A7AAAA30283C8A1700878BEC /* NewAnimeSearchResultsComponent.swift in Sources */,
 				A772E9262840A68D0095FE4F /* ComponentCollection.swift in Sources */,
+				A7A883D02841E25300DA8AAE /* ComponentCollectionItem.swift in Sources */,
 				A7E44A952829CB37005C0AB5 /* RootControllerFactory.swift in Sources */,
 				A74F986828161291003A1073 /* MocksManager.swift in Sources */,
 				A7B0E33B281F95E500A13CD6 /* HomeAnimeItem.swift in Sources */,

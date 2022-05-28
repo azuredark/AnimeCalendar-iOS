@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +21,45 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfB-xM-Gum">
                         <rect key="frame" x="10" y="10" width="316" height="159"/>
-                        <color key="backgroundColor" name="App Black"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-anime-item-komicantcommunicate" translatesAutoresizingMaskIntoConstraints="NO" id="JQX-pg-b52">
+                                <rect key="frame" x="5" y="5" width="95" height="149"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gkq-vo-Bb4">
+                                <rect key="frame" x="100" y="5" width="211" height="149"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VIu-5m-pkE">
+                                        <rect key="frame" x="10" y="0.0" width="201" height="149"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ANIME_TITLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKM-2V-a3s">
+                                                <rect key="frame" x="0.0" y="0.0" width="201" height="149"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="VIu-5m-pkE" secondAttribute="bottom" id="B2Y-zA-Emr"/>
+                                    <constraint firstItem="VIu-5m-pkE" firstAttribute="leading" secondItem="Gkq-vo-Bb4" secondAttribute="leading" constant="10" id="Ewn-br-vcb"/>
+                                    <constraint firstAttribute="trailing" secondItem="VIu-5m-pkE" secondAttribute="trailing" id="HBk-wI-xE6"/>
+                                    <constraint firstItem="VIu-5m-pkE" firstAttribute="top" secondItem="Gkq-vo-Bb4" secondAttribute="top" id="b2c-VC-5YE"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" name="App White"/>
+                        <constraints>
+                            <constraint firstItem="Gkq-vo-Bb4" firstAttribute="top" secondItem="jfB-xM-Gum" secondAttribute="top" constant="5" id="3zF-Du-Dif"/>
+                            <constraint firstAttribute="bottom" secondItem="JQX-pg-b52" secondAttribute="bottom" constant="5" id="KnX-vG-xag"/>
+                            <constraint firstItem="JQX-pg-b52" firstAttribute="leading" secondItem="jfB-xM-Gum" secondAttribute="leading" constant="5" id="To6-7q-b5K"/>
+                            <constraint firstAttribute="trailing" secondItem="Gkq-vo-Bb4" secondAttribute="trailing" constant="5" id="dKl-4j-rWJ"/>
+                            <constraint firstItem="JQX-pg-b52" firstAttribute="width" secondItem="jfB-xM-Gum" secondAttribute="width" multiplier="0.3" id="dPt-Gk-0Fw"/>
+                            <constraint firstAttribute="bottom" secondItem="Gkq-vo-Bb4" secondAttribute="bottom" constant="5" id="mjg-u0-V3M"/>
+                            <constraint firstItem="JQX-pg-b52" firstAttribute="top" secondItem="jfB-xM-Gum" secondAttribute="top" constant="5" id="ouE-8N-f4A"/>
+                            <constraint firstItem="Gkq-vo-Bb4" firstAttribute="leading" secondItem="JQX-pg-b52" secondAttribute="trailing" id="rok-DV-oWx"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <constraints>
@@ -32,13 +71,19 @@
             </collectionViewCellContentView>
             <connections>
                 <outlet property="animeContainerView" destination="jfB-xM-Gum" id="Eqq-zO-xuD"/>
+                <outlet property="animeCoverImage" destination="JQX-pg-b52" id="wx8-hQ-dP3"/>
+                <outlet property="animeTitleLabel" destination="lKM-2V-a3s" id="fue-Ej-C0R"/>
             </connections>
             <point key="canvasLocation" x="134.78260869565219" y="131.91964285714286"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <namedColor name="App Black">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <image name="new-anime-item-komicantcommunicate" width="112.5" height="159"/>
+        <namedColor name="App White">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

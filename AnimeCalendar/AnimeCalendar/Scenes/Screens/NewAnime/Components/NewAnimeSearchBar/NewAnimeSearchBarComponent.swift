@@ -38,7 +38,6 @@ extension NewAnimeSearchBarComponent: ScreenComponent {
 
   // TODO: Searchbar background color changes in DarkMode
   func configureView() {
-    newAnimeSearchBar.becomeFirstResponder()
     newAnimeSearchBar.searchBarStyle = .minimal
     newAnimeSearchBar.autocapitalizationType = .none
     newAnimeSearchBar.placeholder = "shingeki no kyojin, dr. stone"
