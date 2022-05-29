@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeDateComponent: UIViewController {
+final class HomeDateComponent: UIViewController, ScreenComponent {
   /// # Outlets
   @IBOutlet private weak var currentDateView: UIView!
   @IBOutlet private weak var currentDateLabel: UILabel!
@@ -33,7 +33,7 @@ extension HomeDateComponent {
   }
 }
 
-extension HomeDateComponent: ScreenComponent {
+extension HomeDateComponent: Component {
   func configureComponent() {
     configureView()
   }

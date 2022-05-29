@@ -8,7 +8,7 @@
 import RxSwift
 import UIKit
 
-final class HomeAnimeItem: UICollectionViewCell {
+final class HomeAnimeItem: UICollectionViewCell, ComponentCollectionItem {
   /// # Outlets
   @IBOutlet private weak var animeCoverPicture: UIImageView!
   @IBOutlet private weak var animeCoverView: UIView!
@@ -37,19 +37,49 @@ final class HomeAnimeItem: UICollectionViewCell {
 extension HomeAnimeItem {
   override func awakeFromNib() {
     super.awakeFromNib()
-    configureCollectionItem()
+    configureComponent()
   }
 }
 
-// TODO: Create abstraction for CollectionItem
-extension HomeAnimeItem {
-  func configureCollectionItem() {
-//    configureBindings()
-    configurePictureView()
-    configurePictureImage()
-//    updateEpisodeProgress()
+extension HomeAnimeItem: Component {
+  func configureComponent() {
+    configureInitialState()
+    configureView()
   }
 
+  func configureView() {
+    configureSubviews()
+  }
+
+  func configureSubviews() {
+    configurePictureView()
+    configurePictureImage()
+  }
+}
+
+extension HomeAnimeItem: Bindable {
+  // TODO: FIX BINDINGS, THIS SHOULD ONLY BE RAN ONCE DURING AWAKE-FROM-NIB
+  func configureBindings() {
+    componentDidAppear?
+      .ifEmpty(default: false)
+      .asObservable()
+      .subscribe(onNext: { [weak self] value in
+        if value {
+          self?.updateEpisodeProgress()
+        }
+      })
+      .disposed(by: disposeBag)
+  }
+}
+
+extension HomeAnimeItem: ComponentItem {
+  func configureInitialState() {
+    contentView.backgroundColor = Color.white
+    animeCoverView.backgroundColor = Color.white
+  }
+}
+
+extension HomeAnimeItem {
   func configurePictureView() {
     let animeCoverShadow = Shadow(.bottom)
     animeCoverView.addBottomShadow(shadow: animeCoverShadow, layerRadius: cornerRadius)
@@ -70,20 +100,5 @@ extension HomeAnimeItem {
         strongSelf.episodeProgressBarView.superview?.layoutIfNeeded()
       })
     }
-  }
-}
-
-private extension HomeAnimeItem {
-  // TODO: FIX BINDINGS, THIS SHOULD ONLY BE RAN ONCE DURING AWAKE-FROM-NIB
-  func configureBindings() {
-    componentDidAppear?
-      .ifEmpty(default: false)
-      .asObservable()
-      .subscribe(onNext: { [weak self] value in
-        if value {
-          self?.updateEpisodeProgress()
-        }
-      })
-      .disposed(by: disposeBag)
   }
 }

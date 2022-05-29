@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class NewAnimeSearchResultsComponent: UIViewController {
+final class NewAnimeSearchResultsComponent: UIViewController, ScreenComponent {
   /// # IBOutlets
   @IBOutlet private weak var newAnimeSearchResults: UICollectionView!
   /// # Properties
@@ -47,11 +47,11 @@ extension NewAnimeSearchResultsComponent {
   }
 }
 
-extension NewAnimeSearchResultsComponent: ScreenComponent {
+extension NewAnimeSearchResultsComponent: Component {
   func configureComponent() {
     configureView()
     configureCollection()
-    bindCollection()
+    configureBindings()
   }
 
   func configureView() {
@@ -68,15 +68,18 @@ extension NewAnimeSearchResultsComponent: ScreenComponent {
   }
 }
 
-extension NewAnimeSearchResultsComponent: ComponentCollection {
+// TODO: Missing Contract for Collections/TableViews
+extension NewAnimeSearchResultsComponent {
   func configureCollection() {
     // Register item from Xib
     newAnimeSearchResults.register(UINib(nibName: Xibs.newAnimeSearchResultItemView, bundle: Bundle.main), forCellWithReuseIdentifier: Xibs.newAnimeSearchResultItemView)
     // Set delegate
     newAnimeSearchResults.rx.setDelegate(self).disposed(by: disposeBag)
   }
+}
 
-  func bindCollection() {
+extension NewAnimeSearchResultsComponent: Bindable {
+  func configureBindings() {
     animesObservable
       .bind(to: newAnimeSearchResults.rx.items(cellIdentifier: Xibs.newAnimeSearchResultItemView, cellType: NewAnimeSearchResultItem.self)) { _, anime, item in
         item.anime = anime

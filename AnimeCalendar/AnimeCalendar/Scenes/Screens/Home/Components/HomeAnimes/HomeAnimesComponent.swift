@@ -10,7 +10,7 @@ import RxSwift
 import UIKit
 
 /// # Home animes collection
-final class HomeAnimesComponent: UIViewController {
+final class HomeAnimesComponent: UIViewController, ScreenComponent {
   /// # Outlets
   @IBOutlet private weak var animesCollection: UICollectionView!
 
@@ -58,11 +58,11 @@ extension HomeAnimesComponent {
   }
 }
 
-extension HomeAnimesComponent: ScreenComponent {
+extension HomeAnimesComponent: Component {
   func configureComponent() {
     configureView()
     configureCollection()
-    bindCollection()
+    configureBindings()
   }
 
   func configureView() {
@@ -72,15 +72,17 @@ extension HomeAnimesComponent: ScreenComponent {
   func configureSubviews() {}
 }
 
-extension HomeAnimesComponent: ComponentCollection {
+extension HomeAnimesComponent {
   func configureCollection() {
     // Register item from Xib
     animesCollection.register(UINib(nibName: Xibs.homeAnimeItemView, bundle: Bundle.main), forCellWithReuseIdentifier: Xibs.homeAnimeItemView)
     // Set delegate
     animesCollection.rx.setDelegate(self).disposed(by: disposeBag)
   }
+}
 
-  func bindCollection() {
+extension HomeAnimesComponent: Bindable {
+  func configureBindings() {
     animesObservable
       .bind(to: animesCollection.rx.items(cellIdentifier: Xibs.homeAnimeItemView, cellType: HomeAnimeItem.self)) { [weak self] _, anime, item in
         item.anime = anime

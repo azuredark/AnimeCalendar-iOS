@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class NewAnimeSearchBarComponent: UIViewController {
+final class NewAnimeSearchBarComponent: UIViewController, ScreenComponent {
   /// # Outlets
   @IBOutlet private weak var newAnimeSearchBar: UISearchBar!
   /// # Properties
@@ -31,7 +31,7 @@ extension NewAnimeSearchBarComponent {
   }
 }
 
-extension NewAnimeSearchBarComponent: ScreenComponent {
+extension NewAnimeSearchBarComponent: Component {
   func configureComponent() {
     configureView()
   }

@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class NewAnimeSearchResultItem: UICollectionViewCell {
+final class NewAnimeSearchResultItem: UICollectionViewCell, ComponentCollectionItem {
   /// # Outlets
   @IBOutlet private weak var animeContainerView: UIView!
   @IBOutlet private weak var animeTitleLabel: UILabel!
@@ -25,7 +25,7 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
     didSet {
       guard let anime = self.anime else { return }
       searchResultAnime = BehaviorSubject(value: anime)
-      configureCollectionItemBindings()
+      configureBindings()
     }
   }
 }
@@ -33,18 +33,32 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
 extension NewAnimeSearchResultItem {
   override func awakeFromNib() {
     super.awakeFromNib()
-    configureCollectionItem()
+    configureComponent()
   }
 }
 
-extension NewAnimeSearchResultItem: ComponentCollectionItem {
+extension NewAnimeSearchResultItem: Component {
   /// # Collection item
-  func configureCollectionItem() {
+  func configureComponent() {
+    configureInitialState()
     configureView()
   }
 
+  /// # Configure View
+  func configureView() {
+    configureSubviews()
+  }
+
+  /// # Configure Subviews
+  func configureSubviews() {
+    configureShadows()
+    configureImages()
+  }
+}
+
+extension NewAnimeSearchResultItem: Bindable {
   /// # Configure bindings (Rx)
-  func configureCollectionItemBindings() {
+  func configureBindings() {
     searchResultAnime?
       .map { $0.name }
       .bind(to: animeTitleLabel.rx.text)
@@ -58,21 +72,11 @@ extension NewAnimeSearchResultItem: ComponentCollectionItem {
       })
       .disposed(by: disposeBag)
   }
+}
 
-  /// # Configure View
-  func configureView() {
-    configureInitialValues()
-    configureSubViews()
-  }
-
-  /// # Configure Subviews
-  func configureSubViews() {
-    configureShadows()
-    configureImages()
-  }
-
+extension NewAnimeSearchResultItem: ComponentItem {
   /// # Initial values
-  func configureInitialValues() {
+  func configureInitialState() {
     // Container and contentView background colors
     contentView.backgroundColor = Color.white
     animeContainerView.backgroundColor = Color.white
@@ -97,9 +101,4 @@ private extension NewAnimeSearchResultItem {
     animeCoverImage.layer.borderColor = Color.lightGray.withAlphaComponent(0.4).cgColor
     animeCoverImage.layer.borderWidth = 1
   }
-}
-
-extension NewAnimeSearchResultItem: ComponentCollection {
-  func configureCollection() {}
-  func bindCollection() {}
 }

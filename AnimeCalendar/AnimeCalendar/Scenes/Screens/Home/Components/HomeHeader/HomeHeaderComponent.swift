@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeHeaderComponent: UIViewController {
+final class HomeHeaderComponent: UIViewController, ScreenComponent {
   /// # Outlets
   @IBOutlet private weak var nameLabel: UILabel!
   @IBOutlet private weak var animesToWatchLabel: UILabel!
@@ -34,7 +34,7 @@ extension HomeHeaderComponent {
   }
 }
 
-extension HomeHeaderComponent: ScreenComponent {
+extension HomeHeaderComponent: Component {
   func configureComponent() {
     configureView()
   }
