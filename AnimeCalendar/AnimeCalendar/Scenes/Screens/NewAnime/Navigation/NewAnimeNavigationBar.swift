@@ -10,10 +10,10 @@ import UIKit
 
 final class NewAnimeNavigationBar: ScreenNavigationBar {
   /// # Properties
-  weak var screen: ScreenProtocol?
+  weak var screen: Screen?
 
   /// # Init
-  init(_ screen: ScreenProtocol) {
+  init(_ screen: Screen) {
     self.screen = screen
     configureNavigationBar()
   }

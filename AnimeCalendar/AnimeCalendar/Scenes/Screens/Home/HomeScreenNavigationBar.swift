@@ -8,8 +8,8 @@
 import UIKit
 
 final class HomeScreenNavigationBar: ScreenNavigationBar {
-  weak var screen: ScreenProtocol?
-  init(_ screen: ScreenProtocol) {
+  weak var screen: Screen?
+  init(_ screen: Screen) {
     self.screen = screen
   }
 }

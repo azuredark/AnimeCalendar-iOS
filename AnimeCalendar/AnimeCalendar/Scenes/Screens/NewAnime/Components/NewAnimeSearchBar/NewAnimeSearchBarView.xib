@@ -27,7 +27,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="hct-Jn-sRH">
-                    <rect key="frame" x="-5" y="21" width="424" height="59"/>
+                    <rect key="frame" x="-8" y="26" width="430" height="54"/>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
             </subviews>
@@ -36,12 +36,12 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="hct-Jn-sRH" secondAttribute="bottom" id="39M-Gh-NZ8"/>
                 <constraint firstAttribute="trailing" secondItem="Zei-Vw-6cc" secondAttribute="trailing" id="42O-t3-zYP"/>
-                <constraint firstItem="hct-Jn-sRH" firstAttribute="top" secondItem="Zei-Vw-6cc" secondAttribute="bottom" id="Ktp-yb-43R"/>
+                <constraint firstItem="hct-Jn-sRH" firstAttribute="top" secondItem="Zei-Vw-6cc" secondAttribute="bottom" constant="5" id="Ktp-yb-43R"/>
                 <constraint firstItem="Zei-Vw-6cc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="O9d-Ip-biR"/>
                 <constraint firstItem="Zei-Vw-6cc" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.2625" id="TcF-35-L6K"/>
-                <constraint firstItem="hct-Jn-sRH" firstAttribute="leading" secondItem="Zei-Vw-6cc" secondAttribute="leading" constant="-5" id="hBt-fo-Bgd"/>
+                <constraint firstItem="hct-Jn-sRH" firstAttribute="leading" secondItem="Zei-Vw-6cc" secondAttribute="leading" constant="-8" id="hBt-fo-Bgd"/>
                 <constraint firstItem="Zei-Vw-6cc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mQ0-sy-Umd"/>
-                <constraint firstItem="hct-Jn-sRH" firstAttribute="trailing" secondItem="Zei-Vw-6cc" secondAttribute="trailing" constant="5" id="mkP-vY-Mub"/>
+                <constraint firstItem="hct-Jn-sRH" firstAttribute="trailing" secondItem="Zei-Vw-6cc" secondAttribute="trailing" constant="8" id="mkP-vY-Mub"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="329" y="117"/>

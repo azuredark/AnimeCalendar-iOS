@@ -8,7 +8,7 @@
 import Foundation
 import UIKit.UIViewController
 
-final class AnimeCalendarScreen: UIViewController, ScreenProtocol {
+final class AnimeCalendarScreen: UIViewController, Screen {
   var requestsManager: RequestProtocol
 
   init(requestsManager: RequestProtocol) {

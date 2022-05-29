@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeScreen: UIViewController, ScreenProtocol {
+final class HomeScreen: UIViewController, Screen {
   /// # Protocol properties
   var requestsManager: RequestProtocol
 

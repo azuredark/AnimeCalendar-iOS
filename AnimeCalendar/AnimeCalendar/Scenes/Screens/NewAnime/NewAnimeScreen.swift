@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class NewAnimeScreen: UIViewController, ScreenProtocol {
+final class NewAnimeScreen: UIViewController, Screen {
   /// # IBOutlets
   @IBOutlet private weak var newAnimeContainerView: UIView!
 
@@ -74,7 +74,7 @@ private extension NewAnimeScreen {
     newAnimeSearchBarView.translatesAutoresizingMaskIntoConstraints = false
     /// Constraints
     NSLayoutConstraint.activate([
-      newAnimeSearchBarView.topAnchor.constraint(equalTo: newAnimeContainerView.topAnchor, constant: 20),
+      newAnimeSearchBarView.topAnchor.constraint(equalTo: newAnimeContainerView.topAnchor, constant: 15),
       newAnimeSearchBarView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.09),
       newAnimeSearchBarView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
       newAnimeSearchBarView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),

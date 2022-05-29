@@ -13,7 +13,7 @@ final class CustomNavigationController: UINavigationController {
     .darkContent
   }
 
-  init(_ rootViewController: ScreenProtocol) {
+  init(_ rootViewController: Screen) {
     super.init(rootViewController: rootViewController)
   }
 

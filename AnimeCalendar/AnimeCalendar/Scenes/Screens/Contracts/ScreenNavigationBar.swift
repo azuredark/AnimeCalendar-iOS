@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol ScreenNavigationBar {
-  var screen: ScreenProtocol? { get set }
+protocol ScreenNavigationBar: AnyObject {
+  var screen: Screen? { get set }
   func configureLeftNavigationItems()
   func configureRightNavigationItems()
 }

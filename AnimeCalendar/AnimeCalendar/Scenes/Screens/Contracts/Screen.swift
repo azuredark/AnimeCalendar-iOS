@@ -9,7 +9,7 @@ import Foundation
 import UIKit.UIViewController
 
 /// # All Screens must conform to `RootViweController`
-protocol ScreenProtocol: UIViewController, RootViewController {
+protocol Screen: UIViewController, RootViewController {
   var requestsManager: RequestProtocol { get set }
 
   func configureNavigationItems()
@@ -17,6 +17,6 @@ protocol ScreenProtocol: UIViewController, RootViewController {
   func configureLeftNavigationItems()
 }
 
-protocol ScreenWithTabItem: ScreenProtocol {
+protocol ScreenWithTabItem: Screen {
   func configureTabItem()
 }

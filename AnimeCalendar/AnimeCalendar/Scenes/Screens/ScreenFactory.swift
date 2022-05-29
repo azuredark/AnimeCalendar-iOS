@@ -13,7 +13,7 @@ final class ScreenFactory {
     self.requestsManager = requestsManager
   }
 
-  func getRootScreen(_ screen: ScreenType) -> ScreenProtocol {
+  func getRootScreen(_ screen: ScreenType) -> Screen {
     switch screen {
       case .homeScreen:
         return HomeScreen(requestsManager: requestsManager)

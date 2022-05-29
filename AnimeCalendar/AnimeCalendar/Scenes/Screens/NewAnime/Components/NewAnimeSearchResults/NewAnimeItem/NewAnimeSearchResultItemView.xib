@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,32 +13,100 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NewAnimeSearchResultItemView" id="Gp7-Gj-ZTJ" customClass="NewAnimeSearchResultItem" customModule="AnimeCalendar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="336" height="179"/>
+            <rect key="frame" x="0.0" y="0.0" width="374" height="141"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uGh-b7-4Kt">
-                <rect key="frame" x="0.0" y="0.0" width="336" height="179"/>
+                <rect key="frame" x="0.0" y="0.0" width="374" height="141"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfB-xM-Gum">
-                        <rect key="frame" x="10" y="10" width="316" height="159"/>
+                        <rect key="frame" x="10" y="10" width="354" height="121"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-anime-item-komicantcommunicate" translatesAutoresizingMaskIntoConstraints="NO" id="JQX-pg-b52">
-                                <rect key="frame" x="5" y="5" width="95" height="149"/>
+                                <rect key="frame" x="5" y="5" width="106" height="111"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gkq-vo-Bb4">
-                                <rect key="frame" x="100" y="5" width="211" height="149"/>
+                                <rect key="frame" x="111" y="5" width="238" height="111"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VIu-5m-pkE">
-                                        <rect key="frame" x="10" y="0.0" width="201" height="149"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="VIu-5m-pkE">
+                                        <rect key="frame" x="10" y="0.0" width="228" height="111"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ANIME_TITLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKM-2V-a3s">
-                                                <rect key="frame" x="0.0" y="0.0" width="201" height="149"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ANIME_TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKM-2V-a3s">
+                                                <rect key="frame" x="0.0" y="0.0" width="228" height="11"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                 <color key="textColor" name="App Black"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="euc-qf-Zmz">
+                                                <rect key="frame" x="0.0" y="11" width="228" height="11"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="umb-3W-ALr">
+                                                        <rect key="frame" x="0.0" y="0.0" width="46" height="11"/>
+                                                        <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                                    </stackView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="64j-dp-PzV">
+                                                        <rect key="frame" x="46" y="0.5" width="11" height="10"/>
+                                                    </imageView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Qs-Mb-9yD">
+                                                        <rect key="frame" x="57" y="0.0" width="68.5" height="11"/>
+                                                        <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                                    </stackView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="FxY-A1-LBi">
+                                                        <rect key="frame" x="125.5" y="0.0" width="11.5" height="10"/>
+                                                    </imageView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBz-Rt-f4r">
+                                                        <rect key="frame" x="137" y="0.0" width="57" height="11"/>
+                                                        <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" name="App White"/>
+                                                <constraints>
+                                                    <constraint firstItem="64j-dp-PzV" firstAttribute="leading" secondItem="umb-3W-ALr" secondAttribute="trailing" id="0j3-xV-52f"/>
+                                                    <constraint firstItem="umb-3W-ALr" firstAttribute="leading" secondItem="euc-qf-Zmz" secondAttribute="leading" id="290-65-nrm"/>
+                                                    <constraint firstItem="8Qs-Mb-9yD" firstAttribute="width" secondItem="euc-qf-Zmz" secondAttribute="width" multiplier="0.3" id="2Pp-ln-xGL"/>
+                                                    <constraint firstAttribute="bottom" secondItem="vBz-Rt-f4r" secondAttribute="bottom" id="2Q3-7k-pbJ"/>
+                                                    <constraint firstItem="umb-3W-ALr" firstAttribute="top" secondItem="euc-qf-Zmz" secondAttribute="top" id="4PN-hH-e4a"/>
+                                                    <constraint firstItem="FxY-A1-LBi" firstAttribute="width" secondItem="euc-qf-Zmz" secondAttribute="width" multiplier="0.05" id="547-JA-8Lg"/>
+                                                    <constraint firstItem="vBz-Rt-f4r" firstAttribute="top" secondItem="euc-qf-Zmz" secondAttribute="top" id="7Oc-RG-mQM"/>
+                                                    <constraint firstAttribute="bottom" secondItem="FxY-A1-LBi" secondAttribute="bottom" constant="0.5" id="94X-Nc-EIm"/>
+                                                    <constraint firstAttribute="bottom" secondItem="umb-3W-ALr" secondAttribute="bottom" id="DUW-hG-tVk"/>
+                                                    <constraint firstItem="FxY-A1-LBi" firstAttribute="top" secondItem="euc-qf-Zmz" secondAttribute="top" constant="-0.5" id="Kvz-wR-etQ"/>
+                                                    <constraint firstItem="64j-dp-PzV" firstAttribute="width" secondItem="euc-qf-Zmz" secondAttribute="width" multiplier="0.05" id="MsH-1J-4Kh"/>
+                                                    <constraint firstAttribute="bottom" secondItem="8Qs-Mb-9yD" secondAttribute="bottom" id="OT7-5U-1QE"/>
+                                                    <constraint firstItem="vBz-Rt-f4r" firstAttribute="width" secondItem="euc-qf-Zmz" secondAttribute="width" multiplier="0.25" id="OiF-It-dUg"/>
+                                                    <constraint firstItem="64j-dp-PzV" firstAttribute="top" secondItem="euc-qf-Zmz" secondAttribute="top" id="Pit-ze-15V"/>
+                                                    <constraint firstItem="vBz-Rt-f4r" firstAttribute="leading" secondItem="FxY-A1-LBi" secondAttribute="trailing" id="ZzJ-yX-dnZ"/>
+                                                    <constraint firstItem="8Qs-Mb-9yD" firstAttribute="leading" secondItem="64j-dp-PzV" secondAttribute="trailing" id="he9-ON-v5g"/>
+                                                    <constraint firstItem="FxY-A1-LBi" firstAttribute="leading" secondItem="8Qs-Mb-9yD" secondAttribute="trailing" id="ngI-kj-Kgs"/>
+                                                    <constraint firstItem="umb-3W-ALr" firstAttribute="width" secondItem="euc-qf-Zmz" secondAttribute="width" multiplier="0.2" id="obR-x7-ivw"/>
+                                                    <constraint firstAttribute="bottom" secondItem="64j-dp-PzV" secondAttribute="bottom" id="ruX-Jd-0Us"/>
+                                                    <constraint firstItem="8Qs-Mb-9yD" firstAttribute="top" secondItem="euc-qf-Zmz" secondAttribute="top" id="xRA-QI-EJN"/>
+                                                </constraints>
+                                            </view>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" editable="NO" textAlignment="justified" allowsEditingTextAttributes="YES" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QAV-43-re3">
+                                                <rect key="frame" x="0.0" y="22" width="228" height="67"/>
+                                                <color key="backgroundColor" name="App White"/>
+                                                <mutableString key="text">Synopsis: Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                <color key="textColor" name="App Black"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="8"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="lcw-LD-fAf">
+                                                <rect key="frame" x="0.0" y="89" width="228" height="22"/>
+                                                <color key="backgroundColor" systemColor="systemMintColor"/>
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XTA-qt-exU">
+                                                    <size key="itemSize" width="128" height="128"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                            </collectionView>
                                         </subviews>
                                         <color key="backgroundColor" name="App White"/>
+                                        <constraints>
+                                            <constraint firstItem="euc-qf-Zmz" firstAttribute="height" secondItem="VIu-5m-pkE" secondAttribute="height" multiplier="0.1" id="Kmf-jo-Knw"/>
+                                            <constraint firstItem="lKM-2V-a3s" firstAttribute="height" secondItem="VIu-5m-pkE" secondAttribute="height" multiplier="0.1" id="P2y-jZ-hfK"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" name="App White"/>
@@ -46,6 +115,7 @@
                                     <constraint firstItem="VIu-5m-pkE" firstAttribute="leading" secondItem="Gkq-vo-Bb4" secondAttribute="leading" constant="10" id="Ewn-br-vcb"/>
                                     <constraint firstAttribute="trailing" secondItem="VIu-5m-pkE" secondAttribute="trailing" id="HBk-wI-xE6"/>
                                     <constraint firstItem="VIu-5m-pkE" firstAttribute="top" secondItem="Gkq-vo-Bb4" secondAttribute="top" id="b2c-VC-5YE"/>
+                                    <constraint firstItem="QAV-43-re3" firstAttribute="height" secondItem="Gkq-vo-Bb4" secondAttribute="height" multiplier="0.6" id="kQf-A8-PSO"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -74,10 +144,11 @@
                 <outlet property="animeCoverImage" destination="JQX-pg-b52" id="wx8-hQ-dP3"/>
                 <outlet property="animeTitleLabel" destination="lKM-2V-a3s" id="fue-Ej-C0R"/>
             </connections>
-            <point key="canvasLocation" x="134.78260869565219" y="131.91964285714286"/>
+            <point key="canvasLocation" x="253.62318840579712" y="126.89732142857142"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="new-anime-item-komicantcommunicate" width="112.5" height="159"/>
         <namedColor name="App Black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -85,5 +156,11 @@
         <namedColor name="App White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

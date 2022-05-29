@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ComponentCollection: ScreenComponent {
+protocol ComponentCollection {
   func configureCollection()
   func bindCollection()
 }

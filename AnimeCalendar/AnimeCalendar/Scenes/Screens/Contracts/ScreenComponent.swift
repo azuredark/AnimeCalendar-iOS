@@ -8,8 +8,5 @@
 import Foundation
 import UIKit.UIViewController
 
-protocol ScreenComponent: UIViewController {
-  func configureComponent()
-  func configureView()
-  func configureSubviews()
-}
+protocol ScreenComponent: Component & UIViewController {}
+

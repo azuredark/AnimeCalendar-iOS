@@ -14,9 +14,12 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
   @IBOutlet private weak var animeContainerView: UIView!
   @IBOutlet private weak var animeTitleLabel: UILabel!
   @IBOutlet private weak var animeCoverImage: UIImageView!
+  @IBOutlet private weak var animeGenreCollection: UICollectionView!
+
   /// # Observables
   var searchResultAnime: BehaviorSubject<HomeAnime>?
   private var disposeBag = DisposeBag()
+
   /// # Properties
   var anime: HomeAnime? {
     didSet {
@@ -94,4 +97,9 @@ private extension NewAnimeSearchResultItem {
     animeCoverImage.layer.borderColor = Color.lightGray.withAlphaComponent(0.4).cgColor
     animeCoverImage.layer.borderWidth = 1
   }
+}
+
+extension NewAnimeSearchResultItem: ComponentCollection {
+  func configureCollection() {}
+  func bindCollection() {}
 }
