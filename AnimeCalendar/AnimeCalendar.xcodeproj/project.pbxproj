@@ -51,6 +51,10 @@
 		A7CD0D482817A16000109B8D /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D472817A16000109B8D /* Screen.swift */; };
 		A7CD0D4A2817A31100109B8D /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D492817A31100109B8D /* RequestProtocol.swift */; };
 		A7D4F6CD2828D6AA004622A4 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D4F6CC2828D6AA004622A4 /* TabBarButton.swift */; };
+		A7DAC1C8284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DAC1C6284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift */; };
+		A7DAC1C9284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7DAC1C7284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib */; };
+		A7DAC1CE28441C3000583F39 /* AnimeGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DAC1CD28441C3000583F39 /* AnimeGenre.swift */; };
+		A7DAC1D128447A6900583F39 /* SearchAnime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DAC1D028447A6900583F39 /* SearchAnime.swift */; };
 		A7E44A912829CAB7005C0AB5 /* RootControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A902829CAB7005C0AB5 /* RootControllerType.swift */; };
 		A7E44A932829CAF1005C0AB5 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A922829CAF1005C0AB5 /* RootViewController.swift */; };
 		A7E44A952829CB37005C0AB5 /* RootControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E44A942829CB37005C0AB5 /* RootControllerFactory.swift */; };
@@ -119,6 +123,10 @@
 		A7CD0D472817A16000109B8D /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		A7CD0D492817A31100109B8D /* RequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
 		A7D4F6CC2828D6AA004622A4 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
+		A7DAC1C6284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSearchResultGenreItem.swift; sourceTree = "<group>"; };
+		A7DAC1C7284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeSearchResultGenreItemView.xib; sourceTree = "<group>"; };
+		A7DAC1CD28441C3000583F39 /* AnimeGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeGenre.swift; sourceTree = "<group>"; };
+		A7DAC1D028447A6900583F39 /* SearchAnime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAnime.swift; sourceTree = "<group>"; };
 		A7E44A902829CAB7005C0AB5 /* RootControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootControllerType.swift; sourceTree = "<group>"; };
 		A7E44A922829CAF1005C0AB5 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		A7E44A942829CB37005C0AB5 /* RootControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootControllerFactory.swift; sourceTree = "<group>"; };
@@ -197,7 +205,7 @@
 		A74F986B281615CC003A1073 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				A7B0E328281F534900A13CD6 /* HomeScreenNavigationBar.swift */,
+				A7DAC1CF28447A2D00583F39 /* Navigation */,
 				A74F98492815F8EF003A1073 /* HomeScreen.swift */,
 				A74F984A2815F8EF003A1073 /* HomeScreenView.xib */,
 				A7FDF606281E0226006057D7 /* Components */,
@@ -211,6 +219,7 @@
 			children = (
 				A772E921284098280095FE4F /* NewAnimeSearchResultItem.swift */,
 				A772E922284098280095FE4F /* NewAnimeSearchResultItemView.xib */,
+				A7DAC1CA2844141E00583F39 /* GenreItem */,
 			);
 			path = NewAnimeItem;
 			sourceTree = "<group>";
@@ -238,6 +247,7 @@
 				A7AAAA2E283C8A1700878BEC /* NewAnimeSearchResultsComponent.swift */,
 				A7AAAA2F283C8A1700878BEC /* NewAnimeSearchResultsView.xib */,
 				A772E920284097AE0095FE4F /* NewAnimeItem */,
+				A7DAC1D328447B9300583F39 /* Model */,
 			);
 			path = NewAnimeSearchResults;
 			sourceTree = "<group>";
@@ -334,6 +344,32 @@
 				A7E44A9A282A25D9005C0AB5 /* DummyScreen.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		A7DAC1CA2844141E00583F39 /* GenreItem */ = {
+			isa = PBXGroup;
+			children = (
+				A7DAC1CD28441C3000583F39 /* AnimeGenre.swift */,
+				A7DAC1C6284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift */,
+				A7DAC1C7284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib */,
+			);
+			path = GenreItem;
+			sourceTree = "<group>";
+		};
+		A7DAC1CF28447A2D00583F39 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				A7B0E328281F534900A13CD6 /* HomeScreenNavigationBar.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		A7DAC1D328447B9300583F39 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A7DAC1D028447A6900583F39 /* SearchAnime.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A7E7989928149B4900973881 = {
@@ -549,6 +585,7 @@
 				A7B0E33C281F95E500A13CD6 /* HomeAnimeItemView.xib in Resources */,
 				A7F358562837515D00659375 /* NewAnimeSearchBarView.xib in Resources */,
 				A731E007281D140200036077 /* NewAnimeScreenView.xib in Resources */,
+				A7DAC1C9284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib in Resources */,
 				A74F984C2815F8EF003A1073 /* HomeScreenView.xib in Resources */,
 				A7B0E330281F761300A13CD6 /* HomeDateComponentView.xib in Resources */,
 				A7E798AF28149B4900973881 /* Assets.xcassets in Resources */,
@@ -620,6 +657,7 @@
 				A772E923284098280095FE4F /* NewAnimeSearchResultItem.swift in Sources */,
 				A78685CC2824D67100321415 /* CustomTabBarController.swift in Sources */,
 				A76D971F28435CD100D5FCD7 /* ComponentTableItem.swift in Sources */,
+				A7DAC1D128447A6900583F39 /* SearchAnime.swift in Sources */,
 				A76D971528434CB700D5FCD7 /* Component.swift in Sources */,
 				A70FF51628239D77007D4F64 /* Constraints.swift in Sources */,
 				A76D972128435D3A00D5FCD7 /* ComponenCollectionItem.swift in Sources */,
@@ -629,6 +667,7 @@
 				A76D97232843627500D5FCD7 /* ScreenComponent.swift in Sources */,
 				A7F91E0328190E8600FF59C0 /* NewAnimeScreen.swift in Sources */,
 				A7F358552837515D00659375 /* NewAnimeSearchBarComponent.swift in Sources */,
+				A7DAC1CE28441C3000583F39 /* AnimeGenre.swift in Sources */,
 				A7E798A828149B4900973881 /* SceneDelegate.swift in Sources */,
 				A7E44A932829CAF1005C0AB5 /* RootViewController.swift in Sources */,
 				A7B0E32B281F553A00A13CD6 /* ScreenNavigationBar.swift in Sources */,
@@ -646,6 +685,7 @@
 				A7E44A952829CB37005C0AB5 /* RootControllerFactory.swift in Sources */,
 				A76D971728435BB500D5FCD7 /* Bindable.swift in Sources */,
 				A74F986828161291003A1073 /* MocksManager.swift in Sources */,
+				A7DAC1C8284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift in Sources */,
 				A7B0E33B281F95E500A13CD6 /* HomeAnimeItem.swift in Sources */,
 				A7E44A992829CC56005C0AB5 /* ScreenFactory.swift in Sources */,
 				A7F91E0128190E6000FF59C0 /* AnimeCalendarScreen.swift in Sources */,

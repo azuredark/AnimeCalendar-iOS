@@ -14,6 +14,7 @@ final class HomeAnimesComponent: UIViewController, ScreenComponent {
   /// # Outlets
   @IBOutlet private weak var animesCollection: UICollectionView!
 
+  // TODO: Add differente animes to the sequence (With bindings) so it can simulate managing data from the Network Provider
   /// # Observables
   private let animesDummy: [HomeAnime] =
     [

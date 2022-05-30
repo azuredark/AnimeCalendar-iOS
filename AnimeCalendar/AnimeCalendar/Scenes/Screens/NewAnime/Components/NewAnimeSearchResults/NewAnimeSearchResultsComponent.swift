@@ -14,13 +14,13 @@ final class NewAnimeSearchResultsComponent: UIViewController, ScreenComponent {
   @IBOutlet private weak var newAnimeSearchResults: UICollectionView!
   /// # Properties
   /// # Observables
-  private let animesDummy: [HomeAnime] =
+  private let animesDummy: [SearchAnime] =
     [
-      HomeAnime(name: "Komi can't communicate", cover: "new-anime-item-komicantcommunicate"),
-      HomeAnime(name: "Dr. Stone: Stone Wars", cover: "new-anime-item-drstone"),
-      HomeAnime(name: "Spy x Family", cover: "new-anime-item-spyxfamily"),
+      SearchAnime(name: "Komi can't communicate", cover: "new-anime-item-komicantcommunicate"),
+      SearchAnime(name: "Dr. Stone: Stone Wars", cover: "new-anime-item-drstone"),
+      SearchAnime(name: "Spy x Family", cover: "new-anime-item-spyxfamily")
     ]
-  private lazy var animesObservable: Observable<[HomeAnime]> = Observable.create { [unowned self] observer in
+  private lazy var animesObservable: Observable<[SearchAnime]> = Observable.create { [unowned self] observer in
     observer.onNext(self.animesDummy)
     observer.onCompleted()
     return Disposables.create()
@@ -72,8 +72,10 @@ extension NewAnimeSearchResultsComponent: Component {
 extension NewAnimeSearchResultsComponent {
   func configureCollection() {
     // Register item from Xib
-    newAnimeSearchResults.register(UINib(nibName: Xibs.newAnimeSearchResultItemView, bundle: Bundle.main), forCellWithReuseIdentifier: Xibs.newAnimeSearchResultItemView)
-    // Set delegate
+    let cellXib = UINib(nibName: Xibs.newAnimeSearchResultItemView, bundle: Bundle.main)
+    let reuseIdentifier: String = Xibs.newAnimeSearchResultItemView
+
+    newAnimeSearchResults.register(cellXib, forCellWithReuseIdentifier: reuseIdentifier)
     newAnimeSearchResults.rx.setDelegate(self).disposed(by: disposeBag)
   }
 }
