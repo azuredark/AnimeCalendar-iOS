@@ -64,7 +64,8 @@ extension NewAnimeSearchResultItem: Component {
   /// # Configure Subviews
   func configureSubviews() {
     configureGenreCollection()
-    configureShadows()
+    configureCellContiner()
+    configureCellContiner()
     configureImages()
     configureSynopsis()
   }
@@ -123,19 +124,21 @@ extension NewAnimeSearchResultItem: ComponentItem {
 }
 
 private extension NewAnimeSearchResultItem {
-  func configureShadows() {
+  func configureCellContiner() {
     // Container shadow
     var shadow = Shadow(.bottom)
     shadow.color = Color.lightGray
     shadow.offset = CGSize(width: 2, height: 0)
-    shadow.radius = 2
+    shadow.radius = 3
     animeContainerView.addShadowLayer(shadow: shadow, layerRadius: 15)
   }
 
   func configureImages() {
-    var shadow = Shadow(.bottom)
+    var shadow = Shadow()
     shadow.color = Color.pink
     shadow.radius = 3
+    shadow.offset = CGSize(width: -1, height: 1)
+    shadow.opacity = 0.8
     animeOnAirImage.addShadowLayer(shadow: shadow, layerRadius: 0)
     animeCoverImage.addCornerRadius(radius: 15)
     animeCoverImage.layer.borderColor = Color.lightGray.withAlphaComponent(0.4).cgColor
@@ -144,6 +147,7 @@ private extension NewAnimeSearchResultItem {
 
   func configureSynopsis() {
     animeSynopsisTextView.textContainer.lineFragmentPadding = 0
+    animeSynopsisTextView.textContainer.lineBreakMode = .byTruncatingTail
     animeSynopsisTextView.textContainerInset = UIEdgeInsets(top: 1, left: 0, bottom: 1, right: 0)
   }
 
@@ -199,7 +203,7 @@ private extension NewAnimeSearchResultItem {
 extension NewAnimeSearchResultItem: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     // TODO: Dynamic item-width depending on label text size
-    let width = animeGenreCollection.bounds.width * 0.28
+    let width = animeGenreCollection.bounds.width * 0.35
     let height = animeGenreCollection.bounds.height * 1
     return CGSize(width: width, height: height)
   }
