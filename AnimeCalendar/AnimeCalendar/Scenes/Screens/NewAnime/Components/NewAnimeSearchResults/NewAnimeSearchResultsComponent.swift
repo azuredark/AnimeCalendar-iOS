@@ -17,7 +17,7 @@ final class NewAnimeSearchResultsComponent: UIViewController, ScreenComponent {
   private let animesDummy: [SearchAnime] =
     [
       SearchAnime(name: "Komi can't communicate", cover: "new-anime-item-komicantcommunicate"),
-      SearchAnime(name: "Dr. Stone: Stone Wars", cover: "new-anime-item-drstone"),
+      SearchAnime(name: "Dr. Stone: Stone Wars", cover: "new-anime-item-drstone", onAir: true),
       SearchAnime(name: "Spy x Family", cover: "new-anime-item-spyxfamily")
     ]
   private lazy var animesObservable: Observable<[SearchAnime]> = Observable.create { [unowned self] observer in

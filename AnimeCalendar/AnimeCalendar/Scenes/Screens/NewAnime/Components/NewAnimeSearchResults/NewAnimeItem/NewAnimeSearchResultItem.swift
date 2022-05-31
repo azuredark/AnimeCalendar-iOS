@@ -13,6 +13,8 @@ final class NewAnimeSearchResultItem: UICollectionViewCell, ComponentCollectionI
   /// # Outlets
   @IBOutlet private weak var animeContainerView: UIView!
   @IBOutlet private weak var animeCoverImage: UIImageView!
+  @IBOutlet private weak var animeCoverImageContainer: UIView!
+  @IBOutlet private weak var animeOnAirImage: UIImageView!
   @IBOutlet private weak var animeTitleLabel: UILabel!
   @IBOutlet private weak var animeRatingLabel: UILabel!
   @IBOutlet private weak var animeEpisodesLabel: UILabel!
@@ -72,11 +74,13 @@ extension NewAnimeSearchResultItem: Bindable {
   // TODO: Add missing bindings
   /// # Configure bindings (Rx)
   func configureBindings() {
+    /// # animeTitleLabel (Rx)
     searchResultAnime
       .map { $0.name }
       .bind(to: animeTitleLabel.rx.text)
       .disposed(by: disposeBag)
 
+    /// # animeSynopsisTextView (Rx)
     searchResultAnime
       .map { anime in
         let synopsis: String = anime.synopsis
@@ -88,12 +92,20 @@ extension NewAnimeSearchResultItem: Bindable {
       .disposed(by: disposeBag)
 
     // TODO: SHOULD CALL VIEWMODEL METHOD
+    /// # animeCoverImage (Rx)
     searchResultAnime
       .subscribe(onNext: { [weak self] anime in
         self?.animeCoverImage.imageFromBundle(imageName: anime.cover)
         print("Cover url: \(anime.cover)")
       })
       .disposed(by: disposeBag)
+
+    /// # onAirImage (Rx)
+    searchResultAnime
+      .map { !$0.onAir }
+      .bind(to: animeOnAirImage.rx.isHidden)
+      .disposed(by: disposeBag)
+
     configureGenreCollectionBindings() // * review
   }
 }
@@ -121,6 +133,10 @@ private extension NewAnimeSearchResultItem {
   }
 
   func configureImages() {
+    var shadow = Shadow(.bottom)
+    shadow.color = Color.pink
+    shadow.radius = 3
+    animeOnAirImage.addShadowLayer(shadow: shadow, layerRadius: 0)
     animeCoverImage.addCornerRadius(radius: 15)
     animeCoverImage.layer.borderColor = Color.lightGray.withAlphaComponent(0.4).cgColor
     animeCoverImage.layer.borderWidth = 1

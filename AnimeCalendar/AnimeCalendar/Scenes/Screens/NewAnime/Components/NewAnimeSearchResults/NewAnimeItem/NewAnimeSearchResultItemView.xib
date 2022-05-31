@@ -22,9 +22,32 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfB-xM-Gum">
                         <rect key="frame" x="10" y="10" width="354" height="121"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-anime-item-komicantcommunicate" translatesAutoresizingMaskIntoConstraints="NO" id="JQX-pg-b52">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BxV-fe-41B">
                                 <rect key="frame" x="5" y="5" width="106" height="111"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-anime-item-komicantcommunicate" translatesAutoresizingMaskIntoConstraints="NO" id="JQX-pg-b52">
+                                        <rect key="frame" x="2" y="2" width="102" height="107"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-rA-flE">
+                                        <rect key="frame" x="89" y="-2" width="18" height="17"/>
+                                        <color key="tintColor" name="App Pink"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        </preferredSymbolConfiguration>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" name="App White"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Jdo-rA-flE" secondAttribute="trailing" constant="-1" id="7P8-0i-HxI"/>
+                                    <constraint firstItem="Jdo-rA-flE" firstAttribute="width" secondItem="BxV-fe-41B" secondAttribute="width" multiplier="0.17" id="GkQ-nw-uod"/>
+                                    <constraint firstAttribute="trailing" secondItem="JQX-pg-b52" secondAttribute="trailing" constant="2" id="Mei-eE-jSt"/>
+                                    <constraint firstItem="JQX-pg-b52" firstAttribute="leading" secondItem="BxV-fe-41B" secondAttribute="leading" constant="2" id="RvC-cl-wHw"/>
+                                    <constraint firstItem="Jdo-rA-flE" firstAttribute="top" secondItem="BxV-fe-41B" secondAttribute="top" constant="-3" id="UPb-If-7Qu"/>
+                                    <constraint firstItem="Jdo-rA-flE" firstAttribute="height" secondItem="BxV-fe-41B" secondAttribute="height" multiplier="0.17" id="W1p-qb-BuH"/>
+                                    <constraint firstItem="JQX-pg-b52" firstAttribute="top" secondItem="BxV-fe-41B" secondAttribute="top" constant="2" id="rqI-cO-vLy"/>
+                                    <constraint firstAttribute="bottom" secondItem="JQX-pg-b52" secondAttribute="bottom" constant="2" id="weV-Mf-9Ji"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gkq-vo-Bb4">
                                 <rect key="frame" x="111" y="5" width="238" height="111"/>
                                 <subviews>
@@ -209,13 +232,13 @@
                         <color key="backgroundColor" name="App White"/>
                         <constraints>
                             <constraint firstItem="Gkq-vo-Bb4" firstAttribute="top" secondItem="jfB-xM-Gum" secondAttribute="top" constant="5" id="3zF-Du-Dif"/>
-                            <constraint firstAttribute="bottom" secondItem="JQX-pg-b52" secondAttribute="bottom" constant="5" id="KnX-vG-xag"/>
-                            <constraint firstItem="JQX-pg-b52" firstAttribute="leading" secondItem="jfB-xM-Gum" secondAttribute="leading" constant="5" id="To6-7q-b5K"/>
+                            <constraint firstItem="BxV-fe-41B" firstAttribute="leading" secondItem="jfB-xM-Gum" secondAttribute="leading" constant="5" id="ERV-sL-w8W"/>
+                            <constraint firstItem="Gkq-vo-Bb4" firstAttribute="leading" secondItem="BxV-fe-41B" secondAttribute="trailing" id="Qfg-Nl-d8L"/>
+                            <constraint firstItem="BxV-fe-41B" firstAttribute="top" secondItem="jfB-xM-Gum" secondAttribute="top" constant="5" id="T1F-NY-EI5"/>
+                            <constraint firstAttribute="bottom" secondItem="BxV-fe-41B" secondAttribute="bottom" constant="5" id="Zqd-2p-kZ7"/>
+                            <constraint firstItem="BxV-fe-41B" firstAttribute="width" secondItem="jfB-xM-Gum" secondAttribute="width" multiplier="0.3" id="bEe-E7-Fzb"/>
                             <constraint firstAttribute="trailing" secondItem="Gkq-vo-Bb4" secondAttribute="trailing" constant="5" id="dKl-4j-rWJ"/>
-                            <constraint firstItem="JQX-pg-b52" firstAttribute="width" secondItem="jfB-xM-Gum" secondAttribute="width" multiplier="0.3" id="dPt-Gk-0Fw"/>
                             <constraint firstAttribute="bottom" secondItem="Gkq-vo-Bb4" secondAttribute="bottom" constant="5" id="mjg-u0-V3M"/>
-                            <constraint firstItem="JQX-pg-b52" firstAttribute="top" secondItem="jfB-xM-Gum" secondAttribute="top" constant="5" id="ouE-8N-f4A"/>
-                            <constraint firstItem="Gkq-vo-Bb4" firstAttribute="leading" secondItem="JQX-pg-b52" secondAttribute="trailing" id="rok-DV-oWx"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -229,8 +252,10 @@
             <connections>
                 <outlet property="animeContainerView" destination="jfB-xM-Gum" id="Eqq-zO-xuD"/>
                 <outlet property="animeCoverImage" destination="JQX-pg-b52" id="wx8-hQ-dP3"/>
+                <outlet property="animeCoverImageContainer" destination="BxV-fe-41B" id="aKa-uW-wg0"/>
                 <outlet property="animeEpisodesLabel" destination="Mxr-PR-GmR" id="faR-8S-e15"/>
                 <outlet property="animeGenreCollection" destination="lcw-LD-fAf" id="kB3-Cq-djY"/>
+                <outlet property="animeOnAirImage" destination="Jdo-rA-flE" id="wNH-c9-Koh"/>
                 <outlet property="animeRatingLabel" destination="ajE-ct-I1I" id="qm2-JV-CSC"/>
                 <outlet property="animeSynopsisTextView" destination="QAV-43-re3" id="kIj-3c-Y2n"/>
                 <outlet property="animeTitleLabel" destination="lKM-2V-a3s" id="fue-Ej-C0R"/>
@@ -251,6 +276,9 @@
         </namedColor>
         <namedColor name="App Gray">
             <color red="0.68199998140335083" green="0.68199998140335083" blue="0.69800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="App Pink">
+            <color red="0.96078431372549022" green="0.42745098039215684" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="App White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -21,14 +21,12 @@ final class NewAnimeSearchResultGenreItem: UICollectionViewCell, ComponentCollec
   var genre: AnimeGenre? {
     didSet {
       guard let genre = self.genre else { return }
-      print("genre didSet: \(genre.name)")
       animeGenre.onNext(genre)
     }
   }
 
   override func awakeFromNib() {
     super.awakeFromNib()
-    print("\(self) awakeFromNib()")
     configureComponent()
   }
 }

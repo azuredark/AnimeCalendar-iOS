@@ -15,8 +15,9 @@ struct SearchAnime {
   var year: Int
   var synopsis: String
   var genres: [AnimeGenre]
+  var onAir: Bool
 
-  init(name: String, cover: String, rating: Float, episodesCount: Int, year: Int, synopsis: String, genres: [AnimeGenre]) {
+  init(name: String, cover: String, rating: Float, episodesCount: Int, year: Int, synopsis: String, genres: [AnimeGenre], onAir: Bool) {
     self.name = name
     self.cover = cover
     self.rating = rating
@@ -24,6 +25,7 @@ struct SearchAnime {
     self.year = year
     self.synopsis = synopsis
     self.genres = genres
+    self.onAir = onAir
   }
 
   // Default anime
@@ -39,10 +41,12 @@ struct SearchAnime {
         AnimeGenre(name: "Comedy"),
         AnimeGenre(name: "Romantic"),
         AnimeGenre(name: "School")
-      ])
+      ],
+      onAir: false
+    )
   }
 
-  init(name: String, cover: String) {
+  init(name: String, cover: String, onAir: Bool = false) {
     self.init(
       name: name,
       cover: cover,
@@ -54,6 +58,8 @@ struct SearchAnime {
         AnimeGenre(name: "Comedy"),
         AnimeGenre(name: "Romantic"),
         AnimeGenre(name: "School")
-      ])
+      ],
+      onAir: onAir
+    )
   }
 }
