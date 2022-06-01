@@ -34,8 +34,8 @@ extension NewAnimeScreen {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureScreen()
-    print("Height: \(view.frame.size.height)")
-    print("Width: \(view.frame.size.width)")
+//    print("Height: \(view.frame.size.height)")
+//    print("Width: \(view.frame.size.width)")
   }
 }
 
@@ -52,22 +52,26 @@ private extension NewAnimeScreen {
     /// # Components
     let newAnimeSearchBarComponent: ScreenComponent = NewAnimeSearchBarComponent()
     let newAnimeSearchResultsComponent: ScreenComponent = NewAnimeSearchResultsComponent()
+    let newAnimeSelectedTitleComponent: ScreenComponent = NewAnimeSelectedTitleComponent()
 
     /// # Add Screen's Components
     addChildVC(newAnimeSearchBarComponent)
     addChildVC(newAnimeSearchResultsComponent)
-    print("Child VCs: \(children)")
+    addChildVC(newAnimeSelectedTitleComponent)
+    print("NewAnimeScreen children VCs: \(children)")
 
     /// # Configure Component's constraints
     configureComponentsConstraints(
       newAnimeSearchBarComponent,
-      newAnimeSearchResultsComponent
+      newAnimeSearchResultsComponent,
+      newAnimeSelectedTitleComponent
     )
   }
 
   func configureComponentsConstraints(
     _ newAnimeSearchBar: ScreenComponent,
-    _ newAnimeSearchResults: ScreenComponent
+    _ newAnimeSearchResults: ScreenComponent,
+    _ newAnimeSelectedTitle: ScreenComponent
   ) {
     /// # NewAnimeSearchBarComponent
     let newAnimeSearchBarView: UIView = newAnimeSearchBar.view
@@ -89,6 +93,17 @@ private extension NewAnimeScreen {
       newAnimeSearchResultsView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.35),
       newAnimeSearchResultsView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
       newAnimeSearchResultsView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
+    ])
+    
+    /// # NewAnimeSeletedTitleComponent
+    let newAnimeSeletecTitleView: UIView = newAnimeSelectedTitle.view
+    newAnimeSeletecTitleView.translatesAutoresizingMaskIntoConstraints = false
+    /// Constraints
+    NSLayoutConstraint.activate([
+      newAnimeSeletecTitleView.topAnchor.constraint(equalTo: newAnimeSearchResultsView.bottomAnchor, constant: 20),
+      newAnimeSeletecTitleView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.1),
+      newAnimeSeletecTitleView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
+      newAnimeSeletecTitleView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
     ])
   }
 }

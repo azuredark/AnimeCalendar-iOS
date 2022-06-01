@@ -41,10 +41,7 @@ final class NewAnimeSearchResultItem: UICollectionViewCell, ComponentCollectionI
 extension NewAnimeSearchResultItem {
   override func awakeFromNib() {
     super.awakeFromNib()
-    print("awakeFromNib()")
     configureComponent()
-    print("AnimeGenreCollection Height: \(animeGenreCollection.frame.size.height)")
-    print("AnimeGenreCollection Width: \(animeGenreCollection.frame.size.width)")
   }
 }
 
@@ -148,9 +145,10 @@ private extension NewAnimeSearchResultItem {
   func configureSynopsis() {
     animeSynopsisTextView.textContainer.lineFragmentPadding = 0
     animeSynopsisTextView.textContainer.lineBreakMode = .byTruncatingTail
-    animeSynopsisTextView.textContainerInset = UIEdgeInsets(top: 1, left: 0, bottom: 1, right: 0)
+    animeSynopsisTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
   }
 
+  // TODO: Send to ModelView to call a UseCase or Utility
   func generateAttributedSynopsis(_ synopsis: String) -> NSAttributedString {
     let synopsisTitleFontAttribute: UIFont = .systemFont(ofSize: 10, weight: .heavy)
     let synopsisTitleColorAttribute: UIColor = Color.gray

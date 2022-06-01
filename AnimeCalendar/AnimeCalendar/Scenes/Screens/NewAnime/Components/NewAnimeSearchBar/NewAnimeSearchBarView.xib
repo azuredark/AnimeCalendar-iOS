@@ -21,12 +21,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search animes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zei-Vw-6cc">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="21"/>
+                    <rect key="frame" x="5" y="0.0" width="409" height="21"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                     <color key="textColor" name="App Black"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="hct-Jn-sRH">
+                <searchBar contentMode="redraw" searchBarStyle="minimal" text="" translatesAutoresizingMaskIntoConstraints="NO" id="hct-Jn-sRH">
                     <rect key="frame" x="-8" y="26" width="430" height="54"/>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
@@ -39,9 +39,9 @@
                 <constraint firstItem="hct-Jn-sRH" firstAttribute="top" secondItem="Zei-Vw-6cc" secondAttribute="bottom" constant="5" id="Ktp-yb-43R"/>
                 <constraint firstItem="Zei-Vw-6cc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="O9d-Ip-biR"/>
                 <constraint firstItem="Zei-Vw-6cc" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.2625" id="TcF-35-L6K"/>
-                <constraint firstItem="hct-Jn-sRH" firstAttribute="leading" secondItem="Zei-Vw-6cc" secondAttribute="leading" constant="-8" id="hBt-fo-Bgd"/>
-                <constraint firstItem="Zei-Vw-6cc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mQ0-sy-Umd"/>
-                <constraint firstItem="hct-Jn-sRH" firstAttribute="trailing" secondItem="Zei-Vw-6cc" secondAttribute="trailing" constant="8" id="mkP-vY-Mub"/>
+                <constraint firstItem="hct-Jn-sRH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-8" id="hBt-fo-Bgd"/>
+                <constraint firstItem="Zei-Vw-6cc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="mQ0-sy-Umd"/>
+                <constraint firstItem="hct-Jn-sRH" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" constant="8" id="mkP-vY-Mub"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="329" y="117"/>

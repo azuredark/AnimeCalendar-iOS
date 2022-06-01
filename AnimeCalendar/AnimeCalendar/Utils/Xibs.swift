@@ -5,8 +5,6 @@
 //  Created by Leonardo  on 30/04/22.
 //
 
-import Foundation
-
 enum Xibs {
   /// # Views
   public static var homeScreenView: String { "HomeScreenView" }
@@ -18,6 +16,7 @@ enum Xibs {
   public static var homeAnimesComponentView: String { "HomeAnimesComponentView" }
   public static var newAnimeSearchBarView: String { "NewAnimeSearchBarView" }
   public static var newAnimeSearchResultsView: String { "NewAnimeSearchResultsView" }
+  public static var newAnimeSelectedTitleComponentView: String { "NewAnimeSelectedTitleComponentView" }
   /// # Cells
   public static var homeAnimeItemView: String { "HomeAnimeItemView" }
   public static var newAnimeSearchResultItemView: String { "NewAnimeSearchResultItemView" }
