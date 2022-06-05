@@ -31,4 +31,10 @@ Small Todo's yet to complete, will be filling out periodically.
 - [ ] NewScheduledAnimeScreen design, for live ended anime
 - [ ] NewScheduledAnimeScreen design, for live custom anime
 - [x] Cancel (dismiss NewAnime screen) attributed string title and functionality
-
+- [ ] ViewModels for Screen/Components
+- [ ] UseCases for Screen/Components
+- [ ] Repository (With dummy repository for reading local JSON mock data)contracts & implementation
+- [ ] NetworkLayer (Deploying TS' API)
+- [ ] CacheLayer
+- [ ] LocalStorage layer (Realm)
+- [ ] Firebase connection
