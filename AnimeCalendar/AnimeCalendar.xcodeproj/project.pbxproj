@@ -53,6 +53,14 @@
 		A7CD0D452817A06700109B8D /* RequetsMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D442817A06700109B8D /* RequetsMethods.swift */; };
 		A7CD0D482817A16000109B8D /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D472817A16000109B8D /* Screen.swift */; };
 		A7CD0D4A2817A31100109B8D /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D492817A31100109B8D /* RequestProtocol.swift */; };
+		A7D0F727285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D0F726285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift */; };
+		A7D0F729285C2D600003709B /* ScreenComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D0F728285C2D600003709B /* ScreenComponentContainer.swift */; };
+		A7D0F72F285C301F0003709B /* NewAnimeSelectedEpisodesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D0F72D285C301F0003709B /* NewAnimeSelectedEpisodesComponent.swift */; };
+		A7D0F730285C301F0003709B /* NewAnimeSelectedEpisodesComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7D0F72E285C301F0003709B /* NewAnimeSelectedEpisodesComponentView.xib */; };
+		A7D0F733285C34120003709B /* NewAnimeSelectedTimeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D0F731285C34120003709B /* NewAnimeSelectedTimeComponent.swift */; };
+		A7D0F734285C34120003709B /* NewAnimeSelectedTimeComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7D0F732285C34120003709B /* NewAnimeSelectedTimeComponentView.xib */; };
+		A7D0F737285C34870003709B /* NewAnimeSelectedTypeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D0F735285C34870003709B /* NewAnimeSelectedTypeComponent.swift */; };
+		A7D0F738285C34870003709B /* NewAnimeSelectedTypeComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7D0F736285C34870003709B /* NewAnimeSelectedTypeComponentView.xib */; };
 		A7D4F6CD2828D6AA004622A4 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D4F6CC2828D6AA004622A4 /* TabBarButton.swift */; };
 		A7DAC1C8284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DAC1C6284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift */; };
 		A7DAC1C9284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7DAC1C7284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib */; };
@@ -128,6 +136,14 @@
 		A7CD0D442817A06700109B8D /* RequetsMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequetsMethods.swift; sourceTree = "<group>"; };
 		A7CD0D472817A16000109B8D /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		A7CD0D492817A31100109B8D /* RequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
+		A7D0F726285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSelectedDetailsContainer.swift; sourceTree = "<group>"; };
+		A7D0F728285C2D600003709B /* ScreenComponentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenComponentContainer.swift; sourceTree = "<group>"; };
+		A7D0F72D285C301F0003709B /* NewAnimeSelectedEpisodesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSelectedEpisodesComponent.swift; sourceTree = "<group>"; };
+		A7D0F72E285C301F0003709B /* NewAnimeSelectedEpisodesComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeSelectedEpisodesComponentView.xib; sourceTree = "<group>"; };
+		A7D0F731285C34120003709B /* NewAnimeSelectedTimeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSelectedTimeComponent.swift; sourceTree = "<group>"; };
+		A7D0F732285C34120003709B /* NewAnimeSelectedTimeComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeSelectedTimeComponentView.xib; sourceTree = "<group>"; };
+		A7D0F735285C34870003709B /* NewAnimeSelectedTypeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSelectedTypeComponent.swift; sourceTree = "<group>"; };
+		A7D0F736285C34870003709B /* NewAnimeSelectedTypeComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeSelectedTypeComponentView.xib; sourceTree = "<group>"; };
 		A7D4F6CC2828D6AA004622A4 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		A7DAC1C6284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSearchResultGenreItem.swift; sourceTree = "<group>"; };
 		A7DAC1C7284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeSearchResultGenreItemView.xib; sourceTree = "<group>"; };
@@ -343,6 +359,7 @@
 				A76D971628435BB500D5FCD7 /* Bindable.swift */,
 				A76D971428434CB700D5FCD7 /* Component.swift */,
 				A76D97222843627500D5FCD7 /* ScreenComponent.swift */,
+				A7D0F728285C2D600003709B /* ScreenComponentContainer.swift */,
 				A76D971C28435CA200D5FCD7 /* ComponentItem.swift */,
 				A76D971E28435CD100D5FCD7 /* ComponentTableItem.swift */,
 				A76D972028435D3A00D5FCD7 /* ComponenCollectionItem.swift */,
@@ -360,6 +377,44 @@
 				A7E44A9A282A25D9005C0AB5 /* DummyScreen.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		A7D0F725285C2C090003709B /* NewAnimeSelectedDetails */ = {
+			isa = PBXGroup;
+			children = (
+				A7D0F726285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift */,
+				A7D0F72A285C2FB90003709B /* NewAnimeSelectedEpisodes */,
+				A7D0F72B285C2FD40003709B /* NewAnimeSelectedTime */,
+				A7D0F72C285C2FE30003709B /* NewAnimeSelectedType */,
+			);
+			path = NewAnimeSelectedDetails;
+			sourceTree = "<group>";
+		};
+		A7D0F72A285C2FB90003709B /* NewAnimeSelectedEpisodes */ = {
+			isa = PBXGroup;
+			children = (
+				A7D0F72D285C301F0003709B /* NewAnimeSelectedEpisodesComponent.swift */,
+				A7D0F72E285C301F0003709B /* NewAnimeSelectedEpisodesComponentView.xib */,
+			);
+			path = NewAnimeSelectedEpisodes;
+			sourceTree = "<group>";
+		};
+		A7D0F72B285C2FD40003709B /* NewAnimeSelectedTime */ = {
+			isa = PBXGroup;
+			children = (
+				A7D0F731285C34120003709B /* NewAnimeSelectedTimeComponent.swift */,
+				A7D0F732285C34120003709B /* NewAnimeSelectedTimeComponentView.xib */,
+			);
+			path = NewAnimeSelectedTime;
+			sourceTree = "<group>";
+		};
+		A7D0F72C285C2FE30003709B /* NewAnimeSelectedType */ = {
+			isa = PBXGroup;
+			children = (
+				A7D0F735285C34870003709B /* NewAnimeSelectedTypeComponent.swift */,
+				A7D0F736285C34870003709B /* NewAnimeSelectedTypeComponentView.xib */,
+			);
+			path = NewAnimeSelectedType;
 			sourceTree = "<group>";
 		};
 		A7DAC1CA2844141E00583F39 /* GenreItem */ = {
@@ -429,6 +484,7 @@
 				A7F358572837516200659375 /* NewAnimeSearchBar */,
 				A7AAAA32283C8A1A00878BEC /* NewAnimeSearchResults */,
 				A768269B28471247001F9EB8 /* NewAnimeSelectedTitle */,
+				A7D0F725285C2C090003709B /* NewAnimeSelectedDetails */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -599,10 +655,13 @@
 				A7E798B228149B4900973881 /* LaunchScreen.storyboard in Resources */,
 				A772E924284098280095FE4F /* NewAnimeSearchResultItemView.xib in Resources */,
 				A7B0E338281F8E8B00A13CD6 /* HomeAnimesComponentView.xib in Resources */,
+				A7D0F734285C34120003709B /* NewAnimeSelectedTimeComponentView.xib in Resources */,
+				A7D0F730285C301F0003709B /* NewAnimeSelectedEpisodesComponentView.xib in Resources */,
 				A7B0E33C281F95E500A13CD6 /* HomeAnimeItemView.xib in Resources */,
 				A7F358562837515D00659375 /* NewAnimeSearchBarView.xib in Resources */,
 				A731E007281D140200036077 /* NewAnimeScreenView.xib in Resources */,
 				A7DAC1C9284413FC00583F39 /* NewAnimeSearchResultGenreItemView.xib in Resources */,
+				A7D0F738285C34870003709B /* NewAnimeSelectedTypeComponentView.xib in Resources */,
 				A74F984C2815F8EF003A1073 /* HomeScreenView.xib in Resources */,
 				A7B0E330281F761300A13CD6 /* HomeDateComponentView.xib in Resources */,
 				A768269A28471240001F9EB8 /* NewAnimeSelectedTitleComponentView.xib in Resources */,
@@ -676,15 +735,18 @@
 				A78685CC2824D67100321415 /* CustomTabBarController.swift in Sources */,
 				A76D971F28435CD100D5FCD7 /* ComponentTableItem.swift in Sources */,
 				A7DAC1D128447A6900583F39 /* SearchAnime.swift in Sources */,
+				A7D0F729285C2D600003709B /* ScreenComponentContainer.swift in Sources */,
 				A76D971528434CB700D5FCD7 /* Component.swift in Sources */,
 				A70FF51628239D77007D4F64 /* Constraints.swift in Sources */,
 				A76D972128435D3A00D5FCD7 /* ComponenCollectionItem.swift in Sources */,
 				A78685CA2824D5CE00321415 /* CustomNavigationController.swift in Sources */,
 				A731E009281D1B0D00036077 /* Color.swift in Sources */,
+				A7D0F737285C34870003709B /* NewAnimeSelectedTypeComponent.swift in Sources */,
 				A7CD0D452817A06700109B8D /* RequetsMethods.swift in Sources */,
 				A76D97232843627500D5FCD7 /* ScreenComponent.swift in Sources */,
 				A768269928471240001F9EB8 /* NewAnimeSelectedTitleComponent.swift in Sources */,
 				A7F91E0328190E8600FF59C0 /* NewAnimeScreen.swift in Sources */,
+				A7D0F733285C34120003709B /* NewAnimeSelectedTimeComponent.swift in Sources */,
 				A7F358552837515D00659375 /* NewAnimeSearchBarComponent.swift in Sources */,
 				A7DAC1CE28441C3000583F39 /* AnimeGenre.swift in Sources */,
 				A7E798A828149B4900973881 /* SceneDelegate.swift in Sources */,
@@ -693,6 +755,7 @@
 				A70FF51428238E42007D4F64 /* NSLayoutConstraintExtension.swift in Sources */,
 				A731E003281D12FA00036077 /* Xibs.swift in Sources */,
 				A78685CE2824D6AE00321415 /* TabBarProtocol.swift in Sources */,
+				A7D0F727285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift in Sources */,
 				A76D971D28435CA200D5FCD7 /* ComponentItem.swift in Sources */,
 				A7D4F6CD2828D6AA004622A4 /* TabBarButton.swift in Sources */,
 				A7AD0B0628275F6500367A1B /* NewScheduledAnimeButton.swift in Sources */,
@@ -706,6 +769,7 @@
 				A74F986828161291003A1073 /* MocksManager.swift in Sources */,
 				A7DAC1C8284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift in Sources */,
 				A7B0E33B281F95E500A13CD6 /* HomeAnimeItem.swift in Sources */,
+				A7D0F72F285C301F0003709B /* NewAnimeSelectedEpisodesComponent.swift in Sources */,
 				A7E44A992829CC56005C0AB5 /* ScreenFactory.swift in Sources */,
 				A7F91E0128190E6000FF59C0 /* AnimeCalendarScreen.swift in Sources */,
 				A7B0E329281F534900A13CD6 /* HomeScreenNavigationBar.swift in Sources */,

@@ -53,25 +53,29 @@ private extension NewAnimeScreen {
     let newAnimeSearchBarComponent: ScreenComponent = NewAnimeSearchBarComponent()
     let newAnimeSearchResultsComponent: ScreenComponent = NewAnimeSearchResultsComponent()
     let newAnimeSelectedTitleComponent: ScreenComponent = NewAnimeSelectedTitleComponent()
+    let newAnimeSelectedDetailsComponent: ScreenComponentContainer = NewAnimeSelectedDetailsComponentContainer()
 
     /// # Add Screen's Components
     addChildVC(newAnimeSearchBarComponent)
     addChildVC(newAnimeSearchResultsComponent)
     addChildVC(newAnimeSelectedTitleComponent)
+    addChildVC(newAnimeSelectedDetailsComponent)
     print("NewAnimeScreen children VCs: \(children)")
 
     /// # Configure Component's constraints
     configureComponentsConstraints(
       newAnimeSearchBarComponent,
       newAnimeSearchResultsComponent,
-      newAnimeSelectedTitleComponent
+      newAnimeSelectedTitleComponent,
+      newAnimeSelectedDetailsComponent
     )
   }
 
   func configureComponentsConstraints(
     _ newAnimeSearchBar: ScreenComponent,
     _ newAnimeSearchResults: ScreenComponent,
-    _ newAnimeSelectedTitle: ScreenComponent
+    _ newAnimeSelectedTitle: ScreenComponent,
+    _ newAnimeSelectedDetails: ScreenComponentContainer
   ) {
     /// # NewAnimeSearchBarComponent
     let newAnimeSearchBarView: UIView = newAnimeSearchBar.view
@@ -94,16 +98,27 @@ private extension NewAnimeScreen {
       newAnimeSearchResultsView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
       newAnimeSearchResultsView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
     ])
-    
+
     /// # NewAnimeSeletedTitleComponent
-    let newAnimeSeletecTitleView: UIView = newAnimeSelectedTitle.view
-    newAnimeSeletecTitleView.translatesAutoresizingMaskIntoConstraints = false
+    let newAnimeSelectedTitleView: UIView = newAnimeSelectedTitle.view
+    newAnimeSelectedTitleView.translatesAutoresizingMaskIntoConstraints = false
     /// Constraints
     NSLayoutConstraint.activate([
-      newAnimeSeletecTitleView.topAnchor.constraint(equalTo: newAnimeSearchResultsView.bottomAnchor, constant: 20),
-      newAnimeSeletecTitleView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.1),
-      newAnimeSeletecTitleView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
-      newAnimeSeletecTitleView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
+      newAnimeSelectedTitleView.topAnchor.constraint(equalTo: newAnimeSearchResultsView.bottomAnchor, constant: 20),
+      newAnimeSelectedTitleView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.1),
+      newAnimeSelectedTitleView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
+      newAnimeSelectedTitleView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
+    ])
+
+    /// # NewAnimeDetailsComponent
+    let newAnimeSelectedDetailsView: UIView = newAnimeSelectedDetails.view
+    newAnimeSelectedDetailsView.translatesAutoresizingMaskIntoConstraints = false
+    /// Constraints
+    NSLayoutConstraint.activate([
+      newAnimeSelectedDetailsView.topAnchor.constraint(equalTo: newAnimeSelectedTitleView.bottomAnchor, constant: 20),
+      newAnimeSelectedDetailsView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.1),
+      newAnimeSelectedDetailsView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
+      newAnimeSelectedDetailsView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
     ])
   }
 }
