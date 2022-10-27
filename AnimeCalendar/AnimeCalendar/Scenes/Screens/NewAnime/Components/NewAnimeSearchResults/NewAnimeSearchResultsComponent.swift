@@ -14,13 +14,13 @@ final class NewAnimeSearchResultsComponent: UIViewController, ScreenComponent {
   @IBOutlet private weak var newAnimeSearchResults: UICollectionView!
   /// # Properties
   /// # Observables
-  private let animesDummy: [SearchAnime] =
+  private let animesDummy: [Anime] =
     [
-      SearchAnime(name: "Komi can't communicate", cover: "new-anime-item-komicantcommunicate"),
-      SearchAnime(name: "Dr. Stone: Stone Wars", cover: "new-anime-item-drstone", onAir: true),
-      SearchAnime(name: "Spy x Family", cover: "new-anime-item-spyxfamily")
+      Anime(name: "Komi can't communicate", cover: "new-anime-item-komicantcommunicate"),
+      Anime(name: "Dr. Stone: Stone Wars", cover: "new-anime-item-drstone", onAir: true),
+      Anime(name: "Spy x Family", cover: "new-anime-item-spyxfamily")
     ]
-  private lazy var animesObservable: Observable<[SearchAnime]> = Observable.create { [unowned self] observer in
+  private lazy var animesObservable: Observable<[Anime]> = Observable.create { [unowned self] observer in
     observer.onNext(self.animesDummy)
     observer.onCompleted()
     return Disposables.create()
@@ -105,5 +105,11 @@ extension NewAnimeSearchResultsComponent: UICollectionViewDelegateFlowLayout {
     let height: Int = 5
     let width: Int = 0
     return CGSize(width: width, height: height)
+  }
+}
+
+extension NewAnimeSearchResultsComponent {
+  func resetCollectionOffset() {
+    newAnimeSearchResults.contentOffset = .zero
   }
 }

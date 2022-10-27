@@ -8,6 +8,6 @@
 import Foundation
 
 protocol RequestProtocol {
-  var network: RequestsMethods { get set }
-  var mock: RequestsMethods { get set }
+  var network: Requestable { get set }
+  var mock: Requestable { get set }
 }

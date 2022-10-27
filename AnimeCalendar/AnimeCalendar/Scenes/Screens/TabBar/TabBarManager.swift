@@ -18,7 +18,7 @@ final class TabBarManager {
     configureTabManager()
   }
 
-  fileprivate func configureTabController() {
+  private func configureTabController() {
     // Presented by the tapping the TabBarItem
     let homeVC = screenFactory.getRootScreen(.homeScreen).getRootViewController()
     let animeCalendarVC = screenFactory.getRootScreen(.animeCalendarScreen).getRootViewController()
@@ -28,13 +28,13 @@ final class TabBarManager {
     tabBarController.setViewControllers(tabBarViewControllers, animated: false)
   }
 
-  fileprivate func configureTabBarMiddleButton() {
+  private func configureTabBarMiddleButton() {
     // Configuring the Middle Button, alonside it's press-action
     tabBarController.configureMiddleButton(in: tabBarController.tabBar)
     tabBarController.configureMiddleButtonAction(using: requestsManager)
   }
 
-  fileprivate func configureTabManager() {
+   private func configureTabManager() {
     configureTabController()
     configureTabBarMiddleButton()
   }

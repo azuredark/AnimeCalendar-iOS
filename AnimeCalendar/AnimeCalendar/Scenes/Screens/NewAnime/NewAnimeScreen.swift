@@ -8,9 +8,17 @@
 import Foundation
 import UIKit
 
+// TODO: Conform ComponentContainer protocol
 final class NewAnimeScreen: UIViewController, Screen {
   /// # IBOutlets
   @IBOutlet private weak var newAnimeContainerView: UIView!
+  @IBOutlet private weak var newAnimeScrollView: UIScrollView!
+
+  /// # Components
+  private lazy var newAnimeSearchResultsComponent: NewAnimeSearchResultsComponent = {
+    let searchResults = NewAnimeSearchResultsComponent()
+    return searchResults
+  }()
 
   /// # Properties
   var requestsManager: RequestProtocol
@@ -39,19 +47,19 @@ extension NewAnimeScreen {
   }
 }
 
-extension NewAnimeScreen {
+private extension NewAnimeScreen {
   func configureScreen() {
     configureNavigationItems()
     configureScreenComponents()
+    newAnimeScrollView.delegate = self
   }
 }
 
+// MARK: - Configure child components
 private extension NewAnimeScreen {
-  // TODO: Configure UIScrollView
   func configureScreenComponents() {
     /// # Components
     let newAnimeSearchBarComponent: ScreenComponent = NewAnimeSearchBarComponent()
-    let newAnimeSearchResultsComponent: ScreenComponent = NewAnimeSearchResultsComponent()
     let newAnimeSelectedTitleComponent: ScreenComponent = NewAnimeSelectedTitleComponent()
     let newAnimeSelectedDetailsComponent: ScreenComponentContainer = NewAnimeSelectedDetailsComponentContainer()
 
@@ -70,7 +78,10 @@ private extension NewAnimeScreen {
       newAnimeSelectedDetailsComponent
     )
   }
+}
 
+// MARK: - Constraints
+private extension NewAnimeScreen {
   func configureComponentsConstraints(
     _ newAnimeSearchBar: ScreenComponent,
     _ newAnimeSearchResults: ScreenComponent,
@@ -94,7 +105,7 @@ private extension NewAnimeScreen {
     /// Constraints
     NSLayoutConstraint.activate([
       newAnimeSearchResultsView.topAnchor.constraint(equalTo: newAnimeSearchBarView.bottomAnchor, constant: 20),
-      newAnimeSearchResultsView.heightAnchor.constraint(equalTo: newAnimeContainerView.heightAnchor, multiplier: 0.35),
+      newAnimeSearchResultsView.heightAnchor.constraint(equalToConstant: 300.0),
       newAnimeSearchResultsView.leadingAnchor.constraint(equalTo: newAnimeContainerView.leadingAnchor),
       newAnimeSearchResultsView.trailingAnchor.constraint(equalTo: newAnimeContainerView.trailingAnchor),
     ])
@@ -123,6 +134,16 @@ private extension NewAnimeScreen {
   }
 }
 
+// MARK: - ScrollView delegate & datasource
+extension NewAnimeScreen: UIScrollViewDelegate {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    // cancel scrollview scrolling
+    print("new-anime: scrollViewDidScroll")
+    newAnimeSearchResultsComponent.resetCollectionOffset()
+  }
+}
+
+// MARK: - Navigation Items
 extension NewAnimeScreen {
   func configureNavigationItems() {
     configureLeftNavigationItems()
@@ -138,6 +159,7 @@ extension NewAnimeScreen {
   }
 }
 
+// MARK: - RootViewController
 extension NewAnimeScreen: RootViewController {
   func getRootViewController() -> UIViewController {
     return CustomNavigationController(self)

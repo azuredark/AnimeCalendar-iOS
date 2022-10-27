@@ -8,6 +8,6 @@
 import UIKit.UIViewController
 
 protocol ScreenComponentContainer: UIViewController & Component {
-  var components: [ScreenComponent] { get set }
-  func configureChildComponents(_ children: [ScreenComponent])
+//  var components: [ScreenComponent?] { get set }
+  func configureChildComponents(_ children: [ScreenComponent?])
 }

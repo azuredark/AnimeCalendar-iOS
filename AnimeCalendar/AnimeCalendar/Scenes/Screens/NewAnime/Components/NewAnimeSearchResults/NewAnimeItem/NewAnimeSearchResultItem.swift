@@ -24,12 +24,12 @@ final class NewAnimeSearchResultItem: UICollectionViewCell, ComponentCollectionI
   @IBOutlet private weak var animeGenreCollection: UICollectionView!
 
   /// # Observables
-  private var searchResultAnime = PublishSubject<SearchAnime>()
+  private var searchResultAnime = PublishSubject<Anime>()
   private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
   private var disposeBag = DisposeBag()
 
   /// # Properties
-  var anime: SearchAnime? {
+  var anime: Anime? {
     didSet {
       guard let anime = self.anime else { return }
       searchResultAnime.onNext(anime)
@@ -61,7 +61,6 @@ extension NewAnimeSearchResultItem: Component {
   /// # Configure Subviews
   func configureSubviews() {
     configureGenreCollection()
-    configureCellContiner()
     configureCellContiner()
     configureImages()
     configureSynopsis()
@@ -127,7 +126,7 @@ private extension NewAnimeSearchResultItem {
     shadow.color = Color.lightGray
     shadow.offset = CGSize(width: 2, height: 0)
     shadow.radius = 3
-    animeContainerView.addShadowLayer(shadow: shadow, layerRadius: 15)
+    animeContainerView.addShadowLayer(shadow: shadow, layerRadius: 10)
   }
 
   func configureImages() {
@@ -137,7 +136,7 @@ private extension NewAnimeSearchResultItem {
     shadow.offset = CGSize(width: -1, height: 1)
     shadow.opacity = 0.8
     animeOnAirImage.addShadowLayer(shadow: shadow, layerRadius: 0)
-    animeCoverImage.addCornerRadius(radius: 15)
+    animeCoverImage.addCornerRadius(radius: 5)
     animeCoverImage.layer.borderColor = Color.lightGray.withAlphaComponent(0.4).cgColor
     animeCoverImage.layer.borderWidth = 1
   }

@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct SearchAnime {
+protocol Model {}
+
+struct Anime: Decodable, Model {
   var name: String
   var cover: String
   var rating: Float
@@ -62,4 +64,20 @@ struct SearchAnime {
       onAir: onAir
     )
   }
+}
+
+struct JikanAnime: Codable {
+    var title: String
+    
+    enum CodingKeys: String, CodingKey {
+        case title = "title"
+    }
+}
+
+struct JikanAnimeResult: Codable {
+    var data: [JikanAnime]?
+    
+    enum CodingKeys: String, CodingKey {
+        case data = "data"
+    }
 }

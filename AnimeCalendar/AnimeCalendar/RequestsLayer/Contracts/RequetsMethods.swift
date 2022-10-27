@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol RequestsMethods: AnyObject {
-  func getAnimesForUserByDate()
+protocol Requestable: AnyObject {
+    func makeRequest<T: Decodable>(_ model: T.Type, _ service: Service, _ completion: @escaping (Result<T?, Error>) -> Void)
 }

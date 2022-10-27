@@ -9,7 +9,11 @@ import UIKit
 
 final class NewAnimeSelectedDetailsComponentContainer: UIViewController, ScreenComponentContainer {
   /// # Components
-  internal var components = [ScreenComponent]()
+  internal var components = [ScreenComponent?]()
+
+  private var newAnimeSelectedEpisodesComponent: ScreenComponent?
+  private var newAnimeSelectedTimeComponent: ScreenComponent?
+  private var newAnimeSelectedTypeComponent: ScreenComponent?
 
   /// # Init
   init() {
@@ -31,8 +35,12 @@ extension NewAnimeSelectedDetailsComponentContainer {
 
 // MARK: - Configure child components
 extension NewAnimeSelectedDetailsComponentContainer {
-  func configureChildComponents(_ children: [ScreenComponent]) {
-    children.forEach { self.addChildVC($0) }
+  func configureChildComponents(_ children: [ScreenComponent?]) {
+    children.forEach { component in
+      guard let component = component else { return }
+      component.view.translatesAutoresizingMaskIntoConstraints = false
+      self.addChildVC(component)
+    }
   }
 }
 
@@ -40,9 +48,9 @@ extension NewAnimeSelectedDetailsComponentContainer {
 extension NewAnimeSelectedDetailsComponentContainer: Component {
   /// # Configure child components
   func configureComponent() {
-    let newAnimeSelectedEpisodesComponent: ScreenComponent = NewAnimeSelectedEpisodesComponent()
-    let newAnimeSelectedTimeComponent: ScreenComponent = NewAnimeSelectedTimeComponent()
-    let newAnimeSelectedTypeComponent: ScreenComponent = NewAnimeSelectedTypeComponent()
+    newAnimeSelectedEpisodesComponent = NewAnimeSelectedEpisodesComponent()
+    newAnimeSelectedTimeComponent = NewAnimeSelectedTimeComponent()
+    newAnimeSelectedTypeComponent = NewAnimeSelectedTypeComponent()
 
     components = [
       newAnimeSelectedEpisodesComponent,
@@ -59,23 +67,17 @@ extension NewAnimeSelectedDetailsComponentContainer: Component {
     configureSubviews()
   }
 
-  // TODO: Room for improvement
+  // MARK: - Configure Subviews
   func configureSubviews() {
-    guard let newAnimeEpisodes = components[0] as? NewAnimeSelectedEpisodesComponent,
-          let newAnimeEpisodesView = newAnimeEpisodes.view else { return }
-
-    guard let newAnimeTime = components[1] as? NewAnimeSelectedTimeComponent,
-          let newAnimeTimeView = newAnimeTime.view else { return }
-
-    guard let newAnimeType = components[2] as? NewAnimeSelectedTypeComponent,
-          let newAnimeTypeView = newAnimeType.view else { return }
+    guard let newAnimeEpisodesView = newAnimeSelectedEpisodesComponent?.view else { return }
+    guard let newAnimeTimeView = newAnimeSelectedTimeComponent?.view else { return }
+    guard let newAnimeTypeView = newAnimeSelectedTypeComponent?.view else { return }
 
     newAnimeEpisodesView.backgroundColor = .systemGreen
     newAnimeTimeView.backgroundColor = .systemBlue
     newAnimeTypeView.backgroundColor = .systemRed
 
     /// # NewAnimeEpisodes
-    newAnimeEpisodesView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       newAnimeEpisodesView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       newAnimeEpisodesView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2),
@@ -84,7 +86,6 @@ extension NewAnimeSelectedDetailsComponentContainer: Component {
     ])
 
     /// # NewAnimeTime
-    newAnimeTimeView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       newAnimeTimeView.leadingAnchor.constraint(equalTo: newAnimeEpisodesView.trailingAnchor),
       newAnimeTimeView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
@@ -93,7 +94,6 @@ extension NewAnimeSelectedDetailsComponentContainer: Component {
     ])
 
     /// # NewAnimeType
-    newAnimeTypeView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       newAnimeTypeView.leadingAnchor.constraint(equalTo: newAnimeTimeView.trailingAnchor),
       newAnimeTypeView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
