@@ -1,6 +1,8 @@
 # 📅 Anime Calendar
 Anime Calendar's iOS App - Schedule your seasonal anime to watch!\
-**Currently in progress**
+
+## Project State
+AnimeCalendar was put in hiatus for several months due to many changes happening in my life, including work & time constraints. However, after organizing my own life calendar/schedule, no pun intended lol, AC is **back in development!**. Any UI, or feature ideas feel free to make a PR.
 
 ## UI 
 Uses Xibs and some programmatic views.
@@ -8,6 +10,26 @@ Uses Xibs and some programmatic views.
 ## Dependencies
 Current dependencies used, not planning to add more
 - RxSwift (w/ RxCocoa/RxRelay)
+
+## Setup
+Currently, the project structure aims to make every screen a *root screen* meaning the app can boot from any screen in the app. The `BootManager.swift` module is in charge of said logic. You can boot the app with `.rootTabBar` or a specific `.rootScreen(ScreenType)`.
+```swift
+func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    guard let windowScene = (scene as? UIWindowScene) else { return }
+    let bootManager = BootManager()
+
+    // Boot from .newAnimeScreen
+//    let rootController = bootManager.getRootController(.rootScreen(screen: .newAnimeScreen))
+    let rootController = bootManager.getRootController(.rootTabBar) // Main boot
+
+    let rootViewController = rootController.getRootViewController()
+
+    window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+    window?.windowScene = windowScene
+    window?.rootViewController = rootViewController
+    window?.makeKeyAndVisible()
+  }
+```
 
 #### Home
 | Figma | iOS |
