@@ -21,7 +21,7 @@ final class TabBarManager {
   private func configureTabController() {
     // Presented by the tapping the TabBarItem
     let homeVC = screenFactory.getRootScreen(.homeScreen).getRootViewController()
-    let animeCalendarVC = screenFactory.getRootScreen(.animeCalendarScreen).getRootViewController()
+    let animeCalendarVC = screenFactory.getRootScreen(.calendarScreen).getRootViewController()
 
     // TabBar items (ViewControllers)
     let tabBarViewControllers = [homeVC, animeCalendarVC]

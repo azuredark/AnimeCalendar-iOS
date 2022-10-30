@@ -10,24 +10,24 @@ import Foundation
 // https://api.jikan.moe/v4/anime
 final class NetworkManager: Requestable {
     private lazy var router = Router()
-    
+
     func makeRequest<T: Decodable>(_ model: T.Type, _ service: Service, _ completion: @escaping (Result<T?, Error>) -> Void) {
         let endpoint: EndpointType = getEndpoint(from: service)
-        
+
         router.request(endpoint: endpoint) { [weak self] data, response, error in
             guard let strongSelf = self else { return }
             let httpResponse = strongSelf.handleHTTPResponse(response: response)
+
             if case .success = httpResponse, let data = data {
-                print("senku [DEBUG] \(String(describing: type(of: self))) - model to decode: \(model)")
                 guard let json = strongSelf.decodeData(model, from: data) else {
                     completion(.failure(JSONDecodingError.errorDecoding))
                     return
                 }
                 completion(.success(json))
             }
-            
+
             if let error = error { completion(.failure(error)) }
-            
+
             if case .failure(let msg) = httpResponse {
                 print("senku [DEBUG] \(String(describing: type(of: self))) - ACError: \(msg)")
                 // TODO: Handle failure message
@@ -60,7 +60,7 @@ private extension NetworkManager {
             default: return .failure(NetworkResponse.failed.rawValue)
         }
     }
-    
+
     func decodeData<T: Decodable>(_ type: T.Type, from data: Data) -> T? {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase

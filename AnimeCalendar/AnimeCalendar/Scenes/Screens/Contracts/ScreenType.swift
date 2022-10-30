@@ -10,5 +10,5 @@ import Foundation
 enum ScreenType {
   case homeScreen
   case newAnimeScreen
-  case animeCalendarScreen
+  case calendarScreen
 }

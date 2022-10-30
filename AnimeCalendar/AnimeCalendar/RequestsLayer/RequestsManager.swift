@@ -7,25 +7,11 @@
 
 import Foundation
 
-enum AnimeRequest {
-    case getAnime(id: Int)
-    case getAnimes
-}
-
-enum UserRequest {
-    case getUser(id: Int)
-}
-
-enum MangaRequest {
-    case getManga(id: Int)
-    case getMangas
-}
-
 // TODO: Should the requests be singletons??
 final class RequestsManager: RequestProtocol {
-    lazy var network: Requestable = NetworkManager()
-    lazy var mock: Requestable = MocksManager()
-    // user local requests manager
+    private(set) lazy var network: Requestable = NetworkManager()
+    private(set) lazy var local: Requestable = LocalManager()
+    private(set) lazy var mock: Requestable = MocksManager()
 }
 
 enum Service {

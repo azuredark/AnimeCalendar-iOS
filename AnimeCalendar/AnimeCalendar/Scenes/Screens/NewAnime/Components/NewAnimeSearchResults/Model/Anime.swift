@@ -75,7 +75,8 @@ struct JikanAnime: Codable {
 }
 
 struct JikanAnimeResult: Codable {
-    var data: [JikanAnime]?
+    // If decoding fails, this might be why lol
+    var data: [JikanAnime] = []
     
     enum CodingKeys: String, CodingKey {
         case data = "data"

@@ -8,22 +8,20 @@
 import UIKit
 
 final class HomeScreen: UIViewController, Screen {
-    /// # Protocol properties
-    var requestsManager: RequestProtocol
+    /// # Presenter
+    private weak var presenter: HomePresentable?
 
     /// # NavigationBar
-    lazy var navigationBar: ScreenNavigationBar = HomeScreenNavigationBar(self)
-    private lazy var interactor: HomeInteractor = {
-        return HomeInteractor(requestManager: requestsManager)
+    private lazy var navigationBar: ScreenNavigationBar = {
+        HomeScreenNavigationBar(self)
     }()
 
-    /// # Init
-    init(requestsManager: RequestProtocol) {
-        self.requestsManager = requestsManager
+    // MARK: Initializer
+    init(presenter: HomePresentable) {
         super.init(nibName: Xibs.homeScreenView, bundle: Bundle.main)
-        _ = interactor
-        configureTabItem()
         print("\(self) inited")
+        self.presenter = presenter
+        configureTabItem()
     }
 
     @available(*, unavailable)
@@ -33,7 +31,6 @@ final class HomeScreen: UIViewController, Screen {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("VIEW DIDD LOAD")
         configureScreen()
     }
 }
@@ -45,6 +42,7 @@ extension HomeScreen {
     }
 }
 
+// MARK: - Configure components (UI)
 extension HomeScreen {
     func configureScreenComponents() {
         let homeHeaderComponent: ScreenComponent = HomeHeaderComponent()
@@ -99,6 +97,7 @@ extension HomeScreen {
     }
 }
 
+// MARK: - Navigation Bar
 extension HomeScreen {
     func configureNavigationItems() {
         configureLeftNavigationItems()
@@ -114,14 +113,14 @@ extension HomeScreen {
     }
 }
 
-extension HomeScreen {}
-
+// MARK: - Root view controller
 extension HomeScreen: RootViewController {
     func getRootViewController() -> UIViewController {
         return CustomNavigationController(self)
     }
 }
 
+// MARK: - TabBar item
 extension HomeScreen: ScreenWithTabItem {
     func configureTabItem() {
         view.autoresizingMask = .flexibleHeight
