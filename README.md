@@ -1,17 +1,22 @@
 # 📅 Anime Calendar
 Anime Calendar's iOS App - Schedule your seasonal anime to watch!
 
-## Project State
+## 🚧 Project State
 AnimeCalendar was put in hiatus for several months due to many changes happening in my life, including work & time constraints. However, after organizing my own life calendar/schedule, no pun intended lol, AC is **back in development!**. Any UI, or feature ideas feel free to make a PR.
 
-## UI 
+## 📐 Architecture
+AnimecCalendar uses the **VIPER** arch., with some twists, for creating and maintaining modules. It's planned to have different frameworks for specific services like UserNotifications, Style, etc. Some **design patterns** used are:
+- Singleton
+- Factory
+
+## 🌇 UI
 Uses Xibs and some programmatic views.
 
-## Dependencies
+## ⚙️  Dependencies
 Current dependencies used, not planning to add more
 - RxSwift (w/ RxCocoa/RxRelay)
 
-## Setup
+## ⛩️ Setup
 Currently, the project structure aims to make every screen a *root screen* meaning the app can boot from any screen in the app. The `BootManager.swift` module is in charge of said logic. You can boot the app with `.rootTabBar` or a specific `.rootScreen(ScreenType)`.
 ```swift
 func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -31,17 +36,18 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
   }
 ```
 
-#### Demos
+## 📹 Demos
 | Home |
 | ---|
 | <img src="images/ui/home/home-demo.gif" width=250 /> |
 
-#### Home
+## 📸 Screenshots
+### Home
 | Figma | iOS |
 | --- | --- |
 | <img src="images/ui/home/figma.png" width=250 /> | <img src="images/ui/home/ios.png" width=250 /> |
 
-#### Schedule new anime
+### Schedule new anime
 | Figma | iOS |
 | --- | --- |
 | <img src="images/ui/new-anime/figma1.png" width=250 /> | <img src="images/ui/new-anime/ios1.png" width=250 /> |

@@ -47,6 +47,7 @@ extension HomeAnimeItem: ComponentCollectionItem {
         self.anime = item
         animeTitle.text = item.title
 
+        // TODO: Clean this up ... add caching ...
         let httpSession = URLSession(configuration: .default)
         let imagePath: String = item.imageType.jpgImage.normal
         print("senku [DEBUG] \(String(describing: type(of: self))) - imagePath: \(imagePath)")
