@@ -10,6 +10,6 @@ import UIKit
 
 protocol TabBarButton {
   var button: UIButton { get set }
+  var onTapAction: (() -> Void)? { get set }
   func createButton(in tabBarView: UITabBar)
-  var configureButtonAction: (() -> Void)? { get set }
 }

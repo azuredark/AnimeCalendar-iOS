@@ -8,23 +8,18 @@
 import Foundation
 
 final class RootControllerFactory {
-  private let requestsManager: RequestProtocol
+    // MARK: Methods
+    func getRootController(type rootViewControllerType: RootControllerType) -> RootViewController {
+        switch rootViewControllerType {
+            /// For TabBar with all screens
+            case .rootTabBar:
+                return TabBarManager()
 
-  init(_ requestsManager: RequestProtocol) {
-    self.requestsManager = requestsManager
-  }
-
-  func getRootController(_ rootViewControllerType: RootControllerType) -> RootViewController {
-    switch rootViewControllerType {
-      // For TabBar with all screens
-      case .rootTabBar:
-        return TabBarManager(requestsManager)
-
-      // For individual screens
-      case .rootScreen(let screen):
-        let screenFactory = ScreenFactory(requestsManager)
-        let selectedScreen: RootViewController = screenFactory.getRootScreen(screen)
-        return selectedScreen
+            /// For individual screens
+            case .rootScreen(let screen):
+                let screenFactory = ScreenFactory()
+                let selectedScreen: RootViewController = screenFactory.getRootScreen(screen)
+                return selectedScreen
+        }
     }
-  }
 }

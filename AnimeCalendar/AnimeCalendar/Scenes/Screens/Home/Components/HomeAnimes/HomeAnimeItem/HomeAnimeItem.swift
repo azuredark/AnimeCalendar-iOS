@@ -8,97 +8,105 @@
 import RxSwift
 import UIKit
 
-final class HomeAnimeItem: UICollectionViewCell, ComponentCollectionItem {
-  /// # Outlets
-  @IBOutlet private weak var animeCoverPicture: UIImageView!
-  @IBOutlet private weak var animeCoverView: UIView!
-  @IBOutlet private weak var animeContainerView: UIView!
-  @IBOutlet private weak var episodeProgressBarWidthConstraint: NSLayoutConstraint!
-  @IBOutlet private weak var episodeProgressBarView: UIView!
+final class HomeAnimeItem: UICollectionViewCell {
+    // MARK: State
+    /// # Outlets
+    @IBOutlet private weak var animeCoverPicture: UIImageView!
+    @IBOutlet private weak var animeCoverView: UIView!
+    @IBOutlet private weak var animeTitle: UILabel!
+    @IBOutlet private weak var animeContainerView: UIView!
+    @IBOutlet private weak var episodeProgressBarWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var episodeProgressBarView: UIView!
 
-  var anime: HomeAnime? {
-    didSet {
-      updateEpisodeProgress()
-    }
-  }
+    /// # Data Source
+    private var anime: JikanAnime?
 
-  var componentDidAppear: BehaviorSubject<Bool>? {
-    didSet {
-//      print("Component didSset")
-    }
-  }
+    /// # Observables
+    private let disposeBag = DisposeBag()
 
-  lazy var disposeBag = DisposeBag()
-
-  private let cornerRadius: CGFloat = 15
+    /// # Style
+    private let cornerRadius: CGFloat = 15
 }
 
-// TODO: Configure ComponentCollectionItem
+// MARK: Awake from Xib
 extension HomeAnimeItem {
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    configureComponent()
-  }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureComponent()
+    }
+
+    override func prepareForReuse() {
+        animeTitle.text = ""
+        animeCoverPicture.image = nil
+    }
+}
+
+// MARK: Setup cell
+extension HomeAnimeItem: ComponentCollectionItem {
+    func setupItem(with item: JikanAnime) {
+        self.anime = item
+        animeTitle.text = item.title
+
+        let httpSession = URLSession(configuration: .default)
+        let imagePath: String = item.imageType.jpgImage.normal
+        print("senku [DEBUG] \(String(describing: type(of: self))) - imagePath: \(imagePath)")
+        guard let url = URL(string: imagePath) else { return }
+        let httpRequest = URLRequest(url: url)
+        let httpTask = httpSession.dataTask(with: httpRequest) { [weak self] data, _, error in
+            guard let data = data, error == nil else { print("senku - request error : ("); return }
+            DispatchQueue.main.async {
+                self?.animeCoverPicture.image = UIImage(data: data)
+            }
+        }
+        httpTask.resume()
+
+        updateEpisodeProgress()
+    }
 }
 
 extension HomeAnimeItem: Component {
-  func configureComponent() {
-    configureInitialState()
-    configureView()
-  }
+    func configureComponent() {
+        configureInitialState()
+        configureView()
+    }
 
-  func configureView() {
-    configureSubviews()
-  }
+    func configureView() {
+        configureSubviews()
+    }
 
-  func configureSubviews() {
-    configurePictureView()
-    configurePictureImage()
-  }
-}
-
-extension HomeAnimeItem: Bindable {
-  // TODO: FIX BINDINGS, THIS SHOULD ONLY BE RAN ONCE DURING AWAKE-FROM-NIB
-  func configureBindings() {
-    componentDidAppear?
-      .ifEmpty(default: false)
-      .asObservable()
-      .subscribe(onNext: { [weak self] value in
-        if value {
-          self?.updateEpisodeProgress()
-        }
-      })
-      .disposed(by: disposeBag)
-  }
+    func configureSubviews() {
+        configurePictureView()
+        configurePictureImage()
+    }
 }
 
 extension HomeAnimeItem: ComponentItem {
-  func configureInitialState() {
-    contentView.backgroundColor = Color.white
-    animeCoverView.backgroundColor = Color.white
-  }
-}
-
-extension HomeAnimeItem {
-  func configurePictureView() {
-    let animeCoverShadow = Shadow(.bottom)
-    animeCoverView.addBottomShadow(shadow: animeCoverShadow, layerRadius: cornerRadius)
-  }
-
-  func configurePictureImage() {
-    animeCoverPicture.addCornerRadius(radius: cornerRadius)
-    animeContainerView.addCornerRadius(radius: cornerRadius)
-  }
-}
-
-extension HomeAnimeItem {
-  func updateEpisodeProgress() {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-      UIView.animate(withDuration: 1, delay: 0.0, animations: { [weak self] in
-        guard let strongSelf = self else { return }
-        Constraints.updateConstraintMultiplier(&strongSelf.episodeProgressBarWidthConstraint, to: 0.8)
-        strongSelf.episodeProgressBarView.superview?.layoutIfNeeded()
-      })
+    func configureInitialState() {
+        contentView.backgroundColor = Color.white
+        animeCoverView.backgroundColor = Color.white
     }
-  }
+}
+
+extension HomeAnimeItem {
+    func configurePictureView() {
+        let animeCoverShadow = Shadow(.bottom)
+        animeCoverView.addBottomShadow(shadow: animeCoverShadow, layerRadius: cornerRadius)
+    }
+
+    func configurePictureImage() {
+        animeCoverPicture.addCornerRadius(radius: cornerRadius)
+        animeContainerView.addCornerRadius(radius: cornerRadius)
+    }
+}
+
+extension HomeAnimeItem {
+    func updateEpisodeProgress() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            UIView.animate(withDuration: 1, delay: 0.0, animations: { [weak self] in
+                guard let strongSelf = self else { return }
+                Constraints.updateConstraintMultiplier(&strongSelf.episodeProgressBarWidthConstraint, to: 0.8)
+                strongSelf.episodeProgressBarView.superview?.layoutIfNeeded()
+            })
+        }
+    }
 }

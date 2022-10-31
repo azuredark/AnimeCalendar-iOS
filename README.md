@@ -1,5 +1,5 @@
 # 📅 Anime Calendar
-Anime Calendar's iOS App - Schedule your seasonal anime to watch!\
+Anime Calendar's iOS App - Schedule your seasonal anime to watch!
 
 ## Project State
 AnimeCalendar was put in hiatus for several months due to many changes happening in my life, including work & time constraints. However, after organizing my own life calendar/schedule, no pun intended lol, AC is **back in development!**. Any UI, or feature ideas feel free to make a PR.
@@ -31,6 +31,11 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
   }
 ```
 
+#### Demos
+| Home |
+| ---|
+| <img src="images/ui/home/home-demo.gif" width=250 /> |
+
 #### Home
 | Figma | iOS |
 | --- | --- |
@@ -46,6 +51,8 @@ Small Todo's yet to complete, will be filling out periodically.
 - [x] HomeScreen UI
 - [x] Make TabBar's View custom middle button work, presenting NewScheduledAnime screen.
 - [x] Refactor BootManager
+- [x] Convert modules into VIPER arch.
+- [ ] Cache Images retrieved from both Network & Local
 - [ ] ~~Animate NewScheduledAnime presentation when its TabBar button is pressed~~
 	- It's no longer a TabItem inside the TabBar
 - [x] Middle button presenting NewScheduledAnimeScreen

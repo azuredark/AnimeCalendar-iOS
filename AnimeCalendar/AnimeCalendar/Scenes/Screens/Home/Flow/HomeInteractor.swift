@@ -20,8 +20,8 @@ protocol HomeInteractive {
 final class HomeInteractor {
     // MARK: State
     private lazy var repository = AnimeRepository(requestManager)
-    private var requestManager: RequestProtocol
-    private var disposeBag = DisposeBag()
+    private let requestManager: RequestProtocol
+    private let disposeBag = DisposeBag()
 
     /// This should eventaully have an initial value from user's local storage
     private let animesObservable = BehaviorRelay<[JikanAnime]>(value: [])
@@ -47,7 +47,7 @@ extension HomeInteractor: HomeInteractive {
                 guard let strongSelf = self else { return }
                 let animes: [JikanAnime] = result.data
                 strongSelf.animesObservable.accept(animes)
-                print("senku [DEBUG] \(String(describing: type(of: self))) - animes retrieved: \(animes.map { $0.title })")
+                print("senku [DEBUG] \(String(describing: type(of: self))) - WOOF ANIMES: \(animes.map { $0.title})")
             }).disposed(by: disposeBag)
     }
 }

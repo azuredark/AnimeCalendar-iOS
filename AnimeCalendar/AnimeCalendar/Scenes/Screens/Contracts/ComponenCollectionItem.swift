@@ -8,4 +8,7 @@
 import Foundation
 import UIKit.UICollectionViewCell
 
-protocol ComponentCollectionItem: ComponentItem & UICollectionViewCell {}
+protocol ComponentCollectionItem: ComponentItem & UICollectionViewCell {
+    associatedtype T
+    func setupItem(with item: T)
+}

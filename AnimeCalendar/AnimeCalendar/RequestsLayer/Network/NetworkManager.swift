@@ -63,7 +63,6 @@ private extension NetworkManager {
 
     func decodeData<T: Decodable>(_ type: T.Type, from data: Data) -> T? {
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
             let json = try decoder.decode(type, from: data)
             return json

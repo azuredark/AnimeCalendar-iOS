@@ -39,7 +39,3 @@ extension HomePresenter: HomePresentable {
         return interactor.animes
     }
 }
-
-// Module start() -> Void
-//   presenter.start()
-//     router.start(presenter: HomePresentable)

@@ -8,14 +8,6 @@
 import Foundation
 
 final class ScreenFactory {
-    // MARK: State
-    private let requestsManager: RequestProtocol
-
-    // MARK: Initializers
-    init(_ requestsManager: RequestProtocol) {
-        self.requestsManager = requestsManager
-    }
-
     // MARK: Methods
     /// Get Screen type UIViewController.
     /// - Parameter screen: ScreenType to decide which Screen to return.
@@ -23,13 +15,13 @@ final class ScreenFactory {
     func getRootScreen(_ screen: ScreenType) -> Screen {
         switch screen {
             case .homeScreen:
-                let homeModule = HomeModule(requestsManager: requestsManager)
+                let homeModule = AnimeCalendarModule.shared.getHomeModule()
                 return homeModule.start()
             case .newAnimeScreen:
-                let newAnimeModule = NewAnimeModule(requestsManager: requestsManager)
+                let newAnimeModule = AnimeCalendarModule.shared.getNewAnimeModule()
                 return newAnimeModule.start()
             case .calendarScreen:
-                let calendarModule = CalendarModule(requestsManager: requestsManager)
+                let calendarModule = AnimeCalendarModule.shared.getCalendarModule()
                 return calendarModule.start()
         }
     }

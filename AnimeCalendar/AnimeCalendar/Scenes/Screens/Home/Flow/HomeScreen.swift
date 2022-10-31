@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class HomeScreen: UIViewController, Screen {
     /// # Presenter
@@ -19,7 +21,7 @@ final class HomeScreen: UIViewController, Screen {
     // MARK: Initializer
     init(presenter: HomePresentable) {
         super.init(nibName: Xibs.homeScreenView, bundle: Bundle.main)
-        print("\(self) inited")
+        print("senku [DEBUG] \(String(describing: type(of: self))) - init presenter: \(presenter)")
         self.presenter = presenter
         configureTabItem()
     }
@@ -31,7 +33,12 @@ final class HomeScreen: UIViewController, Screen {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureBindings()
         configureScreen()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        presenter?.updateUserAnimes(name: "Dr. Stone")
     }
 }
 
@@ -42,12 +49,17 @@ extension HomeScreen {
     }
 }
 
+extension HomeScreen: Bindable {
+    func configureBindings() {}
+}
+
 // MARK: - Configure components (UI)
 extension HomeScreen {
     func configureScreenComponents() {
+        guard let presenter = presenter else { return }
         let homeHeaderComponent: ScreenComponent = HomeHeaderComponent()
         let homeDateComponent: ScreenComponent = HomeDateComponent()
-        let homeAnimesComponent: ScreenComponent = HomeAnimesComponent()
+        let homeAnimesComponent: ScreenComponent = HomeAnimesComponent(animes: presenter.animes)
 
         addChildVC(homeHeaderComponent)
         addChildVC(homeDateComponent)

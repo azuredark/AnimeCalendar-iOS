@@ -10,75 +10,119 @@ import Foundation
 protocol Model {}
 
 struct Anime: Decodable, Model {
-  var name: String
-  var cover: String
-  var rating: Float
-  var episodesCount: Int
-  var year: Int
-  var synopsis: String
-  var genres: [AnimeGenre]
-  var onAir: Bool
+    var name: String
+    var cover: String
+    var rating: Float
+    var episodesCount: Int
+    var year: Int
+    var synopsis: String
+    var genres: [AnimeGenre]
+    var onAir: Bool
 
-  init(name: String, cover: String, rating: Float, episodesCount: Int, year: Int, synopsis: String, genres: [AnimeGenre], onAir: Bool) {
-    self.name = name
-    self.cover = cover
-    self.rating = rating
-    self.episodesCount = episodesCount
-    self.year = year
-    self.synopsis = synopsis
-    self.genres = genres
-    self.onAir = onAir
-  }
+    init(name: String, cover: String, rating: Float, episodesCount: Int, year: Int, synopsis: String, genres: [AnimeGenre], onAir: Bool) {
+        self.name = name
+        self.cover = cover
+        self.rating = rating
+        self.episodesCount = episodesCount
+        self.year = year
+        self.synopsis = synopsis
+        self.genres = genres
+        self.onAir = onAir
+    }
 
-  // Default anime
-  init() {
-    self.init(
-      name: "Komi can't communicate",
-      cover: "new-anime-item-komicantcommunicate",
-      rating: 8.5,
-      episodesCount: 12,
-      year: 2021,
-      synopsis: "Hitohito Tadano is an ordinary boy who heads into his first day of high school with a clear plan: to avoid trouble and do his best to blend in with others. Unfortunately, he fails right away when he takes the seat beside the school's madonna—Shouko Komi. His peers now recognize him as someone to eliminate for a chance to sit next to the most beautiful girl in class",
-      genres: [
-        AnimeGenre(name: "Comedy"),
-        AnimeGenre(name: "Romantic"),
-        AnimeGenre(name: "School")
-      ],
-      onAir: false
-    )
-  }
+    // Default anime
+    init() {
+        self.init(
+            name: "Komi can't communicate",
+            cover: "new-anime-item-komicantcommunicate",
+            rating: 8.5,
+            episodesCount: 12,
+            year: 2021,
+            synopsis: "Hitohito Tadano is an ordinary boy who heads into his first day of high school with a clear plan: to avoid trouble and do his best to blend in with others. Unfortunately, he fails right away when he takes the seat beside the school's madonna—Shouko Komi. His peers now recognize him as someone to eliminate for a chance to sit next to the most beautiful girl in class",
+            genres: [
+                AnimeGenre(name: "Comedy"),
+                AnimeGenre(name: "Romantic"),
+                AnimeGenre(name: "School")
+            ],
+            onAir: false
+        )
+    }
 
-  init(name: String, cover: String, onAir: Bool = false) {
-    self.init(
-      name: name,
-      cover: cover,
-      rating: 8.5,
-      episodesCount: 12,
-      year: 2021,
-      synopsis: "Hitohito Tadano is an ordinary boy who heads into his first day of high school with a clear plan: to avoid trouble and do his best to blend in with others. Unfortunately, he fails right away when he takes the seat beside the school's madonna—Shouko Komi. His peers now recognize him as someone to eliminate for a chance to sit next to the most beautiful girl in class",
-      genres: [
-        AnimeGenre(name: "Comedy"),
-        AnimeGenre(name: "Romantic"),
-        AnimeGenre(name: "School")
-      ],
-      onAir: onAir
-    )
-  }
-}
-
-struct JikanAnime: Codable {
-    var title: String
-    
-    enum CodingKeys: String, CodingKey {
-        case title = "title"
+    init(name: String, cover: String, onAir: Bool = false) {
+        self.init(
+            name: name,
+            cover: cover,
+            rating: 8.5,
+            episodesCount: 12,
+            year: 2021,
+            synopsis: "Hitohito Tadano is an ordinary boy who heads into his first day of high school with a clear plan: to avoid trouble and do his best to blend in with others. Unfortunately, he fails right away when he takes the seat beside the school's madonna—Shouko Komi. His peers now recognize him as someone to eliminate for a chance to sit next to the most beautiful girl in class",
+            genres: [
+                AnimeGenre(name: "Comedy"),
+                AnimeGenre(name: "Romantic"),
+                AnimeGenre(name: "School")
+            ],
+            onAir: onAir
+        )
     }
 }
 
-struct JikanAnimeResult: Codable {
+struct JikanAnime: Decodable {
+    var title: String = ""
+    var imageType: AnimeImageType
+    var url: String = ""
+
+    enum CodingKeys: String, CodingKey {
+        case title, url
+        case imageType = "images"
+    }
+}
+
+struct AnimeImageType: Decodable {
+    var jpgImage: AnimeImage
+    var webpImage: AnimeImage
+
+    enum CodingKeys: String, CodingKey {
+        case jpgImage = "jpg"
+        case webpImage = "webp"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        jpgImage = try container.decodeIfPresent(AnimeImage.self, forKey: .jpgImage) ?? AnimeImage()
+        webpImage = try container.decodeIfPresent(AnimeImage.self, forKey: .webpImage) ?? AnimeImage()
+    }
+}
+
+struct AnimeImage: Decodable {
+    var small: String
+    var normal: String
+    var large: String
+
+    enum CodingKeys: String, CodingKey {
+        case small = "small_image_url"
+        case normal = "image_url"
+        case large = "large_image_url"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        small = try container.decodeIfPresent(String.self, forKey: .small) ?? ""
+        normal = try container.decodeIfPresent(String.self, forKey: .normal) ?? ""
+        large = try container.decodeIfPresent(String.self, forKey: .large) ?? ""
+    }
+
+    init() {
+        self.small = "JPG ERROR"
+        self.normal = "JPG ERROR"
+        self.large = "JPG ERROR"
+    }
+}
+
+struct JikanAnimeResult: Decodable {
     // If decoding fails, this might be why lol
     var data: [JikanAnime] = []
-    
+
     enum CodingKeys: String, CodingKey {
-        case data = "data"
+        case data
     }
 }

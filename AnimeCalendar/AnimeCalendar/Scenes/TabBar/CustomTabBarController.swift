@@ -7,10 +7,12 @@
 
 import UIKit
 
-/// # Override tabbar and configure hittest
+// TODO: (Improvement) Override tabbar and configure hittest to allow button taps outside the TabBar
 final class CustomTabBarController: UITabBarController, TabBarProtocol {
+    // MARK: State
     private lazy var newScheduledAnimeButton: TabBarButton = NewScheduledAnimeButton()
 
+    // MARK: Initializers
     init() {
         super.init(nibName: nil, bundle: nil)
         configureTabBar()
@@ -31,15 +33,14 @@ extension CustomTabBarController: TabBarWithMiddleButton {
         tabBar.itemSpacing = CGFloat(180)
     }
 
-    func configureMiddleButton(in tabBarView: UITabBar) {
-        newScheduledAnimeButton.createButton(in: tabBarView)
+    func configureMiddleButton() {
+        newScheduledAnimeButton.createButton(in: tabBar)
     }
 
-    func configureMiddleButtonAction(using request: RequestProtocol) {
-        newScheduledAnimeButton.configureButtonAction = { [weak self] in
-            let newAnimeModule = NewAnimeModule(requestsManager: request)
-            let newAnimeVC = newAnimeModule.start().getRootViewController()
-            self?.present(newAnimeVC, animated: true)
+    func configureMiddleButtonAction(presenting newAnimeVC: UIViewController) {
+        newScheduledAnimeButton.onTapAction = { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.present(newAnimeVC, animated: true)
         }
     }
 }

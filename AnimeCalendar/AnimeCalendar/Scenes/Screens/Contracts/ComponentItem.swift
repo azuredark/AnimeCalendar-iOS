@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ComponentItem: Component & Bindable {
+protocol ComponentItem: Component {
   func configureInitialState()
 }

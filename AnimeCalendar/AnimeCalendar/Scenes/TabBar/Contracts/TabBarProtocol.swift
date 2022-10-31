@@ -8,10 +8,10 @@
 import UIKit
 
 protocol TabBarProtocol: UITabBarController {
-  func configureTabBar()
+    func configureTabBar()
 }
 
 protocol TabBarWithMiddleButton: TabBarProtocol {
-  func configureMiddleButton(in tabBarView: UITabBar)
-  func configureMiddleButtonAction(using request: RequestProtocol)
+    func configureMiddleButton()
+    func configureMiddleButtonAction(presenting newAnimeVC: UIViewController)
 }

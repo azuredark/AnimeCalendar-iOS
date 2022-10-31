@@ -9,39 +9,43 @@ import Foundation
 import UIKit
 
 final class TabBarManager {
-  private let requestsManager: RequestProtocol
-  private lazy var tabBarController: TabBarWithMiddleButton = CustomTabBarController()
-  private lazy var screenFactory = ScreenFactory(requestsManager)
+    // MARK: State
+    private lazy var tabBarController: TabBarWithMiddleButton = CustomTabBarController()
+    
+    // MARK: Initializers
+    init() {
+        configureTabManager()
+    }
 
-  init(_ requestsManager: RequestProtocol) {
-    self.requestsManager = requestsManager
-    configureTabManager()
-  }
+    // MARK: Methods
+    private func configureTabController(with factory: ScreenFactory) {
+        // Presented by the tapping the TabBarItem
+        let homeVC = factory.getRootScreen(.homeScreen).getRootViewController()
+        let animeCalendarVC = factory.getRootScreen(.calendarScreen).getRootViewController()
 
-  private func configureTabController() {
-    // Presented by the tapping the TabBarItem
-    let homeVC = screenFactory.getRootScreen(.homeScreen).getRootViewController()
-    let animeCalendarVC = screenFactory.getRootScreen(.calendarScreen).getRootViewController()
+        // TabBar items (ViewControllers)
+        let tabBarViewControllers = [homeVC, animeCalendarVC]
+        tabBarController.setViewControllers(tabBarViewControllers, animated: false)
+    }
 
-    // TabBar items (ViewControllers)
-    let tabBarViewControllers = [homeVC, animeCalendarVC]
-    tabBarController.setViewControllers(tabBarViewControllers, animated: false)
-  }
+    private func configureTabBarMiddleButton(with factory: ScreenFactory) {
+        /// NewAnime module
+        let newAnimeVC = factory.getRootScreen(.newAnimeScreen).getRootViewController()
+        // Configuring the Middle Button, alonside its press-action
+        tabBarController.configureMiddleButton()
+        tabBarController.configureMiddleButtonAction(presenting: newAnimeVC)
+    }
 
-  private func configureTabBarMiddleButton() {
-    // Configuring the Middle Button, alonside it's press-action
-    tabBarController.configureMiddleButton(in: tabBarController.tabBar)
-    tabBarController.configureMiddleButtonAction(using: requestsManager)
-  }
-
-   private func configureTabManager() {
-    configureTabController()
-    configureTabBarMiddleButton()
-  }
+    private func configureTabManager() {
+        let screenFactory = ScreenFactory()
+        configureTabController(with: screenFactory)
+        configureTabBarMiddleButton(with: screenFactory)
+    }
 }
 
+// MARK: Root View Controller
 extension TabBarManager: RootViewController {
-  func getRootViewController() -> UIViewController {
-    return tabBarController
-  }
+    func getRootViewController() -> UIViewController {
+        return tabBarController
+    }
 }

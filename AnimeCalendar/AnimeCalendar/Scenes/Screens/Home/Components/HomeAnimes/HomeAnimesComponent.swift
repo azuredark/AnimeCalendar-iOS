@@ -21,6 +21,10 @@ final class HomeAnimesComponent: UIViewController, ScreenComponent {
             HomeAnime(name: "Spy x Family", cover: "www"),
             HomeAnime(name: "Dr. Stone", cover: "www"),
         ]
+
+    var animes: [JikanAnime] = []
+    private let animesDriver: Driver<[JikanAnime]>
+
     private lazy var animesObservable: Observable<[HomeAnime]> = Observable.create { [unowned self] observer in
         observer.onNext(self.animesDummy)
         observer.onCompleted()
@@ -32,7 +36,8 @@ final class HomeAnimesComponent: UIViewController, ScreenComponent {
 
     let disposeBag = DisposeBag()
 
-    init() {
+    init(animes: Driver<[JikanAnime]>) {
+        self.animesDriver = animes
         super.init(nibName: Xibs.homeAnimesComponentView, bundle: Bundle.main)
     }
 
@@ -61,9 +66,9 @@ extension HomeAnimesComponent {
 
 extension HomeAnimesComponent: Component {
     func configureComponent() {
+        configureBindings()
         configureView()
         configureCollection()
-        configureBindings()
     }
 
     func configureView() {
@@ -77,23 +82,25 @@ extension HomeAnimesComponent {
     func configureCollection() {
         // Register item from Xib
         animesCollection.register(UINib(nibName: Xibs.homeAnimeItemView, bundle: Bundle.main), forCellWithReuseIdentifier: Xibs.homeAnimeItemView)
-        // Set delegate
-        animesCollection.rx.setDelegate(self).disposed(by: disposeBag)
+        // Set delegate & data source
+        animesCollection.dataSource = self
+        animesCollection.delegate = self
     }
 }
 
 extension HomeAnimesComponent: Bindable {
     func configureBindings() {
-        animesObservable
-            .bind(to: animesCollection.rx.items(cellIdentifier: Xibs.homeAnimeItemView, cellType: HomeAnimeItem.self)) { [weak self] _, anime, item in
-                // TODO: Setup logic in AnimeItem Cell
-                item.anime = anime
-                item.componentDidAppear = self?.componentDidAppear
-            }
-            .disposed(by: disposeBag)
+        animesDriver
+            .drive(onNext: { [weak self] animes in
+                guard let strongSelf = self else { return }
+                print("senku [DEBUG] \(String(describing: type(of: self))) - animesDriver: \(animes)")
+                strongSelf.animes = animes
+                strongSelf.animesCollection.reloadData()
+            }).disposed(by: disposeBag)
     }
 }
 
+// MARK: CollectionView Delegate
 extension HomeAnimesComponent: UICollectionViewDelegateFlowLayout {
     // Set CollectionViewItem (HomeAnimeItem) size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -107,5 +114,26 @@ extension HomeAnimesComponent: UICollectionViewDelegateFlowLayout {
         let height: Int = 0
         let width: Int = 15
         return CGSize(width: width, height: height)
+    }
+}
+
+// MARK: CollectionView DataSource
+extension HomeAnimesComponent: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("senku [DEBUG] \(String(describing: type(of: self))) - numberOfItemsInSection: \(animes.count)")
+        return animes.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Xibs.homeAnimeItemView, for: indexPath) as? HomeAnimeItem else {
+            fatalError("ACError - [HomeAnimesComponent] Error dequeing cell")
+        }
+        let anime: JikanAnime = animes[indexPath.item]
+        cell.setupItem(with: anime)
+        return cell
     }
 }
