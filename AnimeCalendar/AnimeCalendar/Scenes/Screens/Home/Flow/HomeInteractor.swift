@@ -19,17 +19,17 @@ protocol HomeInteractive {
 
 final class HomeInteractor {
     // MARK: State
-    private lazy var repository = AnimeRepository(requestManager)
-    private let requestManager: RequestProtocol
-    private let disposeBag = DisposeBag()
-
+    private let animeRepository: AnimeRepository
+    
+    /// # Observables
     /// This should eventaully have an initial value from user's local storage
     private let animesObservable = BehaviorRelay<[JikanAnime]>(value: [])
+    private let disposeBag = DisposeBag()
 
     // MARK: Initializers
     /// This should come from dependency injection (Swinject candidate)
-    init(requestManager: RequestProtocol) {
-        self.requestManager = requestManager
+    init(animeRepository: AnimeRepository) {
+        self.animeRepository = animeRepository
     }
 }
 
@@ -41,13 +41,12 @@ extension HomeInteractor: HomeInteractive {
     }
 
     func updateUserAnimes(name: String) {
-        repository.getAnime(name: name)
+        animeRepository.getAnime(name: name)
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] result in
                 guard let strongSelf = self else { return }
                 let animes: [JikanAnime] = result.data
                 strongSelf.animesObservable.accept(animes)
-                print("senku [DEBUG] \(String(describing: type(of: self))) - WOOF ANIMES: \(animes.map { $0.title})")
             }).disposed(by: disposeBag)
     }
 }

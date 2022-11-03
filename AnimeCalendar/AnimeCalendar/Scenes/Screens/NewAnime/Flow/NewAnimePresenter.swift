@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 protocol NewAnimePresentable: NSObject {
     func start() -> Screen
+    var searchInput: PublishSubject<String> { get }
+    var searchAnimeResult: Driver<[JikanAnime]> { get }
 }
 
 final class NewAnimePresenter: NSObject {
@@ -26,5 +30,13 @@ final class NewAnimePresenter: NSObject {
 extension NewAnimePresenter: NewAnimePresentable {
     func start() -> Screen {
         router.start(presenter: self)
+    }
+    
+    var searchInput: PublishSubject<String> {
+        interactor.searchInput
+    }
+    
+    var searchAnimeResult: Driver<[JikanAnime]> {
+        interactor.searchAnimeResult
     }
 }

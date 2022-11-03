@@ -8,21 +8,25 @@
 import Foundation
 
 protocol AnimeCalendarModular {
-   func getHomeModule() -> HomeModule
-   func getNewAnimeModule() -> NewAnimeModule
-   func getCalendarModule() -> CalendarModule
+    func getHomeModule() -> HomeModule
+    func getNewAnimeModule() -> NewAnimeModule
+    func getCalendarModule() -> CalendarModule
 }
 
+// TODO: Module dependencies should have a dictionary of repositories? Or make them Singletons?
 final class AnimeCalendarModule {
     // MARK: State
     private lazy var requestsManager = RequestsManager()
+    
+    /// # Repositories
+    private lazy var animeRepository = AnimeRepository(requestsManager)
 
     /// # Singleton instance
     static let shared = AnimeCalendarModule()
 
     /// # Modules
-    private lazy var homeModule = HomeModule(requestsManager: requestsManager)
-    private lazy var newAnimeModule = NewAnimeModule(requestsManager: requestsManager)
+    private lazy var homeModule = HomeModule(animeRepository: animeRepository)
+    private lazy var newAnimeModule = NewAnimeModule(animeRepository: animeRepository)
     private lazy var calendarModule = CalendarModule(requestsManager: requestsManager)
 
     // MARK: Initializers

@@ -93,7 +93,7 @@ extension HomeAnimesComponent: Bindable {
         animesDriver
             .drive(onNext: { [weak self] animes in
                 guard let strongSelf = self else { return }
-                print("senku [DEBUG] \(String(describing: type(of: self))) - animesDriver: \(animes)")
+                print("senku [DEBUG] \(String(describing: type(of: self))) - animes: \(animes.map { $0.title })")
                 strongSelf.animes = animes
                 strongSelf.animesCollection.reloadData()
             }).disposed(by: disposeBag)

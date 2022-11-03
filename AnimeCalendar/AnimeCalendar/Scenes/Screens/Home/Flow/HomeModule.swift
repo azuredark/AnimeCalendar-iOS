@@ -12,8 +12,8 @@ final class HomeModule {
     private let presenter: HomePresentable
     
     // MARK: Initializers
-    init(requestsManager: RequestProtocol) {
-        let interactor = HomeInteractor(requestManager: requestsManager)
+    init(animeRepository: AnimeRepository) {
+        let interactor = HomeInteractor(animeRepository: animeRepository)
         let router = HomeRouter()
         self.presenter = HomePresenter(interactor: interactor, router: router)
     }

@@ -50,7 +50,6 @@ extension HomeAnimeItem: ComponentCollectionItem {
         // TODO: Clean this up ... add caching ...
         let httpSession = URLSession(configuration: .default)
         let imagePath: String = item.imageType.jpgImage.normal
-        print("senku [DEBUG] \(String(describing: type(of: self))) - imagePath: \(imagePath)")
         guard let url = URL(string: imagePath) else { return }
         let httpRequest = URLRequest(url: url)
         let httpTask = httpSession.dataTask(with: httpRequest) { [weak self] data, _, error in

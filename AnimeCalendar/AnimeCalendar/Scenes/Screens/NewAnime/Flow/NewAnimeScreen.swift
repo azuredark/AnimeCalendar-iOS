@@ -19,12 +19,27 @@ final class NewAnimeScreen: UIViewController, Screen {
     private weak var presenter: NewAnimePresentable?
 
     /// # NavigationBar
-    lazy var navigationBar: ScreenNavigationBar = NewAnimeNavigationBar(self)
+    private lazy var navigationBar: ScreenNavigationBar = NewAnimeNavigationBar(self)
 
     /// # Components
-    private lazy var newAnimeSearchResultsComponent: NewAnimeSearchResultsComponent = {
-        let searchResults = NewAnimeSearchResultsComponent()
-        return searchResults
+    private lazy var searchBarComponent: NewAnimeSearchBarComponent = {
+        let component = NewAnimeSearchBarComponent(presenter: presenter)
+        return component
+    }()
+
+    private lazy var searchResultsComponent: NewAnimeSearchResultsComponent = {
+        let component = NewAnimeSearchResultsComponent()
+        return component
+    }()
+
+    private lazy var selectedTitleComponent: NewAnimeSelectedTitleComponent = {
+        let component = NewAnimeSelectedTitleComponent()
+        return component
+    }()
+    
+    private lazy var selectedDetailsComponent: NewAnimeSelectedDetailsComponentContainer = {
+        let component = NewAnimeSelectedDetailsComponentContainer()
+        return component
     }()
 
     // MARK: Initializers
@@ -58,38 +73,24 @@ private extension NewAnimeScreen {
 private extension NewAnimeScreen {
     // TODO: Refactor, add them directly as lazy components
     func configureScreenComponents() {
-        /// # Components
-        let newAnimeSearchBarComponent: ScreenComponent = NewAnimeSearchBarComponent()
-        let newAnimeSelectedTitleComponent: ScreenComponent = NewAnimeSelectedTitleComponent()
-        let newAnimeSelectedDetailsComponent: ScreenComponentContainer = NewAnimeSelectedDetailsComponentContainer()
 
         /// # Add Screen's Components
-        addChildVC(newAnimeSearchBarComponent)
-        addChildVC(newAnimeSearchResultsComponent)
-        addChildVC(newAnimeSelectedTitleComponent)
-        addChildVC(newAnimeSelectedDetailsComponent)
+        addChildVC(searchBarComponent)
+        addChildVC(searchResultsComponent)
+        addChildVC(selectedTitleComponent)
+        addChildVC(selectedDetailsComponent)
         print("NewAnimeScreen children VCs: \(children)")
 
         /// # Configure Component's constraints
-        configureComponentsConstraints(
-            newAnimeSearchBarComponent,
-            newAnimeSearchResultsComponent,
-            newAnimeSelectedTitleComponent,
-            newAnimeSelectedDetailsComponent
-        )
+        configureComponentsConstraints()
     }
 }
 
 // MARK: - Constraints
 private extension NewAnimeScreen {
-    func configureComponentsConstraints(
-        _ newAnimeSearchBar: ScreenComponent,
-        _ newAnimeSearchResults: ScreenComponent,
-        _ newAnimeSelectedTitle: ScreenComponent,
-        _ newAnimeSelectedDetails: ScreenComponentContainer
-    ) {
+    func configureComponentsConstraints() {
         /// # NewAnimeSearchBarComponent
-        let newAnimeSearchBarView: UIView = newAnimeSearchBar.view
+        let newAnimeSearchBarView: UIView = searchBarComponent.view
         newAnimeSearchBarView.translatesAutoresizingMaskIntoConstraints = false
         /// Constraints
         NSLayoutConstraint.activate([
@@ -100,7 +101,7 @@ private extension NewAnimeScreen {
         ])
 
         /// # NewAnimeSearchResultsComponent
-        let newAnimeSearchResultsView: UIView = newAnimeSearchResults.view
+        let newAnimeSearchResultsView: UIView = searchResultsComponent.view
         newAnimeSearchResultsView.translatesAutoresizingMaskIntoConstraints = false
         /// Constraints
         NSLayoutConstraint.activate([
@@ -111,7 +112,7 @@ private extension NewAnimeScreen {
         ])
 
         /// # NewAnimeSeletedTitleComponent
-        let newAnimeSelectedTitleView: UIView = newAnimeSelectedTitle.view
+        let newAnimeSelectedTitleView: UIView = selectedTitleComponent.view
         newAnimeSelectedTitleView.translatesAutoresizingMaskIntoConstraints = false
         /// Constraints
         NSLayoutConstraint.activate([
@@ -122,7 +123,7 @@ private extension NewAnimeScreen {
         ])
 
         /// # NewAnimeDetailsComponent
-        let newAnimeSelectedDetailsView: UIView = newAnimeSelectedDetails.view
+        let newAnimeSelectedDetailsView: UIView = selectedDetailsComponent.view
         newAnimeSelectedDetailsView.translatesAutoresizingMaskIntoConstraints = false
         /// Constraints
         NSLayoutConstraint.activate([
@@ -139,7 +140,7 @@ extension NewAnimeScreen: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // cancel scrollview scrolling
         print("new-anime: scrollViewDidScroll")
-        newAnimeSearchResultsComponent.resetCollectionOffset()
+        searchResultsComponent.resetCollectionOffset()
     }
 }
 

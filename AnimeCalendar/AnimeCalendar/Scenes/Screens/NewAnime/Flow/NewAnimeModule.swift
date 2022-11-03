@@ -12,8 +12,8 @@ final class NewAnimeModule {
     private let presenter: NewAnimePresentable
 
     // MARK: Initializers
-    init(requestsManager: RequestProtocol) {
-        let interactor = NewAnimeInteractor(requestsManager: requestsManager)
+    init(animeRepository: AnimeRepository) {
+        let interactor = NewAnimeInteractor(animeRepository: animeRepository)
         let router = NewAnimeRouter()
         self.presenter = NewAnimePresenter(interactor: interactor, router: router)
     }
