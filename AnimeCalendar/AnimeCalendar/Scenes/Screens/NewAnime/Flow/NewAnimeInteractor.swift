@@ -43,7 +43,7 @@ private extension NewAnimeInteractor {
     /// Listens to valid user input, transforms it into an JikanAnime observable and binds to it.
     func bindSearchObservable() {
         inputSearchAnimeObservable
-            .flatMap { [weak self] text -> Observable<[JikanAnime]> in
+            .flatMapLatest { [weak self] text -> Observable<[JikanAnime]> in
                 guard let self = self else { return Observable.just(JikanAnimeResult().data) }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - text: \(text)")
                 return self.animeRepository.getAnime(name: text).compactMap { $0?.data }
