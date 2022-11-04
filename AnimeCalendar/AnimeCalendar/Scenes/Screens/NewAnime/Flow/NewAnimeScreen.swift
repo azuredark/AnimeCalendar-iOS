@@ -28,7 +28,7 @@ final class NewAnimeScreen: UIViewController, Screen {
     }()
 
     private lazy var searchResultsComponent: NewAnimeSearchResultsComponent = {
-        let component = NewAnimeSearchResultsComponent()
+        let component = NewAnimeSearchResultsComponent(presenter: presenter)
         return component
     }()
 

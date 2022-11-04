@@ -23,32 +23,31 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
     @IBOutlet private weak var animeGenreCollection: UICollectionView!
 
     /// # Observables
-    private var searchResultAnime = PublishSubject<Anime>()
+    private let animeObservable = PublishSubject<JikanAnime>()
     private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
+    
     private var disposeBag = DisposeBag()
-
-    /// # Properties
-    var anime: Anime? {
-        didSet {
-            guard let anime = self.anime else { return }
-            searchResultAnime.onNext(anime)
-            searchResultAnimeGenre.onNext(anime.genres)
-        }
-    }
 }
 
 extension NewAnimeSearchResultItem {
     override func awakeFromNib() {
         super.awakeFromNib()
+        print("senku [DEBUG] \(String(describing: type(of: self))) - AWAKKKE FROM XIBBBB!!!!")
         configureComponent()
     }
 
-    override func prepareForReuse() {}
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        animeTitleLabel.text = ""
+        animeSynopsisTextView.text = ""
+        animeCoverImage.image = nil
+    }
 }
 
 extension NewAnimeSearchResultItem: ComponentCollectionItem {
-    // TODO: Setup the Item with this method
-    func setupItem(with item: JikanAnime) {}
+    func setupItem(with item: JikanAnime) {
+        animeObservable.onNext(item)
+    }
 }
 
 extension NewAnimeSearchResultItem: Component {
@@ -74,43 +73,62 @@ extension NewAnimeSearchResultItem: Component {
 }
 
 extension NewAnimeSearchResultItem: Bindable {
-    // TODO: Add missing bindings
     /// # Configure bindings (Rx)
     func configureBindings() {
         /// # animeTitleLabel (Rx)
-        searchResultAnime
-            .map { $0.name }
-            .bind(to: animeTitleLabel.rx.text)
-            .disposed(by: disposeBag)
+        bindTitle()
+        bindSynopsis()
+        bindCoverImage()
+    }
 
-        /// # animeSynopsisTextView (Rx)
-        searchResultAnime
-            .map { anime in
+    /// Bind title
+    func bindTitle() {
+        animeObservable
+            .map { $0.title }
+            .asDriver(onErrorJustReturn: "")
+            .drive(animeTitleLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+
+    /// Bind synopsis
+    func bindSynopsis() {
+        animeObservable
+            .map { [weak self] anime in
+                guard let self = self else { return NSAttributedString(string: "Synopsis") }
                 let synopsis: String = anime.synopsis
                 let synopsisText: String = "Synopsis: \(synopsis)"
                 let attributedSynopsis: NSAttributedString = self.generateAttributedSynopsis(synopsisText)
                 return attributedSynopsis
             }
-            .bind(to: animeSynopsisTextView.rx.attributedText)
+            .asDriver(onErrorJustReturn: NSAttributedString(string: ""))
+            .drive(animeSynopsisTextView.rx.attributedText)
             .disposed(by: disposeBag)
-
-        // TODO: SHOULD CALL VIEWMODEL METHOD
-        /// # animeCoverImage (Rx)
-        searchResultAnime
-            .subscribe(onNext: { [weak self] anime in
-                self?.animeCoverImage.imageFromBundle(imageName: anime.cover)
-                print("Cover url: \(anime.cover)")
-            })
-            .disposed(by: disposeBag)
-
-        /// # onAirImage (Rx)
-        searchResultAnime
-            .map { !$0.onAir }
-            .bind(to: animeOnAirImage.rx.isHidden)
-            .disposed(by: disposeBag)
-
-        configureGenreCollectionBindings() // * review
     }
+
+    /// Bind cover image
+    func bindCoverImage() {}
+
+    /// Bind stars
+    func bindStars() {}
+
+    /// Bind on air
+    func bindOnAir() {}
+
+    /// # animeCoverImage (Rx)
+//        animeObservable
+//            .subscribe(onNext: { [weak self] anime in
+//                self?.animeCoverImage.imageFromBundle(imageName: anime.cover)
+//                print("Cover url: \(anime.cover)")
+//            })
+//            .disposed(by: disposeBag)
+
+    /// # onAirImage (Rx)
+//        animeObservable
+//            .map { !$0.onAir }
+//            .bind(to: animeOnAirImage.rx.isHidden)
+//            .disposed(by: disposeBag)
+
+//        configureGenreCollectionBindings()
 }
 
 extension NewAnimeSearchResultItem: ComponentItem {

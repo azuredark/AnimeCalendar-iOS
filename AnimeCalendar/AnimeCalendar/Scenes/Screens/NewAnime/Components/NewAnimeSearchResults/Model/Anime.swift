@@ -67,13 +67,30 @@ struct Anime: Decodable, Model {
 }
 
 struct JikanAnime: Decodable {
-    var title: String = ""
+    var title: String
     var imageType: AnimeImageType
-    var url: String = ""
+    var malURL: String
+    var synopsis: String
 
     enum CodingKeys: String, CodingKey {
-        case title, url
+        case title, synopsis
+        case malURL = "url"
         case imageType = "images"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        title = try container.decode(String.self, forKey: .title)
+        malURL = try container.decodeIfPresent(String.self, forKey: .malURL) ?? ""
+        imageType = try container.decode(AnimeImageType.self, forKey: .imageType)
+        synopsis = try container.decodeIfPresent(String.self, forKey: .synopsis) ?? ""
+    }
+    
+    init() {
+        self.title = ""
+        self.imageType = AnimeImageType()
+        self.malURL = ""
+        self.synopsis = ""
     }
 }
 
@@ -90,6 +107,11 @@ struct AnimeImageType: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         jpgImage = try container.decodeIfPresent(AnimeImage.self, forKey: .jpgImage) ?? AnimeImage()
         webpImage = try container.decodeIfPresent(AnimeImage.self, forKey: .webpImage) ?? AnimeImage()
+    }
+    
+    init() {
+        self.jpgImage = AnimeImage()
+        self.webpImage = AnimeImage()
     }
 }
 

@@ -20,7 +20,7 @@ final class NewAnimeInteractor {
 
     /// # Observables
     private let inputSearchAnimeObservable = PublishSubject<String>()
-    private let searchResultAnimeObservable = BehaviorSubject<[JikanAnime]>(value: [])
+    private let searchResultAnimeObservable = PublishSubject<[JikanAnime]>()
     
     private let disposeBag = DisposeBag()
 
@@ -60,7 +60,6 @@ extension NewAnimeInteractor: NewAnimeInteractive {
     }
     
     var searchAnimeResult: Driver<[JikanAnime]> {
-        /// Skips the 1st event, as it's empty for being a BehaviorSubject
-        searchResultAnimeObservable.skip(1).asDriver(onErrorJustReturn: [])
+        searchResultAnimeObservable.asDriver(onErrorJustReturn: [])
     }
 }

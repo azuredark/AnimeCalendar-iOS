@@ -14,24 +14,27 @@ final class NetworkManager: Requestable {
     func makeRequest<T: Decodable>(_ model: T.Type, _ service: Service, _ completion: @escaping (Result<T?, Error>) -> Void) {
         let endpoint: EndpointType = getEndpoint(from: service)
 
-        router.request(endpoint: endpoint) { [weak self] data, response, error in
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let strongSelf = self else { return }
-            let httpResponse = strongSelf.handleHTTPResponse(response: response)
+            strongSelf.router.request(endpoint: endpoint) { [weak self] data, response, error in
+                guard let strongSelf = self else { return }
+                let httpResponse = strongSelf.handleHTTPResponse(response: response)
 
-            if case .success = httpResponse, let data = data {
-                guard let json = strongSelf.decodeData(model, from: data) else {
-                    completion(.failure(JSONDecodingError.errorDecoding))
-                    return
+                if case .success = httpResponse, let data = data {
+                    print("senku [DEBUG] \(String(describing: type(of: self))) - success data!!!")
+                    guard let json = strongSelf.decodeData(model, from: data) else {
+                        completion(.failure(JSONDecodingError.errorDecoding))
+                        return
+                    }
+                    completion(.success(json))
                 }
-                completion(.success(json))
-            }
 
-            if let error = error { completion(.failure(error)) }
+                if let error = error { completion(.failure(error)) }
 
-            if case .failure(let msg) = httpResponse {
-                print("senku [DEBUG] \(String(describing: type(of: self))) - ACError: \(msg)")
-                // TODO: Handle failure message
-//                completion(.failure(error))
+                if case .failure(let msg) = httpResponse {
+                    print("senku [DEBUG] \(String(describing: type(of: self))) - ACError: \(msg)")
+                    // TODO: Handle failure message
+                }
             }
         }
     }

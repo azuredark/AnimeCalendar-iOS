@@ -75,6 +75,13 @@ extension NewAnimeSearchBarComponent: Bindable {
             .distinctUntilChanged()
             .bind(to: presenter.searchInput)
             .disposed(by: disposeBag)
+        
+        newAnimeSearchBar.rx.textDidEndEditing
+            .subscribe(onNext: { a in
+               print("senku [DEBUG] \(String(describing: type(of: self))) - END EDITTINGGG!!! ")
+            }).disposed(by: disposeBag)
+        
+        
     }
     
     func bindSearchResult() {
