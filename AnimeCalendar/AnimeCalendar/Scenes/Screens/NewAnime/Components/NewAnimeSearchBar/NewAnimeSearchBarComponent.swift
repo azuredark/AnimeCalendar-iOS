@@ -80,8 +80,6 @@ extension NewAnimeSearchBarComponent: Bindable {
             .subscribe(onNext: { a in
                print("senku [DEBUG] \(String(describing: type(of: self))) - END EDITTINGGG!!! ")
             }).disposed(by: disposeBag)
-        
-        
     }
     
     func bindSearchResult() {

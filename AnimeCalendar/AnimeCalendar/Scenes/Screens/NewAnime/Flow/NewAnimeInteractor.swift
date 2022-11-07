@@ -12,6 +12,7 @@ import RxCocoa
 protocol NewAnimeInteractive {
     var searchInput: PublishSubject<String> { get }
     var searchAnimeResult: Driver<[JikanAnime]> { get }
+    func getImageObservable(from path: String) -> Observable<UIImage>
 }
 
 final class NewAnimeInteractor {
@@ -21,7 +22,7 @@ final class NewAnimeInteractor {
     /// # Observables
     private let inputSearchAnimeObservable = PublishSubject<String>()
     private let searchResultAnimeObservable = PublishSubject<[JikanAnime]>()
-    
+
     private let disposeBag = DisposeBag()
 
     // MARK: Initializers
@@ -58,8 +59,19 @@ extension NewAnimeInteractor: NewAnimeInteractive {
     var searchInput: PublishSubject<String> {
         inputSearchAnimeObservable
     }
-    
+
     var searchAnimeResult: Driver<[JikanAnime]> {
         searchResultAnimeObservable.asDriver(onErrorJustReturn: [])
+    }
+
+    func getImageObservable(from path: String) -> Observable<UIImage> {
+        animeRepository.getResource(in: .newAnimeScreen, path: path)
+            .flatMapLatest { data -> Observable<UIImage> in
+                .create { observable in
+                    observable.onNext(UIImage(data: data) ?? UIImage(named: "new-anime-item-drstone")!)
+                    observable.onCompleted()
+                    return Disposables.create()
+                }
+            }
     }
 }

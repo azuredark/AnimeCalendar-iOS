@@ -271,8 +271,8 @@
 		A74F98622816103C003A1073 /* RequestsLayer */ = {
 			isa = PBXGroup;
 			children = (
-				A76FFA08290F18CB007209E8 /* Local */,
 				A74F986528161284003A1073 /* RequestsManager.swift */,
+				A76FFA08290F18CB007209E8 /* Local */,
 				A764DC2428BF0BBD005A68B0 /* Cache */,
 				A764DC2328BF0BB2005A68B0 /* Mock */,
 				A764DC1028BEC4E9005A68B0 /* Repository */,

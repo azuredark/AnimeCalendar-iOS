@@ -9,15 +9,23 @@ import Foundation
 
 // https://api.jikan.moe/v4/anime
 final class NetworkManager: Requestable {
+    // MARK: State
+    /// # Cache
+    private lazy var homeCache = CacheFactory().getCacheModule(from: .homeScreen)
+    private lazy var newAnimeCache = CacheFactory().getCacheModule(from: .newAnimeScreen)
+    private lazy var calendarCache = CacheFactory().getCacheModule(from: .calendarScreen)
+
+    /// # Router
     private lazy var router = Router()
 
+    // MARK: Methods
     func makeRequest<T: Decodable>(_ model: T.Type, _ service: Service, _ completion: @escaping (Result<T?, Error>) -> Void) {
         let endpoint: EndpointType = getEndpoint(from: service)
 
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.router.request(endpoint: endpoint) { [weak self] data, response, error in
-                guard let strongSelf = self else { return }
+
+            strongSelf.router.request(endpoint: endpoint) { data, response, error in
                 let httpResponse = strongSelf.handleHTTPResponse(response: response)
 
                 if case .success = httpResponse, let data = data {
@@ -39,6 +47,34 @@ final class NetworkManager: Requestable {
         }
     }
 
+    func makeResourceRequest(in screen: ScreenType, from path: String, _ completion: @escaping (Result<Data, Error>) -> Void) {
+        /// Check if the path is empty
+        guard !path.isEmpty else { completion(.failure(NetworkError.errorPathEmpty)); return }
+        
+        // Check for the resource in the cache first
+        let cache: CacheManager = initializeCache(type: screen)
+        if let cacheValue = cache.load(from: path), let unwrapped = cacheValue.value as? Data {
+            completion(.success(unwrapped))
+            print("senku [DEBUG] \(String(describing: type(of: self))) - FOUND IN CACHE")
+            return
+        }
+
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            guard let strongSelf = self else { completion(.failure(NetworkError.errorMissingURL)); return }
+            guard let url = URL(string: path) else { completion(.failure(NetworkError.errorMissingURL)); return }
+
+            strongSelf.router.request(from: url) { data, response, error in
+                let httpResponse = strongSelf.handleHTTPResponse(response: response)
+                if case .success = httpResponse, let data = data {
+                    print("senku [DEBUG] \(String(describing: type(of: self))) - image success!! | data: \(data)")
+                    cache.save(key: path, value: data)
+                    completion(.success(data))
+                }
+                if let error = error { completion(.failure(error)) }
+            }
+        }
+    }
+
     // TODO: Could this be refacored in some way?? All cases return endpoint
     private func getEndpoint(from service: Service) -> EndpointType {
         switch service {
@@ -48,6 +84,17 @@ final class NetworkManager: Requestable {
                 return endpoint
             case .user(let endpoint):
                 return endpoint
+        }
+    }
+
+    private func initializeCache(type screenType: ScreenType) -> CacheManager {
+        switch screenType {
+            case .homeScreen:
+                return homeCache
+            case .newAnimeScreen:
+                return newAnimeCache
+            case .calendarScreen:
+                return calendarCache
         }
     }
 }

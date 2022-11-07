@@ -88,10 +88,20 @@ extension NewAnimeSearchResultsComponent {
 extension NewAnimeSearchResultsComponent: Bindable {
     func configureBindings() {
         presenter?.searchAnimeResult
-            .drive(newAnimeSearchResults.rx.items(cellIdentifier: Xibs.newAnimeSearchResultItemView, cellType: NewAnimeSearchResultItem.self)) { _, anime, item in
+            .drive(newAnimeSearchResults.rx.items(cellIdentifier: Xibs.newAnimeSearchResultItemView, cellType: NewAnimeSearchResultItem.self)) { [weak self] _, anime, item in
+                guard let strongSelf = self else { return }
+                item.presenter = strongSelf.presenter
                 item.setupItem(with: anime)
             }
             .disposed(by: disposeBag)
+
+//        presenter?.searchAnimeResult
+//            .drive(onNext: { [weak self] _ in
+//                guard let strongSelf = self else { return }
+//                UIView.animate(withDuration: 0.2, delay: .zero) {
+//                    strongSelf.newAnimeSearchResults.contentOffset = .zero
+//                }
+//            }).disposed(by: disposeBag)
     }
 }
 

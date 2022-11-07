@@ -17,5 +17,7 @@ enum NetworkError: String, Error {
     case errorParametersNil         = "ACError - Parameters were nil."
     case errorEncodingFailed        = "ACError - Parameters encoding failed."
     case errorMissingURL            = "ACError - URL is nil."
+    case errorPathEmpty             = "ACError - URL path is empty."
+    case errorReference             = "ACError - Error accessing scope's reference."
     case errorCreatingUrlComponents = "ACError - Can't create URLComponents"
 }

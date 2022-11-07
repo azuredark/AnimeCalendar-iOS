@@ -19,24 +19,34 @@ final class Router {
     private var task: URLSessionTask?
 
     /// Create a network request using an input Endpoint.
-    ///
     /// - Parameter endpoint: Endpoint containing all information related to the request.
-    /// - Parameter completion: Closure of type Result<Data, Error> which returns the output of the request
+    /// - Parameter completion: Closure of type RequestResponse  which returns the output of the request
     func request(endpoint: EndpointType, completion: @escaping RequestResponse) {
         do {
             let httpSession = URLSession(configuration: .ephemeral)
             let httpRequest: URLRequest = try buildHttpRequest(endpoint: endpoint)
             print("senku [DEBUG] \(String(describing: type(of: self))) - endpoint: \(httpRequest.url?.absoluteURL)")
-            task = httpSession.dataTask(with: httpRequest, completionHandler: { data, response, error in
+            task = httpSession.dataTask(with: httpRequest) { data, response, error in
                 if let error = error { completion(nil, nil, error) }
-
                 if let data = data { completion(data, response, nil) }
-                // Cancel task afterwards???
-            })
+            }
             task?.resume()
         } catch {
             completion(nil, nil, error)
         }
+    }
+
+    /// Create network request using an input URL. Should be used for images
+    /// - Parameter url: URL to fetch data from.
+    /// - Parameter completion: Closure of type RequestResponse which returns the output of the request
+    func request(from url: URL, completion: @escaping RequestResponse) {
+        let httpSession = URLSession(configuration: .default)
+        let httpRequest = URLRequest(url: url)
+        task = httpSession.dataTask(with: httpRequest) { data, response, error in
+            if let error = error { completion(nil, nil, error) }
+            if let data = data { completion(data, response, nil) }
+        }
+        task?.resume()
     }
 
     func cancel() {

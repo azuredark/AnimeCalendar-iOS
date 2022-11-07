@@ -25,14 +25,19 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
     /// # Observables
     private let animeObservable = PublishSubject<JikanAnime>()
     private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
-    
+    weak var presenter: NewAnimePresentable? {
+        didSet {
+            print("senku [DEBUG] \(String(describing: type(of: self))) - PRESENTER IS SET !!!")
+            bindCoverImage()
+        }
+    }
+
     private var disposeBag = DisposeBag()
 }
 
 extension NewAnimeSearchResultItem {
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("senku [DEBUG] \(String(describing: type(of: self))) - AWAKKKE FROM XIBBBB!!!!")
         configureComponent()
     }
 
@@ -78,7 +83,7 @@ extension NewAnimeSearchResultItem: Bindable {
         /// # animeTitleLabel (Rx)
         bindTitle()
         bindSynopsis()
-        bindCoverImage()
+//        bindCoverImage()
     }
 
     /// Bind title
@@ -106,7 +111,22 @@ extension NewAnimeSearchResultItem: Bindable {
     }
 
     /// Bind cover image
-    func bindCoverImage() {}
+    func bindCoverImage() {
+        print("senku [DEBUG] \(String(describing: type(of: self))) - COVERRR IMAGE BINDDD")
+        animeObservable
+            .map { $0.imageType.jpgImage.normal }
+            .flatMapLatest { [weak presenter] path -> Driver<UIImage> in
+                print("senku [DEBUG] \(String(describing: type(of: self))) - PATH FROM BIND: \(path)")
+                guard let presenter = presenter else {
+                    print("senku [DEBUG] \(String(describing: type(of: self))) - PRESENTER RIIIP")
+                    return Observable.just(UIImage(named: "new-anime-item-drstone")!).asDriver(onErrorJustReturn: UIImage(named: "new-anime-item-drstone")!)
+                }
+                print("senku [DEBUG] \(String(describing: type(of: self))) - PRESENTER EXISSSSTS!")
+                return presenter.getAnimeCoverImage(path: path)
+            }.asDriver(onErrorJustReturn: UIImage(named: "new-anime-item-drstone")!)
+            .drive(animeCoverImage.rx.image)
+            .disposed(by: disposeBag)
+    }
 
     /// Bind stars
     func bindStars() {}
