@@ -22,7 +22,7 @@ final class NetworkManager: Requestable {
     func makeRequest<T: Decodable>(_ model: T.Type, _ service: Service, _ completion: @escaping (Result<T?, Error>) -> Void) {
         let endpoint: EndpointType = getEndpoint(from: service)
 
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let strongSelf = self else { return }
 
             strongSelf.router.request(endpoint: endpoint) { data, response, error in
@@ -51,15 +51,16 @@ final class NetworkManager: Requestable {
         /// Check if the path is empty
         guard !path.isEmpty else { completion(.failure(NetworkError.errorPathEmpty)); return }
         
+        #warning("Shit ton of instances are being created of the cache wtf")
         // Check for the resource in the cache first
-        let cache: CacheManager = initializeCache(type: screen)
-        if let cacheValue = cache.load(from: path), let unwrapped = cacheValue.value as? Data {
-            completion(.success(unwrapped))
-            print("senku [DEBUG] \(String(describing: type(of: self))) - FOUND IN CACHE")
-            return
-        }
+//        let cache: CacheManager = initializeCache(type: screen)
+//        if let cacheValue = cache.load(from: path), let unwrapped = cacheValue.value as? Data {
+//            completion(.success(unwrapped))
+//            print("senku [DEBUG] \(String(describing: type(of: self))) - FOUND IN CACHE")
+//            return
+//        }
 
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let strongSelf = self else { completion(.failure(NetworkError.errorMissingURL)); return }
             guard let url = URL(string: path) else { completion(.failure(NetworkError.errorMissingURL)); return }
 
@@ -67,7 +68,7 @@ final class NetworkManager: Requestable {
                 let httpResponse = strongSelf.handleHTTPResponse(response: response)
                 if case .success = httpResponse, let data = data {
                     print("senku [DEBUG] \(String(describing: type(of: self))) - image success!! | data: \(data)")
-                    cache.save(key: path, value: data)
+//                    cache.save(key: path, value: data)
                     completion(.success(data))
                 }
                 if let error = error { completion(.failure(error)) }
