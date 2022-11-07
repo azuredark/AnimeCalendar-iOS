@@ -112,6 +112,7 @@ extension NewAnimeSearchResultItem: Bindable {
 
     /// Bind cover image
     func bindCoverImage() {
+        #warning("There so much code not related to the cell here. the flatmap transormation should happen somewhere else.")
         print("senku [DEBUG] \(String(describing: type(of: self))) - COVERRR IMAGE BINDDD")
         animeObservable
             .map { $0.imageType.jpgImage.normal }

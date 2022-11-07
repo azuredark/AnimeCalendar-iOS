@@ -90,6 +90,7 @@ extension NewAnimeSearchResultsComponent: Bindable {
         presenter?.searchAnimeResult
             .drive(newAnimeSearchResults.rx.items(cellIdentifier: Xibs.newAnimeSearchResultItemView, cellType: NewAnimeSearchResultItem.self)) { [weak self] _, anime, item in
                 guard let strongSelf = self else { return }
+                #warning("Sooo I should not be passing the presenter to the item, there has to be another way")
                 item.presenter = strongSelf.presenter
                 item.setupItem(with: anime)
             }
