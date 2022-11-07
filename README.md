@@ -37,9 +37,10 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 ```
 
 ## 📹 Demos
-| Home |
-| ---|
+| Home | New Anime |
+| ---| --- |
 | <img src="images/ui/home/home-demo.gif" width=250 /> |
+| <img src="images/ui/home/new-anime-demo.gif" width=250 /> |
 
 ## 📸 Screenshots
 ### Home
