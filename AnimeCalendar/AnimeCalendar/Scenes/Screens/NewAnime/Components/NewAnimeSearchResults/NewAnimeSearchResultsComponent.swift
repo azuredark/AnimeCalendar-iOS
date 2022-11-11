@@ -87,10 +87,11 @@ extension NewAnimeSearchResultsComponent {
 
 extension NewAnimeSearchResultsComponent: Bindable {
     func configureBindings() {
-        presenter?.searchAnimeResult
-            .drive(newAnimeSearchResults.rx.items(cellIdentifier: Xibs.newAnimeSearchResultItemView, cellType: NewAnimeSearchResultItem.self)) { [weak self] _, anime, item in
-                guard let strongSelf = self else { return }
-                item.presenter = strongSelf.presenter
+        guard let presenter = presenter else { return }
+        presenter.searchAnimeResult
+            .drive(newAnimeSearchResults.rx.items(cellIdentifier: Xibs.newAnimeSearchResultItemView, cellType: NewAnimeSearchResultItem.self)) { [weak presenter] _, anime, item in
+                guard let presenter = presenter else { return }
+                item.presenter = presenter
                 item.setupItem(with: anime)
             }
             .disposed(by: disposeBag)

@@ -19,11 +19,12 @@ class GenericRepository {
 
     // MARK: Methods
     func getResource(in screen: ScreenType, path: String) -> Observable<Data> {
-        print("senku [DEBUG] \(String(describing: type(of: self))) - getResource()")
-        print("senku [DEBUG] \(String(describing: type(of: self))) - path: \(path)")
+//        print("senku [DEBUG] \(String(describing: type(of: self))) - path: \(path)")
         return .create { [weak self] observer in
-            print("senku [DEBUG] \(String(describing: type(of: self))) - WOOOOOOOOOOOOOOOOOOOF")
-            guard let strongSelf = self else { print("senku [DEBUG] \(String(describing: type(of: self))) - FUCKKKK"); return Disposables.create() }
+            guard let strongSelf = self else {
+                print("senku [DEBUG] \(String(describing: type(of: self))) - FUCKKKK")
+                return Disposables.create()
+            }
 
             strongSelf.requestsManager.network.makeResourceRequest(in: screen, from: path) { result in
                 switch result {
@@ -36,6 +37,19 @@ class GenericRepository {
                 observer.onCompleted()
             }
             return Disposables.create()
+        }
+    }
+    
+    func getResourceV2(in screen: ScreenType, path: String, completion: @escaping (Data?) -> Void) {
+         requestsManager.network.makeResourceRequest(in: screen, from: path) { result in
+             switch result {
+                 case .success(let data):
+                     completion(data)
+                 case .failure(let error):
+                     print("senku [DEBUG] \(String(describing: type(of: self))) - error: \(error)")
+                     completion(nil)
+             }
+
         }
     }
 }

@@ -9,6 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+#warning("Remove RxSwift to prevent memory leaks")
 final class NewAnimeSearchResultItem: UICollectionViewCell {
     /// # Outlets
     @IBOutlet private weak var animeContainerView: UIView!
@@ -25,9 +26,7 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
     /// # Observables
     private let animeObservable = PublishSubject<JikanAnime>()
     private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
-    weak var presenter: NewAnimePresentable? {
-        didSet { bindCoverImage() }
-    }
+    weak var presenter: NewAnimePresentable?
     
     private var disposeBag = DisposeBag()
 }
@@ -40,6 +39,7 @@ extension NewAnimeSearchResultItem {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        presenter = nil
         animeTitleLabel.text = ""
         animeSynopsisTextView.text = ""
         animeCoverImage.image = nil
@@ -49,6 +49,14 @@ extension NewAnimeSearchResultItem {
 extension NewAnimeSearchResultItem: ComponentCollectionItem {
     func setupItem(with item: JikanAnime) {
         animeObservable.onNext(item)
+        
+        /// Setting image
+        presenter?.getAnimeCoverImageV2(path: item.imageType.jpgImage.normal, completion: { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.animeCoverImage.image = image
+            }
+        })
     }
 }
 
@@ -81,6 +89,10 @@ extension NewAnimeSearchResultItem: Bindable {
         bindTitle()
         bindSynopsis()
 //        bindCoverImage()
+        
+        animeObservable.subscribe(onNext: { value in
+            print("senku [DEBUG] \(String(describing: type(of: self))) - NEW ANIME: \(value.title)")
+        }).disposed(by: disposeBag)
     }
 
     /// Bind title

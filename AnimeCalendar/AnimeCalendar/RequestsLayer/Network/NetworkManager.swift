@@ -67,7 +67,6 @@ final class NetworkManager: Requestable {
             strongSelf.router.request(from: url) { data, response, error in
                 let httpResponse = strongSelf.handleHTTPResponse(response: response)
                 if case .success = httpResponse, let data = data {
-                    print("senku [DEBUG] \(String(describing: type(of: self))) - image success!! | data: \(data)")
 //                    cache.save(key: path, value: data)
                     completion(.success(data))
                 }

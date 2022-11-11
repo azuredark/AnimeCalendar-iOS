@@ -12,6 +12,7 @@ import RxCocoa
 protocol NewAnimePresentable: NSObject {
     func start() -> Screen
     func getAnimeCoverImage(path: String) -> Driver<UIImage>
+    func getAnimeCoverImageV2(path: String, completion: @escaping (UIImage) -> Void)
     var searchInput: PublishSubject<String> { get }
     var searchAnimeResult: Driver<[JikanAnime]> { get }
 }
@@ -45,5 +46,9 @@ extension NewAnimePresenter: NewAnimePresentable {
         interactor.getImageObservable(from: path)
             .compactMap { $0 }
             .asDriver(onErrorJustReturn: UIImage(named: "new-anime-item-drstone")!)
+    }
+    
+    func getAnimeCoverImageV2(path: String, completion: @escaping (UIImage) -> Void) {
+        interactor.getCoverImage(path: path, completion: completion)
     }
 }

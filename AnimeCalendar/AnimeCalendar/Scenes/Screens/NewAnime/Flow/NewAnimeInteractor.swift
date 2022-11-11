@@ -13,6 +13,7 @@ protocol NewAnimeInteractive {
     var searchInput: PublishSubject<String> { get }
     var searchAnimeResult: Driver<[JikanAnime]> { get }
     func getImageObservable(from path: String) -> Observable<UIImage?>
+    func getCoverImage(path: String, completion: @escaping (UIImage) -> Void)
 }
 
 final class NewAnimeInteractor {
@@ -73,5 +74,15 @@ extension NewAnimeInteractor: NewAnimeInteractive {
                     return Disposables.create()
                 }
             }
+    }
+
+    func getCoverImage(path: String, completion: @escaping (UIImage) -> Void) {
+        animeRepository.getResourceV2(in: .newAnimeScreen, path: path) { data in
+            if let data = data {
+                completion(UIImage(data: data) ?? UIImage(named: "new-anime-item-drstone")!)
+                return
+            }
+            completion(UIImage(named: "new-anime-item-drstone")!)
+        }
     }
 }
