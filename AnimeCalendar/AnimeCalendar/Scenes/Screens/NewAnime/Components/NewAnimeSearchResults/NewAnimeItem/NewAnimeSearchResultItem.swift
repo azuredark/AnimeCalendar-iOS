@@ -26,12 +26,9 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
     private let animeObservable = PublishSubject<JikanAnime>()
     private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
     weak var presenter: NewAnimePresentable? {
-        didSet {
-            print("senku [DEBUG] \(String(describing: type(of: self))) - PRESENTER IS SET !!!")
-            bindCoverImage()
-        }
+        didSet { bindCoverImage() }
     }
-
+    
     private var disposeBag = DisposeBag()
 }
 
@@ -112,19 +109,11 @@ extension NewAnimeSearchResultItem: Bindable {
 
     /// Bind cover image
     func bindCoverImage() {
-        #warning("There so much code not related to the cell here. the flatmap transormation should happen somewhere else.")
-        print("senku [DEBUG] \(String(describing: type(of: self))) - COVERRR IMAGE BINDDD")
+        guard let presenter = presenter else { return }
         animeObservable
             .map { $0.imageType.jpgImage.normal }
-            .flatMapLatest { [weak presenter] path -> Driver<UIImage> in
-                print("senku [DEBUG] \(String(describing: type(of: self))) - PATH FROM BIND: \(path)")
-                guard let presenter = presenter else {
-                    print("senku [DEBUG] \(String(describing: type(of: self))) - PRESENTER RIIIP")
-                    return Observable.just(UIImage(named: "new-anime-item-drstone")!).asDriver(onErrorJustReturn: UIImage(named: "new-anime-item-drstone")!)
-                }
-                print("senku [DEBUG] \(String(describing: type(of: self))) - PRESENTER EXISSSSTS!")
-                return presenter.getAnimeCoverImage(path: path)
-            }.asDriver(onErrorJustReturn: UIImage(named: "new-anime-item-drstone")!)
+            .asDriver(onErrorJustReturn: "")
+            .flatMapLatest(presenter.getAnimeCoverImage)
             .drive(animeCoverImage.rx.image)
             .disposed(by: disposeBag)
     }

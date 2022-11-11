@@ -42,6 +42,8 @@ extension NewAnimePresenter: NewAnimePresentable {
     }
     
     func getAnimeCoverImage(path: String) -> Driver<UIImage> {
-        interactor.getImageObservable(from: path).asDriver(onErrorJustReturn: UIImage(named: "new-anime-item-drstone")!)
+        interactor.getImageObservable(from: path)
+            .compactMap { $0 }
+            .asDriver(onErrorJustReturn: UIImage(named: "new-anime-item-drstone")!)
     }
 }
