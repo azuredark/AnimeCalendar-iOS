@@ -56,7 +56,7 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 ### Discover (New!)
 | Figma | iOS |
 | --- | --- |
-| <img src="images/ui/discover/figma.png" width=250 /> | |
+| <img src="images/ui/discover/figma.png" width=250 /> | <img src="images/ui/discover/ios.png" width=250 /> |
 
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 
