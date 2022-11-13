@@ -2,7 +2,8 @@
 Anime Calendar's iOS App - Schedule your seasonal anime to watch!
 
 ## 🚧 Project State
-AnimeCalendar was put in hiatus for several months due to many changes happening in my life, including work & time constraints. However, after organizing my own life calendar/schedule, no pun intended lol, AC is **back in development!**. Any UI, or feature ideas feel free to make a PR.
+AnimeCalendar was put in hiatus for several months due to many changes happening in my life, including work & time constraints. However, after organizing my own life calendar/schedule, no pun intended lol, AC is **back in development!**. 
+#### Any UI, or feature ideas feel free to make a PR or check the current [issues](https://github.com/Estremadoyro/AnimeCalendar-iOS/issues).
 
 ## 📐 Architecture
 AnimecCalendar uses the **VIPER** arch., with some twists, for creating and maintaining modules. It's planned to have different frameworks for specific services like UserNotifications, Style, etc. Some **design patterns** used are:
