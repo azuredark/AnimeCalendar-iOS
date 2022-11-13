@@ -52,6 +52,11 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 | --- | --- |
 | <img src="images/ui/new-anime/figma1.png" width=250 /> | <img src="images/ui/new-anime/ios1.png" width=250 /> |
 
+### Discover (New!)
+| Figma | iOS |
+| --- | --- |
+| <img src="images/ui/discover/figma.png" width=250 /> | |
+
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 
 - [x] HomeScreen UI
