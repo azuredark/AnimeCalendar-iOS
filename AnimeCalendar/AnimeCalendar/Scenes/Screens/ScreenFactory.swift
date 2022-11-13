@@ -23,6 +23,9 @@ final class ScreenFactory {
             case .calendarScreen:
                 let calendarModule = AnimeCalendarModule.shared.getCalendarModule()
                 return calendarModule.start()
+            case .discoverScreen:
+                let discoverModule = AnimeCalendarModule.shared.getDiscoverModule()
+                return discoverModule.start()
         }
     }
 }

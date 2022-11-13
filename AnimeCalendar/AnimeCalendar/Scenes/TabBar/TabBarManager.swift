@@ -30,10 +30,10 @@ final class TabBarManager {
 
     private func configureTabBarMiddleButton(with factory: ScreenFactory) {
         /// NewAnime module
-        let newAnimeVC = factory.getRootScreen(.newAnimeScreen).getRootViewController()
+        let discoverVC = factory.getRootScreen(.discoverScreen).getRootViewController()
         // Configuring the Middle Button, alonside its press-action
         tabBarController.configureMiddleButton()
-        tabBarController.configureMiddleButtonAction(presenting: newAnimeVC)
+        tabBarController.configureMiddleButtonAction(presenting: discoverVC)
     }
 
     private func configureTabManager() {

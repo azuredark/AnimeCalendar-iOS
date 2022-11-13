@@ -40,6 +40,7 @@ extension CustomTabBarController: TabBarWithMiddleButton {
     func configureMiddleButtonAction(presenting newAnimeVC: UIViewController) {
         newScheduledAnimeButton.onTapAction = { [weak self] in
             guard let strongSelf = self else { return }
+            newAnimeVC.modalPresentationStyle = .fullScreen
             strongSelf.present(newAnimeVC, animated: true)
         }
     }

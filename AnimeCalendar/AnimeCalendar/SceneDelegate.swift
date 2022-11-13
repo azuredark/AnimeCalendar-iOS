@@ -13,7 +13,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let bootManager = BootManager()
-//        let rootController = bootManager.getRootController(.rootScreen(screen: .newAnimeScreen))
+        
+        /// Bootable screens
+        /// .rootTabBar (Main, for intializing all the app's modules)
+        /// i.e.: bootManager.getRootController(.rootTabBar)
+        /// Screen types (Directly load a specific module only):
+        /// - .home
+        /// - .newAnime
+        /// - .calendar
+        /// - .discover
+        /// i.e.: bootManager.getRootController(.rootScreen(screen: .discoverScreen))
         let rootController = bootManager.getRootController(.rootTabBar)
         let rootViewController = rootController.getRootViewController()
 

@@ -1,15 +1,15 @@
 //
-//  CalendarInteractor.swift
+//  DiscoverInteractor.swift
 //  AnimeCalendar
 //
-//  Created by Leonardo  on 30/10/22.
+//  Created by Leonardo  on 13/11/22.
 //
 
 import Foundation
 
-protocol CalendarInteractive {}
+protocol DiscoverInteractive {}
 
-final class CalendarInteractor {
+final class DiscoverInteractor {
     // MARK: State
     private let animeRepository: AnimeRepository
 
@@ -21,4 +21,4 @@ final class CalendarInteractor {
     // MARK: Methods
 }
 
-extension CalendarInteractor: CalendarInteractive {}
+extension DiscoverInteractor: DiscoverInteractive {}

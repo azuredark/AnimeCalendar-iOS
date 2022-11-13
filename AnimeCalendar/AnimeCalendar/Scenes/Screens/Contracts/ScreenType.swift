@@ -8,7 +8,8 @@
 import Foundation
 
 enum ScreenType {
-  case homeScreen
-  case newAnimeScreen
-  case calendarScreen
+    case homeScreen
+    case newAnimeScreen
+    case calendarScreen
+    case discoverScreen
 }
