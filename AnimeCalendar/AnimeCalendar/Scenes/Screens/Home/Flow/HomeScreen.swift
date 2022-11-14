@@ -15,7 +15,8 @@ final class HomeScreen: UIViewController, Screen {
 
     /// # NavigationBar
     private lazy var navigationBar: ScreenNavigationBar = {
-        HomeScreenNavigationBar(self)
+        let navigationBar = HomeScreenNavigationBar(self)
+        return navigationBar
     }()
 
     // MARK: Initializer
@@ -35,10 +36,7 @@ final class HomeScreen: UIViewController, Screen {
         super.viewDidLoad()
         configureBindings()
         configureScreen()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        presenter?.updateUserAnimes(name: "Dr. Stone")
+        print("senku [DEBUG] \(String(describing: type(of: self))) - navigation controlllelr: \(navigationController)")
     }
 }
 
@@ -50,7 +48,9 @@ extension HomeScreen {
 }
 
 extension HomeScreen: Bindable {
-    func configureBindings() {}
+    func configureBindings() {
+        presenter?.updateUserAnimes(name: "Dr. Stone")
+    }
 }
 
 // MARK: - Configure components (UI)
@@ -114,6 +114,11 @@ extension HomeScreen {
     func configureNavigationItems() {
         configureLeftNavigationItems()
         configureRightNavigationItems()
+        configureNavigationTitle()
+    }
+
+    func configureNavigationTitle() {
+        navigationBar.configureTitle()
     }
 
     func configureLeftNavigationItems() {

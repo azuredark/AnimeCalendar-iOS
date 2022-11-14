@@ -15,21 +15,8 @@ final class HomeAnimesComponent: UIViewController, ScreenComponent {
     @IBOutlet private weak var animesCollection: UICollectionView!
 
     // TODO: Add differente animes to the sequence (With bindings) so it can simulate managing data from the Network Provider
-    /// # Observables
-    private let animesDummy: [HomeAnime] =
-        [
-            HomeAnime(name: "Spy x Family", cover: "www"),
-            HomeAnime(name: "Dr. Stone", cover: "www"),
-        ]
-
     var animes: [JikanAnime] = []
     private let animesDriver: Driver<[JikanAnime]>
-
-    private lazy var animesObservable: Observable<[HomeAnime]> = Observable.create { [unowned self] observer in
-        observer.onNext(self.animesDummy)
-        observer.onCompleted()
-        return Disposables.create()
-    }
 
     // Flag to pass for the AnimateItem
     let componentDidAppear: BehaviorSubject<Bool> = BehaviorSubject(value: false)

@@ -26,7 +26,7 @@ public extension UIView {
     self.layer.insertSublayer(shadowLayer, at: 0)
   }
 
-  /// - Description: For Views without requiring an Image with shadow
+  /// For Views without requiring an Image with shadow
   /// - Parameter shadow: Shadow object to use inside the layer
   /// - Parameter layerRadius: Radius of the layer
   func addShadowLayer(shadow: Shadow, layerRadius: CGFloat) {

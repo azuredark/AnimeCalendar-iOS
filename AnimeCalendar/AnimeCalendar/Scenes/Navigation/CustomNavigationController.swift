@@ -8,17 +8,22 @@
 import UIKit
 
 final class CustomNavigationController: UINavigationController {
-  /// # Only for NON-DARKMODE approach, should eventually be removed or kept until there is a custom dark mode configured
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    .darkContent
-  }
+    override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
 
-  init(_ rootViewController: Screen) {
-    super.init(rootViewController: rootViewController)
-  }
+    init(_ rootViewController: Screen) {
+        super.init(rootViewController: rootViewController)
 
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+        /// Settings
+        navigationBar.backgroundColor = Color.cream
+        
+        /// Remove Navigations bar's line (iOS 14 and below)
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.layoutIfNeeded()
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

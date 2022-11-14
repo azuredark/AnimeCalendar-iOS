@@ -19,8 +19,12 @@ final class DiscoverScreenNavigationBar: ScreenNavigationBar {
 
 extension DiscoverScreenNavigationBar {
     func configureTitle() {
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: Color.black
+        ]
+
         screen?.navigationItem.title = "Discover"
-        screen?.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Color.black]
+        screen?.navigationController?.navigationBar.titleTextAttributes = titleAttributes
     }
 
     func configureLeftNavigationItems() {
@@ -39,7 +43,14 @@ extension DiscoverScreenNavigationBar {
     func configureRightNavigationItems() {
         // Item's image
         let configuration = UIImage.SymbolConfiguration(weight: .heavy)
-        var settingsImage = UIImage(systemName: "line.3.horizontal.decrease.circle.fill", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+        var settingsImage: UIImage
+
+        if #available(iOS 15.0, *) {
+            settingsImage = UIImage(systemName: "line.3.horizontal.decrease.circle.fill", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+        } else {
+            settingsImage = UIImage(systemName: "slider.horizontal.3", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+        }
+
         settingsImage = settingsImage.withTintColor(Color.black)
 
         // Navigation item
@@ -71,4 +82,3 @@ private extension DiscoverScreenNavigationBar {
         screen?.dismiss(animated: true)
     }
 }
-

@@ -15,6 +15,11 @@ final class HomeScreenNavigationBar: ScreenNavigationBar {
 }
 
 extension HomeScreenNavigationBar {
+    func configureTitle() {
+//        screen?.navigationController?.navigationBar.backgroundColor = Color.white
+        print("senku [DEBUG] \(String(describing: type(of: self))) - navigation controller: \(screen?.navigationController)")
+    }
+    
     func configureLeftNavigationItems() {
         // Item's image
         let configuration = UIImage.SymbolConfiguration(weight: .heavy)
@@ -31,7 +36,12 @@ extension HomeScreenNavigationBar {
     func configureRightNavigationItems() {
         // Item's image
         let configuration = UIImage.SymbolConfiguration(weight: .heavy)
-        var darkModeImage = UIImage(systemName: "circle.righthalf.filled", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+        var darkModeImage: UIImage
+        if #available(iOS 15.0, *) {
+            darkModeImage = UIImage(systemName: "circle.righthalf.filled", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+        } else {
+            darkModeImage = UIImage(systemName: "circle", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+        }
         darkModeImage = darkModeImage.withTintColor(Color.black)
 
         // Navigation item
