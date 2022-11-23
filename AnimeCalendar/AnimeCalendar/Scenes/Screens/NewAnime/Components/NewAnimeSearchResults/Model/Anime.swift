@@ -7,90 +7,46 @@
 
 import Foundation
 
-protocol Model {}
-
-struct Anime: Decodable, Model {
-    var name: String
-    var cover: String
-    var rating: Float
-    var episodesCount: Int
-    var year: Int
-    var synopsis: String
-    var genres: [AnimeGenre]
-    var onAir: Bool
-
-    init(name: String, cover: String, rating: Float, episodesCount: Int, year: Int, synopsis: String, genres: [AnimeGenre], onAir: Bool) {
-        self.name = name
-        self.cover = cover
-        self.rating = rating
-        self.episodesCount = episodesCount
-        self.year = year
-        self.synopsis = synopsis
-        self.genres = genres
-        self.onAir = onAir
-    }
-
-    // Default anime
-    init() {
-        self.init(
-            name: "Komi can't communicate",
-            cover: "new-anime-item-komicantcommunicate",
-            rating: 8.5,
-            episodesCount: 12,
-            year: 2021,
-            synopsis: "Hitohito Tadano is an ordinary boy who heads into his first day of high school with a clear plan: to avoid trouble and do his best to blend in with others. Unfortunately, he fails right away when he takes the seat beside the school's madonna—Shouko Komi. His peers now recognize him as someone to eliminate for a chance to sit next to the most beautiful girl in class",
-            genres: [
-                AnimeGenre(name: "Comedy"),
-                AnimeGenre(name: "Romantic"),
-                AnimeGenre(name: "School")
-            ],
-            onAir: false
-        )
-    }
-
-    init(name: String, cover: String, onAir: Bool = false) {
-        self.init(
-            name: name,
-            cover: cover,
-            rating: 8.5,
-            episodesCount: 12,
-            year: 2021,
-            synopsis: "Hitohito Tadano is an ordinary boy who heads into his first day of high school with a clear plan: to avoid trouble and do his best to blend in with others. Unfortunately, he fails right away when he takes the seat beside the school's madonna—Shouko Komi. His peers now recognize him as someone to eliminate for a chance to sit next to the most beautiful girl in class",
-            genres: [
-                AnimeGenre(name: "Comedy"),
-                AnimeGenre(name: "Romantic"),
-                AnimeGenre(name: "School")
-            ],
-            onAir: onAir
-        )
-    }
-}
-
-struct JikanAnime: Decodable {
+struct Anime: Decodable, Hashable {
+    var id: Int
     var title: String
     var imageType: AnimeImageType
     var malURL: String
     var synopsis: String
 
     enum CodingKeys: String, CodingKey {
-        case title, synopsis
-        case malURL = "url"
+        case id        = "mal_id"
+        case title
+        case malURL    = "url"
         case imageType = "images"
+        case synopsis
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
         title = try container.decode(String.self, forKey: .title)
         malURL = try container.decodeIfPresent(String.self, forKey: .malURL) ?? ""
         imageType = try container.decode(AnimeImageType.self, forKey: .imageType)
         synopsis = try container.decodeIfPresent(String.self, forKey: .synopsis) ?? ""
     }
-    
+  
     init() {
+        self.id = 69
         self.title = ""
         self.imageType = AnimeImageType()
         self.malURL = ""
         self.synopsis = ""
+    }
+    
+    // MARK: Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    // MARK: Equatable
+    static func == (lhs: Anime, rhs: Anime) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
@@ -140,9 +96,9 @@ struct AnimeImage: Decodable {
     }
 }
 
-struct JikanAnimeResult: Decodable {
+struct AnimeResult: Decodable {
     // If decoding fails, this might be why lol
-    var data: [JikanAnime] = []
+    var data: [Anime] = []
 
     enum CodingKeys: String, CodingKey {
         case data

@@ -7,7 +7,6 @@
 
 import Foundation
 
-// https://api.jikan.moe/v4/anime
 final class NetworkManager: Requestable {
     // MARK: State
     /// # Cache
@@ -85,6 +84,8 @@ final class NetworkManager: Requestable {
             case .manga(let endpoint):
                 return endpoint
             case .user(let endpoint):
+                return endpoint
+            case .season(let endpoint):
                 return endpoint
         }
     }

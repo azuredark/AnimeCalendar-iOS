@@ -9,6 +9,8 @@ import Foundation
 
 protocol DiscoverPresentable: NSObject {
     func start() -> Screen
+    func updateSeasonAnime()
+    var feed: DiscoverFeed { get }
 }
 
 final class DiscoverPresenter: NSObject {
@@ -28,5 +30,13 @@ final class DiscoverPresenter: NSObject {
 extension DiscoverPresenter: DiscoverPresentable {
     func start() -> Screen {
         router.start(presenter: self)
+    }
+
+    func updateSeasonAnime() {
+        interactor.updateSeasonAnime()
+    }
+    
+    var feed: DiscoverFeed {
+        return interactor.feed
     }
 }

@@ -18,4 +18,5 @@ enum Service {
     case anime(AnimeEndpoint)
     case user(UserEndpoint)
     case manga(MangaEndpoint)
+    case season(SeasonEndpoint)
 }

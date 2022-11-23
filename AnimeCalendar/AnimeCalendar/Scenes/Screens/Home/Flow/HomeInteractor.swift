@@ -14,7 +14,7 @@ import RxCocoa
  */
 protocol HomeInteractive {
     func updateUserAnimes(name: String)
-    var animes: Driver<[JikanAnime]> { get }
+    var animes: Driver<[Anime]> { get }
 }
 
 final class HomeInteractor {
@@ -23,7 +23,7 @@ final class HomeInteractor {
     
     /// # Observables
     /// This should eventaully have an initial value from user's local storage
-    private let animesObservable = BehaviorRelay<[JikanAnime]>(value: [])
+    private let animesObservable = BehaviorRelay<[Anime]>(value: [])
     private let disposeBag = DisposeBag()
 
     // MARK: Initializers
@@ -34,7 +34,7 @@ final class HomeInteractor {
 }
 
 extension HomeInteractor: HomeInteractive {
-    var animes: Driver<[JikanAnime]> {
+    var animes: Driver<[Anime]> {
         return animesObservable
             .skip(1)
             .asDriver(onErrorJustReturn: [])
@@ -45,7 +45,7 @@ extension HomeInteractor: HomeInteractive {
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] result in
                 guard let strongSelf = self else { return }
-                let animes: [JikanAnime] = result.data
+                let animes: [Anime] = result.data
                 strongSelf.animesObservable.accept(animes)
             }).disposed(by: disposeBag)
     }

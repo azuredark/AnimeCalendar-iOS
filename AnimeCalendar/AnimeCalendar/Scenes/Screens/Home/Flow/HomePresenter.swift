@@ -11,7 +11,7 @@ import RxCocoa
 protocol HomePresentable: NSObject {
     func start() -> Screen
     func updateUserAnimes(name: String)
-    var animes: Driver<[JikanAnime]> { get }
+    var animes: Driver<[Anime]> { get }
 }
 
 final class HomePresenter: NSObject {
@@ -35,7 +35,7 @@ extension HomePresenter: HomePresentable {
         interactor.updateUserAnimes(name: name)
     }
 
-    var animes: Driver<[JikanAnime]> {
+    var animes: Driver<[Anime]> {
         return interactor.animes
     }
 }

@@ -90,7 +90,7 @@ private extension DiscoverSearchBar {
             buttonConfig.baseBackgroundColor = .clear
             buttonConfig.baseForegroundColor = Color.white
             searchButton.configurationUpdateHandler = { button in
-                button.backgroundColor = button.isHighlighted ? Color.pink.withAlphaComponent(0.9) : Color.pink
+                button.backgroundColor = button.isHighlighted ? Color.pink.withAlphaComponent(0.6) : Color.pink
                 buttonConfig.baseForegroundColor = button.isHighlighted ? Color.white.withAlphaComponent(0.4) : Color.white
             }
             
@@ -101,7 +101,7 @@ private extension DiscoverSearchBar {
             searchButton.backgroundColor = Color.pink
         }
         
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .bold, scale: .small)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 19, weight: .bold, scale: .small)
         let image = UIImage(systemName: "magnifyingglass", withConfiguration: imageConfig)!
         searchButton.setImage(image, for: .normal)
         

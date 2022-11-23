@@ -18,19 +18,6 @@ final class NewAnimeSearchResultsComponent: UIViewController, ScreenComponent {
     private weak var presenter: NewAnimePresentable?
 
     /// # Observables
-    private let animesDummy: [Anime] =
-        [
-            Anime(name: "Komi can't communicate", cover: "new-anime-item-komicantcommunicate"),
-            Anime(name: "Dr. Stone: Stone Wars", cover: "new-anime-item-drstone", onAir: true),
-            Anime(name: "Spy x Family", cover: "new-anime-item-spyxfamily")
-        ]
-    private lazy var animesObservable: Observable<[Anime]> = Observable.create { [unowned self] observer in
-        observer.onNext(self.animesDummy)
-        observer.onCompleted()
-        return Disposables.create()
-    }
-
-    // TODO: Components should CompositeDisposable bags
     let disposeBag = DisposeBag()
 
     /// # Init

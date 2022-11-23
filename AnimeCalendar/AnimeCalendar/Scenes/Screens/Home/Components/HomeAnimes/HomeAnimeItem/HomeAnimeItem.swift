@@ -19,7 +19,7 @@ final class HomeAnimeItem: UICollectionViewCell {
     @IBOutlet private weak var episodeProgressBarView: UIView!
 
     /// # Data Source
-    private var anime: JikanAnime?
+    private var anime: Anime?
 
     /// # Observables
     private let disposeBag = DisposeBag()
@@ -43,7 +43,7 @@ extension HomeAnimeItem {
 
 // MARK: Setup cell
 extension HomeAnimeItem: ComponentCollectionItem {
-    func setupItem(with item: JikanAnime) {
+    func setupItem(with item: Anime) {
         self.anime = item
         animeTitle.text = item.title
 

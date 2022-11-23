@@ -15,15 +15,15 @@ final class HomeAnimesComponent: UIViewController, ScreenComponent {
     @IBOutlet private weak var animesCollection: UICollectionView!
 
     // TODO: Add differente animes to the sequence (With bindings) so it can simulate managing data from the Network Provider
-    var animes: [JikanAnime] = []
-    private let animesDriver: Driver<[JikanAnime]>
+    var animes: [Anime] = []
+    private let animesDriver: Driver<[Anime]>
 
     // Flag to pass for the AnimateItem
     let componentDidAppear: BehaviorSubject<Bool> = BehaviorSubject(value: false)
 
     let disposeBag = DisposeBag()
 
-    init(animes: Driver<[JikanAnime]>) {
+    init(animes: Driver<[Anime]>) {
         self.animesDriver = animes
         super.init(nibName: Xibs.homeAnimesComponentView, bundle: Bundle.main)
     }
@@ -80,7 +80,7 @@ extension HomeAnimesComponent: Bindable {
         animesDriver
             .drive(onNext: { [weak self] animes in
                 guard let strongSelf = self else { return }
-                print("senku [DEBUG] \(String(describing: type(of: self))) - animes: \(animes.map { $0.title })")
+//                print("senku [DEBUG] \(String(describing: type(of: self))) - animes: \(animes.map { $0.title })")
                 strongSelf.animes = animes
                 strongSelf.animesCollection.reloadData()
             }).disposed(by: disposeBag)
@@ -119,7 +119,7 @@ extension HomeAnimesComponent: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Xibs.homeAnimeItemView, for: indexPath) as? HomeAnimeItem else {
             fatalError("ACError - [HomeAnimesComponent] Error dequeing cell")
         }
-        let anime: JikanAnime = animes[indexPath.item]
+        let anime: Anime = animes[indexPath.item]
         cell.setupItem(with: anime)
         return cell
     }

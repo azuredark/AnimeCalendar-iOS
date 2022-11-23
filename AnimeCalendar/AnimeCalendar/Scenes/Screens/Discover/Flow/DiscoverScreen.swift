@@ -32,6 +32,11 @@ final class DiscoverScreen: UIViewController, Screen {
         return searchBar
     }()
 
+    /// Feed made of a compostional collection view containing all sections and items
+    private lazy var feed: Feed = {
+        return Feed(listeningTo: presenter?.feed)
+    }()
+
     // MARK: Initializers
     init(presenter: DiscoverPresentable) {
         super.init(nibName: nil, bundle: nil)
@@ -48,19 +53,26 @@ final class DiscoverScreen: UIViewController, Screen {
 extension DiscoverScreen {
     override func viewDidLoad() {
         configureScreen()
+        updateLatestFeed()
     }
 }
 
-extension DiscoverScreen {
+private extension DiscoverScreen {
+    func updateLatestFeed() {
+        print("senku [DEBUG] \(String(describing: type(of: self))) - updateLatestFeed")
+        presenter?.updateSeasonAnime()
+    }
+}
+
+private extension DiscoverScreen {
     func configureScreen() {
         view.backgroundColor = Color.cream
-        configureScreenContainer()
+        layoutScreenContainer()
         configureNavigationItems()
         configureScreenComponents()
     }
 
-    func configureScreenContainer() {
-        #warning("This must be some sort of scroll view object subclass or the class itself idk")
+    func layoutScreenContainer() {
         let xInset: CGFloat = 20.0
         NSLayoutConstraint.activate([
             screenContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: xInset),
@@ -96,6 +108,7 @@ extension DiscoverScreen {
 private extension DiscoverScreen {
     func configureScreenComponents() {
         configureSearchBarView()
+        configureFeed()
     }
 }
 
@@ -110,6 +123,19 @@ private extension DiscoverScreen {
             searchbBar.trailingAnchor.constraint(equalTo: screenContainer.trailingAnchor),
             searchbBar.topAnchor.constraint(equalTo: screenContainer.topAnchor, constant: yInset),
             searchbBar.heightAnchor.constraint(equalToConstant: height)
+        ])
+    }
+
+    func configureFeed() {
+        let feedCollection = feed.getCollection()
+        screenContainer.addSubview(feedCollection)
+        
+        let yInset: CGFloat = 15.0
+        NSLayoutConstraint.activate([
+            feedCollection.leadingAnchor.constraint(equalTo: screenContainer.leadingAnchor),
+            feedCollection.trailingAnchor.constraint(equalTo: screenContainer.trailingAnchor),
+            feedCollection.topAnchor.constraint(equalTo: searchbBar.bottomAnchor, constant: yInset),
+            feedCollection.bottomAnchor.constraint(equalTo: screenContainer.bottomAnchor, constant: -yInset)
         ])
     }
 }

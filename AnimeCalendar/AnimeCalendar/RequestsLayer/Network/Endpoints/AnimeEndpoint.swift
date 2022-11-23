@@ -7,6 +7,7 @@
 
 import Foundation
 
+// https://api.jikan.moe/v4/anime
 enum AnimeEndpoint {
     case getAnime(name: String)
     case getAnimes

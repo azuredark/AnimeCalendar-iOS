@@ -11,7 +11,7 @@ import RxCocoa
 
 protocol NewAnimeInteractive {
     var searchInput: PublishSubject<String> { get }
-    var searchAnimeResult: Driver<[JikanAnime]> { get }
+    var searchAnimeResult: Driver<[Anime]> { get }
     func getImageObservable(from path: String) -> Observable<UIImage?>
     func getCoverImage(path: String, completion: @escaping (UIImage) -> Void)
 }
@@ -22,7 +22,7 @@ final class NewAnimeInteractor {
 
     /// # Observables
     private let inputSearchAnimeObservable = PublishSubject<String>()
-    private let searchResultAnimeObservable = PublishSubject<[JikanAnime]>()
+    private let searchResultAnimeObservable = PublishSubject<[Anime]>()
 
     private let disposeBag = DisposeBag()
 
@@ -45,8 +45,8 @@ private extension NewAnimeInteractor {
     /// Listens to valid user input, transforms it into an JikanAnime observable and binds to it.
     func bindSearchObservable() {
         inputSearchAnimeObservable
-            .flatMapLatest { [weak self] text -> Observable<[JikanAnime]> in
-                guard let self = self else { return Observable.just(JikanAnimeResult().data) }
+            .flatMapLatest { [weak self] text -> Observable<[Anime]> in
+                guard let self = self else { return Observable.just(AnimeResult().data) }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - text: \(text)")
                 return self.animeRepository.getAnime(name: text).compactMap { $0?.data }
             }
@@ -61,7 +61,7 @@ extension NewAnimeInteractor: NewAnimeInteractive {
         inputSearchAnimeObservable
     }
 
-    var searchAnimeResult: Driver<[JikanAnime]> {
+    var searchAnimeResult: Driver<[Anime]> {
         searchResultAnimeObservable.asDriver(onErrorJustReturn: [])
     }
 

@@ -24,7 +24,7 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
     @IBOutlet private weak var animeGenreCollection: UICollectionView!
 
     /// # Observables
-    private let animeObservable = PublishSubject<JikanAnime>()
+    private let animeObservable = PublishSubject<Anime>()
     private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
     weak var presenter: NewAnimePresentable?
     
@@ -47,7 +47,7 @@ extension NewAnimeSearchResultItem {
 }
 
 extension NewAnimeSearchResultItem: ComponentCollectionItem {
-    func setupItem(with item: JikanAnime) {
+    func setupItem(with item: Anime) {
         animeObservable.onNext(item)
         
         /// Setting image

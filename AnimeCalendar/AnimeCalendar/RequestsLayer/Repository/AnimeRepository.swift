@@ -39,28 +39,45 @@ class GenericRepository {
             return Disposables.create()
         }
     }
-    
-    func getResourceV2(in screen: ScreenType, path: String, completion: @escaping (Data?) -> Void) {
-         requestsManager.network.makeResourceRequest(in: screen, from: path) { result in
-             switch result {
-                 case .success(let data):
-                     completion(data)
-                 case .failure(let error):
-                     print("senku [DEBUG] \(String(describing: type(of: self))) - error: \(error)")
-                     completion(nil)
-             }
 
+    func getResourceV2(in screen: ScreenType, path: String, completion: @escaping (Data?) -> Void) {
+        requestsManager.network.makeResourceRequest(in: screen, from: path) { result in
+            switch result {
+                case .success(let data):
+                    completion(data)
+                case .failure(let error):
+                    print("senku [DEBUG] \(String(describing: type(of: self))) - error: \(error)")
+                    completion(nil)
+            }
         }
     }
 }
 
 final class AnimeRepository: GenericRepository {
-    func getAnime(name: String) -> Observable<JikanAnimeResult?> {
+    func getAnime(name: String) -> Observable<AnimeResult?> {
         return .create { [weak self] observer in
             guard let strongSelf = self else { return Disposables.create() }
 
-            let model = JikanAnimeResult.self
+            let model = AnimeResult.self
             strongSelf.requestsManager.network.makeRequest(model, .anime(.getAnime(name: name))) { result in
+                switch result {
+                    case .success(let anime):
+                        observer.onNext(anime)
+                    case .failure(let error):
+                        observer.onError(error)
+                }
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+
+    func getSeasonAnime(page: Int = 1) -> Observable<AnimeResult?> {
+        return .create { [weak self] observer in
+            guard let strongSelf = self else { return Disposables.create()}
+            
+            let model = AnimeResult.self
+            strongSelf.requestsManager.network.makeRequest(model, .season(.getCurrentSeasonAnime(page: page))) { result in
                 switch result {
                     case .success(let anime):
                         observer.onNext(anime)

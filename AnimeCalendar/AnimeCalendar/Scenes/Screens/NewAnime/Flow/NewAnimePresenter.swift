@@ -14,7 +14,7 @@ protocol NewAnimePresentable: NSObject {
     func getAnimeCoverImage(path: String) -> Driver<UIImage>
     func getAnimeCoverImageV2(path: String, completion: @escaping (UIImage) -> Void)
     var searchInput: PublishSubject<String> { get }
-    var searchAnimeResult: Driver<[JikanAnime]> { get }
+    var searchAnimeResult: Driver<[Anime]> { get }
 }
 
 final class NewAnimePresenter: NSObject {
@@ -38,7 +38,7 @@ extension NewAnimePresenter: NewAnimePresentable {
         interactor.searchInput
     }
     
-    var searchAnimeResult: Driver<[JikanAnime]> {
+    var searchAnimeResult: Driver<[Anime]> {
         interactor.searchAnimeResult
     }
     

@@ -14,6 +14,14 @@
 		A731E007281D140200036077 /* NewAnimeScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A731E006281D140200036077 /* NewAnimeScreenView.xib */; };
 		A731E009281D1B0D00036077 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A731E008281D1B0D00036077 /* Color.swift */; };
 		A7339F4D2876558000A000DB /* ScreenComponent+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7339F4C2876558000A000DB /* ScreenComponent+Extension.swift */; };
+		A7445F22292DC0A6008A4696 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F21292DC0A6008A4696 /* Feed.swift */; };
+		A7445F25292DC0D4008A4696 /* SeasonAnimeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F24292DC0D4008A4696 /* SeasonAnimeSection.swift */; };
+		A7445F28292DC166008A4696 /* TopAnimeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F27292DC166008A4696 /* TopAnimeSection.swift */; };
+		A7445F2A292DC25D008A4696 /* FeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F29292DC25D008A4696 /* FeedDataSource.swift */; };
+		A7445F2D292DCA68008A4696 /* GenericFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F2C292DCA68008A4696 /* GenericFeedCell.swift */; };
+		A7445F2F292DCB75008A4696 /* SeasonAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F2E292DCB75008A4696 /* SeasonAnimeCell.swift */; };
+		A7445F31292DEDE4008A4696 /* SeasonEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */; };
+		A7445F33292E0369008A4696 /* FeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F32292E0369008A4696 /* FeedHeader.swift */; };
 		A74EE6862921C114004D750E /* DiscoverSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74EE6852921C114004D750E /* DiscoverSearchBar.swift */; };
 		A74F984B2815F8EF003A1073 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74F98492815F8EF003A1073 /* HomeScreen.swift */; };
 		A74F984C2815F8EF003A1073 /* HomeScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A74F984A2815F8EF003A1073 /* HomeScreenView.xib */; };
@@ -132,6 +140,14 @@
 		A731E006281D140200036077 /* NewAnimeScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeScreenView.xib; sourceTree = "<group>"; };
 		A731E008281D1B0D00036077 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A7339F4C2876558000A000DB /* ScreenComponent+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenComponent+Extension.swift"; sourceTree = "<group>"; };
+		A7445F21292DC0A6008A4696 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		A7445F24292DC0D4008A4696 /* SeasonAnimeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonAnimeSection.swift; sourceTree = "<group>"; };
+		A7445F27292DC166008A4696 /* TopAnimeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAnimeSection.swift; sourceTree = "<group>"; };
+		A7445F29292DC25D008A4696 /* FeedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDataSource.swift; sourceTree = "<group>"; };
+		A7445F2C292DCA68008A4696 /* GenericFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericFeedCell.swift; sourceTree = "<group>"; };
+		A7445F2E292DCB75008A4696 /* SeasonAnimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonAnimeCell.swift; sourceTree = "<group>"; };
+		A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonEndpoint.swift; sourceTree = "<group>"; };
+		A7445F32292E0369008A4696 /* FeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeader.swift; sourceTree = "<group>"; };
 		A74EE6852921C114004D750E /* DiscoverSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverSearchBar.swift; sourceTree = "<group>"; };
 		A74F98492815F8EF003A1073 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		A74F984A2815F8EF003A1073 /* HomeScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeScreenView.xib; sourceTree = "<group>"; };
@@ -252,6 +268,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A7445F23292DC0AD008A4696 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				A7445F24292DC0D4008A4696 /* SeasonAnimeSection.swift */,
+				A7445F27292DC166008A4696 /* TopAnimeSection.swift */,
+			);
+			path = Groups;
+			sourceTree = "<group>";
+		};
+		A7445F26292DC0DF008A4696 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				A7445F21292DC0A6008A4696 /* Feed.swift */,
+				A7445F29292DC25D008A4696 /* FeedDataSource.swift */,
+				A7445F23292DC0AD008A4696 /* Groups */,
+				A7445F2B292DCA07008A4696 /* Cells */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		A7445F2B292DCA07008A4696 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A7445F2C292DCA68008A4696 /* GenericFeedCell.swift */,
+				A7445F2E292DCB75008A4696 /* SeasonAnimeCell.swift */,
+				A7445F32292E0369008A4696 /* FeedHeader.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		A74F984D2815F954003A1073 /* AppBoot */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +386,7 @@
 		A75215022920B9AE00E94104 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A7445F26292DC0DF008A4696 /* Feed */,
 				A74EE6852921C114004D750E /* DiscoverSearchBar.swift */,
 			);
 			path = Components;
@@ -361,6 +408,7 @@
 				A764DC1828BEE48C005A68B0 /* AnimeEndpoint.swift */,
 				A764DC1A28BEE49D005A68B0 /* MangaEndpoint.swift */,
 				A764DC1C28BEE4B0005A68B0 /* UserEndpoint.swift */,
+				A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -959,6 +1007,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7445F31292DEDE4008A4696 /* SeasonEndpoint.swift in Sources */,
 				A7E44A972829CBEB005C0AB5 /* ScreenType.swift in Sources */,
 				A7E44A9B282A25D9005C0AB5 /* DummyScreen.swift in Sources */,
 				A76FFA0F290F205A007209E8 /* NewAnimeInteractor.swift in Sources */,
@@ -976,6 +1025,7 @@
 				A78685CC2824D67100321415 /* CustomTabBarController.swift in Sources */,
 				A76D971F28435CD100D5FCD7 /* ComponentTableItem.swift in Sources */,
 				A76FFA0D290F202E007209E8 /* NewAnimeModule.swift in Sources */,
+				A7445F22292DC0A6008A4696 /* Feed.swift in Sources */,
 				A7DAC1D128447A6900583F39 /* Anime.swift in Sources */,
 				A7D0F729285C2D600003709B /* ScreenComponentContainer.swift in Sources */,
 				A752150A2920BA2400E94104 /* DiscoverRouter.swift in Sources */,
@@ -985,6 +1035,8 @@
 				A764DC2B28BF291D005A68B0 /* ParameterEncoding.swift in Sources */,
 				A70FF51628239D77007D4F64 /* Constraints.swift in Sources */,
 				A764DC1428BEC50A005A68B0 /* AnimeRepository.swift in Sources */,
+				A7445F25292DC0D4008A4696 /* SeasonAnimeSection.swift in Sources */,
+				A7445F2D292DCA68008A4696 /* GenericFeedCell.swift in Sources */,
 				A764DC1628BEC512005A68B0 /* MangaRepository.swift in Sources */,
 				A76D972128435D3A00D5FCD7 /* ComponenCollectionItem.swift in Sources */,
 				A78685CA2824D5CE00321415 /* CustomNavigationController.swift in Sources */,
@@ -995,6 +1047,7 @@
 				A76FFA11290F207D007209E8 /* NewAnimePresenter.swift in Sources */,
 				A7CD0D452817A06700109B8D /* RequetsMethods.swift in Sources */,
 				A76D97232843627500D5FCD7 /* ScreenComponent.swift in Sources */,
+				A7445F2F292DCB75008A4696 /* SeasonAnimeCell.swift in Sources */,
 				A768269928471240001F9EB8 /* NewAnimeSelectedTitleComponent.swift in Sources */,
 				A7F91E0328190E8600FF59C0 /* NewAnimeScreen.swift in Sources */,
 				A7D0F733285C34120003709B /* NewAnimeSelectedTimeComponent.swift in Sources */,
@@ -1003,6 +1056,7 @@
 				A7DAC1CE28441C3000583F39 /* AnimeGenre.swift in Sources */,
 				A76FFA1D290F231C007209E8 /* CalendarPresenter.swift in Sources */,
 				A7E798A828149B4900973881 /* SceneDelegate.swift in Sources */,
+				A7445F2A292DC25D008A4696 /* FeedDataSource.swift in Sources */,
 				A764DC1D28BEE4B0005A68B0 /* UserEndpoint.swift in Sources */,
 				A7E44A932829CAF1005C0AB5 /* RootViewController.swift in Sources */,
 				A75215062920BA1300E94104 /* DiscoverPresenter.swift in Sources */,
@@ -1011,12 +1065,14 @@
 				A70FF51428238E42007D4F64 /* NSLayoutConstraint+Extension.swift in Sources */,
 				A731E003281D12FA00036077 /* Xibs.swift in Sources */,
 				A78685CE2824D6AE00321415 /* TabBarProtocol.swift in Sources */,
+				A7445F33292E0369008A4696 /* FeedHeader.swift in Sources */,
 				A7D0F727285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift in Sources */,
 				A76FFA1F290F234C007209E8 /* CalendarRouter.swift in Sources */,
 				A75215082920BA1E00E94104 /* DiscoverInteractor.swift in Sources */,
 				A76D971D28435CA200D5FCD7 /* ComponentItem.swift in Sources */,
 				A7D4F6CD2828D6AA004622A4 /* TabBarButton.swift in Sources */,
 				A7AD0B0628275F6500367A1B /* NewScheduledAnimeButton.swift in Sources */,
+				A7445F28292DC166008A4696 /* TopAnimeSection.swift in Sources */,
 				A74F984B2815F8EF003A1073 /* HomeScreen.swift in Sources */,
 				A7B0E337281F8E8B00A13CD6 /* HomeAnimesComponent.swift in Sources */,
 				A7FDF609281E025E006057D7 /* HomeHeaderComponent.swift in Sources */,
