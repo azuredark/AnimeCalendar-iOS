@@ -36,7 +36,6 @@ final class HomeInteractor {
 extension HomeInteractor: HomeInteractive {
     var animes: Driver<[Anime]> {
         return animesObservable
-            .skip(1)
             .asDriver(onErrorJustReturn: [])
     }
 

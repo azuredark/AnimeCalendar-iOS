@@ -41,8 +41,7 @@ final class NetworkManager: Requestable {
                 if let error = error { completion(.failure(error)) }
 
                 if case .failure(let msg) = httpResponse {
-                    print("senku [DEBUG] \(String(describing: type(of: self))) - ACError: \(msg)")
-                    // TODO: Handle failure message
+                    print("senku [❌] \(String(describing: type(of: self))) - ACError: \(msg)")
                 }
             }
         }

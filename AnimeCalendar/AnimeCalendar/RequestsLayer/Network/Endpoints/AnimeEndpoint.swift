@@ -8,9 +8,16 @@
 import Foundation
 
 // https://api.jikan.moe/v4/anime
-enum AnimeEndpoint {
+enum AnimeEndpoint: Equatable {
     case getAnime(name: String)
     case getAnimes
+    
+    static func == (lhs: AnimeEndpoint, rhs: AnimeEndpoint) -> Bool {
+        switch (lhs, rhs) {
+            case (.getAnime, getAnime): return true
+            default: return false
+        }
+    }
 }
 
 extension AnimeEndpoint: EndpointType {

@@ -1,0 +1,3492 @@
+{
+  "pagination": {
+    "last_visible_page": 2,
+    "has_next_page": true,
+    "current_page": 1,
+    "items": {
+      "count": 25,
+      "total": 34,
+      "per_page": 25
+    }
+  },
+  "data": [
+    {
+      "mal_id": 6215,
+      "url": "https://myanimelist.net/anime/6215/Dr",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/8/19471.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/8/19471t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/8/19471l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/8/19471.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/8/19471t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/8/19471l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr."
+        },
+        {
+          "type": "Synonym",
+          "title": "Namie Amuro: Dr."
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr."
+        }
+      ],
+      "title": "Dr.",
+      "title_english": null,
+      "title_japanese": "Dr.",
+      "title_synonyms": [
+        "Namie Amuro: Dr."
+      ],
+      "type": "Music",
+      "source": "Original",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2009-03-14T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 14,
+            "month": 3,
+            "year": 2009
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Mar 14, 2009"
+      },
+      "duration": "5 min",
+      "rating": "G - All Ages",
+      "score": 6.05,
+      "scored_by": 1279,
+      "rank": 8980,
+      "popularity": 9463,
+      "members": 2619,
+      "favorites": 0,
+      "synopsis": "The video's story is set in the year 3000 on an Earth that has been reduced to ruins by weapons of mass destruction and environmental destruction. An animated alter-ego of Amuro is the lone survivor who wants to restore the once beautiful planet. She attempts to \"convey a message of 'world peace' that transcends time\" to the 21st century through a time-slip. A girl living in the present (as represented by another alter-ego of Amuro) receives that message of world peace. (Source: ANN)",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 14,
+          "type": "anime",
+          "name": "Sunrise",
+          "url": "https://myanimelist.net/anime/producer/14/Sunrise"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 1,
+          "type": "anime",
+          "name": "Action",
+          "url": "https://myanimelist.net/anime/genre/1/Action"
+        },
+        {
+          "mal_id": 2,
+          "type": "anime",
+          "name": "Adventure",
+          "url": "https://myanimelist.net/anime/genre/2/Adventure"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 19,
+          "type": "anime",
+          "name": "Music",
+          "url": "https://myanimelist.net/anime/genre/19/Music"
+        },
+        {
+          "mal_id": 31,
+          "type": "anime",
+          "name": "Super Power",
+          "url": "https://myanimelist.net/anime/genre/31/Super_Power"
+        }
+      ],
+      "demographics": []
+    },
+    {
+      "mal_id": 8551,
+      "url": "https://myanimelist.net/anime/8551/Dr_Slump_Movie_11__Dr_Mashirito___Abale-chan",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/8/23179.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/8/23179t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/8/23179l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/8/23179.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/8/23179t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/8/23179l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump Movie 11: Dr. Mashirito &amp; Abale-chan"
+        },
+        {
+          "type": "Synonym",
+          "title": "Gekijouban Dr. Slump: Dr. Mashirito Abale-chan"
+        },
+        {
+          "type": "Japanese",
+          "title": "劇場版Dr.SLUMP Dr.マシリト アバレちゃん"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Slump: Dr. Mashirito and Abale-chan"
+        }
+      ],
+      "title": "Dr. Slump Movie 11: Dr. Mashirito &amp; Abale-chan",
+      "title_english": "Dr. Slump: Dr. Mashirito and Abale-chan",
+      "title_japanese": "劇場版Dr.SLUMP Dr.マシリト アバレちゃん",
+      "title_synonyms": [
+        "Gekijouban Dr. Slump: Dr. Mashirito Abale-chan"
+      ],
+      "type": "Movie",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2007-03-03T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 3,
+            "month": 3,
+            "year": 2007
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Mar 3, 2007"
+      },
+      "duration": "5 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 5.97,
+      "scored_by": 463,
+      "rank": 9365,
+      "popularity": 11201,
+      "members": 1385,
+      "favorites": 0,
+      "synopsis": "The story centers around an evil counterpart of Arale created by Dr. Mashirito named Abale.",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 30449,
+      "url": "https://myanimelist.net/anime/30449/Dr_Slump__Robot_Taiketsu_Shukuteki_Dr_Mashirito_Toujou___Keen_de_Yuushou_Penguin_Grand_Prix",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/10/72852.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/10/72852t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/10/72852l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/10/72852.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/10/72852t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/10/72852l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump: Robot Taiketsu! Shukuteki Dr. Mashirito Toujou / Keen de Yuushou!? Penguin Grand Prix"
+        },
+        {
+          "type": "Japanese",
+          "title": "ドクタースランプ ロボット対決! 宿敵ドクターマシリト登場 / キーンで優勝!? ペンギン・グランプリ"
+        }
+      ],
+      "title": "Dr. Slump: Robot Taiketsu! Shukuteki Dr. Mashirito Toujou / Keen de Yuushou!? Penguin Grand Prix",
+      "title_english": null,
+      "title_japanese": "ドクタースランプ ロボット対決! 宿敵ドクターマシリト登場 / キーンで優勝!? ペンギン・グランプリ",
+      "title_synonyms": [],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1998-04-01T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 1,
+            "month": 4,
+            "year": 1998
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Apr 1, 1998"
+      },
+      "duration": "45 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 5.84,
+      "scored_by": 125,
+      "rank": 9948,
+      "popularity": 13360,
+      "members": 660,
+      "favorites": 0,
+      "synopsis": "A special two-parts episode aired between episode 14 and 15 of Dr. Slump 2.",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        },
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Mecha",
+          "url": "https://myanimelist.net/anime/genre/18/Mecha"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 17307,
+      "url": "https://myanimelist.net/anime/17307/Dr_Typhoon",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/11/46205.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/11/46205t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/11/46205l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/11/46205.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/11/46205t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/11/46205l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Typhoon"
+        },
+        {
+          "type": "Synonym",
+          "title": "Doc Typhoon"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.(ドク)タイフーン"
+        }
+      ],
+      "title": "Dr. Typhoon",
+      "title_english": null,
+      "title_japanese": "Dr.(ドク)タイフーン",
+      "title_synonyms": [
+        "Doc Typhoon"
+      ],
+      "type": "OVA",
+      "source": "Unknown",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1991-04-03T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 3,
+            "month": 4,
+            "year": 1991
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Apr 3, 1991"
+      },
+      "duration": "46 min",
+      "rating": "R+ - Mild Nudity",
+      "score": null,
+      "scored_by": null,
+      "rank": 18331,
+      "popularity": 15270,
+      "members": 378,
+      "favorites": 0,
+      "synopsis": "Based on a seinen manga written by Takahashi Michitsuna and illustrated by Kazama Eiji, serialised in Weekly Manga Action.",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [],
+      "genres": [
+        {
+          "mal_id": 8,
+          "type": "anime",
+          "name": "Drama",
+          "url": "https://myanimelist.net/anime/genre/8/Drama"
+        },
+        {
+          "mal_id": 30,
+          "type": "anime",
+          "name": "Sports",
+          "url": "https://myanimelist.net/anime/genre/30/Sports"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [],
+      "demographics": [
+        {
+          "mal_id": 42,
+          "type": "anime",
+          "name": "Seinen",
+          "url": "https://myanimelist.net/anime/genre/42/Seinen"
+        }
+      ]
+    },
+    {
+      "mal_id": 3312,
+      "url": "https://myanimelist.net/anime/3312/Dr_Slump",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1475/116861.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1475/116861t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1475/116861l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1475/116861.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1475/116861t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1475/116861l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump 2"
+        },
+        {
+          "type": "Synonym",
+          "title": "Doctor Slump"
+        },
+        {
+          "type": "Japanese",
+          "title": "ドクタースランプ"
+        }
+      ],
+      "title": "Dr. Slump",
+      "title_english": null,
+      "title_japanese": "ドクタースランプ",
+      "title_synonyms": [
+        "Dr. Slump 2",
+        "Doctor Slump"
+      ],
+      "type": "TV",
+      "source": "Manga",
+      "episodes": 74,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1997-11-26T00:00:00+00:00",
+        "to": "1999-09-22T00:00:00+00:00",
+        "prop": {
+          "from": {
+            "day": 26,
+            "month": 11,
+            "year": 1997
+          },
+          "to": {
+            "day": 22,
+            "month": 9,
+            "year": 1999
+          }
+        },
+        "string": "Nov 26, 1997 to Sep 22, 1999"
+      },
+      "duration": "25 min per ep",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 6.97,
+      "scored_by": 7140,
+      "rank": 4105,
+      "popularity": 4691,
+      "members": 16964,
+      "favorites": 47,
+      "synopsis": "In Penguin Village, humans live alongside talking animals and objects. Senbei Norimaki is one of these humans, and he's an inventor with the lofty dream of creating the world's best robot girl. The product of his efforts is Arale, but depending on your definition of perfect, she's anything but! Not only is Arale severely nearsighted, but she also has no common sense! At least she has super-strength, though that often proves to be a setback as well. Although she means well, Arale only causes trouble for her neighbors in the whimsical Penguin Village!",
+      "background": null,
+      "season": "fall",
+      "year": 1997,
+      "broadcast": {
+        "day": "Wednesdays",
+        "time": "19:00",
+        "timezone": "Asia/Tokyo",
+        "string": "Wednesdays at 19:00 (JST)"
+      },
+      "producers": [
+        {
+          "mal_id": 169,
+          "type": "anime",
+          "name": "Fuji TV",
+          "url": "https://myanimelist.net/anime/producer/169/Fuji_TV"
+        }
+      ],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        },
+        {
+          "mal_id": 36,
+          "type": "anime",
+          "name": "Slice of Life",
+          "url": "https://myanimelist.net/anime/genre/36/Slice_of_Life"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 38691,
+      "url": "https://myanimelist.net/anime/38691/Dr_Stone",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1613/102576.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1613/102576t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1613/102576l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1613/102576.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1613/102576t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1613/102576l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": "2ei4KpfCOAI",
+        "url": "https://www.youtube.com/watch?v=2ei4KpfCOAI",
+        "embed_url": "https://www.youtube.com/embed/2ei4KpfCOAI?enablejsapi=1&;amp;wmode=opaque&amp;autoplay=1",
+        "images": {
+          "image_url": "https://img.youtube.com/vi/2ei4KpfCOAI/default.jpg",
+          "small_image_url": "https://img.youtube.com/vi/2ei4KpfCOAI/sddefault.jpg",
+          "medium_image_url": "https://img.youtube.com/vi/2ei4KpfCOAI/mqdefault.jpg",
+          "large_image_url": "https://img.youtube.com/vi/2ei4KpfCOAI/hqdefault.jpg",
+          "maximum_image_url": "https://img.youtube.com/vi/2ei4KpfCOAI/maxresdefault.jpg"
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Stone"
+        },
+        {
+          "type": "Japanese",
+          "title": "ドクターストーン"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Stone"
+        }
+      ],
+      "title": "Dr. Stone",
+      "title_english": "Dr. Stone",
+      "title_japanese": "ドクターストーン",
+      "title_synonyms": [],
+      "type": "TV",
+      "source": "Manga",
+      "episodes": 24,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2019-07-05T00:00:00+00:00",
+        "to": "2019-12-13T00:00:00+00:00",
+        "prop": {
+          "from": {
+            "day": 5,
+            "month": 7,
+            "year": 2019
+          },
+          "to": {
+            "day": 13,
+            "month": 12,
+            "year": 2019
+          }
+        },
+        "string": "Jul 5, 2019 to Dec 13, 2019"
+      },
+      "duration": "24 min per ep",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 8.29,
+      "scored_by": 927258,
+      "rank": 249,
+      "popularity": 56,
+      "members": 1525155,
+      "favorites": 25403,
+      "synopsis": "After five years of harboring unspoken feelings, high-schooler Taiju Ooki is finally ready to confess his love to Yuzuriha Ogawa. Just when Taiju begins his confession however, a blinding green light strikes the Earth and petrifies mankind around the world—turning every single human into stone. Several millennia later, Taiju awakens to find the modern world completely nonexistent, as nature has flourished in the years humanity stood still. Among a stone world of statues, Taiju encounters one other living human: his science-loving friend Senkuu, who has been active for a few months. Taiju learns that Senkuu has developed a grand scheme—to launch the complete revival of civilization with science. Taiju's brawn and Senkuu's brains combine to forge a formidable partnership, and they soon uncover a method to revive those petrified. However, Senkuu's master plan is threatened when his ideologies are challenged by those who awaken. All the while, the reason for mankind's petrification remains unknown. [Written by MAL Rewrite]",
+      "background": null,
+      "season": "summer",
+      "year": 2019,
+      "broadcast": {
+        "day": "Fridays",
+        "time": "22:00",
+        "timezone": "Asia/Tokyo",
+        "string": "Fridays at 22:00 (JST)"
+      },
+      "producers": [
+        {
+          "mal_id": 1143,
+          "type": "anime",
+          "name": "TOHO animation",
+          "url": "https://myanimelist.net/anime/producer/1143/TOHO_animation"
+        },
+        {
+          "mal_id": 1365,
+          "type": "anime",
+          "name": "Shueisha",
+          "url": "https://myanimelist.net/anime/producer/1365/Shueisha"
+        },
+        {
+          "mal_id": 2495,
+          "type": "anime",
+          "name": "8PAN",
+          "url": "https://myanimelist.net/anime/producer/2495/8PAN"
+        }
+      ],
+      "licensors": [
+        {
+          "mal_id": 102,
+          "type": "anime",
+          "name": "Funimation",
+          "url": "https://myanimelist.net/anime/producer/102/Funimation"
+        },
+        {
+          "mal_id": 1468,
+          "type": "anime",
+          "name": "Crunchyroll",
+          "url": "https://myanimelist.net/anime/producer/1468/Crunchyroll"
+        }
+      ],
+      "studios": [
+        {
+          "mal_id": 73,
+          "type": "anime",
+          "name": "TMS Entertainment",
+          "url": "https://myanimelist.net/anime/producer/73/TMS_Entertainment"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 2,
+          "type": "anime",
+          "name": "Adventure",
+          "url": "https://myanimelist.net/anime/genre/2/Adventure"
+        },
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 76,
+          "type": "anime",
+          "name": "Survival",
+          "url": "https://myanimelist.net/anime/genre/76/Survival"
+        },
+        {
+          "mal_id": 78,
+          "type": "anime",
+          "name": "Time Travel",
+          "url": "https://myanimelist.net/anime/genre/78/Time_Travel"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 50612,
+      "url": "https://myanimelist.net/anime/50612/Dr_Stone__Ryuusui",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1071/124921.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1071/124921t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1071/124921l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1071/124921.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1071/124921t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1071/124921l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": "xR0mAOlclHg",
+        "url": "https://www.youtube.com/watch?v=xR0mAOlclHg",
+        "embed_url": "https://www.youtube.com/embed/xR0mAOlclHg?enablejsapi=1&;amp;wmode=opaque&amp;autoplay=1",
+        "images": {
+          "image_url": "https://img.youtube.com/vi/xR0mAOlclHg/default.jpg",
+          "small_image_url": "https://img.youtube.com/vi/xR0mAOlclHg/sddefault.jpg",
+          "medium_image_url": "https://img.youtube.com/vi/xR0mAOlclHg/mqdefault.jpg",
+          "large_image_url": "https://img.youtube.com/vi/xR0mAOlclHg/hqdefault.jpg",
+          "maximum_image_url": "https://img.youtube.com/vi/xR0mAOlclHg/maxresdefault.jpg"
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Stone: Ryuusui"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.STONE 龍水"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Stone: Ryusui"
+        }
+      ],
+      "title": "Dr. Stone: Ryuusui",
+      "title_english": "Dr. Stone: Ryusui",
+      "title_japanese": "Dr.STONE 龍水",
+      "title_synonyms": [],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2022-07-10T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 10,
+            "month": 7,
+            "year": 2022
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Jul 10, 2022"
+      },
+      "duration": "54 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 8.36,
+      "scored_by": 65478,
+      "rank": 192,
+      "popularity": 1345,
+      "members": 149910,
+      "favorites": 563,
+      "synopsis": "Now that brains and brawns have united forces, the next step in Senkuu's plan to unravel the mystery behind the green light that once petrified humanity is to go to the other side of the Earth and investigate its origin. However, to achieve this, Senkuu must first build a ship. With the help of Tsukasa Shishiou's former underlings, the base of the ship is rapidly assembled, but there is one missing piece: a skilled captain. During their search, Senkuu and his crew come across a petrified Ryuusui Nanami—the heir of the biggest maritime conglomerate, known for his vast knowledge of sailboats but unpleasant personality. Despite this, Senkuu takes the risk and revives Ryuusui. Ryuusui, upon realizing there are no ownership rights in this new civilization, is excited at the prospect of claiming everything for himself. But before he agrees to play a crucial part in their upcoming journey and command the vessel through the restless seas, he and Senkuu must find the king of fuels to power the ship—oil. [Written by MAL Rewrite]",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [
+        {
+          "mal_id": 1143,
+          "type": "anime",
+          "name": "TOHO animation",
+          "url": "https://myanimelist.net/anime/producer/1143/TOHO_animation"
+        },
+        {
+          "mal_id": 1365,
+          "type": "anime",
+          "name": "Shueisha",
+          "url": "https://myanimelist.net/anime/producer/1365/Shueisha"
+        }
+      ],
+      "licensors": [
+        {
+          "mal_id": 1468,
+          "type": "anime",
+          "name": "Crunchyroll",
+          "url": "https://myanimelist.net/anime/producer/1468/Crunchyroll"
+        }
+      ],
+      "studios": [
+        {
+          "mal_id": 73,
+          "type": "anime",
+          "name": "TMS Entertainment",
+          "url": "https://myanimelist.net/anime/producer/73/TMS_Entertainment"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 2,
+          "type": "anime",
+          "name": "Adventure",
+          "url": "https://myanimelist.net/anime/genre/2/Adventure"
+        },
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 78,
+          "type": "anime",
+          "name": "Time Travel",
+          "url": "https://myanimelist.net/anime/genre/78/Time_Travel"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 2930,
+      "url": "https://myanimelist.net/anime/2930/Tensai_Dr_Hamax",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/13/74919.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/13/74919t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/13/74919l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/13/74919.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/13/74919t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/13/74919l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Tensai? Dr. Hamax"
+        },
+        {
+          "type": "Japanese",
+          "title": "天才？Dr.ハマックス"
+        }
+      ],
+      "title": "Tensai? Dr. Hamax",
+      "title_english": null,
+      "title_japanese": "天才？Dr.ハマックス",
+      "title_synonyms": [],
+      "type": "TV",
+      "source": "Original",
+      "episodes": 12,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2007-10-06T00:00:00+00:00",
+        "to": "2007-12-22T00:00:00+00:00",
+        "prop": {
+          "from": {
+            "day": 6,
+            "month": 10,
+            "year": 2007
+          },
+          "to": {
+            "day": 22,
+            "month": 12,
+            "year": 2007
+          }
+        },
+        "string": "Oct 6, 2007 to Dec 22, 2007"
+      },
+      "duration": "23 min per ep",
+      "rating": "G - All Ages",
+      "score": null,
+      "scored_by": null,
+      "rank": 16539,
+      "popularity": 16242,
+      "members": 303,
+      "favorites": 0,
+      "synopsis": "No synopsis has been added for this series yet. Click here to update this information.",
+      "background": null,
+      "season": "fall",
+      "year": 2007,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": "Unknown"
+      },
+      "producers": [
+        {
+          "mal_id": 10,
+          "type": "anime",
+          "name": "Production I.G",
+          "url": "https://myanimelist.net/anime/producer/10/Production_IG"
+        },
+        {
+          "mal_id": 577,
+          "type": "anime",
+          "name": "Tohokushinsha Film Corporation",
+          "url": "https://myanimelist.net/anime/producer/577/Tohokushinsha_Film_Corporation"
+        }
+      ],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 80,
+          "type": "anime",
+          "name": "Trans Arts",
+          "url": "https://myanimelist.net/anime/producer/80/Trans_Arts"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [],
+      "demographics": []
+    },
+    {
+      "mal_id": 2259,
+      "url": "https://myanimelist.net/anime/2259/Dr_Rin_ni_Kiitemite",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1279/96440.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1279/96440t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1279/96440l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1279/96440.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1279/96440t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1279/96440l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Rin ni Kiitemite!"
+        },
+        {
+          "type": "Synonym",
+          "title": "Ask Dr. Rin"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.リンにきいてみて！"
+        }
+      ],
+      "title": "Dr. Rin ni Kiitemite!",
+      "title_english": null,
+      "title_japanese": "Dr.リンにきいてみて！",
+      "title_synonyms": [
+        "Ask Dr. Rin"
+      ],
+      "type": "TV",
+      "source": "Manga",
+      "episodes": 51,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2001-03-05T00:00:00+00:00",
+        "to": "2002-02-25T00:00:00+00:00",
+        "prop": {
+          "from": {
+            "day": 5,
+            "month": 3,
+            "year": 2001
+          },
+          "to": {
+            "day": 25,
+            "month": 2,
+            "year": 2002
+          }
+        },
+        "string": "Mar 5, 2001 to Feb 25, 2002"
+      },
+      "duration": "24 min per ep",
+      "rating": "PG - Children",
+      "score": 6.74,
+      "scored_by": 1088,
+      "rank": 5177,
+      "popularity": 8244,
+      "members": 4134,
+      "favorites": 13,
+      "synopsis": "Kanzaki Meirin, a junior high school student, posseses fusui power which can drive away evil spirits away whenever they appeared. She is in fact, the fortune teller Dr. Rin. She is in love with her best friend, soccer club member, Yuuki Asuka. However, Yuuki does not like fortune-telling and superstitious things. (Source: ANN)",
+      "background": null,
+      "season": "spring",
+      "year": 2001,
+      "broadcast": {
+        "day": "Mondays",
+        "time": "18:30",
+        "timezone": "Asia/Tokyo",
+        "string": "Mondays at 18:30 (JST)"
+      },
+      "producers": [
+        {
+          "mal_id": 139,
+          "type": "anime",
+          "name": "Nihon Ad Systems",
+          "url": "https://myanimelist.net/anime/producer/139/Nihon_Ad_Systems"
+        }
+      ],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 126,
+          "type": "anime",
+          "name": "Studio Comet",
+          "url": "https://myanimelist.net/anime/producer/126/Studio_Comet"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 10,
+          "type": "anime",
+          "name": "Fantasy",
+          "url": "https://myanimelist.net/anime/genre/10/Fantasy"
+        },
+        {
+          "mal_id": 22,
+          "type": "anime",
+          "name": "Romance",
+          "url": "https://myanimelist.net/anime/genre/22/Romance"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 23,
+          "type": "anime",
+          "name": "School",
+          "url": "https://myanimelist.net/anime/genre/23/School"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 25,
+          "type": "anime",
+          "name": "Shoujo",
+          "url": "https://myanimelist.net/anime/genre/25/Shoujo"
+        }
+      ]
+    },
+    {
+      "mal_id": 2222,
+      "url": "https://myanimelist.net/anime/2222/Dr_Slump__Arale-chan",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/9/38381.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/9/38381t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/9/38381l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/9/38381.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/9/38381t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/9/38381l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump: Arale-chan"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump &amp; Arale-chan"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump 1"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプ・アラレちゃん"
+        },
+        {
+          "type": "German",
+          "title": "Dr. Slump Arale"
+        },
+        {
+          "type": "Spanish",
+          "title": "Dr. Slump Arale"
+        },
+        {
+          "type": "French",
+          "title": "Dr. Slump Arale"
+        }
+      ],
+      "title": "Dr. Slump: Arale-chan",
+      "title_english": null,
+      "title_japanese": "Dr.スランプ・アラレちゃん",
+      "title_synonyms": [
+        "Dr. Slump &amp; Arale-chan",
+        "Dr. Slump 1"
+      ],
+      "type": "TV",
+      "source": "Manga",
+      "episodes": 243,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1981-04-08T00:00:00+00:00",
+        "to": "1986-02-19T00:00:00+00:00",
+        "prop": {
+          "from": {
+            "day": 8,
+            "month": 4,
+            "year": 1981
+          },
+          "to": {
+            "day": 19,
+            "month": 2,
+            "year": 1986
+          }
+        },
+        "string": "Apr 8, 1981 to Feb 19, 1986"
+      },
+      "duration": "25 min per ep",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 7.16,
+      "scored_by": 5337,
+      "rank": 3244,
+      "popularity": 5017,
+      "members": 14125,
+      "favorites": 63,
+      "synopsis": "Dr. Slump creates a little android girl, Arale, who is very strong, happy, and totally common senseless. They live in Penguin Village where the strangest things happen (e.g., the dawn is announced by a little pig wearing a basquee) (Source: ANN)",
+      "background": null,
+      "season": "spring",
+      "year": 1981,
+      "broadcast": {
+        "day": "Wednesdays",
+        "time": "19:00",
+        "timezone": "Asia/Tokyo",
+        "string": "Wednesdays at 19:00 (JST)"
+      },
+      "producers": [
+        {
+          "mal_id": 169,
+          "type": "anime",
+          "name": "Fuji TV",
+          "url": "https://myanimelist.net/anime/producer/169/Fuji_TV"
+        },
+        {
+          "mal_id": 2278,
+          "type": "anime",
+          "name": "Harmony Gold",
+          "url": "https://myanimelist.net/anime/producer/2278/Harmony_Gold"
+        }
+      ],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        },
+        {
+          "mal_id": 36,
+          "type": "anime",
+          "name": "Slice of Life",
+          "url": "https://myanimelist.net/anime/genre/36/Slice_of_Life"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 48549,
+      "url": "https://myanimelist.net/anime/48549/Dr_Stone__New_World",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1355/128948.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1355/128948t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1355/128948l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1355/128948.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1355/128948t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1355/128948l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": "--K49563xfA",
+        "url": "https://www.youtube.com/watch?v=--K49563xfA",
+        "embed_url": "https://www.youtube.com/embed/--K49563xfA?enablejsapi=1&;amp;wmode=opaque&amp;autoplay=1",
+        "images": {
+          "image_url": "https://img.youtube.com/vi/--K49563xfA/default.jpg",
+          "small_image_url": "https://img.youtube.com/vi/--K49563xfA/sddefault.jpg",
+          "medium_image_url": "https://img.youtube.com/vi/--K49563xfA/mqdefault.jpg",
+          "large_image_url": "https://img.youtube.com/vi/--K49563xfA/hqdefault.jpg",
+          "maximum_image_url": "https://img.youtube.com/vi/--K49563xfA/maxresdefault.jpg"
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Stone: New World"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Stone 3rd Season"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.STONE NEW WORLD"
+        }
+      ],
+      "title": "Dr. Stone: New World",
+      "title_english": null,
+      "title_japanese": "Dr.STONE NEW WORLD",
+      "title_synonyms": [
+        "Dr. Stone 3rd Season"
+      ],
+      "type": "TV",
+      "source": "Manga",
+      "episodes": null,
+      "status": "Not yet aired",
+      "airing": false,
+      "aired": {
+        "from": "2023-04-01T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 1,
+            "month": 4,
+            "year": 2023
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Apr 2023 to ?"
+      },
+      "duration": "Unknown",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": null,
+      "scored_by": null,
+      "rank": null,
+      "popularity": 1388,
+      "members": 143796,
+      "favorites": 537,
+      "synopsis": "Third season of Dr. Stone, airing in Spring 2023.",
+      "background": null,
+      "season": "spring",
+      "year": 2023,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": "Unknown"
+      },
+      "producers": [
+        {
+          "mal_id": 1143,
+          "type": "anime",
+          "name": "TOHO animation",
+          "url": "https://myanimelist.net/anime/producer/1143/TOHO_animation"
+        },
+        {
+          "mal_id": 1365,
+          "type": "anime",
+          "name": "Shueisha",
+          "url": "https://myanimelist.net/anime/producer/1365/Shueisha"
+        }
+      ],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 73,
+          "type": "anime",
+          "name": "TMS Entertainment",
+          "url": "https://myanimelist.net/anime/producer/73/TMS_Entertainment"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 2,
+          "type": "anime",
+          "name": "Adventure",
+          "url": "https://myanimelist.net/anime/genre/2/Adventure"
+        },
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 78,
+          "type": "anime",
+          "name": "Time Travel",
+          "url": "https://myanimelist.net/anime/genre/78/Time_Travel"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 28369,
+      "url": "https://myanimelist.net/anime/28369/Dr_Slump__Arale-chan_Specials",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/13/68505.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/13/68505t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/13/68505l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/13/68505.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/13/68505t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/13/68505l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump: Arale-chan Specials"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump: Penguin Village SOS"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump: Game by Heart"
+        },
+        {
+          "type": "Synonym",
+          "title": "Episode 24.5"
+        },
+        {
+          "type": "Synonym",
+          "title": "Heart de Shoubu! - Nandemo OK Orcha-kun - Penguin Mura SOS!!"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプアラレちゃんスペシャル"
+        }
+      ],
+      "title": "Dr. Slump: Arale-chan Specials",
+      "title_english": null,
+      "title_japanese": "Dr.スランプアラレちゃんスペシャル",
+      "title_synonyms": [
+        "Dr. Slump: Penguin Village SOS",
+        "Dr. Slump: Game by Heart",
+        "Episode 24.5",
+        "Heart de Shoubu! - Nandemo OK Orcha-kun - Penguin Mura SOS!!"
+      ],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 2,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1981-10-07T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 7,
+            "month": 10,
+            "year": 1981
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Oct 7, 1981"
+      },
+      "duration": "24 min per ep",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 5.75,
+      "scored_by": 249,
+      "rank": 10317,
+      "popularity": 12255,
+      "members": 946,
+      "favorites": 0,
+      "synopsis": "A special two-part episode that aired between episodes 24 and 25 of Dr. Slump: Arale-chan.",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 30420,
+      "url": "https://myanimelist.net/anime/30420/Dr_Slump__Arale-chan_no_Koutsuu_Anzen",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/11/72793.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/11/72793t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/11/72793l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/11/72793.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/11/72793t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/11/72793l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump: Arale-chan no Koutsuu Anzen"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump: Arale-chan Traffic Education Film"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump &amp; Arale-chan: Let's Learn Traffic Safety"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr.スランプ アラレちゃん 交通ルールをまもろうよ"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプアラレちゃんの交通安全"
+        }
+      ],
+      "title": "Dr. Slump: Arale-chan no Koutsuu Anzen",
+      "title_english": null,
+      "title_japanese": "Dr.スランプアラレちゃんの交通安全",
+      "title_synonyms": [
+        "Dr. Slump: Arale-chan Traffic Education Film",
+        "Dr. Slump &amp; Arale-chan: Let's Learn Traffic Safety",
+        "Dr.スランプ アラレちゃん 交通ルールをまもろうよ"
+      ],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 2,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1983-01-01T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 1,
+            "month": 1,
+            "year": 1983
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "1983"
+      },
+      "duration": "13 min per ep",
+      "rating": "G - All Ages",
+      "score": 5.65,
+      "scored_by": 202,
+      "rank": 10765,
+      "popularity": 12955,
+      "members": 754,
+      "favorites": 2,
+      "synopsis": "The gang goes on a picknick Sunday morning. Arale almost gets run over when she crosses the street without looking. Senbei makes a rice machine that brings pictures to life, one of which is a bicycle. Tarou and Akane get in trouble for their reckless riding. The next day, everyone goes to school and Tarou doesn't abide to his lessons from the previous day and crashes into a truck when he speeds at an intersection.",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 56,
+          "type": "anime",
+          "name": "Educational",
+          "url": "https://myanimelist.net/anime/genre/56/Educational"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 4070,
+      "url": "https://myanimelist.net/anime/4070/Black_Jack__Dr_Pinoko_no_Mori_no_Bouken",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/9/7415.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/9/7415t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/9/7415l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/9/7415.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/9/7415t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/9/7415l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Black Jack: Dr. Pinoko no Mori no Bouken"
+        },
+        {
+          "type": "Japanese",
+          "title": "ブラック・ジャック Dr. ピノコの森の冒険"
+        },
+        {
+          "type": "English",
+          "title": "Black Jack: Dr. Pinoco's Adventure"
+        }
+      ],
+      "title": "Black Jack: Dr. Pinoko no Mori no Bouken",
+      "title_english": "Black Jack: Dr. Pinoco's Adventure",
+      "title_japanese": "ブラック・ジャック Dr. ピノコの森の冒険",
+      "title_synonyms": [],
+      "type": "Movie",
+      "source": "Unknown",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2005-12-17T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 17,
+            "month": 12,
+            "year": 2005
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Dec 17, 2005"
+      },
+      "duration": "7 min",
+      "rating": "G - All Ages",
+      "score": 6.19,
+      "scored_by": 793,
+      "rank": 8187,
+      "popularity": 9914,
+      "members": 2232,
+      "favorites": 1,
+      "synopsis": "Dr. Black Jack forgot his doctor's bag, and his assistant (plus self-claimed \"wife\") Pinoko rushed to deliver the bag but found herself lost in the forest. Guided by a butterfly, she found that many animals in the forest are sick or injured, and Pinoko used her knowledge to help those animals. (Source: ANN)",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [
+        {
+          "mal_id": 200,
+          "type": "anime",
+          "name": "Tezuka Productions",
+          "url": "https://myanimelist.net/anime/producer/200/Tezuka_Productions"
+        }
+      ],
+      "licensors": [],
+      "studios": [],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 67,
+          "type": "anime",
+          "name": "Medical",
+          "url": "https://myanimelist.net/anime/genre/67/Medical"
+        }
+      ],
+      "demographics": []
+    },
+    {
+      "mal_id": 50666,
+      "url": "https://myanimelist.net/anime/50666/Dr_Stone_Stone_Wars_-_Soushuuhen_Special_Eizou",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png",
+          "small_image_url": "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png",
+          "large_image_url": "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png",
+          "small_image_url": "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png",
+          "large_image_url": "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": false,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Stone Stone Wars - Soushuuhen Special Eizou"
+        },
+        {
+          "type": "Japanese",
+          "title": "アニメ『Dr.STONE』\"第2期総集編スペシャル映像\""
+        }
+      ],
+      "title": "Dr. Stone Stone Wars - Soushuuhen Special Eizou",
+      "title_english": null,
+      "title_japanese": "アニメ『Dr.STONE』\"第2期総集編スペシャル映像\"",
+      "title_synonyms": [],
+      "type": "Special",
+      "source": "Unknown",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": null,
+        "to": null,
+        "prop": {
+          "from": {
+            "day": null,
+            "month": null,
+            "year": null
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Not available"
+      },
+      "duration": "12 min",
+      "rating": null,
+      "score": null,
+      "scored_by": null,
+      "rank": 0,
+      "popularity": 0,
+      "members": 0,
+      "favorites": 0,
+      "synopsis": null,
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [],
+      "genres": [
+        {
+          "mal_id": 1,
+          "type": "anime",
+          "name": "Action",
+          "url": "https://myanimelist.net/anime/genre/1/Action"
+        },
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 34878,
+      "url": "https://myanimelist.net/anime/34878/Dr_Slump__Arale-chan_-_Penguin_Mura_no_Shouboutai",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/7/84158.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/7/84158t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/7/84158l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/7/84158.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/7/84158t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/7/84158l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump: Arale-chan - Penguin Mura no Shouboutai"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump Arale-chan Penguin Village Fire Brigade"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプ アラレちゃん ペンギン村の消防隊"
+        }
+      ],
+      "title": "Dr. Slump: Arale-chan - Penguin Mura no Shouboutai",
+      "title_english": null,
+      "title_japanese": "Dr.スランプ アラレちゃん ペンギン村の消防隊",
+      "title_synonyms": [
+        "Dr. Slump Arale-chan Penguin Village Fire Brigade"
+      ],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1984-01-01T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 1,
+            "month": 1,
+            "year": 1984
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "1984"
+      },
+      "duration": "11 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 5.74,
+      "scored_by": 175,
+      "rank": 10383,
+      "popularity": 13450,
+      "members": 640,
+      "favorites": 0,
+      "synopsis": "The cast of Dr. Slump: Arale-chan help promote fire safety.",
+      "background": "Fuji TV commemorated the release of the series on DVD with this special hosted by Mami Koyama and Toshiyuki Makihara.",
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 56,
+          "type": "anime",
+          "name": "Educational",
+          "url": "https://myanimelist.net/anime/genre/56/Educational"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 8546,
+      "url": "https://myanimelist.net/anime/8546/Dr_Slump_Movie_02__Hoyoyo_Uchuu_Daibouken",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/12/23174.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/12/23174t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/12/23174l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/12/23174.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/12/23174t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/12/23174l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": "sZq-l2cXQXk",
+        "url": "https://www.youtube.com/watch?v=sZq-l2cXQXk",
+        "embed_url": "https://www.youtube.com/embed/sZq-l2cXQXk?enablejsapi=1&;amp;wmode=opaque&amp;autoplay=1",
+        "images": {
+          "image_url": "https://img.youtube.com/vi/sZq-l2cXQXk/default.jpg",
+          "small_image_url": "https://img.youtube.com/vi/sZq-l2cXQXk/sddefault.jpg",
+          "medium_image_url": "https://img.youtube.com/vi/sZq-l2cXQXk/mqdefault.jpg",
+          "large_image_url": "https://img.youtube.com/vi/sZq-l2cXQXk/hqdefault.jpg",
+          "maximum_image_url": "https://img.youtube.com/vi/sZq-l2cXQXk/maxresdefault.jpg"
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump Movie 02: \"Hoyoyo!\" Uchuu Daibouken"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.SLUMP “ほよよ!”宇宙大冒険"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Slump: \"Hoyoyo!\" Space Adventure"
+        }
+      ],
+      "title": "Dr. Slump Movie 02: \"Hoyoyo!\" Uchuu Daibouken",
+      "title_english": "Dr. Slump: \"Hoyoyo!\" Space Adventure",
+      "title_japanese": "Dr.SLUMP “ほよよ!”宇宙大冒険",
+      "title_synonyms": [],
+      "type": "Movie",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1982-07-10T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 10,
+            "month": 7,
+            "year": 1982
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Jul 10, 1982"
+      },
+      "duration": "1 hr 30 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 6.35,
+      "scored_by": 560,
+      "rank": 7364,
+      "popularity": 10823,
+      "members": 1608,
+      "favorites": 0,
+      "synopsis": "When local teacher Midori Yamabuki receives an emergency summons to her home planet it turns out to be a trap devised by galactic warlord Dr. Mashirito, and it's up to Dr. Senbei Norimaki and a group of students (including his robot daughter Arale) to venture into space to save her. (Source: ANN)",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [
+        {
+          "mal_id": 467,
+          "type": "anime",
+          "name": "Discotek Media",
+          "url": "https://myanimelist.net/anime/producer/467/Discotek_Media"
+        }
+      ],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 28367,
+      "url": "https://myanimelist.net/anime/28367/Dr_Slump__Arale-chan_92_Oshougatsu_Special",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/12/68503.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/12/68503t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/12/68503l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/12/68503.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/12/68503t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/12/68503l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump: Arale-chan '92 Oshougatsu Special"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump: Arale-chan '92 New Year Special"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプ・アラレちゃん '92お正月スペシャル"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Slump: New Year Doesn't Come"
+        }
+      ],
+      "title": "Dr. Slump: Arale-chan '92 Oshougatsu Special",
+      "title_english": "Dr. Slump: New Year Doesn't Come",
+      "title_japanese": "Dr.スランプ・アラレちゃん '92お正月スペシャル",
+      "title_synonyms": [
+        "Dr. Slump: Arale-chan '92 New Year Special"
+      ],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 3,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1992-01-01T00:00:00+00:00",
+        "to": "1992-01-03T00:00:00+00:00",
+        "prop": {
+          "from": {
+            "day": 1,
+            "month": 1,
+            "year": 1992
+          },
+          "to": {
+            "day": 3,
+            "month": 1,
+            "year": 1992
+          }
+        },
+        "string": "Jan 1, 1992 to Jan 3, 1992"
+      },
+      "duration": "28 min per ep",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 5.83,
+      "scored_by": 177,
+      "rank": 9993,
+      "popularity": 12663,
+      "members": 826,
+      "favorites": 0,
+      "synopsis": null,
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 28371,
+      "url": "https://myanimelist.net/anime/28371/Dr_Slump__Arale-chan_-_Penguin_Mura_Eiyuu_Densetsu",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1310/107726.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1310/107726t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1310/107726l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1310/107726.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1310/107726t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1310/107726l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump: Arale-chan - Penguin Mura Eiyuu Densetsu"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプアラレちゃんスペシャル ペンギン村英雄伝説"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Slump: Hero Legend of Penguin Village"
+        }
+      ],
+      "title": "Dr. Slump: Arale-chan - Penguin Mura Eiyuu Densetsu",
+      "title_english": "Dr. Slump: Hero Legend of Penguin Village",
+      "title_japanese": "Dr.スランプアラレちゃんスペシャル ペンギン村英雄伝説",
+      "title_synonyms": [],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1982-01-02T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 2,
+            "month": 1,
+            "year": 1982
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Jan 2, 1982"
+      },
+      "duration": "46 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 5.98,
+      "scored_by": 226,
+      "rank": 9303,
+      "popularity": 12477,
+      "members": 881,
+      "favorites": 1,
+      "synopsis": null,
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 40852,
+      "url": "https://myanimelist.net/anime/40852/Dr_Stone__Stone_Wars",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1711/110614.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1711/110614t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1711/110614l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1711/110614.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1711/110614t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1711/110614l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": "esjDq0JQ_1s",
+        "url": "https://www.youtube.com/watch?v=esjDq0JQ_1s",
+        "embed_url": "https://www.youtube.com/embed/esjDq0JQ_1s?enablejsapi=1&;amp;wmode=opaque&amp;autoplay=1",
+        "images": {
+          "image_url": "https://img.youtube.com/vi/esjDq0JQ_1s/default.jpg",
+          "small_image_url": "https://img.youtube.com/vi/esjDq0JQ_1s/sddefault.jpg",
+          "medium_image_url": "https://img.youtube.com/vi/esjDq0JQ_1s/mqdefault.jpg",
+          "large_image_url": "https://img.youtube.com/vi/esjDq0JQ_1s/hqdefault.jpg",
+          "maximum_image_url": "https://img.youtube.com/vi/esjDq0JQ_1s/maxresdefault.jpg"
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Stone: Stone Wars"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Stone 2nd Season"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Stone Second Season"
+        },
+        {
+          "type": "Japanese",
+          "title": "ドクターストーン STONE WARS"
+        },
+        {
+          "type": "German",
+          "title": "Dr. Stone Staffel 2"
+        },
+        {
+          "type": "Spanish",
+          "title": "Dr. Stone : Stone Wars"
+        }
+      ],
+      "title": "Dr. Stone: Stone Wars",
+      "title_english": null,
+      "title_japanese": "ドクターストーン STONE WARS",
+      "title_synonyms": [
+        "Dr. Stone 2nd Season",
+        "Dr. Stone Second Season"
+      ],
+      "type": "TV",
+      "source": "Manga",
+      "episodes": 11,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2021-01-14T00:00:00+00:00",
+        "to": "2021-03-25T00:00:00+00:00",
+        "prop": {
+          "from": {
+            "day": 14,
+            "month": 1,
+            "year": 2021
+          },
+          "to": {
+            "day": 25,
+            "month": 3,
+            "year": 2021
+          }
+        },
+        "string": "Jan 14, 2021 to Mar 25, 2021"
+      },
+      "duration": "24 min per ep",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 8.18,
+      "scored_by": 489859,
+      "rank": 364,
+      "popularity": 157,
+      "members": 880054,
+      "favorites": 6869,
+      "synopsis": "Senkuu has made it his goal to bring back two million years of human achievement and revive the entirety of those turned to statues. However, one man stands in his way: Tsukasa Shishiou, who believes that only the fittest of those petrified should be revived. As the snow melts and spring approaches, Senkuu and his allies in Ishigami Village finish the preparations for their attack on the Tsukasa Empire. With a reinvented cell phone model now at their disposal, the Kingdom of Science is ready to launch its newest scheme to recruit the sizable numbers of Tsukasa's army to their side. However, it is a race against time; for every day the Kingdom of Science spends perfecting their inventions, the empire rapidly grows in number. Reuniting with old friends and gaining new allies, Senkuu and the Kingdom of Science must stop Tsukasa's forces in order to fulfill their goal of restoring humanity and all its creations. With the two sides each in pursuit of their ideal world, the Stone Wars have now begun! [Written by MAL Rewrite]",
+      "background": null,
+      "season": "winter",
+      "year": 2021,
+      "broadcast": {
+        "day": "Thursdays",
+        "time": "22:30",
+        "timezone": "Asia/Tokyo",
+        "string": "Thursdays at 22:30 (JST)"
+      },
+      "producers": [
+        {
+          "mal_id": 1143,
+          "type": "anime",
+          "name": "TOHO animation",
+          "url": "https://myanimelist.net/anime/producer/1143/TOHO_animation"
+        },
+        {
+          "mal_id": 1365,
+          "type": "anime",
+          "name": "Shueisha",
+          "url": "https://myanimelist.net/anime/producer/1365/Shueisha"
+        },
+        {
+          "mal_id": 2229,
+          "type": "anime",
+          "name": "Toho Music",
+          "url": "https://myanimelist.net/anime/producer/2229/Toho_Music"
+        },
+        {
+          "mal_id": 2495,
+          "type": "anime",
+          "name": "8PAN",
+          "url": "https://myanimelist.net/anime/producer/2495/8PAN"
+        }
+      ],
+      "licensors": [
+        {
+          "mal_id": 102,
+          "type": "anime",
+          "name": "Funimation",
+          "url": "https://myanimelist.net/anime/producer/102/Funimation"
+        }
+      ],
+      "studios": [
+        {
+          "mal_id": 73,
+          "type": "anime",
+          "name": "TMS Entertainment",
+          "url": "https://myanimelist.net/anime/producer/73/TMS_Entertainment"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 2,
+          "type": "anime",
+          "name": "Adventure",
+          "url": "https://myanimelist.net/anime/genre/2/Adventure"
+        },
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 76,
+          "type": "anime",
+          "name": "Survival",
+          "url": "https://myanimelist.net/anime/genre/76/Survival"
+        },
+        {
+          "mal_id": 78,
+          "type": "anime",
+          "name": "Time Travel",
+          "url": "https://myanimelist.net/anime/genre/78/Time_Travel"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 43555,
+      "url": "https://myanimelist.net/anime/43555/Dr_Stone__Stone_Wars_-_Kaisen_Zenya_Special_Eizou",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1097/109900.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1097/109900t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1097/109900l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/1097/109900.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/1097/109900t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/1097/109900l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Stone: Stone Wars - Kaisen Zenya Special Eizou"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Stone: Stone Wars Episode Zero"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Stone Recap"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Stone Special Feature"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.STONE STONE WARS 開戦前夜スペシャル映像"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Stone: Stone Wars Eve of the Battle Special Feature"
+        }
+      ],
+      "title": "Dr. Stone: Stone Wars - Kaisen Zenya Special Eizou",
+      "title_english": "Dr. Stone: Stone Wars Eve of the Battle Special Feature",
+      "title_japanese": "Dr.STONE STONE WARS 開戦前夜スペシャル映像",
+      "title_synonyms": [
+        "Dr. Stone: Stone Wars Episode Zero",
+        "Dr. Stone Recap",
+        "Dr. Stone Special Feature"
+      ],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "2020-10-11T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 11,
+            "month": 10,
+            "year": 2020
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Oct 11, 2020"
+      },
+      "duration": "22 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 7.16,
+      "scored_by": 19947,
+      "rank": 3245,
+      "popularity": 2875,
+      "members": 46108,
+      "favorites": 44,
+      "synopsis": "A recap episode with additional scenes which was screened on Jump's official YouTube channel for Jump Special Anime Festa 2020.",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 73,
+          "type": "anime",
+          "name": "TMS Entertainment",
+          "url": "https://myanimelist.net/anime/producer/73/TMS_Entertainment"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 2,
+          "type": "anime",
+          "name": "Adventure",
+          "url": "https://myanimelist.net/anime/genre/2/Adventure"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        },
+        {
+          "mal_id": 41,
+          "type": "anime",
+          "name": "Suspense",
+          "url": "https://myanimelist.net/anime/genre/41/Suspense"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 76,
+          "type": "anime",
+          "name": "Survival",
+          "url": "https://myanimelist.net/anime/genre/76/Survival"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 7666,
+      "url": "https://myanimelist.net/anime/7666/Dr_Slump_Movie_01__Arale-chan_Hello_Fushigi_Shima",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/4/23167.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/4/23167t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/4/23167l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/4/23167.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/4/23167t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/4/23167l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": "0_xE0SlTqx8",
+        "url": "https://www.youtube.com/watch?v=0_xE0SlTqx8",
+        "embed_url": "https://www.youtube.com/embed/0_xE0SlTqx8?enablejsapi=1&;amp;wmode=opaque&amp;autoplay=1",
+        "images": {
+          "image_url": "https://img.youtube.com/vi/0_xE0SlTqx8/default.jpg",
+          "small_image_url": "https://img.youtube.com/vi/0_xE0SlTqx8/sddefault.jpg",
+          "medium_image_url": "https://img.youtube.com/vi/0_xE0SlTqx8/mqdefault.jpg",
+          "large_image_url": "https://img.youtube.com/vi/0_xE0SlTqx8/hqdefault.jpg",
+          "maximum_image_url": "https://img.youtube.com/vi/0_xE0SlTqx8/maxresdefault.jpg"
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump Movie 01: Arale-chan Hello! Fushigi Shima"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump &amp; Arale-chan Hello! Strange Island"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプ アラレちゃん ハロー！不思議島"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Slump and Arale-chan: Hello! Wonder Island"
+        }
+      ],
+      "title": "Dr. Slump Movie 01: Arale-chan Hello! Fushigi Shima",
+      "title_english": "Dr. Slump and Arale-chan: Hello! Wonder Island",
+      "title_japanese": "Dr.スランプ アラレちゃん ハロー！不思議島",
+      "title_synonyms": [
+        "Dr. Slump &amp; Arale-chan Hello! Strange Island"
+      ],
+      "type": "Movie",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1981-07-18T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 18,
+            "month": 7,
+            "year": 1981
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Jul 18, 1981"
+      },
+      "duration": "25 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 6.23,
+      "scored_by": 857,
+      "rank": 8013,
+      "popularity": 10080,
+      "members": 2115,
+      "favorites": 0,
+      "synopsis": "Professor Senbei finds a videotape of his deceased father providing instructions on how to create a love potion. The main ingredient is a tear of the evil Gyaasuka Daimao who lives at the Wonder Island. To retrieve it, Senbei takes Arale and Gatchan on a wacky adventure. (Source: ANN)",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [
+        {
+          "mal_id": 467,
+          "type": "anime",
+          "name": "Discotek Media",
+          "url": "https://myanimelist.net/anime/producer/467/Discotek_Media"
+        }
+      ],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 30453,
+      "url": "https://myanimelist.net/anime/30453/Dr_Slump__Arale-chan_Ayaya_Penguin_Mura_de_TV_Jack",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/10/72862.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/10/72862t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/10/72862l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/10/72862.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/10/72862t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/10/72862l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump: Arale-chan Ayaya!? Penguin Mura de TV Jack"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプアラレちゃん あやや!?ペンギン村でテレビジャック"
+        }
+      ],
+      "title": "Dr. Slump: Arale-chan Ayaya!? Penguin Mura de TV Jack",
+      "title_english": null,
+      "title_japanese": "Dr.スランプアラレちゃん あやや!?ペンギン村でテレビジャック",
+      "title_synonyms": [],
+      "type": "Special",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1981-07-25T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 25,
+            "month": 7,
+            "year": 1981
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Jul 25, 1981"
+      },
+      "duration": "46 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 5.77,
+      "scored_by": 171,
+      "rank": 10243,
+      "popularity": 12680,
+      "members": 821,
+      "favorites": 0,
+      "synopsis": "A collaboration of the Dr. Slump: Arale-chan series and the Queen Millennia series. This special consists of the new material wrapped around a previously released Queen Millennia special. The new material is about 2 minutes long.",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 8548,
+      "url": "https://myanimelist.net/anime/8548/Dr_Slump_Movie_08__Arale-chan_Hoyoyo_Tasuketa_Same_ni_Tsurerarete",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/12/23176.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/12/23176t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/12/23176l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/12/23176.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/12/23176t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/12/23176l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": null,
+        "url": null,
+        "embed_url": null,
+        "images": {
+          "image_url": null,
+          "small_image_url": null,
+          "medium_image_url": null,
+          "large_image_url": null,
+          "maximum_image_url": null
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump Movie 08: Arale-chan Hoyoyo!! Tasuketa Same ni Tsurerarete..."
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプ アラレちゃん ほよよ!!助けたサメに連れられて..."
+        },
+        {
+          "type": "English",
+          "title": "Dr. Slump and Arale-chan: Hoyoyo!! Follow the Rescued Shark..."
+        }
+      ],
+      "title": "Dr. Slump Movie 08: Arale-chan Hoyoyo!! Tasuketa Same ni Tsurerarete...",
+      "title_english": "Dr. Slump and Arale-chan: Hoyoyo!! Follow the Rescued Shark...",
+      "title_japanese": "Dr.スランプ アラレちゃん ほよよ!!助けたサメに連れられて...",
+      "title_synonyms": [],
+      "type": "Movie",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1994-03-12T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 12,
+            "month": 3,
+            "year": 1994
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Mar 12, 1994"
+      },
+      "duration": "25 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 6.05,
+      "scored_by": 385,
+      "rank": 8979,
+      "popularity": 11492,
+      "members": 1245,
+      "favorites": 0,
+      "synopsis": "Arale saves a baby shark at the beach and in gratitude the sharks invite she and her family to visit the Underwater Kingdom. (Source: ANN)",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [
+        {
+          "mal_id": 1479,
+          "type": "anime",
+          "name": "Studio Core",
+          "url": "https://myanimelist.net/anime/producer/1479/Studio_Core"
+        }
+      ],
+      "licensors": [],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    },
+    {
+      "mal_id": 8547,
+      "url": "https://myanimelist.net/anime/8547/Dr_Slump_Movie_05__Arale-chan_Hoyoyo_Yume_no_Miyako_Mechapolis",
+      "images": {
+        "jpg": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/4/23175.jpg",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/4/23175t.jpg",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/4/23175l.jpg"
+        },
+        "webp": {
+          "image_url": "https://cdn.myanimelist.net/images/anime/4/23175.webp",
+          "small_image_url": "https://cdn.myanimelist.net/images/anime/4/23175t.webp",
+          "large_image_url": "https://cdn.myanimelist.net/images/anime/4/23175l.webp"
+        }
+      },
+      "trailer": {
+        "youtube_id": "nrlGqtK3b0Q",
+        "url": "https://www.youtube.com/watch?v=nrlGqtK3b0Q",
+        "embed_url": "https://www.youtube.com/embed/nrlGqtK3b0Q?enablejsapi=1&;amp;wmode=opaque&amp;autoplay=1",
+        "images": {
+          "image_url": "https://img.youtube.com/vi/nrlGqtK3b0Q/default.jpg",
+          "small_image_url": "https://img.youtube.com/vi/nrlGqtK3b0Q/sddefault.jpg",
+          "medium_image_url": "https://img.youtube.com/vi/nrlGqtK3b0Q/mqdefault.jpg",
+          "large_image_url": "https://img.youtube.com/vi/nrlGqtK3b0Q/hqdefault.jpg",
+          "maximum_image_url": "https://img.youtube.com/vi/nrlGqtK3b0Q/maxresdefault.jpg"
+        }
+      },
+      "approved": true,
+      "titles": [
+        {
+          "type": "Default",
+          "title": "Dr. Slump Movie 05: Arale-chan Hoyoyo! Yume no Miyako Mechapolis"
+        },
+        {
+          "type": "Synonym",
+          "title": "Dr. Slump and Arale-chan: Hoyoyo! Dream Metropolitan Mecha Police"
+        },
+        {
+          "type": "Japanese",
+          "title": "Dr.スランプ アラレちゃん ほよよ!夢の都メカポリス"
+        },
+        {
+          "type": "English",
+          "title": "Dr. Slump and Arale-chan: Hoyoyo! City of Dreams, Mechapolis"
+        }
+      ],
+      "title": "Dr. Slump Movie 05: Arale-chan Hoyoyo! Yume no Miyako Mechapolis",
+      "title_english": "Dr. Slump and Arale-chan: Hoyoyo! City of Dreams, Mechapolis",
+      "title_japanese": "Dr.スランプ アラレちゃん ほよよ!夢の都メカポリス",
+      "title_synonyms": [
+        "Dr. Slump and Arale-chan: Hoyoyo! Dream Metropolitan Mecha Police"
+      ],
+      "type": "Movie",
+      "source": "Manga",
+      "episodes": 1,
+      "status": "Finished Airing",
+      "airing": false,
+      "aired": {
+        "from": "1985-07-13T00:00:00+00:00",
+        "to": null,
+        "prop": {
+          "from": {
+            "day": 13,
+            "month": 7,
+            "year": 1985
+          },
+          "to": {
+            "day": null,
+            "month": null,
+            "year": null
+          }
+        },
+        "string": "Jul 13, 1985"
+      },
+      "duration": "38 min",
+      "rating": "PG-13 - Teens 13 or older",
+      "score": 6.07,
+      "scored_by": 421,
+      "rank": 8820,
+      "popularity": 11275,
+      "members": 1350,
+      "favorites": 0,
+      "synopsis": "Arale and her friends from Penguin Village, after watching a movie that mentions Mechapolis, a mecha city, express a desire that it was real. That same night all the children get abducted and end up in the real Mechapolis! They learn that for that night every wish they have will be granted. What could possibly go wrong... (Source: M74)",
+      "background": null,
+      "season": null,
+      "year": null,
+      "broadcast": {
+        "day": null,
+        "time": null,
+        "timezone": null,
+        "string": null
+      },
+      "producers": [],
+      "licensors": [
+        {
+          "mal_id": 467,
+          "type": "anime",
+          "name": "Discotek Media",
+          "url": "https://myanimelist.net/anime/producer/467/Discotek_Media"
+        }
+      ],
+      "studios": [
+        {
+          "mal_id": 18,
+          "type": "anime",
+          "name": "Toei Animation",
+          "url": "https://myanimelist.net/anime/producer/18/Toei_Animation"
+        }
+      ],
+      "genres": [
+        {
+          "mal_id": 4,
+          "type": "anime",
+          "name": "Comedy",
+          "url": "https://myanimelist.net/anime/genre/4/Comedy"
+        },
+        {
+          "mal_id": 24,
+          "type": "anime",
+          "name": "Sci-Fi",
+          "url": "https://myanimelist.net/anime/genre/24/Sci-Fi"
+        }
+      ],
+      "explicit_genres": [],
+      "themes": [
+        {
+          "mal_id": 57,
+          "type": "anime",
+          "name": "Gag Humor",
+          "url": "https://myanimelist.net/anime/genre/57/Gag_Humor"
+        }
+      ],
+      "demographics": [
+        {
+          "mal_id": 27,
+          "type": "anime",
+          "name": "Shounen",
+          "url": "https://myanimelist.net/anime/genre/27/Shounen"
+        }
+      ]
+    }
+  ]
+}

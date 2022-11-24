@@ -45,7 +45,7 @@ final class FeedDataSource {
                                                                          withReuseIdentifier: FeedHeader.reuseIdentifier,
                                                                          for: indexPath) as? FeedHeader
             let section = FeedSection.allCases[indexPath.section]
-            headerView?.label.text = section.rawValue
+            headerView?.setupTitle(with: section.rawValue)
             return headerView
         }
         

@@ -8,8 +8,14 @@
 import Foundation
 
 // https://api.jikan.moe/v4/seasons/now?page=1
-enum SeasonEndpoint {
+enum SeasonEndpoint: Equatable {
     case getCurrentSeasonAnime(page: Int)
+    
+    static func == (lhs: SeasonEndpoint, rhs: SeasonEndpoint) -> Bool {
+        switch (lhs, rhs) {
+            case (.getCurrentSeasonAnime, .getCurrentSeasonAnime): return true
+        }
+    }
 }
 
 extension SeasonEndpoint: EndpointType {

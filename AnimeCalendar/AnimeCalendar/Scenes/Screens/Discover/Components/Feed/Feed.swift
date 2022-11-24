@@ -94,7 +94,7 @@ extension Feed: Bindable {
         seasonAnimeFeed.driver.drive { [weak self] animes in
             guard let strongSelf = self else { return }
             print("senku [DEBUG] \(String(describing: type(of: self))) - updateSnapshot with: \(animes.map { $0.title })")
-            strongSelf.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes)
+            strongSelf.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes, animating: true)
         }.disposed(by: disposeBag)
     }
 }
