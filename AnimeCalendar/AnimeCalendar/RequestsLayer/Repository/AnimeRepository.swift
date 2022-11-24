@@ -74,12 +74,14 @@ final class AnimeRepository: GenericRepository {
         }
     }
 
-    func getSeasonAnime(page: Int = 1) -> Observable<AnimeResult?> {
+    func getSeasonAnime(page: Int = 1, responsible: RequestResponsibleType = .network) -> Observable<AnimeResult?> {
         return .create { [weak self] observer in
             guard let strongSelf = self else { return Disposables.create()}
             
             let model = AnimeResult.self
-            strongSelf.requestsManager.network.makeRequest(model, .season(.getCurrentSeasonAnime(page: page))) { result in
+            let requestResponsible: Requestable = strongSelf.requestsManager.getRequestResponsible(.mock)
+            
+            requestResponsible.makeRequest(model, .season(.getCurrentSeasonAnime(page: page))) { result in
                 switch result {
                     case .success(let anime):
                         observer.onNext(anime)

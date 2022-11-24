@@ -41,8 +41,8 @@ extension FeedHeader {
     func layoutHeader() {
         let inset: CGFloat = 10.0
         NSLayoutConstraint.activate([
-            headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            headerLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
+            headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            headerLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
             headerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
         ])

@@ -27,7 +27,7 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
     private let animeObservable = PublishSubject<Anime>()
     private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
     weak var presenter: NewAnimePresentable?
-    
+
     private var disposeBag = DisposeBag()
 }
 
@@ -49,7 +49,7 @@ extension NewAnimeSearchResultItem {
 extension NewAnimeSearchResultItem: ComponentCollectionItem {
     func setupItem(with item: Anime) {
         animeObservable.onNext(item)
-        
+
         /// Setting image
         presenter?.getAnimeCoverImageV2(path: item.imageType.jpgImage.normal, completion: { [weak self] image in
             guard let self = self else { return }
@@ -89,7 +89,7 @@ extension NewAnimeSearchResultItem: Bindable {
         bindTitle()
         bindSynopsis()
 //        bindCoverImage()
-        
+
         animeObservable.subscribe(onNext: { value in
             print("senku [DEBUG] \(String(describing: type(of: self))) - NEW ANIME: \(value.title)")
         }).disposed(by: disposeBag)
@@ -168,10 +168,12 @@ extension NewAnimeSearchResultItem: ComponentItem {
 private extension NewAnimeSearchResultItem {
     func configureCellContiner() {
         // Container shadow
-        var shadow = Shadow(.bottom)
-        shadow.color = Color.lightGray
-        shadow.offset = CGSize(width: 2, height: 0)
-        shadow.radius = 3
+        let shadow: Shadow = ShadowBuilder().getTemplate(type: .bottom)
+            .with(color: Color.lightGray)
+            .with(offset: CGSize(width: 2, height: 0))
+            .with(radius: 3.0)
+            .build()
+        
         animeContainerView.addShadowLayer(shadow: shadow, layerRadius: 10)
     }
 
@@ -181,6 +183,7 @@ private extension NewAnimeSearchResultItem {
         shadow.radius = 3
         shadow.offset = CGSize(width: -1, height: 1)
         shadow.opacity = 0.8
+        
         animeOnAirImage.addShadowLayer(shadow: shadow, layerRadius: 0)
         animeCoverImage.addCornerRadius(radius: 5)
         animeCoverImage.layer.borderColor = Color.lightGray.withAlphaComponent(0.4).cgColor

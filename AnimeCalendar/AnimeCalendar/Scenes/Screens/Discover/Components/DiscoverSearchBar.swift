@@ -152,7 +152,9 @@ private extension DiscoverSearchBar {
 
 private extension DiscoverSearchBar {
     func addShadowAndRadius() {
-        let shadow = Shadow(.full, color: Color.pink)
+        let shadow = ShadowBuilder().getTemplate(type: .full)
+            .with(color: Color.pink)
+            .build()
         searchButton.addCornerRadius(radius: 10)
         searchButton.addShadowLayer(shadow: shadow, layerRadius: 10)
     }

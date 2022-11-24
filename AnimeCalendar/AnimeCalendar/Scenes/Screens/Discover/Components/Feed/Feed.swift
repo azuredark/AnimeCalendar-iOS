@@ -16,6 +16,8 @@ final class Feed {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: getLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.backgroundColor = .clear
+        collection.showsVerticalScrollIndicator = false
+        collection.showsHorizontalScrollIndicator = false
         return collection
     }()
 
@@ -63,7 +65,7 @@ private extension Feed {
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(180.0),
                                                heightDimension: .absolute(280.0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = .init(top: 0, leading: 2, bottom: 0, trailing: 2)
+        group.contentInsets = .init(top: 0, leading: 0, bottom: 5, trailing: 30.0)
         
         // Header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),

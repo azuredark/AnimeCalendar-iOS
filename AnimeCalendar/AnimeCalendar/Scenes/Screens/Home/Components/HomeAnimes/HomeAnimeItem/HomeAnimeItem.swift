@@ -89,7 +89,7 @@ extension HomeAnimeItem: ComponentItem {
 
 extension HomeAnimeItem {
     func configurePictureView() {
-        let animeCoverShadow = Shadow(.bottom)
+        let animeCoverShadow = ShadowBuilder().getTemplate(type: .bottom).build()
         animeCoverView.addBottomShadow(shadow: animeCoverShadow, layerRadius: cornerRadius)
     }
 

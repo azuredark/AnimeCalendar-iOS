@@ -34,11 +34,12 @@ final class FeedDataSource {
             switch section {
                 case .seasonAnime, .topAnime:
                     let seasonAnimeCell: SeasonAnimeCell = Self.getCell(with: collectionView, at: indexPath)
-                    seasonAnimeCell.setup(item: anime)
+                    seasonAnimeCell.anime = anime
+                    seasonAnimeCell.setup()
                     return seasonAnimeCell
             }
         }
-        
+
         // Supplementary views
         dataSource?.supplementaryViewProvider = { collection, kind, indexPath -> UICollectionReusableView? in
             let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
@@ -48,7 +49,6 @@ final class FeedDataSource {
             headerView?.setupTitle(with: section.rawValue)
             return headerView
         }
-        
     }
 
     private func configureCollection() {

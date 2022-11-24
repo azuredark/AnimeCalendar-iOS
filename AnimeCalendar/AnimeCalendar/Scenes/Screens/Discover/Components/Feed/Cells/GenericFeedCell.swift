@@ -8,37 +8,78 @@
 import UIKit
 
 protocol FeedCell {
-    associatedtype T: Decodable
     static var reuseIdentifier: String { get set }
-    func setup(item: T)
+    func setup()
 }
 
 class GenericFeedCell: UICollectionViewCell {
+    // MARK: Accessibility id
+    private let accessId = GenericFeedCellIdentifiers()
+
     // MARK: State
+    private var shadowExists: Bool = false
+
+    private lazy var container: UIView = {
+        let container = UIView(frame: .zero)
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.backgroundColor = Color.white
+        container.accessibilityIdentifier = accessId.containerId
+        contentView.addSubview(container)
+        return container
+    }()
+
     private(set) lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Color.black
         label.font = .boldSystemFont(ofSize: 18)
         label.numberOfLines = 1
-        contentView.addSubview(label)
+        container.addSubview(label)
         return label
     }()
 
-    // MARK: Initializers
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        container.layer.shadowPath = nil
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setupShadow()
+    }
 }
 
 extension GenericFeedCell {
     func setupUI() {
+        backgroundColor = .clear
+        layoutContainer()
         layoutTitleLabel()
-        contentView.backgroundColor = Color.pink
+    }
+}
+
+private extension GenericFeedCell {
+    func layoutContainer() {
+        NSLayoutConstraint.activate([
+            container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            container.topAnchor.constraint(equalTo: contentView.topAnchor),
+            container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
 
     func layoutTitleLabel() {
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor)
         ])
+    }
+
+    func setupShadow() {
+        if !shadowExists {
+            let shadow = ShadowBuilder().getTemplate(type: .bottom).build()
+            container.addBottomShadow(shadow: shadow, layerRadius: 1.0)
+            shadowExists = true
+        }
     }
 }

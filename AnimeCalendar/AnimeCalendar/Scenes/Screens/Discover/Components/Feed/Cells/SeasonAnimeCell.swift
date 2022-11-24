@@ -8,14 +8,19 @@
 import UIKit
 
 final class SeasonAnimeCell: GenericFeedCell, FeedCell {
-    typealias T = Anime
+    // MARK: Reference object
+    var anime: Anime? { didSet { setupUI(); setNeedsLayout() } }
 
     // MARK: State
     static var reuseIdentifier: String = "SEASON_ANIME_CELL_RESUSE_ID"
+    
+    /// Reset cell's state when preparing for reusing
+    override func prepareForReuse() {
+        titleLabel.text = nil
+    }
 
     // MARK: Methods
-    func setup(item: Anime) {
-        setupUI()
-        titleLabel.text = item.title
+    func setup() {
+        titleLabel.text = anime?.title
     }
 }
