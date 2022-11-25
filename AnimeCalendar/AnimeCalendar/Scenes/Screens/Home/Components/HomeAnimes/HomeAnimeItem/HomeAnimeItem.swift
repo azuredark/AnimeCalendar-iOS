@@ -26,6 +26,7 @@ final class HomeAnimeItem: UICollectionViewCell {
 
     /// # Style
     private let cornerRadius: CGFloat = 15
+    private var hasShadow: Bool = false
 }
 
 // MARK: Awake from Xib
@@ -60,6 +61,7 @@ extension HomeAnimeItem: ComponentCollectionItem {
         }
         httpTask.resume()
 
+        configureCoverViewShadow()
         updateEpisodeProgress()
     }
 }
@@ -75,27 +77,43 @@ extension HomeAnimeItem: Component {
     }
 
     func configureSubviews() {
-        configurePictureView()
-        configurePictureImage()
+        configureContainer()
+        configureCoverView()
+        configureCoverImageView()
     }
 }
 
 extension HomeAnimeItem: ComponentItem {
     func configureInitialState() {
-        contentView.backgroundColor = Color.white
-        animeCoverView.backgroundColor = Color.white
+        contentView.backgroundColor = .clear
+        animeCoverView.backgroundColor = .clear
     }
 }
 
-extension HomeAnimeItem {
-    func configurePictureView() {
-        let animeCoverShadow = ShadowBuilder().getTemplate(type: .bottom).build()
-        animeCoverView.addBottomShadow(shadow: animeCoverShadow, layerRadius: cornerRadius)
+private extension HomeAnimeItem {
+    func configureContainer() {
+        animeContainerView.backgroundColor = Color.white
+        animeContainerView.addCornerRadius(radius: cornerRadius)
     }
 
-    func configurePictureImage() {
+    func configureCoverView() {
+    }
+
+    func configureCoverImageView() {
         animeCoverPicture.addCornerRadius(radius: cornerRadius)
-        animeContainerView.addCornerRadius(radius: cornerRadius)
+    }
+
+    func configureCoverViewShadow() {
+        if !hasShadow {
+            animeCoverView.setNeedsLayout()
+            animeCoverView.layoutIfNeeded()
+            let shadow = ShadowBuilder().getTemplate(type: .bottom)
+                .with(opacity: 0.25)
+                .with(cornerRadius: cornerRadius)
+                .build()
+            animeCoverView.addShadow(with: shadow)
+            hasShadow = true
+        }
     }
 }
 

@@ -37,16 +37,6 @@ class GenericFeedCell: UICollectionViewCell {
         container.addSubview(label)
         return label
     }()
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        container.layer.shadowPath = nil
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setupShadow()
-    }
 }
 
 extension GenericFeedCell {
@@ -65,6 +55,7 @@ private extension GenericFeedCell {
             container.topAnchor.constraint(equalTo: contentView.topAnchor),
             container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        configureContainerShadow()
     }
 
     func layoutTitleLabel() {
@@ -75,10 +66,15 @@ private extension GenericFeedCell {
         ])
     }
 
-    func setupShadow() {
+    func configureContainerShadow() {
         if !shadowExists {
-            let shadow = ShadowBuilder().getTemplate(type: .bottom).build()
-            container.addBottomShadow(shadow: shadow, layerRadius: 1.0)
+            container.setNeedsLayout()
+            container.layoutIfNeeded()
+            let shadow = ShadowBuilder().getTemplate(type: .full)
+                .with(opacity: 0.20)
+                .with(cornerRadius: 10.0)
+                .build()
+            container.addShadow(with: shadow)
             shadowExists = true
         }
     }

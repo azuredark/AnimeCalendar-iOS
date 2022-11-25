@@ -171,21 +171,22 @@ private extension NewAnimeSearchResultItem {
         let shadow: Shadow = ShadowBuilder().getTemplate(type: .bottom)
             .with(color: Color.lightGray)
             .with(offset: CGSize(width: 2, height: 0))
-            .with(radius: 3.0)
+            .with(blur: 3.0)
+            .with(cornerRadius: 10.0)
             .build()
-        
-        animeContainerView.addShadowLayer(shadow: shadow, layerRadius: 10)
+        animeContainerView.addShadow(with: shadow)
     }
 
     func configureImages() {
         var shadow = Shadow()
         shadow.color = Color.pink
-        shadow.radius = 3
+        shadow.blur = 3.0
         shadow.offset = CGSize(width: -1, height: 1)
         shadow.opacity = 0.8
+        shadow.cornerRadius = 5.0
+        animeOnAirImage.addShadow(with: shadow)
         
-        animeOnAirImage.addShadowLayer(shadow: shadow, layerRadius: 0)
-        animeCoverImage.addCornerRadius(radius: 5)
+//        animeCoverImage.addCornerRadius(radius: 5)
         animeCoverImage.layer.borderColor = Color.lightGray.withAlphaComponent(0.4).cgColor
         animeCoverImage.layer.borderWidth = 1
     }

@@ -73,10 +73,9 @@ private extension DiscoverScreen {
     }
 
     func layoutScreenContainer() {
-        let xInset: CGFloat = 20.0
         NSLayoutConstraint.activate([
-            screenContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: xInset),
-            screenContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -xInset),
+            screenContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            screenContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             screenContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             screenContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
@@ -117,10 +116,11 @@ private extension DiscoverScreen {
         screenContainer.addSubview(searchbBar)
         let height: CGFloat = 35.0
         let yInset: CGFloat = 10.0
+        let xInset: CGFloat = 20.0
 
         NSLayoutConstraint.activate([
-            searchbBar.leadingAnchor.constraint(equalTo: screenContainer.leadingAnchor),
-            searchbBar.trailingAnchor.constraint(equalTo: screenContainer.trailingAnchor),
+            searchbBar.leadingAnchor.constraint(equalTo: screenContainer.leadingAnchor, constant: xInset),
+            searchbBar.trailingAnchor.constraint(equalTo: screenContainer.trailingAnchor, constant: -xInset),
             searchbBar.topAnchor.constraint(equalTo: screenContainer.topAnchor, constant: yInset),
             searchbBar.heightAnchor.constraint(equalToConstant: height)
         ])

@@ -32,6 +32,11 @@ extension HomeHeaderComponent {
         super.viewDidLoad()
         configureComponent()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        configurePictureViewShadow()
+    }
 }
 
 extension HomeHeaderComponent: Component {
@@ -49,6 +54,7 @@ extension HomeHeaderComponent: Component {
         configureAnimesToWatchLabel()
         configurePictureView()
         configurePictureImage()
+        configureDateLabel()
     }
 }
 
@@ -69,14 +75,25 @@ extension HomeHeaderComponent {
         animesToWatchLabel.attributedText = animesCountMutableText
     }
 
-    func configurePictureView() {
-        // PictureView
-        let pictureViewShadow: Shadow = ShadowBuilder().getTemplate(type: .bottom).build()
-        pictureView.addShadowLayer(shadow: pictureViewShadow, layerRadius: cornerRadius)
-    }
+    func configurePictureView() {}
 
     func configurePictureImage() {
         // PictureImage
         pictureImage.addCornerRadius(radius: cornerRadius)
+    }
+    
+    func configureDateLabel() {
+        dateLabel.textColor = Color.gray
+    }
+}
+
+private extension HomeHeaderComponent {
+    func configurePictureViewShadow() {
+        let shadow: Shadow = ShadowBuilder().getTemplate(type: .full)
+            .with(cornerRadius: cornerRadius)
+            .with(opacity: 0.5)
+            .build()
+
+        pictureView.addShadow(with: shadow)
     }
 }

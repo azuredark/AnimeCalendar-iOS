@@ -78,6 +78,7 @@ private extension Feed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.boundarySupplementaryItems = [header]
+        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 0, trailing: 0)
 
         return section
     }

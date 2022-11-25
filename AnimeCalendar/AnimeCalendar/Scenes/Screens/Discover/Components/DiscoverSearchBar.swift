@@ -58,7 +58,7 @@ final class DiscoverSearchBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if !hasShadowAndRadius { addShadowAndRadius(); hasShadowAndRadius.toggle() }
+        configureSearchButtonShadow()
     }
 }
 
@@ -151,11 +151,14 @@ private extension DiscoverSearchBar {
 }
 
 private extension DiscoverSearchBar {
-    func addShadowAndRadius() {
-        let shadow = ShadowBuilder().getTemplate(type: .full)
-            .with(color: Color.pink)
-            .build()
-        searchButton.addCornerRadius(radius: 10)
-        searchButton.addShadowLayer(shadow: shadow, layerRadius: 10)
+    func configureSearchButtonShadow() {
+        if !hasShadowAndRadius {
+            let shadow = ShadowBuilder().getTemplate(type: .full)
+                .with(color: Color.pink)
+                .with(cornerRadius: 10.0)
+                .build()
+            searchButton.addButtonShadow(shadow: shadow)
+            hasShadowAndRadius = true
+        }
     }
 }

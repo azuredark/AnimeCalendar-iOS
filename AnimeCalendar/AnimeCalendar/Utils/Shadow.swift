@@ -9,26 +9,32 @@ import Foundation
 import UIKit
 
 struct Shadow {
-    var radius: CGFloat
+    var blur: CGFloat
     var offset: CGSize
     var opacity: Float
     var color: UIColor
+    var cornerRadius: CGFloat
 
     /// Convenience init, default shadow
     ///
     /// Strongly recommended using the **ShadowBuilder** instead
     init() {
-        self.init(radius: 4.0, offset: CGSize(width: 0, height: 0), opacity: 1.0, color: Color.black.withAlphaComponent(0.25))
+        self.init(blur: 4.0,
+                  offset: CGSize(width: 0, height: 0),
+                  opacity: 1.0,
+                  color: Color.black.withAlphaComponent(0.25),
+                  cornerRadius: 0)
     }
 
     /// Designed initialzier, fully custom shadow.
     ///
     /// If created alone, it's strongly recommended using the **ShadowBuilder** instead
-    init(radius: CGFloat, offset: CGSize, opacity: Float, color: UIColor) {
-        self.radius = radius
+    init(blur: CGFloat, offset: CGSize, opacity: Float, color: UIColor, cornerRadius: CGFloat) {
+        self.blur = blur
         self.offset = offset
         self.opacity = opacity
         self.color = color
+        self.cornerRadius = cornerRadius
     }
 }
 
@@ -40,7 +46,7 @@ enum ShadowType {
 
 protocol ShadowBuildable {
     func getTemplate(type shadowType: ShadowType) -> ShadowBuilder
-    func with(radius: CGFloat) -> ShadowBuilder
+    func with(blur: CGFloat) -> ShadowBuilder
     func with(offset: CGSize) -> ShadowBuilder
     func with(opacity: Float) -> ShadowBuilder
     func with(color: UIColor) -> ShadowBuilder
@@ -48,18 +54,20 @@ protocol ShadowBuildable {
 }
 
 final class ShadowBuilder: ShadowBuildable {
-    private var radius: CGFloat = 4.0
+    private var blur: CGFloat = 4.0
     private var offset = CGSize(width: 0, height: 0)
     private var opacity: Float = 1.0
     private var color: UIColor = Color.black.withAlphaComponent(0.25)
+    private var cornerRadius: CGFloat = 0
 
     init() {}
 
-    private init(radius: CGFloat, offset: CGSize, opacity: Float, color: UIColor) {
-        self.radius = radius
+    private init(blur: CGFloat, offset: CGSize, opacity: Float, color: UIColor, cornerRadius: CGFloat) {
+        self.blur = blur
         self.offset = offset
         self.opacity = opacity
         self.color = color
+        self.cornerRadius = cornerRadius
     }
 
     /// Create shadow from a pre-defined template.
@@ -68,17 +76,25 @@ final class ShadowBuilder: ShadowBuildable {
     func getTemplate(type shadowType: ShadowType) -> ShadowBuilder {
         switch shadowType {
             case .bottom:
-                return ShadowBuilder(radius: 4, offset: CGSize(width: 0, height: -4), opacity: 0.25, color: Color.black)
+                return ShadowBuilder(blur: 4,
+                                     offset: CGSize(width: 0, height: 4),
+                                     opacity: 0.8,
+                                     color: Color.black,
+                                     cornerRadius: 0)
             case .full:
-                return ShadowBuilder(radius: 4, offset: .zero, opacity: 0.25, color: Color.black)
+                return ShadowBuilder(blur: 4,
+                                     offset: .zero,
+                                     opacity: 0.8,
+                                     color: Color.black,
+                                     cornerRadius: 0)
         }
     }
 
-    /// Modifies the current builder's radius.
-    /// - Parameter radius: Shadow's radius.
+    /// Modifies the current builder's blur.
+    /// - Parameter blur: Shadow's blur.
     /// - Returns: New ShadowBuilder
-    func with(radius: CGFloat) -> Self {
-        self.radius = radius
+    func with(blur: CGFloat) -> Self {
+        self.blur = blur
         return self
     }
 
@@ -106,9 +122,21 @@ final class ShadowBuilder: ShadowBuildable {
         return self
     }
 
+    /// Modifies the current builder's corner radius.
+    /// - Parameter cornerRadius: Shadow's corner radius.
+    /// - Returns: New ShadowBuilder
+    func with(cornerRadius: CGFloat) -> Self {
+        self.cornerRadius = cornerRadius
+        return self
+    }
+
     /// Creates a new Shadow.
     /// - Returns: A new shadow with builder settings.
     func build() -> Shadow {
-        return Shadow(radius: radius, offset: offset, opacity: opacity, color: color)
+        return Shadow(blur: blur,
+                      offset: offset,
+                      opacity: opacity,
+                      color: color,
+                      cornerRadius: cornerRadius)
     }
 }
