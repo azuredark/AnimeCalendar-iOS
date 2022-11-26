@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class Feed {
+final class Feed: NSObject {
     // MARK: State
     static let sectionHeaderKind: String = "SECTION_HEADER_ELEMENT_KIND"
     private lazy var containerCollection: UICollectionView = {
@@ -21,18 +21,23 @@ final class Feed {
         return collection
     }()
 
-    private let discoverFeed: DiscoverFeed?
+    private weak var presenter: DiscoverPresentable?
 
     /// # DataSource
     private lazy var dataSource: FeedDataSource = {
-        FeedDataSource(for: containerCollection)
+        FeedDataSource(for: containerCollection, presenter: presenter)
     }()
+
+    private var cellIsSelectable: Bool = true
 
     private let disposeBag = DisposeBag()
 
     // MARK: Initializers
-    init(listeningTo discoverFeed: DiscoverFeed?) {
-        self.discoverFeed = discoverFeed
+    init(presenter: DiscoverPresentable?) {
+        super.init()
+        self.presenter = presenter
+
+        containerCollection.delegate = self
         configureBindings()
     }
 
@@ -48,25 +53,27 @@ private extension Feed {
             guard let strongSelf = self else { fatalError("No Feed reference while generating collection layout") }
             let section = FeedSection.allCases[sectionIndex]
             switch section {
-                case .seasonAnime, .topAnime:
-                    return strongSelf.getSeasonAnimeSection()
+                case .animeSeason, .animeTop:
+                    return strongSelf.getAnimeSeasonSection()
+                case .animePromos:
+                    return strongSelf.getAnimePromosSection()
             }
         }
         return layout
     }
 
-    func getSeasonAnimeSection() -> NSCollectionLayoutSection {
+    func getAnimeSeasonSection() -> NSCollectionLayoutSection {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         // Group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(180.0),
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(170.0),
                                                heightDimension: .absolute(280.0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = .init(top: 0, leading: 0, bottom: 5, trailing: 30.0)
-        
+        //        group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 30.0)
+
         // Header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: .estimated(44))
@@ -78,7 +85,36 @@ private extension Feed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.boundarySupplementaryItems = [header]
-        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 0, trailing: 0)
+        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 0, trailing: 20.0)
+        section.interGroupSpacing = 30.0
+
+        return section
+    }
+
+    func getAnimePromosSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        // Group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6),
+                                               heightDimension: .fractionalWidth(2 / 3))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        // Header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .estimated(44))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: Self.sectionHeaderKind,
+                                                                 alignment: .top)
+
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        section.boundarySupplementaryItems = [header]
+        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 0, trailing: 20.0)
+        section.interGroupSpacing = 30.0
 
         return section
     }
@@ -91,19 +127,23 @@ extension Feed: Bindable {
 
     func bindFeed() {
         #warning("THIS COULD BE IMPROVED")
-        guard let discoverFeed = discoverFeed else { return }
+        guard let discoverFeed = presenter?.feed else { return }
         let seasonAnimeFeed = discoverFeed.seasonAnime
-//        let topAnimeFeed = discoverFeed.topAnime
         seasonAnimeFeed.driver.drive { [weak self] animes in
             guard let strongSelf = self else { return }
-            print("senku [DEBUG] \(String(describing: type(of: self))) - updateSnapshot with: \(animes.map { $0.title })")
             strongSelf.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes, animating: true)
         }.disposed(by: disposeBag)
     }
 }
 
-/// All section types
-enum FeedSection: String, CaseIterable {
-    case seasonAnime = "Current Season"
-    case topAnime = "All-Time Top Anime"
+extension Feed: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard cellIsSelectable else { return }
+        cellIsSelectable = false
+
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.expand(lasting: 0.2, end: .reset, toScale: 1.05) { [weak self] in
+            self?.cellIsSelectable = true
+        }
+    }
 }

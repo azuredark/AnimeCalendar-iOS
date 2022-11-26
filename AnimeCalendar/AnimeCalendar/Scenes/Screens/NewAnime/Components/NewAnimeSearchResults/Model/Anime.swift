@@ -9,14 +9,16 @@ import Foundation
 
 struct Anime: Decodable, Hashable {
     var id: Int
-    var title: String
+    var titleOrg: String
+    var titleEng: String
     var imageType: AnimeImageType
     var malURL: String
     var synopsis: String
 
     enum CodingKeys: String, CodingKey {
         case id        = "mal_id"
-        case title
+        case titleOrg  = "title"
+        case titleEng  = "title_english"
         case malURL    = "url"
         case imageType = "images"
         case synopsis
@@ -25,7 +27,8 @@ struct Anime: Decodable, Hashable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(Int.self, forKey: .id)
-        title = try container.decode(String.self, forKey: .title)
+        titleOrg = try container.decode(String.self, forKey: .titleOrg)
+        titleEng = try container.decodeIfPresent(String.self, forKey: .titleEng) ?? titleOrg
         malURL = try container.decodeIfPresent(String.self, forKey: .malURL) ?? ""
         imageType = try container.decode(AnimeImageType.self, forKey: .imageType)
         synopsis = try container.decodeIfPresent(String.self, forKey: .synopsis) ?? ""
@@ -33,7 +36,8 @@ struct Anime: Decodable, Hashable {
   
     init() {
         self.id = 69
-        self.title = ""
+        self.titleEng = ""
+        self.titleOrg = ""
         self.imageType = AnimeImageType()
         self.malURL = ""
         self.synopsis = ""

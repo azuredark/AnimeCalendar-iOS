@@ -34,6 +34,54 @@ extension UIView {
         self.layer.cornerRadius = radius
         self.clipsToBounds = true
     }
+
+    // TODO: Fix? Or remove idk
+    typealias CornerEdge = (corner: UIRectCorner, radius: CGFloat)
+    func addDifferentCornerRadius(radius: CGFloat, corners: [CornerEdge]) {
+        // Apply the smallest corner to all of them
+        let smallestRadius: CGFloat = getSmallestRadiusCorner(corners: corners)
+        self.layer.cornerRadius = smallestRadius
+        
+        let edgeCorners = UIRectCorner.init(corners.map{$0.corner})
+        
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: edgeCorners, cornerRadii: CGSize(width: 0, height: 0))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        layer.mask = mask
+    }
+
+    private func getSmallestRadiusCorner(corners: [CornerEdge]) -> CGFloat {
+        let sortedCorners: [CGFloat] = corners
+            .sorted { first, next in
+                first.radius > next.radius
+            }
+            .map { $0.radius }
+
+        print("senku [DEBUG] \(String(describing: type(of: self))) - smallest corner: \(sortedCorners.first ?? 0)")
+        return sortedCorners.first ?? 0
+    }
+    
+    // TODO: Currently not working, the content dissappears :(
+    typealias CornerRadiuses = (min: CGFloat, max: CGFloat)
+    /// Adds 2 different corner radius to the view.
+    ///
+    /// This method applies the **min** radius to **all the corners**, then applies the **max** radius to the specified ones. This will make the view have 2 different corner radiuses.
+    /// - Parameter radiuses: Tuple containing the **min** and **max** corners.
+    /// - Parameter corner: The corners where to apply the **max** radius
+    @available(*, unavailable,  message: "Doesn't work, don't use :(")
+    func addCornerRadius(radiuses: CornerRadiuses, at corners: UIRectCorner) {
+        // Apply the smallest to all of the edges
+        self.layer.cornerRadius = radiuses.min
+        
+        /// Path with the max radius applied to the specified corners
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radiuses.max, height: 0))
+        
+        /// Shape layer
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        
+        layer.mask = mask
+    }
     
     func addShadowForImageView(shadow: Shadow, fillColor: UIColor) {
         let shadowLayer = CAShapeLayer()

@@ -13,7 +13,7 @@ final class DiscoverModule {
     
     // MARK: Initializers
     init(animeRepository: AnimeRepository) {
-        let interacor = DiscoverInteractor(animeRepository: animeRepository)
+        let interacor = DiscoverInteractor(repository: animeRepository)
         let router = DiscoverRouter()
         presenter = DiscoverPresenter(interactor: interacor, router: router)
     }

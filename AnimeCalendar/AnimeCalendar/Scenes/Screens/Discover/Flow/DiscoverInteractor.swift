@@ -16,27 +16,22 @@ typealias DiscoverFeed = (
 protocol DiscoverInteractive {
     var feed: DiscoverFeed { get }
     func updateSeasonAnime()
+    func getImageResource(path: String, completion: @escaping ImageSetting)
 }
 
-final class DiscoverInteractor {
+final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
     // MARK: State
-    private let animeRepository: AnimeRepository
     private let disposeBag = DisposeBag()
 
     /// # Observables
     #warning("Fill the default value with placholders to give the loading impression")
     private let seasonAnimeObservable = BehaviorRelay<[Anime]>(value: [])
     private let topAnimeObservable = BehaviorRelay<[Anime]>(value: [])
-
-    // MARK: Initializers
-    init(animeRepository: AnimeRepository) {
-        self.animeRepository = animeRepository
-    }
 }
 
 extension DiscoverInteractor: DiscoverInteractive {
     func updateSeasonAnime() {
-        animeRepository.getSeasonAnime()
+        repository.getSeasonAnime()
             .compactMap { $0 }
             .map { $0.data }
             .bind(to: seasonAnimeObservable)
@@ -45,8 +40,8 @@ extension DiscoverInteractor: DiscoverInteractive {
 
     var feed: DiscoverFeed {
         return (
-            seasonAnime: (driver: seasonAnimeObservable.asDriver(), section: .seasonAnime),
-            topAnime: (driver: topAnimeObservable.asDriver(), section: .topAnime)
+            seasonAnime: (driver: seasonAnimeObservable.asDriver(), section: .animeSeason),
+            topAnime: (driver: topAnimeObservable.asDriver(), section: .animeTop)
         )
     }
 }

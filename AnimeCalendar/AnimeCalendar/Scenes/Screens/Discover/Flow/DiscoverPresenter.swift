@@ -5,11 +5,12 @@
 //  Created by Leonardo  on 13/11/22.
 //
 
-import Foundation
+import UIKit
 
 protocol DiscoverPresentable: NSObject {
     func start() -> Screen
     func updateSeasonAnime()
+    func getImageResource(path: String, completion: @escaping ImageSetting)
     var feed: DiscoverFeed { get }
 }
 
@@ -38,5 +39,9 @@ extension DiscoverPresenter: DiscoverPresentable {
     
     var feed: DiscoverFeed {
         return interactor.feed
+    }
+    
+    func getImageResource(path: String, completion: @escaping ImageSetting) {
+        interactor.getImageResource(path: path, completion: completion)
     }
 }

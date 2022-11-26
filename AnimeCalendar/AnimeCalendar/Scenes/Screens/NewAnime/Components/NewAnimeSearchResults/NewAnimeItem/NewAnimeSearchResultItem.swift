@@ -51,7 +51,7 @@ extension NewAnimeSearchResultItem: ComponentCollectionItem {
         animeObservable.onNext(item)
 
         /// Setting image
-        presenter?.getAnimeCoverImageV2(path: item.imageType.jpgImage.normal, completion: { [weak self] image in
+        presenter?.getImageResource(path: item.imageType.jpgImage.normal, completion: { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.animeCoverImage.image = image
@@ -88,17 +88,16 @@ extension NewAnimeSearchResultItem: Bindable {
         /// # animeTitleLabel (Rx)
         bindTitle()
         bindSynopsis()
-//        bindCoverImage()
 
         animeObservable.subscribe(onNext: { value in
-            print("senku [DEBUG] \(String(describing: type(of: self))) - NEW ANIME: \(value.title)")
+            print("senku [DEBUG] \(String(describing: type(of: self))) - NEW ANIME: \(value.titleOrg)")
         }).disposed(by: disposeBag)
     }
 
     /// Bind title
     func bindTitle() {
         animeObservable
-            .map { $0.title }
+            .map { $0.titleEng }
             .asDriver(onErrorJustReturn: "")
             .drive(animeTitleLabel.rx.text)
             .disposed(by: disposeBag)
@@ -119,38 +118,11 @@ extension NewAnimeSearchResultItem: Bindable {
             .disposed(by: disposeBag)
     }
 
-    /// Bind cover image
-    func bindCoverImage() {
-        guard let presenter = presenter else { return }
-        animeObservable
-            .map { $0.imageType.jpgImage.normal }
-            .asDriver(onErrorJustReturn: "")
-            .flatMapLatest(presenter.getAnimeCoverImage)
-            .drive(animeCoverImage.rx.image)
-            .disposed(by: disposeBag)
-    }
-
     /// Bind stars
     func bindStars() {}
 
     /// Bind on air
     func bindOnAir() {}
-
-    /// # animeCoverImage (Rx)
-//        animeObservable
-//            .subscribe(onNext: { [weak self] anime in
-//                self?.animeCoverImage.imageFromBundle(imageName: anime.cover)
-//                print("Cover url: \(anime.cover)")
-//            })
-//            .disposed(by: disposeBag)
-
-    /// # onAirImage (Rx)
-//        animeObservable
-//            .map { !$0.onAir }
-//            .bind(to: animeOnAirImage.rx.isHidden)
-//            .disposed(by: disposeBag)
-
-//        configureGenreCollectionBindings()
 }
 
 extension NewAnimeSearchResultItem: ComponentItem {

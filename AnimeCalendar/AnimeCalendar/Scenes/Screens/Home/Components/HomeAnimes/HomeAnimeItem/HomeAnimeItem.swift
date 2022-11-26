@@ -46,7 +46,7 @@ extension HomeAnimeItem {
 extension HomeAnimeItem: ComponentCollectionItem {
     func setupItem(with item: Anime) {
         self.anime = item
-        animeTitle.text = item.title
+        animeTitle.text = item.titleEng
 
         // TODO: Clean this up ... add caching ...
         let httpSession = URLSession(configuration: .default)

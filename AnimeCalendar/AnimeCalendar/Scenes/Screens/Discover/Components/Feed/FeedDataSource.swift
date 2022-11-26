@@ -19,24 +19,32 @@ final class FeedDataSource {
     // MARK: State
     private let collectionView: UICollectionView
     private var dataSource: DiffableDataSource?
+    private weak var presenter: DiscoverPresentable?
 
     // MARK: Initializers
-    init(for collectionView: UICollectionView) {
+    init(for collectionView: UICollectionView, presenter: DiscoverPresentable?) {
         self.collectionView = collectionView
+        self.presenter = presenter
+
         configureCollection()
         buildDataSource()
     }
 
     // MARK: Provider
     private func buildDataSource() {
-        dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, anime in
+        dataSource = DiffableDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, anime in
             let section = FeedSection.allCases[indexPath.section]
             switch section {
-                case .seasonAnime, .topAnime:
+                case .animeSeason, .animeTop:
                     let seasonAnimeCell: SeasonAnimeCell = Self.getCell(with: collectionView, at: indexPath)
                     seasonAnimeCell.anime = anime
+                    seasonAnimeCell.presenter = self?.presenter
                     seasonAnimeCell.setup()
                     return seasonAnimeCell
+                case .animePromos:
+                    let promoAnimeCell: PromoAnimeCell = Self.getCell(with: collectionView, at: indexPath)
+                    promoAnimeCell.presenter = self?.presenter
+                    return promoAnimeCell
             }
         }
 
@@ -52,9 +60,14 @@ final class FeedDataSource {
     }
 
     private func configureCollection() {
-        // Cell - Season anime
+        // MARK: Cells
+        // Season anime
         collectionView.register(SeasonAnimeCell.self, forCellWithReuseIdentifier: SeasonAnimeCell.reuseIdentifier)
-        // Header view
+        // Promos trailers
+        collectionView.register(PromoAnimeCell.self, forCellWithReuseIdentifier: PromoAnimeCell.reuseIdentifier)
+
+        // MARK: Headers
+        // Generic header
         collectionView.register(FeedHeader.self,
                                 forSupplementaryViewOfKind: Feed.sectionHeaderKind,
                                 withReuseIdentifier: FeedHeader.reuseIdentifier)
@@ -82,4 +95,17 @@ private extension FeedDataSource {
         }
         return cell
     }
+}
+
+/// All section types
+enum FeedSection: String, CaseIterable {
+    case animeSeason = "Current Season"
+    case animeTop    = "All-Time Top Anime"
+    case animePromos = "Promos"
+}
+
+/// All item types
+enum FeedItem: CaseIterable {
+    case anime
+    case promo
 }

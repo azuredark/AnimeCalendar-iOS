@@ -34,7 +34,7 @@ final class DiscoverScreen: UIViewController, Screen {
 
     /// Feed made of a compostional collection view containing all sections and items
     private lazy var feed: Feed = {
-        return Feed(listeningTo: presenter?.feed)
+        return Feed(presenter: presenter)
     }()
 
     // MARK: Initializers
@@ -130,7 +130,7 @@ private extension DiscoverScreen {
         let feedCollection = feed.getCollection()
         screenContainer.addSubview(feedCollection)
         
-        let yInset: CGFloat = 15.0
+        let yInset: CGFloat = 10.0
         NSLayoutConstraint.activate([
             feedCollection.leadingAnchor.constraint(equalTo: screenContainer.leadingAnchor),
             feedCollection.trailingAnchor.constraint(equalTo: screenContainer.trailingAnchor),

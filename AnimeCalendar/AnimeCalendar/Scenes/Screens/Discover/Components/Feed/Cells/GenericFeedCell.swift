@@ -19,7 +19,7 @@ class GenericFeedCell: UICollectionViewCell {
     // MARK: State
     private var shadowExists: Bool = false
 
-    private lazy var container: UIView = {
+    private lazy var mainContainer: UIView = {
         let container = UIView(frame: .zero)
         container.translatesAutoresizingMaskIntoConstraints = false
         container.backgroundColor = Color.white
@@ -31,11 +31,32 @@ class GenericFeedCell: UICollectionViewCell {
     private(set) lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Color.black
-        label.font = .boldSystemFont(ofSize: 18)
-        label.numberOfLines = 1
-        container.addSubview(label)
+        label.textColor = Color.white
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.numberOfLines = 2
+        mainContainer.addSubview(label)
         return label
+    }()
+
+    private(set) lazy var coverImageView: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleToFill
+        view.backgroundColor = .clear
+        view.addCornerRadius(radius: 10.0)
+        mainContainer.addSubview(view)
+        return view
+    }()
+
+    private lazy var titleBlurContainerView: UIView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.layer.opacity = 0.85
+        blurView.clipsToBounds = true
+        coverImageView.addSubview(blurView)
+        return blurView
     }()
 }
 
@@ -43,6 +64,8 @@ extension GenericFeedCell {
     func setupUI() {
         backgroundColor = .clear
         layoutContainer()
+        layoutCoverImageView()
+        layoutTitleBlurContainerView()
         layoutTitleLabel()
     }
 }
@@ -50,31 +73,53 @@ extension GenericFeedCell {
 private extension GenericFeedCell {
     func layoutContainer() {
         NSLayoutConstraint.activate([
-            container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            container.topAnchor.constraint(equalTo: contentView.topAnchor),
-            container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            mainContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            mainContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            mainContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         configureContainerShadow()
     }
 
-    func layoutTitleLabel() {
+    func layoutCoverImageView() {
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+            coverImageView.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
+            coverImageView.trailingAnchor.constraint(equalTo: mainContainer.trailingAnchor),
+            coverImageView.topAnchor.constraint(equalTo: mainContainer.topAnchor),
+            coverImageView.bottomAnchor.constraint(equalTo: mainContainer.bottomAnchor)
         ])
     }
 
+    func layoutTitleBlurContainerView() {
+        NSLayoutConstraint.activate([
+            titleBlurContainerView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
+            titleBlurContainerView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
+            titleBlurContainerView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
+            titleBlurContainerView.heightAnchor.constraint(equalToConstant: 50.0)
+        ])
+    }
+
+    func layoutTitleLabel() {
+        let xInset: CGFloat = 5.0
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: titleBlurContainerView.leadingAnchor, constant: xInset),
+            titleLabel.trailingAnchor.constraint(equalTo: titleBlurContainerView.trailingAnchor, constant: -xInset),
+            titleLabel.centerYAnchor.constraint(equalTo: titleBlurContainerView.centerYAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: titleBlurContainerView.centerXAnchor)
+        ])
+    }
+}
+
+private extension GenericFeedCell {
     func configureContainerShadow() {
         if !shadowExists {
-            container.setNeedsLayout()
-            container.layoutIfNeeded()
-            let shadow = ShadowBuilder().getTemplate(type: .full)
+            mainContainer.setNeedsLayout()
+            mainContainer.layoutIfNeeded()
+            let shadow = ShadowBuilder().getTemplate(type: .bottom)
                 .with(opacity: 0.20)
                 .with(cornerRadius: 10.0)
                 .build()
-            container.addShadow(with: shadow)
+            mainContainer.addShadow(with: shadow)
             shadowExists = true
         }
     }

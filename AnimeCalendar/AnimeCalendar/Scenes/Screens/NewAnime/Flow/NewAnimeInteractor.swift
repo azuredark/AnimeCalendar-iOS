@@ -12,24 +12,20 @@ import RxCocoa
 protocol NewAnimeInteractive {
     var searchInput: PublishSubject<String> { get }
     var searchAnimeResult: Driver<[Anime]> { get }
-    func getImageObservable(from path: String) -> Observable<UIImage?>
-    func getCoverImage(path: String, completion: @escaping (UIImage) -> Void)
+    func getImageResource(path: String, completion: @escaping ImageSetting)
 }
 
-final class NewAnimeInteractor {
+final class NewAnimeInteractor: GenericInteractor<AnimeRepository> {
     // MARK: State
-    private let animeRepository: AnimeRepository
-
     /// # Observables
     private let inputSearchAnimeObservable = PublishSubject<String>()
     private let searchResultAnimeObservable = PublishSubject<[Anime]>()
 
     private let disposeBag = DisposeBag()
-
-    // MARK: Initializers
-    init(animeRepository: AnimeRepository) {
-        self.animeRepository = animeRepository
-        setup()
+    
+    override init(repository: AnimeRepository) {
+        super.init(repository: repository)
+        setupBindings()
     }
 
     private func setup() {
@@ -48,7 +44,7 @@ private extension NewAnimeInteractor {
             .flatMapLatest { [weak self] text -> Observable<[Anime]> in
                 guard let self = self else { return Observable.just(AnimeResult().data) }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - text: \(text)")
-                return self.animeRepository.getAnime(name: text).compactMap { $0?.data }
+                return self.repository.getAnime(name: text).compactMap { $0?.data }
             }
             .bind(to: searchResultAnimeObservable)
             .disposed(by: disposeBag)
@@ -63,26 +59,5 @@ extension NewAnimeInteractor: NewAnimeInteractive {
 
     var searchAnimeResult: Driver<[Anime]> {
         searchResultAnimeObservable.asDriver(onErrorJustReturn: [])
-    }
-
-    func getImageObservable(from path: String) -> Observable<UIImage?> {
-        return animeRepository.getResource(in: .newAnimeScreen, path: path)
-            .flatMapLatest { data -> Observable<UIImage?> in
-                .create { observable in
-                    observable.onNext(UIImage(data: data))
-                    observable.onCompleted()
-                    return Disposables.create()
-                }
-            }
-    }
-
-    func getCoverImage(path: String, completion: @escaping (UIImage) -> Void) {
-        animeRepository.getResourceV2(in: .newAnimeScreen, path: path) { data in
-            if let data = data {
-                completion(UIImage(data: data) ?? UIImage(named: "new-anime-item-drstone")!)
-                return
-            }
-            completion(UIImage(named: "new-anime-item-drstone")!)
-        }
     }
 }
