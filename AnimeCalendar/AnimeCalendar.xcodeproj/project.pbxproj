@@ -102,6 +102,8 @@
 		A7C18D092931876C0047C6E8 /* GenericRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C18D082931876C0047C6E8 /* GenericRepository.swift */; };
 		A7C18D0B29318A600047C6E8 /* GenericPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C18D0A29318A600047C6E8 /* GenericPresenter.swift */; };
 		A7CC37A62931F324005102B3 /* PromoAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CC37A52931F324005102B3 /* PromoAnimeCell.swift */; };
+		A7CC37A82931FA8E005102B3 /* PromoEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CC37A72931FA8E005102B3 /* PromoEndpoint.swift */; };
+		A7CC37AA29320B01005102B3 /* watch-promos-page?1.json in Resources */ = {isa = PBXBuildFile; fileRef = A7CC37A929320B01005102B3 /* watch-promos-page?1.json */; };
 		A7CD0D452817A06700109B8D /* RequetsMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D442817A06700109B8D /* RequetsMethods.swift */; };
 		A7CD0D482817A16000109B8D /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD0D472817A16000109B8D /* Screen.swift */; };
 		A7D0F727285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D0F726285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift */; };
@@ -237,6 +239,8 @@
 		A7C18D082931876C0047C6E8 /* GenericRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRepository.swift; sourceTree = "<group>"; };
 		A7C18D0A29318A600047C6E8 /* GenericPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPresenter.swift; sourceTree = "<group>"; };
 		A7CC37A52931F324005102B3 /* PromoAnimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoAnimeCell.swift; sourceTree = "<group>"; };
+		A7CC37A72931FA8E005102B3 /* PromoEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoEndpoint.swift; sourceTree = "<group>"; };
+		A7CC37A929320B01005102B3 /* watch-promos-page?1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "watch-promos-page?1.json"; sourceTree = "<group>"; };
 		A7CD0D442817A06700109B8D /* RequetsMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequetsMethods.swift; sourceTree = "<group>"; };
 		A7CD0D472817A16000109B8D /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		A7D0F726285C2C8E0003709B /* NewAnimeSelectedDetailsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSelectedDetailsContainer.swift; sourceTree = "<group>"; };
@@ -441,6 +445,7 @@
 				A764DC1A28BEE49D005A68B0 /* MangaEndpoint.swift */,
 				A764DC1C28BEE4B0005A68B0 /* UserEndpoint.swift */,
 				A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */,
+				A7CC37A72931FA8E005102B3 /* PromoEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -594,6 +599,7 @@
 			children = (
 				A7A275F1292F332D00D1E61B /* seasons-now-page?1.json */,
 				A7A275EF292F2F2E00D1E61B /* anime-q?drstone.json */,
+				A7CC37A929320B01005102B3 /* watch-promos-page?1.json */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1001,6 +1007,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7E798B228149B4900973881 /* LaunchScreen.storyboard in Resources */,
+				A7CC37AA29320B01005102B3 /* watch-promos-page?1.json in Resources */,
 				A772E924284098280095FE4F /* NewAnimeSearchResultItemView.xib in Resources */,
 				A7B0E338281F8E8B00A13CD6 /* HomeAnimesComponentView.xib in Resources */,
 				A7D0F734285C34120003709B /* NewAnimeSelectedTimeComponentView.xib in Resources */,
@@ -1087,6 +1094,7 @@
 				A752150C2920BA2B00E94104 /* DiscoverModule.swift in Sources */,
 				A7A275ED292F2A7D00D1E61B /* ACFont.swift in Sources */,
 				A772E923284098280095FE4F /* NewAnimeSearchResultItem.swift in Sources */,
+				A7CC37A82931FA8E005102B3 /* PromoEndpoint.swift in Sources */,
 				A78685CC2824D67100321415 /* CustomTabBarController.swift in Sources */,
 				A76D971F28435CD100D5FCD7 /* ComponentTableItem.swift in Sources */,
 				A76FFA0D290F202E007209E8 /* NewAnimeModule.swift in Sources */,

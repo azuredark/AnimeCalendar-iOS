@@ -10,12 +10,14 @@ import RxCocoa
 
 typealias DiscoverFeed = (
     seasonAnime: (driver: Driver<[Anime]>, section: FeedSection),
-    topAnime: (driver: Driver<[Anime]>, section: FeedSection)
+    topAnime: (driver: Driver<[Anime]>, section: FeedSection),
+    recentPromosAnime: (driver: Driver<[Promo]>, section: FeedSection)
 )
 
 protocol DiscoverInteractive {
     var feed: DiscoverFeed { get }
     func updateSeasonAnime()
+    func updateRecentPromosAnime()
     func getImageResource(path: String, completion: @escaping ImageSetting)
 }
 
@@ -27,6 +29,7 @@ final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
     #warning("Fill the default value with placholders to give the loading impression")
     private let seasonAnimeObservable = BehaviorRelay<[Anime]>(value: [])
     private let topAnimeObservable = BehaviorRelay<[Anime]>(value: [])
+    private let recentPromosAnimeObservable = BehaviorRelay<[Promo]>(value: [])
 }
 
 extension DiscoverInteractor: DiscoverInteractive {
@@ -38,10 +41,19 @@ extension DiscoverInteractor: DiscoverInteractive {
             .disposed(by: disposeBag)
     }
 
+    func updateRecentPromosAnime() {
+        repository.getRecentPromos()
+            .compactMap { $0 }
+            .map { $0.promos }
+            .bind(to: recentPromosAnimeObservable)
+            .disposed(by: disposeBag)
+    }
+
     var feed: DiscoverFeed {
         return (
             seasonAnime: (driver: seasonAnimeObservable.asDriver(), section: .animeSeason),
-            topAnime: (driver: topAnimeObservable.asDriver(), section: .animeTop)
+            topAnime: (driver: topAnimeObservable.asDriver(), section: .animeTop),
+            recentPromosAnime: (driver: recentPromosAnimeObservable.asDriver(), section: .animePromos)
         )
     }
 }

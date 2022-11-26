@@ -42,13 +42,16 @@ private extension MocksManager {
                 return endpoint
             case .season(let endpoint):
                 return endpoint
+            case .promo(let endpoint):
+                return endpoint
         }
     }
 }
 
 private enum EndpointFile: String {
-    case getAnime         = "anime-q?drstone"
-    case getCurrentSeason = "seasons-now-page?1"
+    case getAnime             = "anime-q?drstone"
+    case getCurrentSeason     = "seasons-now-page?1"
+    case getRecentPromosAnime = "watch-promos-page?1"
 
     /// Create and endpoint file name enum from an endpont type
     init(endpoint: EndpointType) {
@@ -58,6 +61,10 @@ private enum EndpointFile: String {
 
         if let endpoint = endpoint as? SeasonEndpoint, endpoint == .getCurrentSeasonAnime(page: 1) {
             self = .getCurrentSeason; return
+        }
+        
+        if let endpoint = endpoint as? PromoEndpoint, endpoint == .getRecentPromos(page: 1) {
+            self = .getRecentPromosAnime; return
         }
 
         self = .getAnime

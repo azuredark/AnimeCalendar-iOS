@@ -9,8 +9,9 @@ import UIKit
 
 protocol DiscoverPresentable: NSObject {
     func start() -> Screen
-    func updateSeasonAnime()
     func getImageResource(path: String, completion: @escaping ImageSetting)
+    func updateSeasonAnime()
+    func updateRecentPromosAnime()
     var feed: DiscoverFeed { get }
 }
 
@@ -20,7 +21,7 @@ final class DiscoverPresenter: NSObject {
     private let interactor: DiscoverInteractive
     /// # Router
     private let router: DiscoverRoutable
-    
+
     // MARK: Initializers
     init(interactor: DiscoverInteractive, router: DiscoverRoutable) {
         self.interactor = interactor
@@ -33,15 +34,19 @@ extension DiscoverPresenter: DiscoverPresentable {
         router.start(presenter: self)
     }
 
-    func updateSeasonAnime() {
-        interactor.updateSeasonAnime()
+    func getImageResource(path: String, completion: @escaping ImageSetting) {
+        interactor.getImageResource(path: path, completion: completion)
     }
-    
+
     var feed: DiscoverFeed {
         return interactor.feed
     }
-    
-    func getImageResource(path: String, completion: @escaping ImageSetting) {
-        interactor.getImageResource(path: path, completion: completion)
+
+    func updateSeasonAnime() {
+        interactor.updateSeasonAnime()
+    }
+
+    func updateRecentPromosAnime() {
+        interactor.updateRecentPromosAnime()
     }
 }

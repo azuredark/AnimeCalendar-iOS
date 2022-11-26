@@ -8,18 +8,20 @@
 import UIKit
 
 protocol FeedDataSourceable {
-    func updateSnapshot(for section: FeedSection, with: [Anime], animating: Bool)
+    func updateSnapshot(for section: FeedSection, with: [AnyHashable], animating: Bool)
 }
 
 final class FeedDataSource {
     // MARK: Aliases
-    private typealias DiffableDataSource = UICollectionViewDiffableDataSource<FeedSection, Anime>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<FeedSection, Anime>
+    private typealias DiffableDataSource = UICollectionViewDiffableDataSource<FeedSection, AnyHashable>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<FeedSection, AnyHashable>
 
     // MARK: State
     private let collectionView: UICollectionView
     private var dataSource: DiffableDataSource?
+    private var currentSnapshot = Snapshot()
     private weak var presenter: DiscoverPresentable?
+    private var existingSections = [FeedSection]()
 
     // MARK: Initializers
     init(for collectionView: UICollectionView, presenter: DiscoverPresentable?) {
@@ -32,18 +34,24 @@ final class FeedDataSource {
 
     // MARK: Provider
     private func buildDataSource() {
-        dataSource = DiffableDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, anime in
+        dataSource = DiffableDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, item in
             let section = FeedSection.allCases[indexPath.section]
             switch section {
                 case .animeSeason, .animeTop:
                     let seasonAnimeCell: SeasonAnimeCell = Self.getCell(with: collectionView, at: indexPath)
+                    guard let anime = item as? Anime else { return seasonAnimeCell }
+                    
                     seasonAnimeCell.anime = anime
                     seasonAnimeCell.presenter = self?.presenter
                     seasonAnimeCell.setup()
                     return seasonAnimeCell
                 case .animePromos:
                     let promoAnimeCell: PromoAnimeCell = Self.getCell(with: collectionView, at: indexPath)
+                    guard let promo = item as? Promo else { return promoAnimeCell }
+                    
+                    promoAnimeCell.promo = promo
                     promoAnimeCell.presenter = self?.presenter
+                    promoAnimeCell.setup()
                     return promoAnimeCell
             }
         }
@@ -79,11 +87,14 @@ extension FeedDataSource: FeedDataSourceable {
     /// - Parameter section: The section to update
     /// - Parameter animes: The animes to update for the specified section
     /// Updates the **items** for the current **section**
-    func updateSnapshot(for section: FeedSection, with items: [Anime], animating: Bool = false) {
-        var snapshot = Snapshot()
-        snapshot.appendSections([section])
-        snapshot.appendItems(items, toSection: section)
-        dataSource?.apply(snapshot, animatingDifferences: animating)
+    func updateSnapshot(for section: FeedSection, with items: [AnyHashable], animating: Bool = false) {
+        print("senku [DEBUG] \(String(describing: type(of: self))) - UPDATE SNAPSHOT! - section: \(section.rawValue) | items: \(items)")
+        if !existingSections.contains(section) {
+            currentSnapshot.appendSections([section])
+            existingSections.append(section)
+        }
+        currentSnapshot.appendItems(items, toSection: section)
+        dataSource?.apply(currentSnapshot, animatingDifferences: animating)
     }
 }
 
@@ -100,8 +111,8 @@ private extension FeedDataSource {
 /// All section types
 enum FeedSection: String, CaseIterable {
     case animeSeason = "Current Season"
-    case animeTop    = "All-Time Top Anime"
     case animePromos = "Promos"
+    case animeTop    = "All-Time Top Anime"
 }
 
 /// All item types

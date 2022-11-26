@@ -61,6 +61,7 @@ private extension DiscoverScreen {
     func updateLatestFeed() {
         print("senku [DEBUG] \(String(describing: type(of: self))) - updateLatestFeed")
         presenter?.updateSeasonAnime()
+        presenter?.updateRecentPromosAnime()
     }
 }
 

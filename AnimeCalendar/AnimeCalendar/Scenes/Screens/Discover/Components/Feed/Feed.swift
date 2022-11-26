@@ -85,7 +85,7 @@ private extension Feed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.boundarySupplementaryItems = [header]
-        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 0, trailing: 20.0)
+        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 15.0, trailing: 20.0)
         section.interGroupSpacing = 30.0
 
         return section
@@ -98,8 +98,8 @@ private extension Feed {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         // Group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6),
-                                               heightDimension: .fractionalWidth(2 / 3))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.65),
+                                               heightDimension: .fractionalWidth(1/3))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         // Header
@@ -128,12 +128,24 @@ extension Feed: Bindable {
     func bindFeed() {
         #warning("THIS COULD BE IMPROVED")
         guard let discoverFeed = presenter?.feed else { return }
+
         let seasonAnimeFeed = discoverFeed.seasonAnime
         seasonAnimeFeed.driver.drive { [weak self] animes in
             guard let strongSelf = self else { return }
             strongSelf.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes, animating: true)
         }.disposed(by: disposeBag)
+
+        let recentPromosAnimeFeed = discoverFeed.recentPromosAnime
+        recentPromosAnimeFeed.driver.drive { [weak self] promos in
+            guard let strongSelf = self else { return }
+            strongSelf.dataSource.updateSnapshot(for: recentPromosAnimeFeed.section, with: promos, animating: true)
+        }.disposed(by: disposeBag)
     }
+}
+
+private extension Feed {
+    // TODO: Is there even a way to filter those?
+    func filterNoImagePromos(promos: [Promo]) {}
 }
 
 extension Feed: UICollectionViewDelegate {

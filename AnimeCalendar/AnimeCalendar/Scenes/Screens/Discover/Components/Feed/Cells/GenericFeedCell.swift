@@ -28,6 +28,16 @@ class GenericFeedCell: UICollectionViewCell {
         return container
     }()
 
+    private(set) lazy var coverImageView: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleToFill
+        view.backgroundColor = .clear
+        view.addCornerRadius(radius: 10.0)
+        mainContainer.addSubview(view)
+        return view
+    }()
+
     private(set) lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -37,16 +47,6 @@ class GenericFeedCell: UICollectionViewCell {
         label.numberOfLines = 2
         mainContainer.addSubview(label)
         return label
-    }()
-
-    private(set) lazy var coverImageView: UIImageView = {
-        let view = UIImageView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleToFill
-        view.backgroundColor = .clear
-        view.addCornerRadius(radius: 10.0)
-        mainContainer.addSubview(view)
-        return view
     }()
 
     private lazy var titleBlurContainerView: UIView = {

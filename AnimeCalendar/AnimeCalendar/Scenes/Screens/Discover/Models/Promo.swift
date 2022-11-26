@@ -20,7 +20,9 @@ struct PromoResult: Decodable {
     }
 }
 
+// TODO: Create Id from promo & Anime instead of UUID if possible!
 struct Promo: Decodable, Hashable {
+    var id = UUID()
     var title: String
     var anime: Anime
     var trailer: Trailer
@@ -40,12 +42,14 @@ struct Promo: Decodable, Hashable {
     
     // Equatable
     static func == (lhs: Promo, rhs: Promo) -> Bool {
-        return lhs.anime.id == rhs.anime.id
+//        return lhs.anime.id == rhs.anime.id
+        return lhs.id == rhs.id
     }
     
     // Hashable
     func hash(into hasher: inout Hasher) {
-        hasher.combine(anime.id)
+//        hasher.combine(anime.id)
+        hasher.combine(id)
     }
     
     // MARK: Initializers

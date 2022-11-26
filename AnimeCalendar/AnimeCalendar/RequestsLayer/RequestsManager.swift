@@ -33,6 +33,7 @@ enum Service {
     case user(UserEndpoint)
     case manga(MangaEndpoint)
     case season(SeasonEndpoint)
+    case promo(PromoEndpoint)
 }
 
 enum RequestResponsibleType {
