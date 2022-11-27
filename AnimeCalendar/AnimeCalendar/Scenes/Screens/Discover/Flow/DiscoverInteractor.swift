@@ -19,6 +19,7 @@ protocol DiscoverInteractive {
     func updateSeasonAnime()
     func updateRecentPromosAnime()
     func getImageResource(path: String, completion: @escaping ImageSetting)
+    func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag]
 }
 
 final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
@@ -47,6 +48,40 @@ extension DiscoverInteractor: DiscoverInteractive {
             .map { $0.promos }
             .bind(to: recentPromosAnimeObservable)
             .disposed(by: disposeBag)
+    }
+
+    /// Tuple representing each tag's with its priority.
+    typealias TagPriority = (tag: AnimeTag, priority: Int)
+    
+    /// Creates a list of AnimeTag, sorted by priority, checking its *episodes*, *score* and *rank*.
+    ///
+    /// The **priority** is pre-defined following the UI conventions order, which is as follows (Top-Bottom):
+    /// 1. Episode Tag
+    /// 2. Score Tag
+    /// 3. Rank Tag
+    /// - Parameter episodes: The anime's episodes count.
+    /// - Parameter score: The anime's score.
+    /// - Parameter rank: The anime's rank.
+    /// - Returns: List of sorted **[AnimeTag]** by priority
+    func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag] {
+        var tagPriority: [TagPriority] = []
+
+        if let episodes = episodes, episodes > 0 {
+            tagPriority.append((tag: .episodes(value: episodes), priority: 1))
+        }
+
+        if let score = score {
+            tagPriority.append((tag: .score(value: score), priority: 2))
+        }
+
+        if let rank = rank {
+            tagPriority.append((tag: .rank(value: rank), priority: 3))
+        }
+
+        let sortedTags = tagPriority.sorted(by: { $0.priority < $1.priority })
+            .map { $0.tag }
+
+        return sortedTags
     }
 
     var feed: DiscoverFeed {

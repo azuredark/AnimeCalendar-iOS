@@ -32,17 +32,6 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         return imageView
     }()
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Color.white
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 14, weight: .bold)
-        label.numberOfLines = 2
-        mainContainer.addSubview(label)
-        return label
-    }()
-
     private lazy var titleBlurContainerView: UIView = {
         let blurEffect = UIBlurEffect(style: .dark)
         let blurView = UIVisualEffectView(effect: blurEffect)
@@ -51,6 +40,17 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         blurView.clipsToBounds = true
         coverImageView.addSubview(blurView)
         return blurView
+    }()
+
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = Color.white
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.numberOfLines = 2
+        mainContainer.addSubview(label) // Don't add directly to the blur containerview
+        return label
     }()
 
     override func prepareForReuse() {

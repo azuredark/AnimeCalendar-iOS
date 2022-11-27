@@ -89,9 +89,8 @@ extension FeedDataSource: FeedDataSourceable {
     /// Updates the **items** for the current **section**
     func updateSnapshot(for section: FeedSection, with items: [AnyHashable], animating: Bool = false) {
         print("senku [DEBUG] \(String(describing: type(of: self))) - UPDATE SNAPSHOT! - section: \(section.rawValue) | items: \(items)")
-        if !existingSections.contains(section) {
+        if currentSnapshot.indexOfSection(section) == nil {
             currentSnapshot.appendSections([section])
-            existingSections.append(section)
         }
         currentSnapshot.appendItems(items, toSection: section)
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)

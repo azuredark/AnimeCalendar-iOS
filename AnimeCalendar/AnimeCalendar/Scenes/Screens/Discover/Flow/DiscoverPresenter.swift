@@ -12,6 +12,7 @@ protocol DiscoverPresentable: NSObject {
     func getImageResource(path: String, completion: @escaping ImageSetting)
     func updateSeasonAnime()
     func updateRecentPromosAnime()
+    func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag]
     var feed: DiscoverFeed { get }
 }
 
@@ -48,5 +49,9 @@ extension DiscoverPresenter: DiscoverPresentable {
 
     func updateRecentPromosAnime() {
         interactor.updateRecentPromosAnime()
+    }
+
+    func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag] {
+        interactor.getTags(episodes: episodes, score: score, rank: rank)
     }
 }

@@ -19,7 +19,7 @@ class GenericFeedCell: UICollectionViewCell {
     // MARK: State
     private var shadowExists: Bool = false
 
-    private lazy var mainContainer: UIView = {
+    private(set) lazy var mainContainer: UIView = {
         let container = UIView(frame: .zero)
         container.translatesAutoresizingMaskIntoConstraints = false
         container.backgroundColor = Color.white
@@ -43,7 +43,7 @@ class GenericFeedCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Color.white
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .systemFont(ofSize: 14, weight: .bold)
         label.numberOfLines = 2
         mainContainer.addSubview(label)
         return label
@@ -95,7 +95,7 @@ private extension GenericFeedCell {
             titleBlurContainerView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
             titleBlurContainerView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
             titleBlurContainerView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
-            titleBlurContainerView.heightAnchor.constraint(equalToConstant: 50.0)
+            titleBlurContainerView.heightAnchor.constraint(equalToConstant: 40.0)
         ])
     }
 
