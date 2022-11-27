@@ -13,7 +13,7 @@ AnimecCalendar uses the **VIPER** arch., with some twists, for creating and main
 Uses Xibs and some programmatic views.
 
 ## ⚙️  Dependencies
-Current dependencies used, not planning to add more
+Current dependencies used, not planning to add more:
 - RxSwift (w/ RxCocoa/RxRelay)
 
 ## ⛩️ Setup
