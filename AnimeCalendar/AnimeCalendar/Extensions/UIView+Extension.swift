@@ -35,30 +35,16 @@ extension UIView {
         self.clipsToBounds = true
     }
 
-    // TODO: Fix? Or remove idk
-    typealias CornerEdge = (corner: UIRectCorner, radius: CGFloat)
-    func addDifferentCornerRadius(radius: CGFloat, corners: [CornerEdge]) {
-        // Apply the smallest corner to all of them
-        let smallestRadius: CGFloat = getSmallestRadiusCorner(corners: corners)
-        self.layer.cornerRadius = smallestRadius
-        
-        let edgeCorners = UIRectCorner.init(corners.map{$0.corner})
-        
-        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: edgeCorners, cornerRadii: CGSize(width: 0, height: 0))
+    /// Add corner radius to the speificed corners.
+    ///
+    /// - Warning: Must run when the *subviews* have been layed out, otherwise the mask won't show up.
+    /// - Parameter radius: The amount of radius for each corner.
+    /// - Parameter corners: The corners to apply the radius to.
+    func addCornerRadius(radius: CGFloat, corners: UIRectCorner) {
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         layer.mask = mask
-    }
-
-    private func getSmallestRadiusCorner(corners: [CornerEdge]) -> CGFloat {
-        let sortedCorners: [CGFloat] = corners
-            .sorted { first, next in
-                first.radius > next.radius
-            }
-            .map { $0.radius }
-
-        print("senku [DEBUG] \(String(describing: type(of: self))) - smallest corner: \(sortedCorners.first ?? 0)")
-        return sortedCorners.first ?? 0
     }
     
     // TODO: Currently not working, the content dissappears :(

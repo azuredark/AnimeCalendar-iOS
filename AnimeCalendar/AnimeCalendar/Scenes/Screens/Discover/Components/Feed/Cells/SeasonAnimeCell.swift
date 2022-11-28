@@ -41,6 +41,7 @@ final class SeasonAnimeCell: GenericFeedCell, FeedCell {
 
 private extension SeasonAnimeCell {
     func layoutCellTag() {
+        // List of, sorted by priority, AnimeTags
         guard let tags = presenter?.getTags(episodes: anime?.episodesCount,
                                             score: anime?.score,
                                             rank: anime?.rank) else { return }
@@ -51,10 +52,12 @@ private extension SeasonAnimeCell {
     func setupTags(tags: [AnimeTag]) {
         guard !tags.isEmpty else { return }
 
+        // Create AnimeCellTags from each AnimeTag
         let cellTags = tags.compactMap { [weak self] in
             self?.createTag(tag: $0)
         }
 
+        // Align the AnimeCellTags
         alignTags(cellTags: cellTags)
     }
 
@@ -76,7 +79,8 @@ private extension SeasonAnimeCell {
         }
     }
 
-    // TODO: - Refactor!!
+    /// Align all available AnimeCellTags, according to the amount of them.
+    /// - Parameter cellTags: Array if AnimeCellTag.
     func alignTags(cellTags: [AnimeCellTag]) {
         // Setting up common properties
         cellTags.forEach { [weak self] in
@@ -87,66 +91,90 @@ private extension SeasonAnimeCell {
 
         switch cellTags.count {
             case 1:
+                let middleTag = cellTags[0]
+
                 // Align 1 tag
-                guard let tag = cellTags.first else { return }
-                NSLayoutConstraint.activate([
-                    tag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
-                    tag.centerYAnchor.constraint(equalTo: mainContainer.centerYAnchor, constant: -50.0),
-                    tag.heightAnchor.constraint(equalToConstant: 20.0),
-                    tag.widthAnchor.constraint(equalToConstant: 50.0),
-                ])
+                alignTag(middleTag, tagsCount: 1, position: .middle)
 
-                self.cellTags.append(contentsOf: [tag])
+                self.cellTags.append(contentsOf: [middleTag])
             case 2:
+                let topTag = cellTags[0]
+                let bottomTag = cellTags[1]
+
                 // Align 2 tags
-                let topTag: AnimeCellTag = cellTags[0]
-                let bottomTag: AnimeCellTag = cellTags[1]
-
-                NSLayoutConstraint.activate([
-                    topTag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
-                    topTag.centerYAnchor.constraint(equalTo: mainContainer.centerYAnchor, constant: -60.0),
-                    topTag.heightAnchor.constraint(equalToConstant: 20.0),
-                    topTag.widthAnchor.constraint(equalToConstant: 50.0),
-                ])
-
-                NSLayoutConstraint.activate([
-                    bottomTag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
-                    bottomTag.topAnchor.constraint(equalTo: topTag.bottomAnchor, constant: 20.0),
-                    bottomTag.heightAnchor.constraint(equalToConstant: 20.0),
-                    bottomTag.widthAnchor.constraint(equalToConstant: 50.0),
-                ])
+                alignTag(topTag, tagsCount: 2, position: .top)
+                alignTag(bottomTag, tagsCount: 2, position: .bottom) { [weak topTag] bottomTag in
+                    guard let topTag = topTag else { return }
+                    bottomTag.topAnchor.constraint(equalTo: topTag.bottomAnchor, constant: 20.0).isActive = true
+                }
 
                 self.cellTags.append(contentsOf: [topTag, bottomTag])
             case 3:
-                // Align 3 tags
                 let topTag = cellTags[0]
                 let middleTag = cellTags[1]
                 let bottomTag = cellTags[2]
 
-                NSLayoutConstraint.activate([
-                    topTag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
-                    topTag.centerYAnchor.constraint(equalTo: mainContainer.centerYAnchor, constant: -80.0),
-                    topTag.heightAnchor.constraint(equalToConstant: 20.0),
-                    topTag.widthAnchor.constraint(equalToConstant: 50.0),
-                ])
-
-                NSLayoutConstraint.activate([
-                    middleTag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
-                    middleTag.topAnchor.constraint(equalTo: topTag.bottomAnchor, constant: 20.0),
-                    middleTag.heightAnchor.constraint(equalToConstant: 20.0),
-                    middleTag.widthAnchor.constraint(equalToConstant: 50.0),
-                ])
-
-                NSLayoutConstraint.activate([
-                    bottomTag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
-                    bottomTag.topAnchor.constraint(equalTo: middleTag.bottomAnchor, constant: 20.0),
-                    bottomTag.heightAnchor.constraint(equalToConstant: 20.0),
-                    bottomTag.widthAnchor.constraint(equalToConstant: 50.0),
-                ])
+                // Align 3 tags
+                alignTag(topTag, tagsCount: 3, position: .top)
+                alignTag(middleTag, tagsCount: 3, position: .middle) { [weak topTag] middleTag in
+                    guard let topTag = topTag else { return }
+                    middleTag.topAnchor.constraint(equalTo: topTag.bottomAnchor, constant: 20.0).isActive = true
+                }
+                alignTag(bottomTag, tagsCount: 3, position: .bottom) { [weak middleTag] bottomTag in
+                    guard let middleTag = middleTag else { return }
+                    bottomTag.topAnchor.constraint(equalTo: middleTag.bottomAnchor, constant: 20.0).isActive = true
+                }
 
                 self.cellTags.append(contentsOf: [topTag, middleTag, bottomTag])
 
             default: break
         }
     }
+
+    func alignTag(_ tag: AnimeCellTag, tagsCount: Int, position: TagPosition, _ completion: ((AnimeCellTag) -> Void)? = nil) {
+        let hasOneTag: Bool = (tagsCount == 1)
+        let hasTwoTag: Bool = (tagsCount == 2)
+        let hasThreeTag: Bool = (tagsCount == 3)
+
+        switch position {
+            case .top:
+                guard !hasOneTag else { return }
+                let yInset: CGFloat = hasTwoTag ? -60 : (hasThreeTag ? -80 : 0)
+
+                NSLayoutConstraint.activate([
+                    tag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
+                    tag.centerYAnchor.constraint(equalTo: mainContainer.centerYAnchor, constant: yInset),
+                    tag.heightAnchor.constraint(equalToConstant: 20.0),
+                    tag.widthAnchor.constraint(equalToConstant: 55.0)
+                ])
+
+            case .middle:
+                guard !hasTwoTag else { return }
+
+                NSLayoutConstraint.activate([
+                    tag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
+                    tag.heightAnchor.constraint(equalToConstant: 20.0),
+                    tag.widthAnchor.constraint(equalToConstant: 55.0)
+                ])
+
+                tag.centerYAnchor.constraint(equalTo: mainContainer.centerYAnchor, constant: -55.0).isActive = hasOneTag
+                completion?(tag)
+
+            case .bottom:
+                guard !hasOneTag else { return }
+
+                NSLayoutConstraint.activate([
+                    tag.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
+                    tag.heightAnchor.constraint(equalToConstant: 20.0),
+                    tag.widthAnchor.constraint(equalToConstant: 55.0)
+                ])
+                completion?(tag)
+        }
+    }
+}
+
+enum TagPosition {
+    case top
+    case middle
+    case bottom
 }

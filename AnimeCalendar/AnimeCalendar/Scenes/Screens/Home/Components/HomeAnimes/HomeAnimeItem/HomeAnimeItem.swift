@@ -50,7 +50,7 @@ extension HomeAnimeItem: ComponentCollectionItem {
 
         // TODO: Clean this up ... add caching ...
         let httpSession = URLSession(configuration: .default)
-        let imagePath: String = item.imageType.jpgImage.normal
+        let imagePath: String = item.imageType.jpgImage.large
         guard let url = URL(string: imagePath) else { return }
         let httpRequest = URLRequest(url: url)
         let httpTask = httpSession.dataTask(with: httpRequest) { [weak self] data, _, error in
@@ -61,7 +61,7 @@ extension HomeAnimeItem: ComponentCollectionItem {
         }
         httpTask.resume()
 
-        configureCoverViewShadow()
+//        configureCoverViewShadow()
         updateEpisodeProgress()
     }
 }

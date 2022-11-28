@@ -10,13 +10,23 @@ import UIKit
 final class AnimeCellTag: UIView {
     // MARK: State
     private var config: AnimeCellTag.Config
+    
+    private var hasDifferenteCorners: Bool = false
+    
+    private lazy var mainContainer: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05)
+        addSubview(view)
+        return view
+    }()
 
     private lazy var blurContainerView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.translatesAutoresizingMaskIntoConstraints = false
-        blurView.layer.opacity = 0.85
-        addSubview(blurView)
+        blurView.clipsToBounds = true
+        mainContainer.addSubview(blurView)
         return blurView
     }()
 
@@ -25,7 +35,7 @@ final class AnimeCellTag: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.tintColor = Color.white
-        addSubview(imageView)
+        mainContainer.addSubview(imageView)
         return imageView
     }()
 
@@ -34,9 +44,9 @@ final class AnimeCellTag: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.textColor = Color.white
-        label.font = .systemFont(ofSize: 10, weight: .medium)
+        label.font = .systemFont(ofSize: 11, weight: .medium)
         label.numberOfLines = 1
-        addSubview(label)
+        mainContainer.addSubview(label)
         return label
     }()
 
@@ -47,6 +57,14 @@ final class AnimeCellTag: UIView {
         super.init(frame: frame)
         setupUI()
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if !hasDifferenteCorners {
+            mainContainer.addCornerRadius(radius: 5, corners: [.topRight, .bottomRight])
+            hasDifferenteCorners = true
+        }
+    }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
@@ -56,17 +74,27 @@ final class AnimeCellTag: UIView {
 
 private extension AnimeCellTag {
     func setupUI() {
+        layoutMainContainer()
         layoutBlurContainerView()
         layoutIconImageView()
         layoutIconTextLabel()
     }
+    
+    func layoutMainContainer() {
+        NSLayoutConstraint.activate([
+            mainContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            mainContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            mainContainer.topAnchor.constraint(equalTo: topAnchor),
+            mainContainer.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
 
     func layoutBlurContainerView() {
         NSLayoutConstraint.activate([
-            blurContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            blurContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            blurContainerView.topAnchor.constraint(equalTo: topAnchor),
-            blurContainerView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            blurContainerView.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
+            blurContainerView.trailingAnchor.constraint(equalTo: mainContainer.trailingAnchor),
+            blurContainerView.topAnchor.constraint(equalTo: mainContainer.topAnchor),
+            blurContainerView.bottomAnchor.constraint(equalTo: mainContainer.bottomAnchor)
         ])
     }
 
@@ -75,10 +103,10 @@ private extension AnimeCellTag {
 
         let xInset: CGFloat = 5.0
         NSLayoutConstraint.activate([
-            iconImageView.leadingAnchor.constraint(equalTo: blurContainerView.leadingAnchor, constant: xInset),
+            iconImageView.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor, constant: xInset),
             iconImageView.heightAnchor.constraint(equalToConstant: 12.0),
             iconImageView.widthAnchor.constraint(equalToConstant: 11.0),
-            iconImageView.centerYAnchor.constraint(equalTo: blurContainerView.centerYAnchor)
+            iconImageView.centerYAnchor.constraint(equalTo: mainContainer.centerYAnchor)
         ])
     }
 
@@ -88,7 +116,8 @@ private extension AnimeCellTag {
         let xInset: CGFloat = 5.0
         NSLayoutConstraint.activate([
             iconTextLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: xInset),
-            iconTextLabel.centerYAnchor.constraint(equalTo: blurContainerView.centerYAnchor)
+            iconTextLabel.trailingAnchor.constraint(equalTo: mainContainer.trailingAnchor, constant: -xInset),
+            iconTextLabel.centerYAnchor.constraint(equalTo: mainContainer.centerYAnchor)
         ])
     }
 }

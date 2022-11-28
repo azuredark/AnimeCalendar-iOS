@@ -78,6 +78,7 @@
 		A772E923284098280095FE4F /* NewAnimeSearchResultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A772E921284098280095FE4F /* NewAnimeSearchResultItem.swift */; };
 		A772E924284098280095FE4F /* NewAnimeSearchResultItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A772E922284098280095FE4F /* NewAnimeSearchResultItemView.xib */; };
 		A77AD119293065DE00299F33 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AD118293065DE00299F33 /* UIButton+Extension.swift */; };
+		A77CECB729349C7300FE6D05 /* TopEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77CECB629349C7300FE6D05 /* TopEndpoint.swift */; };
 		A78685CA2824D5CE00321415 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78685C92824D5CE00321415 /* CustomNavigationController.swift */; };
 		A78685CC2824D67100321415 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78685CB2824D67100321415 /* CustomTabBarController.swift */; };
 		A78685CE2824D6AE00321415 /* TabBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78685CD2824D6AE00321415 /* TabBarProtocol.swift */; };
@@ -217,6 +218,7 @@
 		A772E921284098280095FE4F /* NewAnimeSearchResultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAnimeSearchResultItem.swift; sourceTree = "<group>"; };
 		A772E922284098280095FE4F /* NewAnimeSearchResultItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeSearchResultItemView.xib; sourceTree = "<group>"; };
 		A77AD118293065DE00299F33 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		A77CECB629349C7300FE6D05 /* TopEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopEndpoint.swift; sourceTree = "<group>"; };
 		A78685C92824D5CE00321415 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		A78685CB2824D67100321415 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		A78685CD2824D6AE00321415 /* TabBarProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarProtocol.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 				A764DC1C28BEE4B0005A68B0 /* UserEndpoint.swift */,
 				A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */,
 				A7CC37A72931FA8E005102B3 /* PromoEndpoint.swift */,
+				A77CECB629349C7300FE6D05 /* TopEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -1096,6 +1099,7 @@
 				A7E44A972829CBEB005C0AB5 /* ScreenType.swift in Sources */,
 				A7E44A9B282A25D9005C0AB5 /* DummyScreen.swift in Sources */,
 				A76FFA0F290F205A007209E8 /* NewAnimeInteractor.swift in Sources */,
+				A77CECB729349C7300FE6D05 /* TopEndpoint.swift in Sources */,
 				A7E44A912829CAB7005C0AB5 /* RootControllerType.swift in Sources */,
 				A74F986428161279003A1073 /* NetworkManager.swift in Sources */,
 				A7FDF60E281E038D006057D7 /* UIViewController+Extension.swift in Sources */,

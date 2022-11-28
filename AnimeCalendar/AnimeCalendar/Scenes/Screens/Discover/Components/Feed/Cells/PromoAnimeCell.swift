@@ -32,14 +32,12 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         return imageView
     }()
 
-    private lazy var titleBlurContainerView: UIView = {
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        blurView.layer.opacity = 0.85
-        blurView.clipsToBounds = true
-        coverImageView.addSubview(blurView)
-        return blurView
+    private lazy var titleContainerView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
+        coverImageView.addSubview(view)
+        return view
     }()
 
     private lazy var titleLabel: UILabel = {
@@ -49,8 +47,18 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 14, weight: .bold)
         label.numberOfLines = 2
-        mainContainer.addSubview(label) // Don't add directly to the blur containerview
+        titleContainerView.addSubview(label) // Don't add directly to the blur containerview
         return label
+    }()
+
+    private lazy var titleBlurContainerView: UIView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.layer.opacity = 1
+        blurView.clipsToBounds = true
+        coverImageView.addSubview(blurView)
+        return blurView
     }()
 
     override func prepareForReuse() {
@@ -73,6 +81,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         layoutContainer()
         layoutCoverImageView()
         layoutTitleBlurContainerView()
+        layoutTitleContainerView()
         layoutTitleLabel()
     }
 }
@@ -86,6 +95,15 @@ private extension PromoAnimeCell {
             mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         configureContainerShadow()
+    }
+
+    func layoutTitleContainerView() {
+        NSLayoutConstraint.activate([
+            titleContainerView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
+            titleContainerView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
+            titleContainerView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
+            titleContainerView.heightAnchor.constraint(equalToConstant: 40.0)
+        ])
     }
 
     func layoutCoverImageView() {
