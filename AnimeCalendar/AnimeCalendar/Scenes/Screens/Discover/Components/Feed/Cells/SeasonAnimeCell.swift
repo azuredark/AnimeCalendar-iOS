@@ -20,21 +20,26 @@ final class SeasonAnimeCell: GenericFeedCell, FeedCell {
     /// Reset cell's state when preparing for reusing
     override func prepareForReuse() {
         super.prepareForReuse()
-        titleLabel.text = nil
+        blurView.reset()
         coverImageView.image = nil
         cellTags.forEach { $0?.removeFromSuperview() }
         cellTags = []
     }
 
     // MARK: Methods
+    /// The setup is run for **every new cell dequed**. In contrast with **setupUI** which only configure constraints on each run and its UI elements are saved in the *new initialized cell's* memory.
+    ///
+    /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
-        titleLabel.text = anime?.titleEng
+        blurView.configure(with: anime?.titleEng ?? "", lines: 2)
+        
         let imagePath = anime?.imageType.jpgImage.normal ?? ""
         presenter?.getImageResource(path: imagePath) { [weak self] image in
             DispatchQueue.main.async {
                 self?.coverImageView.image = image
             }
         }
+        
         layoutCellTag()
     }
 }

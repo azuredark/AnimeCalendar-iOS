@@ -20,7 +20,7 @@ final class MocksManager: Requestable {
         do {
             let data = try Data(contentsOf: url)
             let json: T = try JSONDecoder().decode(model, from: data)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 completion(.success(json))
             }
         } catch {
@@ -44,6 +44,8 @@ private extension MocksManager {
                 return endpoint
             case .promo(let endpoint):
                 return endpoint
+            case .top(let endpoint):
+                return endpoint
         }
     }
 }
@@ -52,6 +54,7 @@ private enum EndpointFile: String {
     case getAnime             = "anime-q?drstone"
     case getCurrentSeason     = "seasons-now-page?1"
     case getRecentPromosAnime = "watch-promos-page?1"
+    case getTopAinme          = "top-anime-order_by?rank-page?1"
 
     /// Create and endpoint file name enum from an endpont type
     init(endpoint: EndpointType) {
@@ -65,6 +68,10 @@ private enum EndpointFile: String {
         
         if let endpoint = endpoint as? PromoEndpoint, endpoint == .getRecentPromos(page: 1) {
             self = .getRecentPromosAnime; return
+        }
+        
+        if let endpoint = endpoint as? TopEndpoint, endpoint == .getTopAnime(orderBy: .rank, page: 1) {
+            self = .getTopAinme; return
         }
 
         self = .getAnime

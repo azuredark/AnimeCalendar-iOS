@@ -24,6 +24,9 @@
 		A7445F2F292DCB75008A4696 /* SeasonAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F2E292DCB75008A4696 /* SeasonAnimeCell.swift */; };
 		A7445F31292DEDE4008A4696 /* SeasonEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */; };
 		A7445F33292E0369008A4696 /* FeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F32292E0369008A4696 /* FeedHeader.swift */; };
+		A74BE7AC2935632800FE3F99 /* BlurContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74BE7AB2935632800FE3F99 /* BlurContainer.swift */; };
+		A74BE7AE293580E500FE3F99 /* TopAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74BE7AD293580E500FE3F99 /* TopAnimeCell.swift */; };
+		A74BE7B029358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json in Resources */ = {isa = PBXBuildFile; fileRef = A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json */; };
 		A74EE6862921C114004D750E /* DiscoverSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74EE6852921C114004D750E /* DiscoverSearchBar.swift */; };
 		A74F984B2815F8EF003A1073 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74F98492815F8EF003A1073 /* HomeScreen.swift */; };
 		A74F984C2815F8EF003A1073 /* HomeScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A74F984A2815F8EF003A1073 /* HomeScreenView.xib */; };
@@ -165,6 +168,9 @@
 		A7445F2E292DCB75008A4696 /* SeasonAnimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonAnimeCell.swift; sourceTree = "<group>"; };
 		A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonEndpoint.swift; sourceTree = "<group>"; };
 		A7445F32292E0369008A4696 /* FeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeader.swift; sourceTree = "<group>"; };
+		A74BE7AB2935632800FE3F99 /* BlurContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurContainer.swift; sourceTree = "<group>"; };
+		A74BE7AD293580E500FE3F99 /* TopAnimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAnimeCell.swift; sourceTree = "<group>"; };
+		A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "top-anime-order_by?rank-page?1.json"; sourceTree = "<group>"; };
 		A74EE6852921C114004D750E /* DiscoverSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverSearchBar.swift; sourceTree = "<group>"; };
 		A74F98492815F8EF003A1073 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		A74F984A2815F8EF003A1073 /* HomeScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeScreenView.xib; sourceTree = "<group>"; };
@@ -329,14 +335,23 @@
 		A7445F2B292DCA07008A4696 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				A7445F2C292DCA68008A4696 /* GenericFeedCell.swift */,
 				A7445F2E292DCB75008A4696 /* SeasonAnimeCell.swift */,
 				A7CC37A52931F324005102B3 /* PromoAnimeCell.swift */,
+				A74BE7AD293580E500FE3F99 /* TopAnimeCell.swift */,
 				A77249D8293286B300487DE2 /* Tags */,
 				A7CC37A42931F308005102B3 /* Headers */,
 				A7CC37A32931F300005102B3 /* Identifiers */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		A74BE7AA293562FF00FE3F99 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				A7445F2C292DCA68008A4696 /* GenericFeedCell.swift */,
+				A74BE7AB2935632800FE3F99 /* BlurContainer.swift */,
+			);
+			path = Design;
 			sourceTree = "<group>";
 		};
 		A74F984D2815F954003A1073 /* AppBoot */ = {
@@ -616,6 +631,7 @@
 				A7A275F1292F332D00D1E61B /* seasons-now-page?1.json */,
 				A7A275EF292F2F2E00D1E61B /* anime-q?drstone.json */,
 				A7CC37A929320B01005102B3 /* watch-promos-page?1.json */,
+				A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json */,
 				A7DCE5452932DF560045300C /* ACIcon.swift */,
 			);
 			path = Mocks;
@@ -839,6 +855,7 @@
 				A74F98552815FF6E003A1073 /* Scenes */,
 				A7FDF60C281E0338006057D7 /* Extensions */,
 				A7CD0D4B2817BD0F00109B8D /* Utils */,
+				A74BE7AA293562FF00FE3F99 /* Design */,
 				A7E798AE28149B4900973881 /* Assets.xcassets */,
 				A7E798B028149B4900973881 /* LaunchScreen.storyboard */,
 				A7E798B328149B4900973881 /* Info.plist */,
@@ -1039,6 +1056,7 @@
 				A7B0E330281F761300A13CD6 /* HomeDateComponentView.xib in Resources */,
 				A768269A28471240001F9EB8 /* NewAnimeSelectedTitleComponentView.xib in Resources */,
 				A7E798AF28149B4900973881 /* Assets.xcassets in Resources */,
+				A74BE7B029358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json in Resources */,
 				A7AAAA31283C8A1700878BEC /* NewAnimeSearchResultsView.xib in Resources */,
 				A731E005281D13EE00036077 /* AnimeCalendarScreenView.xib in Resources */,
 				A7A275F2292F332D00D1E61B /* seasons-now-page?1.json in Resources */,
@@ -1194,6 +1212,7 @@
 				A7E44A992829CC56005C0AB5 /* ScreenFactory.swift in Sources */,
 				A76FFA03290DF374007209E8 /* HomeRouter.swift in Sources */,
 				A76FF9FE290A6D7F007209E8 /* HomeInteractor.swift in Sources */,
+				A74BE7AC2935632800FE3F99 /* BlurContainer.swift in Sources */,
 				A7F91E0128190E6000FF59C0 /* AnimeCalendarScreen.swift in Sources */,
 				A752150E2920BAFC00E94104 /* DiscoverScreenNavigationBar.swift in Sources */,
 				A76FFA01290DF36D007209E8 /* HomePresenter.swift in Sources */,
@@ -1204,6 +1223,7 @@
 				A7B0E32F281F761300A13CD6 /* HomeDateComponent.swift in Sources */,
 				A7CD0D482817A16000109B8D /* Screen.swift in Sources */,
 				A7933BF2281E35DD00D4E1B4 /* Shadow.swift in Sources */,
+				A74BE7AE293580E500FE3F99 /* TopAnimeCell.swift in Sources */,
 				A7B0E33F281F9B8800A13CD6 /* HomeAnime.swift in Sources */,
 				A76FFA13290F2099007209E8 /* NewAnimeRouter.swift in Sources */,
 				A768269D28472B18001F9EB8 /* NewAnimeTitleTextField.swift in Sources */,

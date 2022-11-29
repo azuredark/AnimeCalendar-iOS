@@ -10,14 +10,15 @@ import RxCocoa
 
 typealias DiscoverFeed = (
     seasonAnime: (driver: Driver<[Anime]>, section: FeedSection),
-    topAnime: (driver: Driver<[Anime]>, section: FeedSection),
-    recentPromosAnime: (driver: Driver<[Promo]>, section: FeedSection)
+    recentPromosAnime: (driver: Driver<[Promo]>, section: FeedSection),
+    topAnime: (driver: Driver<[Anime]>, section: FeedSection)
 )
 
 protocol DiscoverInteractive {
     var feed: DiscoverFeed { get }
     func updateSeasonAnime()
     func updateRecentPromosAnime()
+    func updateTopAnime(by order: AnimeOrderType)
     func getImageResource(path: String, completion: @escaping ImageSetting)
     func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag]
 }
@@ -29,8 +30,8 @@ final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
     /// # Observables
     #warning("Fill the default value with placholders to give the loading impression")
     private let seasonAnimeObservable = BehaviorRelay<[Anime]>(value: [])
-    private let topAnimeObservable = BehaviorRelay<[Anime]>(value: [])
     private let recentPromosAnimeObservable = BehaviorRelay<[Promo]>(value: [])
+    private let topAnimeObservable = BehaviorRelay<[Anime]>(value: [])
 }
 
 extension DiscoverInteractor: DiscoverInteractive {
@@ -50,9 +51,17 @@ extension DiscoverInteractor: DiscoverInteractive {
             .disposed(by: disposeBag)
     }
 
+    func updateTopAnime(by order: AnimeOrderType) {
+        repository.getTopAnime(by: order)
+            .compactMap { $0 }
+            .map { $0.data }
+            .bind(to: topAnimeObservable)
+            .disposed(by: disposeBag)
+    }
+
     /// Tuple representing each tag's with its priority.
     typealias TagPriority = (tag: AnimeTag, priority: Int)
-    
+
     /// Creates a list of AnimeTag, sorted by priority, checking its *episodes*, *score* and *rank*.
     ///
     /// The **priority** is pre-defined following the UI conventions order, which is as follows (Top-Bottom):
@@ -78,7 +87,7 @@ extension DiscoverInteractor: DiscoverInteractive {
             tagPriority.append((tag: .rank(value: rank), priority: 3))
         }
 
-        let sortedTags = tagPriority.sorted(by: { $0.priority < $1.priority })
+        let sortedTags = tagPriority.sorted { $0.priority < $1.priority }
             .map { $0.tag }
 
         return sortedTags
@@ -87,8 +96,8 @@ extension DiscoverInteractor: DiscoverInteractive {
     var feed: DiscoverFeed {
         return (
             seasonAnime: (driver: seasonAnimeObservable.asDriver(), section: .animeSeason),
-            topAnime: (driver: topAnimeObservable.asDriver(), section: .animeTop),
-            recentPromosAnime: (driver: recentPromosAnimeObservable.asDriver(), section: .animePromos)
+            recentPromosAnime: (driver: recentPromosAnimeObservable.asDriver(), section: .animePromos),
+            topAnime: (driver: topAnimeObservable.asDriver(), section: .animeTop)
         )
     }
 }

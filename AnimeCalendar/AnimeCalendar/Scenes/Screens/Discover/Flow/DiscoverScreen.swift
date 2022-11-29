@@ -62,6 +62,7 @@ private extension DiscoverScreen {
         print("senku [DEBUG] \(String(describing: type(of: self))) - updateLatestFeed")
         presenter?.updateSeasonAnime()
         presenter?.updateRecentPromosAnime()
+        presenter?.updateTopAnime(by: .rank)
     }
 }
 

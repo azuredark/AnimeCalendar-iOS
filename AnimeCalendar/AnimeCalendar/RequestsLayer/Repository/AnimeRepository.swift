@@ -74,4 +74,24 @@ final class AnimeRepository: GenericRepository {
             return Disposables.create()
         }
     }
+    
+    func getTopAnime(by order: AnimeOrderType, page: Int = 1, responsible: RequestResponsibleType = .network) -> Observable<AnimeResult?> {
+        return .create { [weak self] observer in
+            guard let strongSelf = self else { return Disposables.create() }
+            
+            let model = AnimeResult.self
+            let requestResponsible: Requestable = strongSelf.requestsManager.getRequestResponsible(.mock)
+            
+            requestResponsible.makeRequest(model, .top(.getTopAnime(orderBy: order, page: page))) { result in
+                switch result {
+                    case .success(let anime):
+                        observer.onNext(anime)
+                    case .failure(let error):
+                        observer.onError(error)
+                }
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
 }

@@ -88,6 +88,8 @@ final class NetworkManager: Requestable {
                 return endpoint
             case .promo(let endpoint):
                 return endpoint
+            case .top(let endpoint):
+                return endpoint
         }
     }
 

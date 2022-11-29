@@ -1,19 +1,19 @@
 //
-//  PromoAnimeCell.swift
+//  TopAnimeCell.swift
 //  AnimeCalendar
 //
-//  Created by Leonardo  on 26/11/22.
+//  Created by Leonardo  on 28/11/22.
 //
 
 import UIKit
 
-final class PromoAnimeCell: UICollectionViewCell, FeedCell {
-    // MARK: State
-    static var reuseIdentifier: String = "PROMO_ANIME_CELL_REUSE_ID"
+final class TopAnimeCell: UICollectionViewCell, FeedCell {
+    static var reuseIdentifier: String = "TOP_ANIME_CELL_REUSE_ID"
     private var shadowExists: Bool = false
 
+    // MARK: State
+    var anime: Anime? { didSet { setupUI() } }
     weak var presenter: DiscoverPresentable?
-    var promo: Promo? { didSet { setupUI() }}
 
     private lazy var mainContainer: UIView = {
         let container = UIView(frame: .zero)
@@ -32,18 +32,8 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         return imageView
     }()
 
-    private(set) lazy var blurView: BlurContainer = {
-        let config = BlurContainer.Config(opacity: 0.05, blurColor: Color.black)
-        let view = BlurContainer(config: config)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        coverImageView.addSubview(view)
-        return view
-    }()
-
-    /// Reset cell's state when preparing for reusing
     override func prepareForReuse() {
         super.prepareForReuse()
-        blurView.reset()
         coverImageView.image = nil
     }
 
@@ -52,9 +42,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     ///
     /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
-        blurView.configure(with: promo?.anime.titleEng ?? "", lines:  1)
-
-        let imagePath: String = promo?.trailer.image.large ?? ""
+        let imagePath: String = anime?.imageType.jpgImage.normal ?? ""
         presenter?.getImageResource(path: imagePath, completion: { [weak self] image in
             DispatchQueue.main.async {
                 self?.coverImageView.image = image
@@ -63,11 +51,10 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     }
 }
 
-private extension PromoAnimeCell {
+private extension TopAnimeCell {
     func setupUI() {
         layoutContainer()
         layoutCoverImageView()
-        layoutBlurView()
     }
 
     func layoutContainer() {
@@ -88,19 +75,9 @@ private extension PromoAnimeCell {
             coverImageView.bottomAnchor.constraint(equalTo: mainContainer.bottomAnchor)
         ])
     }
-
-    func layoutBlurView() {
-        let height: CGFloat = 40.0
-        NSLayoutConstraint.activate([
-            blurView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
-            blurView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
-            blurView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
-            blurView.heightAnchor.constraint(equalToConstant: height)
-        ])
-    }
 }
 
-private extension PromoAnimeCell {
+private extension TopAnimeCell {
     func configureContainerShadow() {
         if !shadowExists {
             mainContainer.setNeedsLayout()

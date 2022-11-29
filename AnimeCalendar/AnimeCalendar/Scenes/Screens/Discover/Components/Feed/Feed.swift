@@ -12,6 +12,7 @@ import RxCocoa
 final class Feed: NSObject {
     // MARK: State
     static let sectionHeaderKind: String = "SECTION_HEADER_ELEMENT_KIND"
+    
     private lazy var containerCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: getLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -53,15 +54,18 @@ private extension Feed {
             guard let strongSelf = self else { fatalError("No Feed reference while generating collection layout") }
             let section = FeedSection.allCases[sectionIndex]
             switch section {
-                case .animeSeason, .animeTop:
+                case .animeSeason:
                     return strongSelf.getAnimeSeasonSection()
                 case .animePromos:
                     return strongSelf.getAnimePromosSection()
+                case .animeTop:
+                    return strongSelf.getAnimeTopSection()
             }
         }
         return layout
     }
 
+    /// 1 Group vertical fit 1 item,  scrolling horizontally
     func getAnimeSeasonSection() -> NSCollectionLayoutSection {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -91,6 +95,7 @@ private extension Feed {
         return section
     }
 
+    /// 1 Group vertical fit 1 item,  scrolling horizontally
     func getAnimePromosSection() -> NSCollectionLayoutSection {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -113,9 +118,39 @@ private extension Feed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [header]
-        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 0, trailing: 20.0)
+        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 15.0, trailing: 20.0)
         section.interGroupSpacing = 30.0
 
+        return section
+    }
+    
+    /// 1 Group vertical fit 2 items, scrolling horizontally
+    func getAnimeTopSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .absolute(100.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.76),
+                                               heightDimension: .absolute(216.0))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(16.0)
+        
+        // Header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .estimated(44))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: Self.sectionHeaderKind,
+                                                                 alignment: .top)
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.boundarySupplementaryItems = [header]
+        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 0, trailing: 20.0)
+        section.interGroupSpacing = 30.0
+        
         return section
     }
 }
@@ -139,6 +174,12 @@ extension Feed: Bindable {
         recentPromosAnimeFeed.driver.drive { [weak self] promos in
             guard let strongSelf = self else { return }
             strongSelf.dataSource.updateSnapshot(for: recentPromosAnimeFeed.section, with: promos, animating: true)
+        }.disposed(by: disposeBag)
+        
+        let topAnimeFeed = discoverFeed.topAnime
+        topAnimeFeed.driver.drive { [weak self] animes in
+            guard let strongSelf = self else { return }
+            strongSelf.dataSource.updateSnapshot(for: topAnimeFeed.section, with: animes, animating: true)
         }.disposed(by: disposeBag)
     }
 }

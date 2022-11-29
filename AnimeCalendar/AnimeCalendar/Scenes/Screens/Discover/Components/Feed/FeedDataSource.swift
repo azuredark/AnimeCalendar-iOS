@@ -37,10 +37,10 @@ final class FeedDataSource {
         dataSource = DiffableDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, item in
             let section = FeedSection.allCases[indexPath.section]
             switch section {
-                case .animeSeason, .animeTop:
+                case .animeSeason:
                     let seasonAnimeCell: SeasonAnimeCell = Self.getCell(with: collectionView, at: indexPath)
                     guard let anime = item as? Anime else { return seasonAnimeCell }
-                    
+
                     seasonAnimeCell.anime = anime
                     seasonAnimeCell.presenter = self?.presenter
                     seasonAnimeCell.setup()
@@ -48,11 +48,19 @@ final class FeedDataSource {
                 case .animePromos:
                     let promoAnimeCell: PromoAnimeCell = Self.getCell(with: collectionView, at: indexPath)
                     guard let promo = item as? Promo else { return promoAnimeCell }
-                    
+
                     promoAnimeCell.promo = promo
                     promoAnimeCell.presenter = self?.presenter
                     promoAnimeCell.setup()
                     return promoAnimeCell
+                case .animeTop:
+                    let topAnimeCell: TopAnimeCell = Self.getCell(with: collectionView, at: indexPath)
+                    guard let anime = item as? Anime else { return topAnimeCell }
+
+                    topAnimeCell.anime = anime
+                    topAnimeCell.presenter = self?.presenter
+                    topAnimeCell.setup()
+                    return topAnimeCell
             }
         }
 
@@ -73,6 +81,8 @@ final class FeedDataSource {
         collectionView.register(SeasonAnimeCell.self, forCellWithReuseIdentifier: SeasonAnimeCell.reuseIdentifier)
         // Promos trailers
         collectionView.register(PromoAnimeCell.self, forCellWithReuseIdentifier: PromoAnimeCell.reuseIdentifier)
+        // Top anime
+        collectionView.register(TopAnimeCell.self, forCellWithReuseIdentifier: TopAnimeCell.reuseIdentifier)
 
         // MARK: Headers
         // Generic header
@@ -88,7 +98,6 @@ extension FeedDataSource: FeedDataSourceable {
     /// - Parameter animes: The animes to update for the specified section
     /// Updates the **items** for the current **section**
     func updateSnapshot(for section: FeedSection, with items: [AnyHashable], animating: Bool = false) {
-        print("senku [DEBUG] \(String(describing: type(of: self))) - UPDATE SNAPSHOT! - section: \(section.rawValue) | items: \(items)")
         if currentSnapshot.indexOfSection(section) == nil {
             currentSnapshot.appendSections([section])
         }
@@ -111,11 +120,12 @@ private extension FeedDataSource {
 enum FeedSection: String, CaseIterable {
     case animeSeason = "Current Season"
     case animePromos = "Promos"
-    case animeTop    = "All-Time Top Anime"
+    case animeTop    = "Top All-time"
 }
 
 /// All item types
 enum FeedItem: CaseIterable {
     case anime
     case promo
+    case top
 }
