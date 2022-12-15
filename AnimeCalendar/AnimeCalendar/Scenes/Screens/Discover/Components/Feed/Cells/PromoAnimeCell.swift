@@ -33,17 +33,36 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     }()
 
     private(set) lazy var blurView: BlurContainer = {
-        let config = BlurContainer.Config(opacity: 0.05, blurColor: Color.black)
+        let config = BlurContainer.Config(opacity: 1)
         let view = BlurContainer(config: config)
         view.translatesAutoresizingMaskIntoConstraints = false
         coverImageView.addSubview(view)
         return view
+    }()
+    
+    private lazy var gradientLayer: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        gradient.type = .axial
+        gradient.colors = [
+            Color.cobalt,
+            Color.black
+        ]
+        gradient.locations = [0, 1]
+        return gradient
+    }()
+    
+    private lazy var gradientView: UIView = {
+        let gradient = GradientView(colors: [.clear, .black])
+        gradient.translatesAutoresizingMaskIntoConstraints = false
+        coverImageView.addSubview(gradient)
+        return gradient
     }()
 
     /// Reset cell's state when preparing for reusing
     override func prepareForReuse() {
         super.prepareForReuse()
         blurView.reset()
+        presenter = nil
         coverImageView.image = nil
     }
 
@@ -68,6 +87,7 @@ private extension PromoAnimeCell {
         layoutContainer()
         layoutCoverImageView()
         layoutBlurView()
+//        layoutGradientLayer()
     }
 
     func layoutContainer() {
@@ -77,7 +97,8 @@ private extension PromoAnimeCell {
             mainContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        configureContainerShadow()
+        #warning("Is using tooooo much memory, up to 100mb")
+      configureContainerShadow()
     }
 
     func layoutCoverImageView() {
@@ -98,6 +119,18 @@ private extension PromoAnimeCell {
             blurView.heightAnchor.constraint(equalToConstant: height)
         ])
     }
+    
+    func layoutGradientLayer() {
+        NSLayoutConstraint.activate([
+            gradientView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
+            gradientView.topAnchor.constraint(equalTo: coverImageView.topAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
+        ])
+//        gradientLayer.frame = coverImageView.bounds
+//        print("senku [DEBUG] \(String(describing: type(of: self))) - coverImageView: \(coverImageView.bounds)")
+//        coverImageView.layer.addSublayer(gradientLayer)
+    }
 }
 
 private extension PromoAnimeCell {
@@ -113,4 +146,29 @@ private extension PromoAnimeCell {
             shadowExists = true
         }
     }
+}
+
+final class GradientView: UIView {
+    private let gradient : CAGradientLayer
+
+    init(gradient: CAGradientLayer) {
+        self.gradient = gradient
+        super.init(frame: .zero)
+        self.gradient.frame = self.bounds
+        self.layer.insertSublayer(self.gradient, at: 0)
+    }
+
+    convenience init(colors: [UIColor], locations:[Float] = [0.0, 1.0]) {
+        let gradient = CAGradientLayer()
+        gradient.colors = colors.map { $0.cgColor }
+        gradient.locations = locations.map { NSNumber(value: $0) }
+        self.init(gradient: gradient)
+    }
+
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        self.gradient.frame = self.bounds
+    }
+
+    required init?(coder: NSCoder) { fatalError("no init(coder:)") }
 }

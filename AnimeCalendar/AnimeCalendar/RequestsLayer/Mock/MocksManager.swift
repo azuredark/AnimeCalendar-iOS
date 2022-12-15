@@ -54,7 +54,7 @@ private enum EndpointFile: String {
     case getAnime             = "anime-q?drstone"
     case getCurrentSeason     = "seasons-now-page?1"
     case getRecentPromosAnime = "watch-promos-page?1"
-    case getTopAinme          = "top-anime-order_by?rank-page?1"
+    case getTopAinme          = "top-anime-order_by?rank-type?tv-page?1"
 
     /// Create and endpoint file name enum from an endpont type
     init(endpoint: EndpointType) {

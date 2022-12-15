@@ -20,8 +20,9 @@ final class SeasonAnimeCell: GenericFeedCell, FeedCell {
     /// Reset cell's state when preparing for reusing
     override func prepareForReuse() {
         super.prepareForReuse()
-        blurView.reset()
+        presenter = nil
         coverImageView.image = nil
+        blurView.reset()
         cellTags.forEach { $0?.removeFromSuperview() }
         cellTags = []
     }
@@ -40,6 +41,7 @@ final class SeasonAnimeCell: GenericFeedCell, FeedCell {
             }
         }
         
+        #warning("Is using tooooo much memory, up to 600mb")
         layoutCellTag()
     }
 }

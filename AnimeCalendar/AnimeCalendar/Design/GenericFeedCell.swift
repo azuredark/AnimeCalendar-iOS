@@ -39,11 +39,18 @@ class GenericFeedCell: UICollectionViewCell {
     }()
 
     private(set) lazy var blurView: BlurContainer = {
-        let config = BlurContainer.Config(opacity: 0.05, blurColor: Color.black)
+        let config = BlurContainer.Config(opacity: 1)
         let view = BlurContainer(config: config)
         view.translatesAutoresizingMaskIntoConstraints = false
         coverImageView.addSubview(view)
         return view
+    }()
+    
+    private lazy var gradientView: UIView = {
+        let gradient = GradientView(colors: [.clear, Color.black.withAlphaComponent(0.8)])
+        gradient.translatesAutoresizingMaskIntoConstraints = false
+        coverImageView.addSubview(gradient)
+        return gradient
     }()
 }
 
@@ -54,6 +61,7 @@ extension GenericFeedCell {
         layoutContainer()
         layoutCoverImageView()
         layoutBlurView()
+//        layoutGradientView()
     }
 }
 
@@ -65,6 +73,7 @@ private extension GenericFeedCell {
             mainContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        #warning("Is using tooooo much memory, up to 100mb")
         configureContainerShadow()
     }
 
@@ -86,6 +95,15 @@ private extension GenericFeedCell {
             blurView.heightAnchor.constraint(equalToConstant: height)
         ])
     }
+    
+    func layoutGradientView() {
+        NSLayoutConstraint.activate([
+            gradientView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
+            gradientView.topAnchor.constraint(equalTo: coverImageView.topAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
+        ])
+    }
 }
 
 private extension GenericFeedCell {
@@ -93,8 +111,8 @@ private extension GenericFeedCell {
         if !shadowExists {
             mainContainer.setNeedsLayout()
             mainContainer.layoutIfNeeded()
-            let shadow = ShadowBuilder().getTemplate(type: .bottom)
-                .with(opacity: 0.20)
+            let shadow = ShadowBuilder().getTemplate(type: .full)
+                .with(opacity: 0.25)
                 .with(cornerRadius: 10.0)
                 .build()
             mainContainer.addShadow(with: shadow)

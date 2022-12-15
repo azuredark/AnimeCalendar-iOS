@@ -26,7 +26,7 @@
 		A7445F33292E0369008A4696 /* FeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F32292E0369008A4696 /* FeedHeader.swift */; };
 		A74BE7AC2935632800FE3F99 /* BlurContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74BE7AB2935632800FE3F99 /* BlurContainer.swift */; };
 		A74BE7AE293580E500FE3F99 /* TopAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74BE7AD293580E500FE3F99 /* TopAnimeCell.swift */; };
-		A74BE7B029358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json in Resources */ = {isa = PBXBuildFile; fileRef = A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json */; };
+		A74BE7B029358BAD00FE3F99 /* top-anime-order_by?rank-type?tv-page?1.json in Resources */ = {isa = PBXBuildFile; fileRef = A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-type?tv-page?1.json */; };
 		A74EE6862921C114004D750E /* DiscoverSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74EE6852921C114004D750E /* DiscoverSearchBar.swift */; };
 		A74F984B2815F8EF003A1073 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74F98492815F8EF003A1073 /* HomeScreen.swift */; };
 		A74F984C2815F8EF003A1073 /* HomeScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A74F984A2815F8EF003A1073 /* HomeScreenView.xib */; };
@@ -170,7 +170,7 @@
 		A7445F32292E0369008A4696 /* FeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeader.swift; sourceTree = "<group>"; };
 		A74BE7AB2935632800FE3F99 /* BlurContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurContainer.swift; sourceTree = "<group>"; };
 		A74BE7AD293580E500FE3F99 /* TopAnimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAnimeCell.swift; sourceTree = "<group>"; };
-		A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "top-anime-order_by?rank-page?1.json"; sourceTree = "<group>"; };
+		A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-type?tv-page?1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "top-anime-order_by?rank-type?tv-page?1.json"; sourceTree = "<group>"; };
 		A74EE6852921C114004D750E /* DiscoverSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverSearchBar.swift; sourceTree = "<group>"; };
 		A74F98492815F8EF003A1073 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		A74F984A2815F8EF003A1073 /* HomeScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeScreenView.xib; sourceTree = "<group>"; };
@@ -631,7 +631,7 @@
 				A7A275F1292F332D00D1E61B /* seasons-now-page?1.json */,
 				A7A275EF292F2F2E00D1E61B /* anime-q?drstone.json */,
 				A7CC37A929320B01005102B3 /* watch-promos-page?1.json */,
-				A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json */,
+				A74BE7AF29358BAD00FE3F99 /* top-anime-order_by?rank-type?tv-page?1.json */,
 				A7DCE5452932DF560045300C /* ACIcon.swift */,
 			);
 			path = Mocks;
@@ -1056,7 +1056,7 @@
 				A7B0E330281F761300A13CD6 /* HomeDateComponentView.xib in Resources */,
 				A768269A28471240001F9EB8 /* NewAnimeSelectedTitleComponentView.xib in Resources */,
 				A7E798AF28149B4900973881 /* Assets.xcassets in Resources */,
-				A74BE7B029358BAD00FE3F99 /* top-anime-order_by?rank-page?1.json in Resources */,
+				A74BE7B029358BAD00FE3F99 /* top-anime-order_by?rank-type?tv-page?1.json in Resources */,
 				A7AAAA31283C8A1700878BEC /* NewAnimeSearchResultsView.xib in Resources */,
 				A731E005281D13EE00036077 /* AnimeCalendarScreenView.xib in Resources */,
 				A7A275F2292F332D00D1E61B /* seasons-now-page?1.json in Resources */,

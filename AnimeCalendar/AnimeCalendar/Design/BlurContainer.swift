@@ -17,9 +17,8 @@ final class BlurContainer: UIView {
         let blurEffect = UIBlurEffect(style: .dark)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.opacity = 1
         view.clipsToBounds = true
-        insertSubview(view, aboveSubview: self)
+        addSubview(view)
         return view
     }()
 
@@ -37,7 +36,7 @@ final class BlurContainer: UIView {
 
     // MARK: Methods
     private func setup() {
-        backgroundColor = config.blurColor.withAlphaComponent(config.opacity)
+        blurView.alpha = config.opacity
         layoutBlurView()
     }
 
@@ -90,19 +89,9 @@ private extension BlurContainer {
 extension BlurContainer {
     struct Config {
         var opacity: CGFloat
-        var blurColor: UIColor
-//        var corner: BlurCorner
 
-        init(opacity: CGFloat, blurColor: UIColor) {
+        init(opacity: CGFloat) {
             self.opacity = opacity
-            self.blurColor = blurColor
-//            self.corner = corner
         }
     }
 }
-
-// enum BlurCorner {
-//    case all(radius: CGFloat)
-//    case specific(corner: UIRectCorner, radius: CGFloat)
-//    case empty
-// }

@@ -28,6 +28,7 @@ struct AnimeResult: Decodable {
 }
 
 struct Anime: Decodable, Hashable {
+    var uuid = UUID()
     var id: Int
     var titleOrg: String
     var titleEng: String
@@ -77,15 +78,19 @@ struct Anime: Decodable, Hashable {
         self.score = 0
         self.rank = 0
     }
+    
+    // MARK: IMPORTANT: UUID is used due to repeated ids in the SeasonAnime & TopAnime sections, as the airing anime could also appear on the top.
 
     // MARK: Hashable
     func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+//        hasher.combine(id)
+        hasher.combine(uuid)
     }
 
     // MARK: Equatable
     static func == (lhs: Anime, rhs: Anime) -> Bool {
-        return lhs.id == rhs.id
+//        return lhs.id == rhs.id
+        return lhs.uuid == rhs.uuid
     }
 }
 

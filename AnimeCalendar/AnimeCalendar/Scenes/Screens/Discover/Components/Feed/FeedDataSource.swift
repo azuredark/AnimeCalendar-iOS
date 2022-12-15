@@ -34,33 +34,37 @@ final class FeedDataSource {
 
     // MARK: Provider
     private func buildDataSource() {
-        dataSource = DiffableDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, item in
+        let seasonAnimeCell = UICollectionView.CellRegistration<SeasonAnimeCell, Anime> { [weak self] cell, _, anime in
+            cell.anime = anime
+            cell.presenter = self?.presenter
+            cell.setup()
+        }
+
+        let promoAnimeCell = UICollectionView.CellRegistration<PromoAnimeCell, Promo> { [weak self] cell, _, promo in
+            cell.promo = promo
+            cell.presenter = self?.presenter
+            cell.setup()
+        }
+
+        let topAnimeCell = UICollectionView.CellRegistration<TopAnimeCell, Anime> { [weak self] cell, indexPath, anime in
+            cell.anime = anime
+            cell.index = indexPath.row + 1
+            cell.presenter = self?.presenter
+            cell.setup()
+        }
+
+        dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             let section = FeedSection.allCases[indexPath.section]
             switch section {
                 case .animeSeason:
-                    let seasonAnimeCell: SeasonAnimeCell = Self.getCell(with: collectionView, at: indexPath)
-                    guard let anime = item as? Anime else { return seasonAnimeCell }
-
-                    seasonAnimeCell.anime = anime
-                    seasonAnimeCell.presenter = self?.presenter
-                    seasonAnimeCell.setup()
-                    return seasonAnimeCell
+                    guard let anime = item as? Anime else { return nil }
+                    return collectionView.dequeueConfiguredReusableCell(using: seasonAnimeCell, for: indexPath, item: anime)
                 case .animePromos:
-                    let promoAnimeCell: PromoAnimeCell = Self.getCell(with: collectionView, at: indexPath)
-                    guard let promo = item as? Promo else { return promoAnimeCell }
-
-                    promoAnimeCell.promo = promo
-                    promoAnimeCell.presenter = self?.presenter
-                    promoAnimeCell.setup()
-                    return promoAnimeCell
+                    guard let promo = item as? Promo else { return nil }
+                    return collectionView.dequeueConfiguredReusableCell(using: promoAnimeCell, for: indexPath, item: promo)
                 case .animeTop:
-                    let topAnimeCell: TopAnimeCell = Self.getCell(with: collectionView, at: indexPath)
-                    guard let anime = item as? Anime else { return topAnimeCell }
-
-                    topAnimeCell.anime = anime
-                    topAnimeCell.presenter = self?.presenter
-                    topAnimeCell.setup()
-                    return topAnimeCell
+                    guard let anime = item as? Anime else { return nil }
+                    return collectionView.dequeueConfiguredReusableCell(using: topAnimeCell, for: indexPath, item: anime)
             }
         }
 

@@ -73,8 +73,10 @@ private extension Feed {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         // Group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(170.0),
-                                               heightDimension: .absolute(280.0))
+        let groupHeight: CGFloat = 250.0
+        let groupWidth: CGFloat = groupHeight / 1.66 // 16:9
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(groupWidth),
+                                               heightDimension: .absolute(groupHeight))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         //        group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 30.0)
 

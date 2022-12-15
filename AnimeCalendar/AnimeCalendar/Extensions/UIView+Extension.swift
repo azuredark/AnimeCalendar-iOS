@@ -83,3 +83,73 @@ extension UIView {
         self.layer.insertSublayer(shadowLayer, at: 0)
     }
 }
+
+extension UIView {
+    /// Applies blur effect on top of the current view.
+    ///
+    /// - Important: The view which uses the blur effect **must** always be added at **last**, after all the other subviews from the superview have already been added
+    /// - Parameter effect: The blur effect style.
+    /// - Parameter alpha: The alpha or intensity of the blur (0-1).
+    @discardableResult
+    func applyBlur(effect: UIBlurEffect.Style, alpha: CGFloat, layout: BlurLayout = .full) -> UIView {
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.alpha = alpha
+        insertSubview(blurView, at: 1)
+
+        if case .full = layout {
+            blurView.constraintAllAnchors(to: self)
+            return blurView
+        }
+
+        if case .partial(let size, let side) = layout {
+            switch side {
+                case .leading, .trailing:
+                    if case .leading = side {
+                        blurView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+                    } else {
+                        blurView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+                    }
+
+                    NSLayoutConstraint.activate([
+                        blurView.widthAnchor.constraint(equalToConstant: size),
+                        blurView.topAnchor.constraint(equalTo: topAnchor),
+                        blurView.bottomAnchor.constraint(equalTo: topAnchor)
+                    ])
+                case .top, .bottom:
+                    if case .top = side {
+                        blurView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+                    } else {
+                        blurView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+                    }
+
+                    NSLayoutConstraint.activate([
+                        blurView.heightAnchor.constraint(equalToConstant: size),
+                        blurView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                        blurView.trailingAnchor.constraint(equalTo: trailingAnchor)
+                    ])
+            }
+        }
+        
+        return blurView
+    }
+
+    func constraintAllAnchors(to view: UIView) {
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topAnchor.constraint(equalTo: view.topAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+}
+
+enum BlurLayout {
+    case full
+    case partial(height: CGFloat, side: ViewSide)
+}
+
+enum ViewSide {
+    case leading, trailing, top, bottom
+}
