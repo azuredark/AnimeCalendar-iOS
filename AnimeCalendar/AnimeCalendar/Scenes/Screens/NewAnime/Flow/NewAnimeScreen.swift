@@ -79,7 +79,6 @@ private extension NewAnimeScreen {
         addChildVC(searchResultsComponent)
         addChildVC(selectedTitleComponent)
         addChildVC(selectedDetailsComponent)
-        print("NewAnimeScreen children VCs: \(children)")
 
         /// # Configure Component's constraints
         configureComponentsConstraints()

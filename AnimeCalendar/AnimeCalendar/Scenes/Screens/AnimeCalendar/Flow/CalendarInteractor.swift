@@ -11,11 +11,11 @@ protocol CalendarInteractive {}
 
 final class CalendarInteractor {
     // MARK: State
-    private let requestsManager: RequestProtocol
+    private let animeRepository: AnimeRepository
 
     // MARK: Initializers
-    init(requestsManager: RequestProtocol) {
-        self.requestsManager = requestsManager
+    init(animeRepository: AnimeRepository) {
+        self.animeRepository = animeRepository
     }
 
     // MARK: Methods

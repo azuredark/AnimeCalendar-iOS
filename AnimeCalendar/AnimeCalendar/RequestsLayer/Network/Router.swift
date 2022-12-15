@@ -25,7 +25,7 @@ final class Router {
         do {
             let httpSession = URLSession(configuration: .ephemeral)
             let httpRequest: URLRequest = try buildHttpRequest(endpoint: endpoint)
-            print("senku [DEBUG] \(String(describing: type(of: self))) - endpoint: \(httpRequest.url?.absoluteURL)")
+            print("senku [📡] \(String(describing: type(of: self))) - endpoint: \(httpRequest.url?.absoluteString ?? "")")
             task = httpSession.dataTask(with: httpRequest) { data, response, error in
                 if let error = error { completion(nil, nil, error) }
                 if let data = data { completion(data, response, nil) }

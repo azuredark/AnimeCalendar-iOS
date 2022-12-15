@@ -24,10 +24,10 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
     @IBOutlet private weak var animeGenreCollection: UICollectionView!
 
     /// # Observables
-    private let animeObservable = PublishSubject<JikanAnime>()
+    private let animeObservable = PublishSubject<Anime>()
     private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
     weak var presenter: NewAnimePresentable?
-    
+
     private var disposeBag = DisposeBag()
 }
 
@@ -47,11 +47,11 @@ extension NewAnimeSearchResultItem {
 }
 
 extension NewAnimeSearchResultItem: ComponentCollectionItem {
-    func setupItem(with item: JikanAnime) {
+    func setupItem(with item: Anime) {
         animeObservable.onNext(item)
-        
+
         /// Setting image
-        presenter?.getAnimeCoverImageV2(path: item.imageType.jpgImage.normal, completion: { [weak self] image in
+        presenter?.getImageResource(path: item.imageType.jpgImage.normal, completion: { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.animeCoverImage.image = image
@@ -88,17 +88,16 @@ extension NewAnimeSearchResultItem: Bindable {
         /// # animeTitleLabel (Rx)
         bindTitle()
         bindSynopsis()
-//        bindCoverImage()
-        
+
         animeObservable.subscribe(onNext: { value in
-            print("senku [DEBUG] \(String(describing: type(of: self))) - NEW ANIME: \(value.title)")
+            print("senku [DEBUG] \(String(describing: type(of: self))) - NEW ANIME: \(value.titleOrg)")
         }).disposed(by: disposeBag)
     }
 
     /// Bind title
     func bindTitle() {
         animeObservable
-            .map { $0.title }
+            .map { $0.titleEng }
             .asDriver(onErrorJustReturn: "")
             .drive(animeTitleLabel.rx.text)
             .disposed(by: disposeBag)
@@ -119,38 +118,11 @@ extension NewAnimeSearchResultItem: Bindable {
             .disposed(by: disposeBag)
     }
 
-    /// Bind cover image
-    func bindCoverImage() {
-        guard let presenter = presenter else { return }
-        animeObservable
-            .map { $0.imageType.jpgImage.normal }
-            .asDriver(onErrorJustReturn: "")
-            .flatMapLatest(presenter.getAnimeCoverImage)
-            .drive(animeCoverImage.rx.image)
-            .disposed(by: disposeBag)
-    }
-
     /// Bind stars
     func bindStars() {}
 
     /// Bind on air
     func bindOnAir() {}
-
-    /// # animeCoverImage (Rx)
-//        animeObservable
-//            .subscribe(onNext: { [weak self] anime in
-//                self?.animeCoverImage.imageFromBundle(imageName: anime.cover)
-//                print("Cover url: \(anime.cover)")
-//            })
-//            .disposed(by: disposeBag)
-
-    /// # onAirImage (Rx)
-//        animeObservable
-//            .map { !$0.onAir }
-//            .bind(to: animeOnAirImage.rx.isHidden)
-//            .disposed(by: disposeBag)
-
-//        configureGenreCollectionBindings()
 }
 
 extension NewAnimeSearchResultItem: ComponentItem {
@@ -168,21 +140,25 @@ extension NewAnimeSearchResultItem: ComponentItem {
 private extension NewAnimeSearchResultItem {
     func configureCellContiner() {
         // Container shadow
-        var shadow = Shadow(.bottom)
-        shadow.color = Color.lightGray
-        shadow.offset = CGSize(width: 2, height: 0)
-        shadow.radius = 3
-        animeContainerView.addShadowLayer(shadow: shadow, layerRadius: 10)
+        let shadow: Shadow = ShadowBuilder().getTemplate(type: .bottom)
+            .with(color: Color.lightGray)
+            .with(offset: CGSize(width: 2, height: 0))
+            .with(blur: 3.0)
+            .with(cornerRadius: 10.0)
+            .build()
+        animeContainerView.addShadow(with: shadow)
     }
 
     func configureImages() {
         var shadow = Shadow()
         shadow.color = Color.pink
-        shadow.radius = 3
+        shadow.blur = 3.0
         shadow.offset = CGSize(width: -1, height: 1)
         shadow.opacity = 0.8
-        animeOnAirImage.addShadowLayer(shadow: shadow, layerRadius: 0)
-        animeCoverImage.addCornerRadius(radius: 5)
+        shadow.cornerRadius = 5.0
+        animeOnAirImage.addShadow(with: shadow)
+        
+//        animeCoverImage.addCornerRadius(radius: 5)
         animeCoverImage.layer.borderColor = Color.lightGray.withAlphaComponent(0.4).cgColor
         animeCoverImage.layer.borderWidth = 1
     }

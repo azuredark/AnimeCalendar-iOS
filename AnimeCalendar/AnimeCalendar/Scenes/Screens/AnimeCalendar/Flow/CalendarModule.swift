@@ -12,8 +12,8 @@ final class CalendarModule {
     private let presenter: CalendarPresentable
 
     // MARK: Initializers
-    init(requestsManager: RequestProtocol) {
-        let interactor = CalendarInteractor(requestsManager: requestsManager)
+    init(animeRepository: AnimeRepository) {
+        let interactor = CalendarInteractor(animeRepository: animeRepository)
         let router = CalendarRouter()
         self.presenter = CalendarPresenter(interactor: interactor, router: router)
     }

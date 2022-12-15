@@ -8,7 +8,14 @@
 import Foundation
 
 protocol ScreenNavigationBar: AnyObject {
-  var screen: Screen? { get set }
-  func configureLeftNavigationItems()
-  func configureRightNavigationItems()
+    var screen: Screen? { get }
+    func configureTitle()
+    func configureLeftNavigationItems()
+    func configureRightNavigationItems()
+}
+
+extension ScreenNavigationBar {
+    func configureTitle() {}
+    func configureLeftNavigationItems() {}
+    func configureRightNavigationItems() {}
 }

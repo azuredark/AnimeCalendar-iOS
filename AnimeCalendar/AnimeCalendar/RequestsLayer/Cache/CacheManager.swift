@@ -85,6 +85,16 @@ final class CalendarCache: CacheManager, ScreenCacheable {
     }
 }
 
+final class DiscoverCache: CacheManager, ScreenCacheable {
+    let cacheName: String = "discover_cache"
+    var cacheMaxItems: Int = 50
+    
+    init() {
+        super.init(name: cacheName, maxCount: cacheMaxItems)
+    }
+}
+
+
 final class CacheFactory {
     func getCacheModule(from screen: ScreenType) -> CacheManager {
         switch screen {
@@ -94,6 +104,8 @@ final class CacheFactory {
                 return NewAnimeCache()
             case .calendarScreen:
                 return CalendarCache()
+            case .discoverScreen:
+                return DiscoverCache()
         }
     }
 }

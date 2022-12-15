@@ -14,7 +14,7 @@ AnimecCalendar uses the **VIPER** arch., with some twists, for creating and main
 Uses Xibs and some programmatic views.
 
 ## ⚙️  Dependencies
-Current dependencies used, not planning to add more
+Current dependencies used, not planning to add more:
 - RxSwift (w/ RxCocoa/RxRelay)
 
 ## ⛩️ Setup
@@ -38,9 +38,9 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 ```
 
 ## 📹 Demos
-| Home | New Anime |
-| ---| --- |
-| <img src="images/ui/home/home-demo.gif" width=250 /> | <img src="images/ui/new-anime/new-anime-demo.gif" width=250 /> |
+| Home | New Anime | Discover |
+| ---| --- | --- |
+| <img src="images/ui/home/home-demo.gif" width=250 /> | <img src="images/ui/new-anime/new-anime-demo.gif" width=250 /> | <img src="images/ui/discover/discover-demo1.gif" width=250 /> |
 
 ## 📸 Screenshots
 ### Home

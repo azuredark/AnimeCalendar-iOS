@@ -7,13 +7,14 @@
 
 import Foundation
 
-// https://api.jikan.moe/v4/anime
 final class NetworkManager: Requestable {
     // MARK: State
     /// # Cache
-    private lazy var homeCache = CacheFactory().getCacheModule(from: .homeScreen)
-    private lazy var newAnimeCache = CacheFactory().getCacheModule(from: .newAnimeScreen)
-    private lazy var calendarCache = CacheFactory().getCacheModule(from: .calendarScreen)
+    private lazy var cacheFactory  = CacheFactory()
+    private lazy var homeCache     = cacheFactory.getCacheModule(from: .homeScreen)
+    private lazy var newAnimeCache = cacheFactory.getCacheModule(from: .newAnimeScreen)
+    private lazy var calendarCache = cacheFactory.getCacheModule(from: .calendarScreen)
+    private lazy var discoverCache = cacheFactory.getCacheModule(from: .discoverScreen)
 
     /// # Router
     private lazy var router = Router()
@@ -40,8 +41,7 @@ final class NetworkManager: Requestable {
                 if let error = error { completion(.failure(error)) }
 
                 if case .failure(let msg) = httpResponse {
-                    print("senku [DEBUG] \(String(describing: type(of: self))) - ACError: \(msg)")
-                    // TODO: Handle failure message
+                    print("senku [❌] \(String(describing: type(of: self))) - ACError: \(msg)")
                 }
             }
         }
@@ -84,6 +84,12 @@ final class NetworkManager: Requestable {
                 return endpoint
             case .user(let endpoint):
                 return endpoint
+            case .season(let endpoint):
+                return endpoint
+            case .promo(let endpoint):
+                return endpoint
+            case .top(let endpoint):
+                return endpoint
         }
     }
 
@@ -95,6 +101,8 @@ final class NetworkManager: Requestable {
                 return newAnimeCache
             case .calendarScreen:
                 return calendarCache
+            case .discoverScreen:
+                return discoverCache
         }
     }
 }

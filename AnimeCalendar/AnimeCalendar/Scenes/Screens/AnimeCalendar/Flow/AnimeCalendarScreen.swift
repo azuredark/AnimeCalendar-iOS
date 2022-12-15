@@ -37,6 +37,7 @@ extension AnimeCalendarScreen {
 // MARK: - Screen config
 extension AnimeCalendarScreen {
     func configureScreen() {
+        view.backgroundColor = Color.cream
         configureNavigationItems()
     }
 }

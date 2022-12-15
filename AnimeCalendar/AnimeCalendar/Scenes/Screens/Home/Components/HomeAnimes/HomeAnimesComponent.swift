@@ -15,28 +15,15 @@ final class HomeAnimesComponent: UIViewController, ScreenComponent {
     @IBOutlet private weak var animesCollection: UICollectionView!
 
     // TODO: Add differente animes to the sequence (With bindings) so it can simulate managing data from the Network Provider
-    /// # Observables
-    private let animesDummy: [HomeAnime] =
-        [
-            HomeAnime(name: "Spy x Family", cover: "www"),
-            HomeAnime(name: "Dr. Stone", cover: "www"),
-        ]
-
-    var animes: [JikanAnime] = []
-    private let animesDriver: Driver<[JikanAnime]>
-
-    private lazy var animesObservable: Observable<[HomeAnime]> = Observable.create { [unowned self] observer in
-        observer.onNext(self.animesDummy)
-        observer.onCompleted()
-        return Disposables.create()
-    }
+    var animes: [Anime] = []
+    private let animesDriver: Driver<[Anime]>
 
     // Flag to pass for the AnimateItem
     let componentDidAppear: BehaviorSubject<Bool> = BehaviorSubject(value: false)
 
     let disposeBag = DisposeBag()
 
-    init(animes: Driver<[JikanAnime]>) {
+    init(animes: Driver<[Anime]>) {
         self.animesDriver = animes
         super.init(nibName: Xibs.homeAnimesComponentView, bundle: Bundle.main)
     }
@@ -93,7 +80,6 @@ extension HomeAnimesComponent: Bindable {
         animesDriver
             .drive(onNext: { [weak self] animes in
                 guard let strongSelf = self else { return }
-                print("senku [DEBUG] \(String(describing: type(of: self))) - animes: \(animes.map { $0.title })")
                 strongSelf.animes = animes
                 strongSelf.animesCollection.reloadData()
             }).disposed(by: disposeBag)
@@ -132,7 +118,7 @@ extension HomeAnimesComponent: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Xibs.homeAnimeItemView, for: indexPath) as? HomeAnimeItem else {
             fatalError("ACError - [HomeAnimesComponent] Error dequeing cell")
         }
-        let anime: JikanAnime = animes[indexPath.item]
+        let anime: Anime = animes[indexPath.item]
         cell.setupItem(with: anime)
         return cell
     }

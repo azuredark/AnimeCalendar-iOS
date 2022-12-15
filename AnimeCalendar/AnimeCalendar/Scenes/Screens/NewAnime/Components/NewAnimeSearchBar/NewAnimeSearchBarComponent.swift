@@ -85,7 +85,7 @@ extension NewAnimeSearchBarComponent: Bindable {
     func bindSearchResult() {
         presenter?.searchAnimeResult
             .drive(onNext: { animes in
-                print("senku [DEBUG] \(String(describing: type(of: self))) - animes found: \(animes.map {$0.title})")
+                print("senku [DEBUG] \(String(describing: type(of: self))) - animes found: \(animes.map {$0.titleOrg})")
             })
             .disposed(by: disposeBag)
     }

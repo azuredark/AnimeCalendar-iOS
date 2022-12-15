@@ -36,10 +36,14 @@ private extension NewScheduledAnimeButton {
         button.setImage(image, for: .normal)
         button.backgroundColor = Color.pink
         button.tintColor = Color.white
-
-        // Button shadow
-        let shadow = Shadow(radius: 3, offset: CGSize(width: -0.5, height: 5), opacity: 0.8, color: Color.pink)
-        button.addShadowLayer(shadow: shadow, layerRadius: 15)
+        
+        let shadow = ShadowBuilder().getTemplate(type: .bottom)
+            .with(color: Color.pink)
+            .with(cornerRadius: 15.0)
+            .with(blur: 3.0)
+            .with(opacity: 0.8)
+            .build()
+        button.addButtonShadow(shadow: shadow)
 
         // Add as subview
         tabBarView.addSubview(button)

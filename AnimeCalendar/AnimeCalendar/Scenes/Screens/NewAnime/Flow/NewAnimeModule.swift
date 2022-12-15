@@ -13,7 +13,7 @@ final class NewAnimeModule {
 
     // MARK: Initializers
     init(animeRepository: AnimeRepository) {
-        let interactor = NewAnimeInteractor(animeRepository: animeRepository)
+        let interactor = NewAnimeInteractor(repository: animeRepository)
         let router = NewAnimeRouter()
         self.presenter = NewAnimePresenter(interactor: interactor, router: router)
     }

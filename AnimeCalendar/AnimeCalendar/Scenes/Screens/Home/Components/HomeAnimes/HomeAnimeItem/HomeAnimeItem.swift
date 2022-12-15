@@ -19,13 +19,14 @@ final class HomeAnimeItem: UICollectionViewCell {
     @IBOutlet private weak var episodeProgressBarView: UIView!
 
     /// # Data Source
-    private var anime: JikanAnime?
+    private var anime: Anime?
 
     /// # Observables
     private let disposeBag = DisposeBag()
 
     /// # Style
     private let cornerRadius: CGFloat = 15
+    private var hasShadow: Bool = false
 }
 
 // MARK: Awake from Xib
@@ -43,13 +44,13 @@ extension HomeAnimeItem {
 
 // MARK: Setup cell
 extension HomeAnimeItem: ComponentCollectionItem {
-    func setupItem(with item: JikanAnime) {
+    func setupItem(with item: Anime) {
         self.anime = item
-        animeTitle.text = item.title
+        animeTitle.text = item.titleEng
 
         // TODO: Clean this up ... add caching ...
         let httpSession = URLSession(configuration: .default)
-        let imagePath: String = item.imageType.jpgImage.normal
+        let imagePath: String = item.imageType.jpgImage.large
         guard let url = URL(string: imagePath) else { return }
         let httpRequest = URLRequest(url: url)
         let httpTask = httpSession.dataTask(with: httpRequest) { [weak self] data, _, error in
@@ -60,6 +61,7 @@ extension HomeAnimeItem: ComponentCollectionItem {
         }
         httpTask.resume()
 
+//        configureCoverViewShadow()
         updateEpisodeProgress()
     }
 }
@@ -75,27 +77,43 @@ extension HomeAnimeItem: Component {
     }
 
     func configureSubviews() {
-        configurePictureView()
-        configurePictureImage()
+        configureContainer()
+        configureCoverView()
+        configureCoverImageView()
     }
 }
 
 extension HomeAnimeItem: ComponentItem {
     func configureInitialState() {
-        contentView.backgroundColor = Color.white
-        animeCoverView.backgroundColor = Color.white
+        contentView.backgroundColor = .clear
+        animeCoverView.backgroundColor = .clear
     }
 }
 
-extension HomeAnimeItem {
-    func configurePictureView() {
-        let animeCoverShadow = Shadow(.bottom)
-        animeCoverView.addBottomShadow(shadow: animeCoverShadow, layerRadius: cornerRadius)
+private extension HomeAnimeItem {
+    func configureContainer() {
+        animeContainerView.backgroundColor = Color.white
+        animeContainerView.addCornerRadius(radius: cornerRadius)
     }
 
-    func configurePictureImage() {
+    func configureCoverView() {
+    }
+
+    func configureCoverImageView() {
         animeCoverPicture.addCornerRadius(radius: cornerRadius)
-        animeContainerView.addCornerRadius(radius: cornerRadius)
+    }
+
+    func configureCoverViewShadow() {
+        if !hasShadow {
+            animeCoverView.setNeedsLayout()
+            animeCoverView.layoutIfNeeded()
+            let shadow = ShadowBuilder().getTemplate(type: .bottom)
+                .with(opacity: 0.25)
+                .with(cornerRadius: cornerRadius)
+                .build()
+            animeCoverView.addShadow(with: shadow)
+            hasShadow = true
+        }
     }
 }
 

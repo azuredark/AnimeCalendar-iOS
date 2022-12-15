@@ -7,90 +7,90 @@
 
 import Foundation
 
-protocol Model {}
+struct AnimeResult: Decodable {
+    var data: [Anime] = []
 
-struct Anime: Decodable, Model {
-    var name: String
-    var cover: String
-    var rating: Float
-    var episodesCount: Int
-    var year: Int
-    var synopsis: String
-    var genres: [AnimeGenre]
-    var onAir: Bool
-
-    init(name: String, cover: String, rating: Float, episodesCount: Int, year: Int, synopsis: String, genres: [AnimeGenre], onAir: Bool) {
-        self.name = name
-        self.cover = cover
-        self.rating = rating
-        self.episodesCount = episodesCount
-        self.year = year
-        self.synopsis = synopsis
-        self.genres = genres
-        self.onAir = onAir
+    // MARK: Parameter mapping
+    enum CodingKeys: String, CodingKey {
+        case data
     }
 
-    // Default anime
+    // MARK: Decoding Technique
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        data = try container.decodeIfPresent([Anime].self, forKey: .data) ?? [Anime]()
+    }
+
+    // MARK: Initializers
     init() {
-        self.init(
-            name: "Komi can't communicate",
-            cover: "new-anime-item-komicantcommunicate",
-            rating: 8.5,
-            episodesCount: 12,
-            year: 2021,
-            synopsis: "Hitohito Tadano is an ordinary boy who heads into his first day of high school with a clear plan: to avoid trouble and do his best to blend in with others. Unfortunately, he fails right away when he takes the seat beside the school's madonna—Shouko Komi. His peers now recognize him as someone to eliminate for a chance to sit next to the most beautiful girl in class",
-            genres: [
-                AnimeGenre(name: "Comedy"),
-                AnimeGenre(name: "Romantic"),
-                AnimeGenre(name: "School")
-            ],
-            onAir: false
-        )
-    }
-
-    init(name: String, cover: String, onAir: Bool = false) {
-        self.init(
-            name: name,
-            cover: cover,
-            rating: 8.5,
-            episodesCount: 12,
-            year: 2021,
-            synopsis: "Hitohito Tadano is an ordinary boy who heads into his first day of high school with a clear plan: to avoid trouble and do his best to blend in with others. Unfortunately, he fails right away when he takes the seat beside the school's madonna—Shouko Komi. His peers now recognize him as someone to eliminate for a chance to sit next to the most beautiful girl in class",
-            genres: [
-                AnimeGenre(name: "Comedy"),
-                AnimeGenre(name: "Romantic"),
-                AnimeGenre(name: "School")
-            ],
-            onAir: onAir
-        )
+        self.data = [Anime]()
     }
 }
 
-struct JikanAnime: Decodable {
-    var title: String
+struct Anime: Decodable, Hashable {
+    var uuid = UUID()
+    var id: Int
+    var titleOrg: String
+    var titleEng: String
     var imageType: AnimeImageType
     var malURL: String
     var synopsis: String
+    var episodesCount: Int
+    var score: CGFloat
+    var rank: Int
 
+    // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
-        case title, synopsis
-        case malURL = "url"
-        case imageType = "images"
+        case id            = "mal_id"
+        case titleOrg      = "title"
+        case titleEng      = "title_english"
+        case malURL        = "url"
+        case imageType     = "images"
+        case synopsis
+        case episodesCount = "episodes"
+        case score
+        case rank
     }
 
+    // MARK: Decoding Technique
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        title = try container.decode(String.self, forKey: .title)
+        id = try container.decode(Int.self, forKey: .id)
+        titleOrg = try container.decode(String.self, forKey: .titleOrg)
+        titleEng = try container.decodeIfPresent(String.self, forKey: .titleEng) ?? titleOrg
         malURL = try container.decodeIfPresent(String.self, forKey: .malURL) ?? ""
         imageType = try container.decode(AnimeImageType.self, forKey: .imageType)
         synopsis = try container.decodeIfPresent(String.self, forKey: .synopsis) ?? ""
+        episodesCount = try container.decodeIfPresent(Int.self, forKey: .episodesCount) ?? 0
+        score = try container.decodeIfPresent(CGFloat.self, forKey: .score) ?? 0
+        rank = try container.decodeIfPresent(Int.self, forKey: .rank) ?? 0
     }
-    
+
+    // MARK: Initializers
     init() {
-        self.title = ""
+        self.id = 69
+        self.titleEng = ""
+        self.titleOrg = ""
         self.imageType = AnimeImageType()
         self.malURL = ""
         self.synopsis = ""
+        self.episodesCount = 0
+        self.score = 0
+        self.rank = 0
+    }
+    
+    // MARK: IMPORTANT: UUID is used due to repeated ids in the SeasonAnime & TopAnime sections, as the airing anime could also appear on the top.
+
+    // MARK: Hashable
+    func hash(into hasher: inout Hasher) {
+//        hasher.combine(id)
+        hasher.combine(uuid)
+    }
+
+    // MARK: Equatable
+    static func == (lhs: Anime, rhs: Anime) -> Bool {
+//        return lhs.id == rhs.id
+        return lhs.uuid == rhs.uuid
     }
 }
 
@@ -98,17 +98,20 @@ struct AnimeImageType: Decodable {
     var jpgImage: AnimeImage
     var webpImage: AnimeImage
 
+    // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
         case jpgImage = "jpg"
         case webpImage = "webp"
     }
 
+    // MARK: Decoding Technique
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         jpgImage = try container.decodeIfPresent(AnimeImage.self, forKey: .jpgImage) ?? AnimeImage()
         webpImage = try container.decodeIfPresent(AnimeImage.self, forKey: .webpImage) ?? AnimeImage()
     }
-    
+
+    // MARK: Initializers
     init() {
         self.jpgImage = AnimeImage()
         self.webpImage = AnimeImage()
@@ -120,12 +123,14 @@ struct AnimeImage: Decodable {
     var normal: String
     var large: String
 
+    // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
         case small = "small_image_url"
         case normal = "image_url"
         case large = "large_image_url"
     }
 
+    // MARK: Decoding Technique
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         small = try container.decodeIfPresent(String.self, forKey: .small) ?? ""
@@ -133,18 +138,10 @@ struct AnimeImage: Decodable {
         large = try container.decodeIfPresent(String.self, forKey: .large) ?? ""
     }
 
+    // MARK: Initializers
     init() {
         self.small = "JPG ERROR"
         self.normal = "JPG ERROR"
         self.large = "JPG ERROR"
-    }
-}
-
-struct JikanAnimeResult: Decodable {
-    // If decoding fails, this might be why lol
-    var data: [JikanAnime] = []
-
-    enum CodingKeys: String, CodingKey {
-        case data
     }
 }
