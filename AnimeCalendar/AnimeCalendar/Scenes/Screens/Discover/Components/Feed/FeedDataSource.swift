@@ -34,19 +34,22 @@ final class FeedDataSource {
 
     // MARK: Provider
     private func buildDataSource() {
-        let seasonAnimeCell = UICollectionView.CellRegistration<SeasonAnimeCell, Anime> { [weak self] cell, _, anime in
+        let seasonAnimeCell = UICollectionView.CellRegistration<SeasonAnimeCell, Anime> {
+            [weak self] cell, _, anime in
             cell.anime = anime
             cell.presenter = self?.presenter
             cell.setup()
         }
 
-        let promoAnimeCell = UICollectionView.CellRegistration<PromoAnimeCell, Promo> { [weak self] cell, _, promo in
+        let promoAnimeCell = UICollectionView.CellRegistration<PromoAnimeCell, Promo> {
+            [weak self] cell, _, promo in
             cell.promo = promo
             cell.presenter = self?.presenter
             cell.setup()
         }
 
-        let topAnimeCell = UICollectionView.CellRegistration<TopAnimeCell, Anime> { [weak self] cell, indexPath, anime in
+        let topAnimeCell = UICollectionView.CellRegistration<TopAnimeCell, Anime> {
+            [weak self] cell, indexPath, anime in
             cell.anime = anime
             cell.index = indexPath.row + 1
             cell.presenter = self?.presenter

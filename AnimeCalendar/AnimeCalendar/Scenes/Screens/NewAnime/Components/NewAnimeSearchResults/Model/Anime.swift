@@ -38,6 +38,8 @@ struct Anime: Decodable, Hashable {
     var episodesCount: Int
     var score: CGFloat
     var rank: Int
+    var year: Int
+    var members: Int
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -50,6 +52,8 @@ struct Anime: Decodable, Hashable {
         case episodesCount = "episodes"
         case score
         case rank
+        case year
+        case members
     }
 
     // MARK: Decoding Technique
@@ -62,8 +66,10 @@ struct Anime: Decodable, Hashable {
         imageType = try container.decode(AnimeImageType.self, forKey: .imageType)
         synopsis = try container.decodeIfPresent(String.self, forKey: .synopsis) ?? ""
         episodesCount = try container.decodeIfPresent(Int.self, forKey: .episodesCount) ?? 0
-        score = try container.decodeIfPresent(CGFloat.self, forKey: .score) ?? 0
+        score = try container.decodeIfPresent(CGFloat.self, forKey: .score) ?? -1
         rank = try container.decodeIfPresent(Int.self, forKey: .rank) ?? 0
+        year = try container.decodeIfPresent(Int.self, forKey: .year) ?? 0
+        members = try container.decodeIfPresent(Int.self, forKey: .members) ?? -1
     }
 
     // MARK: Initializers
@@ -77,19 +83,19 @@ struct Anime: Decodable, Hashable {
         self.episodesCount = 0
         self.score = 0
         self.rank = 0
+        self.year = 0
+        self.members = 0
     }
     
     // MARK: IMPORTANT: UUID is used due to repeated ids in the SeasonAnime & TopAnime sections, as the airing anime could also appear on the top.
 
     // MARK: Hashable
     func hash(into hasher: inout Hasher) {
-//        hasher.combine(id)
         hasher.combine(uuid)
     }
 
     // MARK: Equatable
     static func == (lhs: Anime, rhs: Anime) -> Bool {
-//        return lhs.id == rhs.id
         return lhs.uuid == rhs.uuid
     }
 }

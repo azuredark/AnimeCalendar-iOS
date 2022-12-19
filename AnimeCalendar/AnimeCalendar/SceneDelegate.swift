@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         /// - .calendar
         /// - .discover
         /// i.e.: bootManager.getRootController(.rootScreen(screen: .discoverScreen))
-        let rootController = bootManager.getRootController(.rootScreen(screen: .discoverScreen))
+        let rootController = bootManager.getRootController(.rootTabBar)
         let rootViewController = rootController.getRootViewController()
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)

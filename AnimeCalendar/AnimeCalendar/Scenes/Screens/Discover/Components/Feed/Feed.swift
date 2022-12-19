@@ -181,6 +181,7 @@ extension Feed: Bindable {
         let topAnimeFeed = discoverFeed.topAnime
         topAnimeFeed.driver.drive { [weak self] animes in
             guard let strongSelf = self else { return }
+            print("senku [DEBUG] \(String(describing: type(of: self))) - animes episodes: \(animes.map { $0.episodesCount })")
             strongSelf.dataSource.updateSnapshot(for: topAnimeFeed.section, with: animes, animating: true)
         }.disposed(by: disposeBag)
     }

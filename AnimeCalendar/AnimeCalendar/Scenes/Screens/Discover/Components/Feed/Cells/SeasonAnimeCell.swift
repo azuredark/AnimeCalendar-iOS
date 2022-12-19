@@ -72,11 +72,11 @@ private extension SeasonAnimeCell {
     func createTag(tag: AnimeTag) -> AnimeCellTag {
         switch tag {
             case .episodes(let value):
-                let icon = UIImage(systemName: "tv.fill")!.withRenderingMode(.alwaysTemplate)
+                let icon = ACIcon.tvFilled.withRenderingMode(.alwaysTemplate)
                 let config = AnimeCellTag.Config(iconImage: icon, iconText: "\(value)")
                 return AnimeCellTag(config: config)
             case .score(let value):
-                let icon = UIImage(systemName: "star.fill")!.withRenderingMode(.alwaysTemplate)
+                let icon = ACIcon.starFilled.withRenderingMode(.alwaysTemplate)
                 let config = AnimeCellTag.Config(iconImage: icon, iconText: "\(value)")
                 return AnimeCellTag(config: config)
             case .rank(let value):
@@ -139,8 +139,8 @@ private extension SeasonAnimeCell {
     }
 
     func alignTag(_ tag: AnimeCellTag, tagsCount: Int, position: TagPosition, _ completion: ((AnimeCellTag) -> Void)? = nil) {
-        let hasOneTag: Bool = (tagsCount == 1)
-        let hasTwoTag: Bool = (tagsCount == 2)
+        let hasOneTag: Bool   = (tagsCount == 1)
+        let hasTwoTag: Bool   = (tagsCount == 2)
         let hasThreeTag: Bool = (tagsCount == 3)
 
         switch position {

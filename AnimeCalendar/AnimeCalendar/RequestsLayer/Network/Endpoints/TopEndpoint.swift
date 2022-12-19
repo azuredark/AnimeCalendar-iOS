@@ -7,7 +7,7 @@
 
 import Foundation
 
-//
+// https://api.jikan.moe/v4/top/anime?order_by=rank&page=1
 
 enum TopEndpoint: Equatable {
     case getTopAnime(orderBy: AnimeOrderType, page: Int)

@@ -46,7 +46,7 @@ extension UIView {
         mask.path = path.cgPath
         layer.mask = mask
     }
-    
+
     // TODO: Currently not working, the content dissappears :(
     typealias CornerRadiuses = (min: CGFloat, max: CGFloat)
     /// Adds 2 different corner radius to the view.
@@ -58,17 +58,17 @@ extension UIView {
     func addCornerRadius(radiuses: CornerRadiuses, at corners: UIRectCorner) {
         // Apply the smallest to all of the edges
         self.layer.cornerRadius = radiuses.min
-        
+
         /// Path with the max radius applied to the specified corners
         let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radiuses.max, height: 0))
-        
+
         /// Shape layer
         let mask = CAShapeLayer()
         mask.path = path.cgPath
-        
+
         layer.mask = mask
     }
-    
+
     func addShadowForImageView(shadow: Shadow, fillColor: UIColor) {
         let shadowLayer = CAShapeLayer()
         shadowLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: shadow.cornerRadius).cgPath
@@ -131,7 +131,7 @@ extension UIView {
                     ])
             }
         }
-        
+
         return blurView
     }
 
@@ -142,6 +142,14 @@ extension UIView {
             topAnchor.constraint(equalTo: view.topAnchor),
             bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+
+    /// Adds multiple subviews to the current view.
+    func addSubViews(_ views: UIView...) {
+        views.forEach { [weak self] view in
+            guard let self = self else { return }
+            self.addSubview(view)
+        }
     }
 }
 
