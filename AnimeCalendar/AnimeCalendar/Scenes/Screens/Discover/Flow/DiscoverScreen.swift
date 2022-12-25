@@ -137,7 +137,7 @@ private extension DiscoverScreen {
             feedCollection.leadingAnchor.constraint(equalTo: screenContainer.leadingAnchor),
             feedCollection.trailingAnchor.constraint(equalTo: screenContainer.trailingAnchor),
             feedCollection.topAnchor.constraint(equalTo: searchbBar.bottomAnchor, constant: yInset),
-            feedCollection.bottomAnchor.constraint(equalTo: screenContainer.bottomAnchor, constant: -yInset)
+            feedCollection.bottomAnchor.constraint(equalTo: screenContainer.bottomAnchor)
         ])
     }
 }

@@ -108,7 +108,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
         return label
     }()
 
-    private lazy var animeGenresLabel: UILabel = {
+    private lazy var genresLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Color.cream
@@ -127,7 +127,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
         engTitleLabel.text = nil
         detailStack.reset()
         japTilteLabel.text = nil
-        animeGenresLabel.text = nil
+        genresLabel.text = nil
     }
 
     #warning("Rank should be related to the id")
@@ -141,7 +141,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
         setupTitleLabel()
         setupAnimeDetail()
         setupJapTitleLabel()
-        setupAnimeGenresLabel()
+        setupGenresLabel()
     }
 }
 
@@ -173,8 +173,9 @@ private extension TopAnimeCell {
         japTilteLabel.text = anime?.titleOrg
     }
 
-    func setupAnimeGenresLabel() {
-        animeGenresLabel.text = "Action, Adventure, Drama & Fantasy"
+    func setupGenresLabel() {
+        let genres: [String]? = anime?.genres.map { $0.name }
+        genresLabel.text = genres?.formatList(by: ",", endSeparator: "&")
     }
 }
 
@@ -277,13 +278,17 @@ private extension TopAnimeCell {
 
     func layoutJapTitleLabel() {
         titleContainer.addArrangedSubview(japTilteLabel)
+        
+        if let superView = self.genresLabel.superview as? UIStackView {
+           // Add custom spacing
+        }
     }
 
     func layoutGenreLabel() {
         NSLayoutConstraint.activate([
-            animeGenresLabel.leadingAnchor.constraint(equalTo: infoContainer.leadingAnchor),
-            animeGenresLabel.trailingAnchor.constraint(lessThanOrEqualTo: infoContainer.trailingAnchor),
-            animeGenresLabel.bottomAnchor.constraint(equalTo: infoContainer.bottomAnchor)
+            genresLabel.leadingAnchor.constraint(equalTo: infoContainer.leadingAnchor),
+            genresLabel.trailingAnchor.constraint(lessThanOrEqualTo: infoContainer.trailingAnchor),
+            genresLabel.bottomAnchor.constraint(equalTo: infoContainer.bottomAnchor)
         ])
     }
 }

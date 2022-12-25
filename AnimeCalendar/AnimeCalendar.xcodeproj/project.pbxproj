@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		A70FF51428238E42007D4F64 /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FF51328238E42007D4F64 /* NSLayoutConstraint+Extension.swift */; };
 		A70FF51628239D77007D4F64 /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FF51528239D77007D4F64 /* Constraints.swift */; };
-		A7231B0129569EAF0039A058 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7231B0029569EAF0039A058 /* String+Extension.swift */; };
+		A7231B0129569EAF0039A058 /* String+RegexFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7231B0029569EAF0039A058 /* String+RegexFilter.swift */; };
+		A7263D672957FA9A00FD5DFE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7263D662957FA9A00FD5DFE /* String+Extension.swift */; };
 		A731E003281D12FA00036077 /* Xibs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A731E002281D12FA00036077 /* Xibs.swift */; };
 		A731E005281D13EE00036077 /* AnimeCalendarScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A731E004281D13EE00036077 /* AnimeCalendarScreenView.xib */; };
 		A731E007281D140200036077 /* NewAnimeScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A731E006281D140200036077 /* NewAnimeScreenView.xib */; };
@@ -156,7 +157,8 @@
 		28ADD1CAD4B24F96213C086B /* Pods_AnimeCalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AnimeCalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70FF51328238E42007D4F64 /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 		A70FF51528239D77007D4F64 /* Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
-		A7231B0029569EAF0039A058 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		A7231B0029569EAF0039A058 /* String+RegexFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RegexFilter.swift"; sourceTree = "<group>"; };
+		A7263D662957FA9A00FD5DFE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A731E002281D12FA00036077 /* Xibs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xibs.swift; sourceTree = "<group>"; };
 		A731E004281D13EE00036077 /* AnimeCalendarScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimeCalendarScreenView.xib; sourceTree = "<group>"; };
 		A731E006281D140200036077 /* NewAnimeScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeScreenView.xib; sourceTree = "<group>"; };
@@ -984,7 +986,8 @@
 				A70FF51328238E42007D4F64 /* NSLayoutConstraint+Extension.swift */,
 				A7339F4C2876558000A000DB /* ScreenComponent+Extension.swift */,
 				A77AD118293065DE00299F33 /* UIButton+Extension.swift */,
-				A7231B0029569EAF0039A058 /* String+Extension.swift */,
+				A7231B0029569EAF0039A058 /* String+RegexFilter.swift */,
+				A7263D662957FA9A00FD5DFE /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1138,7 +1141,7 @@
 				A7E44A912829CAB7005C0AB5 /* RootControllerType.swift in Sources */,
 				A74F986428161279003A1073 /* NetworkManager.swift in Sources */,
 				A7FDF60E281E038D006057D7 /* UIViewController+Extension.swift in Sources */,
-				A7231B0129569EAF0039A058 /* String+Extension.swift in Sources */,
+				A7231B0129569EAF0039A058 /* String+RegexFilter.swift in Sources */,
 				A7A883D22841F94E00DA8AAE /* UIImageView+Extension.swift in Sources */,
 				A74F986A2816129D003A1073 /* CacheManager.swift in Sources */,
 				A76FFA1B290F22FE007209E8 /* CalendarInteractor.swift in Sources */,
@@ -1218,6 +1221,7 @@
 				A76FFA19290F22E3007209E8 /* CalendarModule.swift in Sources */,
 				A7AAAA30283C8A1700878BEC /* NewAnimeSearchResultsComponent.swift in Sources */,
 				A73A817A2931EF6A00B25EBC /* Promo.swift in Sources */,
+				A7263D672957FA9A00FD5DFE /* String+Extension.swift in Sources */,
 				A76FFA0A290F18E5007209E8 /* LocalManager.swift in Sources */,
 				A764DC2928BF14ED005A68B0 /* JSONParameterEncoder.swift in Sources */,
 				A7E44A952829CB37005C0AB5 /* RootControllerFactory.swift in Sources */,

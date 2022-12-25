@@ -15,6 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let bootManager = BootManager()
         
         /// Bootable screens
+        ///
+        /// Every new screen created **must** conform to **RootViewController** and be added to the **ScreenFactory** class in order by be *bootable* from. As the project grows, modules should start to become as independant as possible.
+        ///
         /// .rootTabBar (Main, for intializing all the app's modules)
         /// i.e.: bootManager.getRootController(.rootTabBar)
         /// Screen types (Directly load a specific module only):
@@ -24,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         /// - .discover
         /// i.e.: bootManager.getRootController(.rootScreen(screen: .discoverScreen))
         let rootController = bootManager.getRootController(.rootScreen(screen: .discoverScreen))
-        let rootViewController = rootController.getRootViewController()
+        let rootViewController: UIViewController = rootController.getRootViewController()
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
