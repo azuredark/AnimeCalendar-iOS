@@ -25,7 +25,7 @@ final class NewAnimeSearchResultItem: UICollectionViewCell {
 
     /// # Observables
     private let animeObservable = PublishSubject<Anime>()
-    private var searchResultAnimeGenre = PublishSubject<[AnimeGenre]>()
+    private var searchResultAnimeGenre = PublishSubject<[AnimeGenreOld]>()
     weak var presenter: NewAnimePresentable?
 
     private var disposeBag = DisposeBag()

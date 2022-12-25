@@ -8,6 +8,7 @@
 import Foundation
 
 struct AnimeResult: Decodable {
+    // MARK: Parameters
     var data: [Anime] = []
 
     // MARK: Parameter mapping
@@ -28,6 +29,7 @@ struct AnimeResult: Decodable {
 }
 
 struct Anime: Decodable, Hashable {
+    // MARK: Parameters
     var uuid = UUID()
     var id: Int
     var titleOrg: String
@@ -40,6 +42,7 @@ struct Anime: Decodable, Hashable {
     var rank: Int
     var year: Int
     var members: Int
+    var genres: [AnimeGenre]
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -54,6 +57,7 @@ struct Anime: Decodable, Hashable {
         case rank
         case year
         case members
+        case genres
     }
 
     // MARK: Decoding Technique
@@ -70,6 +74,7 @@ struct Anime: Decodable, Hashable {
         rank = try container.decodeIfPresent(Int.self, forKey: .rank) ?? 0
         year = try container.decodeIfPresent(Int.self, forKey: .year) ?? 0
         members = try container.decodeIfPresent(Int.self, forKey: .members) ?? -1
+        genres = try container.decodeIfPresent([AnimeGenre].self, forKey: .genres) ?? [AnimeGenre]()
     }
 
     // MARK: Initializers
@@ -85,8 +90,9 @@ struct Anime: Decodable, Hashable {
         self.rank = 0
         self.year = 0
         self.members = 0
+        self.genres = [AnimeGenre]()
     }
-    
+
     // MARK: IMPORTANT: UUID is used due to repeated ids in the SeasonAnime & TopAnime sections, as the airing anime could also appear on the top.
 
     // MARK: Hashable
@@ -101,6 +107,7 @@ struct Anime: Decodable, Hashable {
 }
 
 struct AnimeImageType: Decodable {
+    // MARK: Parameters
     var jpgImage: AnimeImage
     var webpImage: AnimeImage
 
@@ -125,6 +132,7 @@ struct AnimeImageType: Decodable {
 }
 
 struct AnimeImage: Decodable {
+    // MARK: Parameters
     var small: String
     var normal: String
     var large: String
@@ -149,5 +157,34 @@ struct AnimeImage: Decodable {
         self.small = "JPG ERROR"
         self.normal = "JPG ERROR"
         self.large = "JPG ERROR"
+    }
+}
+
+struct AnimeGenre: Decodable {
+    // MARK: Parameters
+    var id: Int
+    var name: String
+    var url: String
+
+    // MARK: Parameter mapping
+    enum CodingKeys: String, CodingKey {
+        case id = "mal_id"
+        case name
+        case url
+    }
+
+    // MARK: Decoding Technique
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        self.url = try container.decodeIfPresent(String.self, forKey: .url) ?? ""
+    }
+
+    // MARK: Initializers
+    init() {
+        self.id = 0
+        self.name = "DEFAULT_NAME"
+        self.url = "DEFAULT_URL"
     }
 }

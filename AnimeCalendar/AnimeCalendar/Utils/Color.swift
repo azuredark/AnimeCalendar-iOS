@@ -17,6 +17,7 @@ public enum Color {
   static var black: UIColor { UIColor(named: "App Black")! }
   static var white: UIColor { UIColor(named: "App White")! }
   static var placeholder: UIColor { UIColor(named: "App Placeholder")! }
+  static var subtitle: UIColor { UIColor(named: "App Subtitle")! }
 }
 
 private extension Color {

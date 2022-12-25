@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AnimeGenre: Decodable {
+struct AnimeGenreOld: Decodable {
   var name: String
 
   init(name: String) {

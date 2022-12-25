@@ -15,11 +15,11 @@ final class NewAnimeSearchResultGenreItem: UICollectionViewCell {
     @IBOutlet private weak var genreView: UIView!
 
     /// # Observables
-    private var animeGenre = PublishSubject<AnimeGenre>()
+    private var animeGenre = PublishSubject<AnimeGenreOld>()
     private var disposeBag = DisposeBag()
     
     /// # Data Source
-    var genre: AnimeGenre? {
+    var genre: AnimeGenreOld? {
         didSet {
             guard let genre = self.genre else { return }
             animeGenre.onNext(genre)
@@ -35,7 +35,7 @@ extension NewAnimeSearchResultGenreItem {
 }
 
 extension NewAnimeSearchResultGenreItem: ComponentCollectionItem {
-    func setupItem(with item: AnimeGenre) {}
+    func setupItem(with item: AnimeGenreOld) {}
 }
 
 extension NewAnimeSearchResultGenreItem: Component {

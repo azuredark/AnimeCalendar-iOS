@@ -16,7 +16,6 @@ final class ACStack: UIStackView {
          frame: CGRect = .zero) {
         super.init(frame: frame)
         self.axis = axis
-        self.contentMode = .center
         self.alignment = .center
         self.spacing = 2.0
     }
