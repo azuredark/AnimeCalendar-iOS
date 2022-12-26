@@ -32,6 +32,11 @@ final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
     private let seasonAnimeObservable = BehaviorRelay<[Anime]>(value: [])
     private let recentPromosAnimeObservable = BehaviorRelay<[Promo]>(value: [])
     private let topAnimeObservable = BehaviorRelay<[Anime]>(value: [])
+    
+    /// # Initalizers
+    init(repository: AnimeRepository) {
+        super.init(repository: repository, screen: .discoverScreen)
+    }
 }
 
 extension DiscoverInteractor: DiscoverInteractive {

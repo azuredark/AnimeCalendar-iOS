@@ -11,15 +11,17 @@ import UIKit
 class GenericInteractor<T: GenericRepository> {
     // MARK: State
     let repository: T
+    let screen: ScreenType
 
     // MARK: Initializers
-    init(repository: T) {
+    init(repository: T, screen: ScreenType) {
         self.repository = repository
+        self.screen = screen
     }
 
     // MARK: Methods
     func getImageResource(path: String, completion: @escaping (UIImage) -> Void) {
-        repository.getResource(in: .newAnimeScreen, path: path) { data in
+        repository.getResource(in: screen, path: path) { data in
             if let data = data {
                 completion(UIImage(data: data) ?? UIImage(named: "new-anime-item-drstone")!)
                 return
