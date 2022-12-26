@@ -9,13 +9,6 @@ import Foundation
 
 final class NetworkManager: Requestable {
     // MARK: State
-    /// # Cache
-    private lazy var cacheFactory  = CacheFactory()
-    private lazy var homeCache     = cacheFactory.getCacheModule(from: .homeScreen)
-    private lazy var newAnimeCache = cacheFactory.getCacheModule(from: .newAnimeScreen)
-    private lazy var calendarCache = cacheFactory.getCacheModule(from: .calendarScreen)
-    private lazy var discoverCache = cacheFactory.getCacheModule(from: .discoverScreen)
-
     /// # Router
     private lazy var router = Router()
 
@@ -23,6 +16,7 @@ final class NetworkManager: Requestable {
     func makeRequest<T: Decodable>(_ model: T.Type, _ service: Service, _ completion: @escaping (Result<T?, Error>) -> Void) {
         let endpoint: EndpointType = getEndpoint(from: service)
 
+        #warning("Create custom Queues DON'T USER QOS, it's dog shit")
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let strongSelf = self else { return }
 
@@ -50,15 +44,15 @@ final class NetworkManager: Requestable {
     func makeResourceRequest(in screen: ScreenType, from path: String, _ completion: @escaping (Result<Data, Error>) -> Void) {
         /// Check if the path is empty
         guard !path.isEmpty else { completion(.failure(NetworkError.errorPathEmpty)); return }
-        
-        #warning("Shit ton of instances are being created of the cache wtf")
+
+        let cache = CacheManager.shared.getCache(from: screen)
+
         // Check for the resource in the cache first
-//        let cache: CacheManager = initializeCache(type: screen)
-//        if let cacheValue = cache.load(from: path), let unwrapped = cacheValue.value as? Data {
-//            completion(.success(unwrapped))
-//            print("senku [DEBUG] \(String(describing: type(of: self))) - FOUND IN CACHE")
-//            return
-//        }
+        if let cacheValue = cache?.load(from: path), let unwrapped = cacheValue.value as? Data {
+            completion(.success(unwrapped))
+            print("senku [DEBUG] \(String(describing: type(of: self))) - FOUND IN CACHE")
+            return
+        }
 
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let strongSelf = self else { completion(.failure(NetworkError.errorMissingURL)); return }
@@ -67,7 +61,7 @@ final class NetworkManager: Requestable {
             strongSelf.router.request(from: url) { data, response, error in
                 let httpResponse = strongSelf.handleHTTPResponse(response: response)
                 if case .success = httpResponse, let data = data {
-//                    cache.save(key: path, value: data)
+                    cache?.save(key: path, value: data)
                     completion(.success(data))
                 }
                 if let error = error { completion(.failure(error)) }
@@ -90,19 +84,6 @@ final class NetworkManager: Requestable {
                 return endpoint
             case .top(let endpoint):
                 return endpoint
-        }
-    }
-
-    private func initializeCache(type screenType: ScreenType) -> CacheManager {
-        switch screenType {
-            case .homeScreen:
-                return homeCache
-            case .newAnimeScreen:
-                return newAnimeCache
-            case .calendarScreen:
-                return calendarCache
-            case .discoverScreen:
-                return discoverCache
         }
     }
 }

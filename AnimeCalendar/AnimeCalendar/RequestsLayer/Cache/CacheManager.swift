@@ -7,13 +7,27 @@
 
 import Foundation
 
-final class CacheKey {
+// https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/Introspection/Introspection.html#//apple_ref/doc/uid/TP40010810-CH9-SW61
+// MARK: - Cache Wrappers
+/// Wrapper for NSCache **Key**.
+final class CacheKey: NSObject {
     let key: String
+
+    override var hash: Int { return key.hashValue }
+
     init(_ key: String) {
         self.key = key
     }
+
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let cacheKey = object as? CacheKey else {
+            return false
+        }
+        return cacheKey.key == self.key
+    }
 }
 
+/// Wrapper for NSCache **Value** hasahble model.
 final class CacheValue {
     let value: AnyHashable
     init(_ value: AnyHashable) {
@@ -21,91 +35,172 @@ final class CacheValue {
     }
 }
 
+// MARK: - Cache protocols & extensions
 /// # Docs.
 /// https://developer.apple.com/documentation/foundation/nscache
-class CacheManager: NSCache<CacheKey, CacheValue> {
-    // MARK: State
+protocol CacheManagable {
+    /// Retrieves a cache object **reference** from a specific screen.
+    /// - Parameter screen: ScreenType to retrieve cache from.
+    /// - Returns: ScreenCachable (Screen's cache) object reference.
+    func getCache(from screen: ScreenType) -> Cacheable?
 
-    // MARK: Initializers
-    init(name: String, maxCount: Int) {
-        // (Superclass) NSCache's Initialzier & properties
-        super.init()
-        self.name = name
-        self.countLimit = countLimit
-    }
+    /// Retrieves the cache object **reference** for External Resources (i.e.: Images).
+    /// - Returns: ScreenCachable (External Resource cache) object reference.
+    func getExternalResourceCache() -> Cacheable?
+}
 
-    // MARK: Methods
+protocol Cacheable {
+    /// NSCache data structure which holds hashable data accessed by *key*.
+    var storage: NSCache<CacheKey, CacheValue> { get }
+
+    /// NSCache name
+    var name: String { get }
+
+    /// NSCache limit
+    var countLimit: Int { get }
+
+    /// Configure/update cache storage settings
+    func configureStorageInitialSettings()
+
+    /// Updates the NSCache **max items capacity** limit
+    func updateLimit(to newLimit: Int)
+
     /// Save a cache value by a Key.
     /// - Parameter key: The key which locates the value.
     /// - Parameter value: The value to store under the Key
-    func save(key: String, value: AnyHashable) {
-        let cacheKey = CacheKey(key)
-        let cacheValue = CacheValue(value)
-        setObject(cacheValue, forKey: cacheKey)
-    }
-    
+    func save(key: String, value: AnyHashable)
+
     /// Load value from the cache.
     /// - Parameter key: The key which to look up for the value.
     /// - Returns: A CacheValue, the Cache's value for the key
+    func load(from key: String) -> CacheValue?
+
+    /// Deletes all cached values in **storage**
+    func deleteAllObjects()
+}
+
+extension Cacheable {
+    func save(key: String, value: AnyHashable) {
+        let cacheKey = CacheKey(key)
+        let cacheValue = CacheValue(value)
+        storage.setObject(cacheValue, forKey: cacheKey)
+    }
+
     func load(from key: String) -> CacheValue? {
         let cacheKey = CacheKey(key)
-        return object(forKey: cacheKey)
+        return storage.object(forKey: cacheKey)
+    }
+
+    func updateLimit(to newLimit: Int) {
+        storage.countLimit = newLimit
+    }
+
+    func deleteAllObjects() {
+        storage.removeAllObjects()
     }
 }
 
-protocol ScreenCacheable {
-    var cacheName: String { get }
-    var cacheMaxItems: Int { get }
-}
+// MARK: - Cache Screen Objects
 
-final class HomeCache: CacheManager, ScreenCacheable {
-    let cacheName: String = "home_cache"
-    let cacheMaxItems: Int = 50
+// MARK: Cache Manager
+final class CacheManager: CacheManagable {
+    /// # Cache modules.
+    private lazy var externalResourceCache = ExternalResourceCache()
+    private lazy var homeCache = HomeCache()
+    private lazy var discoverCache = DiscoverCache()
+
+    /// # Singleton instance
+    static let shared = CacheManager()
     
-    init() {
-        super.init(name: cacheName, maxCount: cacheMaxItems)
-    }
-}
+    // MARK: Initializers
+    private init() {}
 
-final class NewAnimeCache: CacheManager, ScreenCacheable {
-    let cacheName: String = "new_anime_cache"
-    let cacheMaxItems: Int = 50
-    
-    init() {
-        super.init(name: cacheName, maxCount: cacheMaxItems)
-    }
-}
-
-final class CalendarCache: CacheManager, ScreenCacheable {
-    let cacheName: String = "calendar_cache"
-    var cacheMaxItems: Int = 50
-    
-    init() {
-        super.init(name: cacheName, maxCount: cacheMaxItems)
-    }
-}
-
-final class DiscoverCache: CacheManager, ScreenCacheable {
-    let cacheName: String = "discover_cache"
-    var cacheMaxItems: Int = 50
-    
-    init() {
-        super.init(name: cacheName, maxCount: cacheMaxItems)
-    }
-}
-
-
-final class CacheFactory {
-    func getCacheModule(from screen: ScreenType) -> CacheManager {
+    func getCache(from screen: ScreenType) -> Cacheable? {
         switch screen {
             case .homeScreen:
-                return HomeCache()
-            case .newAnimeScreen:
-                return NewAnimeCache()
-            case .calendarScreen:
-                return CalendarCache()
+                return homeCache
             case .discoverScreen:
-                return DiscoverCache()
+                return discoverCache
+            default: return nil
         }
+    }
+
+    func getExternalResourceCache() -> Cacheable? {
+        return externalResourceCache
+    }
+}
+
+// MARK: External Resource Cache
+final class ExternalResourceCache: Cacheable {
+    private(set) lazy var storage = NSCache<CacheKey, CacheValue>()
+
+    private(set) var name: String {
+        get  { storage.name }
+        set { storage.name = newValue }
+    }
+
+    private(set) var countLimit: Int {
+        get  { storage.countLimit }
+        set { storage.countLimit = newValue }
+    }
+
+    func configureStorageInitialSettings() {
+        storage.name = "cache_external_resource"
+        storage.countLimit = 50
+    }
+
+    // Initializers
+    init() {
+        configureStorageInitialSettings()
+    }
+}
+
+// MARK: Home Cache
+final class HomeCache: Cacheable {
+    private(set) lazy var storage = NSCache<CacheKey, CacheValue>()
+
+    private(set) var name: String {
+        get  { storage.name }
+        set { storage.name = newValue }
+    }
+
+    private(set) var countLimit: Int {
+        get  { storage.countLimit }
+        set { storage.countLimit = newValue }
+    }
+
+    func configureStorageInitialSettings() {
+        storage.name = "cache_home"
+        storage.countLimit = 20
+    }
+
+    /// # Initializers
+    init() {
+        configureStorageInitialSettings()
+    }
+}
+
+// MARK: Discover Cache
+final class DiscoverCache: Cacheable {
+    private(set) lazy var storage = NSCache<CacheKey, CacheValue>()
+
+    private(set) var name: String {
+        get  { storage.name }
+        set { storage.name = newValue }
+    }
+
+    private(set) var countLimit: Int {
+        get  { storage.countLimit }
+        set { storage.countLimit = newValue }
+    }
+
+    func configureStorageInitialSettings() {
+        storage.name = "cache_discover"
+        storage.countLimit = 100
+    }
+
+    /// # Initializers
+    init() {
+        configureStorageInitialSettings()
     }
 }

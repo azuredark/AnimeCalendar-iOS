@@ -23,8 +23,8 @@ final class NewAnimeInteractor: GenericInteractor<AnimeRepository> {
 
     private let disposeBag = DisposeBag()
     
-    override init(repository: AnimeRepository) {
-        super.init(repository: repository)
+    init(repository: AnimeRepository) {
+        super.init(repository: repository, screen: .newAnimeScreen)
         setupBindings()
     }
 
