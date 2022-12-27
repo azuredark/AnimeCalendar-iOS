@@ -96,6 +96,7 @@ extension Cacheable {
     }
 
     func deleteAllObjects() {
+        print("senku [DEBUG] \(String(describing: type(of: self))) - DELETED CACHE FROM: \(name)")
         storage.removeAllObjects()
     }
 }
@@ -104,13 +105,13 @@ extension Cacheable {
 
 // MARK: Cache Manager
 final class CacheManager: CacheManagable {
-    /// # Cache modules.
+    /// # Cache modules
     private lazy var externalResourceCache = ExternalResourceCache()
     private lazy var homeCache = HomeCache()
     private lazy var discoverCache = DiscoverCache()
 
     /// # Singleton instance
-    static let shared = CacheManager()
+    static let shared: CacheManagable = CacheManager()
     
     // MARK: Initializers
     private init() {}

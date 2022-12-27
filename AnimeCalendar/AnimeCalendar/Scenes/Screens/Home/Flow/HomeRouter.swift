@@ -5,7 +5,7 @@
 //  Created by Leonardo  on 29/10/22.
 //
 
-import Foundation
+import UIKit
 
 /**
  HomeRoutable, interactor's exposed methods
@@ -16,8 +16,12 @@ protocol HomeRoutable {
 
 final class HomeRouter {
     // MARK: State
+    weak private var baseNavigation: UINavigationController?
+    
     // MARK: Initializers
-    init() {}
+    init(baseNavigation: UINavigationController) {
+        self.baseNavigation = baseNavigation
+    }
 }
 
 extension HomeRouter: HomeRoutable {

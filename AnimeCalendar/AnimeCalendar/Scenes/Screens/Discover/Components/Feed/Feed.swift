@@ -201,5 +201,7 @@ extension Feed: UICollectionViewDelegate {
         cell?.expand(lasting: 0.15, end: .reset, toScale: 1.05) { [weak self] in
             self?.cellIsSelectable = true
         }
+        
+        presenter?.handle(action: .transition(to: .animeDetailScreen))
     }
 }

@@ -5,7 +5,7 @@
 //  Created by Leonardo  on 30/10/22.
 //
 
-import Foundation
+import UIKit
 
 protocol NewAnimeRoutable {
     func start(presenter: NewAnimePresentable) -> Screen
@@ -13,10 +13,13 @@ protocol NewAnimeRoutable {
 
 final class NewAnimeRouter {
     // MARK: State
+    weak private var baseNavigation: UINavigationController?
 
     // MARK: Initializers
-    init() {}
-
+    init(baseNavigation: UINavigationController?) {
+        self.baseNavigation = baseNavigation
+    }
+    
     // MARK: Methods
 }
 

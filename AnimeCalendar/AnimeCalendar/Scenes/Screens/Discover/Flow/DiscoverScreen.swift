@@ -27,7 +27,7 @@ final class DiscoverScreen: UIViewController, Screen {
 
     /// # Components
     private lazy var searchbBar: DiscoverSearchBar = {
-        let searchBar = DiscoverSearchBar()
+        let searchBar = DiscoverSearchBar(presenter: presenter)
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
@@ -139,12 +139,5 @@ private extension DiscoverScreen {
             feedCollection.topAnchor.constraint(equalTo: searchbBar.bottomAnchor, constant: yInset),
             feedCollection.bottomAnchor.constraint(equalTo: screenContainer.bottomAnchor)
         ])
-    }
-}
-
-// MARK: - Root view controller
-extension DiscoverScreen: RootViewController {
-    func getRootViewController() -> UIViewController {
-        return CustomNavigationController(self)
     }
 }

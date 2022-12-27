@@ -55,3 +55,10 @@ extension CustomTabBarController: TabBarWithMiddleButton {
         }
     }
 }
+
+// MARK: - Lyce Cicle
+extension CustomTabBarController {
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+}

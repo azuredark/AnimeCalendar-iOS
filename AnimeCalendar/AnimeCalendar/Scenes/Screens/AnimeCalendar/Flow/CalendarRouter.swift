@@ -13,9 +13,12 @@ protocol CalendarRoutable {
 
 final class CalendarRouter {
     // MARK: State
+    private let baseNavigation: CustomNavigationController
 
     // MARK: Initializers
-    init() {}
+    init(baseNavigation: CustomNavigationController) {
+        self.baseNavigation = baseNavigation
+    }
 
     // MARK: Methods
 }

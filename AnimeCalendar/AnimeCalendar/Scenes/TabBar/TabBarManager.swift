@@ -20,9 +20,8 @@ final class TabBarManager {
     // MARK: Methods
     private func configureTabController(with factory: ScreenFactory) {
         // Presented by the tapping the TabBarItem
-        let homeVC = factory.getRootScreen(.homeScreen).getRootViewController()
-        let animeCalendarVC = factory.getRootScreen(.calendarScreen).getRootViewController()
-
+        let homeVC = factory.getModuleBaseController(.homeScreen)
+        let animeCalendarVC = factory.getModuleBaseController(.calendarScreen)
         // TabBar items (ViewControllers)
         let tabBarViewControllers = [homeVC, animeCalendarVC]
         tabBarController.setViewControllers(tabBarViewControllers, animated: false)
@@ -30,7 +29,7 @@ final class TabBarManager {
 
     private func configureTabBarMiddleButton(with factory: ScreenFactory) {
         /// NewAnime module
-        let discoverVC = factory.getRootScreen(.discoverScreen).getRootViewController()
+        let discoverVC = factory.getModuleBaseController(.discoverScreen)
         // Configuring the Middle Button, alonside its press-action
         tabBarController.configureMiddleButton()
         tabBarController.configureMiddleButtonAction(presenting: discoverVC)

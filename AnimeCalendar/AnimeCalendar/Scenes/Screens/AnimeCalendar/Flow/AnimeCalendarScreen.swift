@@ -63,10 +63,3 @@ extension AnimeCalendarScreen: ScreenWithTabItem {
         tabBarItem = UITabBarItem(title: nil, image: tabImage, selectedImage: tabImage)
     }
 }
-
-// MARK: - Root VC
-extension AnimeCalendarScreen: RootViewController {
-    func getRootViewController() -> UIViewController {
-        return CustomNavigationController(self)
-    }
-}

@@ -17,7 +17,6 @@ final class HomeScreenNavigationBar: ScreenNavigationBar {
 extension HomeScreenNavigationBar {
     func configureTitle() {
 //        screen?.navigationController?.navigationBar.backgroundColor = Color.white
-        print("senku [DEBUG] \(String(describing: type(of: self))) - navigation controller: \(screen?.navigationController)")
     }
     
     func configureLeftNavigationItems() {

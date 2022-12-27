@@ -12,7 +12,7 @@ final class ScreenFactory {
     /// Get Screen type UIViewController.
     /// - Parameter screen: ScreenType to decide which Screen to return.
     /// - Returns: Screen
-    func getRootScreen(_ screen: ScreenType) -> Screen {
+    func getModuleBaseController(_ screen: ScreenType) -> CustomNavigationController {
         switch screen {
             case .homeScreen:
                 let homeModule = AnimeCalendarModule.shared.getHomeModule()
@@ -26,6 +26,9 @@ final class ScreenFactory {
             case .discoverScreen:
                 let discoverModule = AnimeCalendarModule.shared.getDiscoverModule()
                 return discoverModule.start()
+            case .animeDetailScreen:
+                let animeDetailModule = AnimeCalendarModule.shared.getAnimeDetailModule()
+                return animeDetailModule.start()
         }
     }
 }

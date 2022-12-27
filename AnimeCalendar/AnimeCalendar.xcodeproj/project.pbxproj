@@ -89,6 +89,11 @@
 		A78685CA2824D5CE00321415 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78685C92824D5CE00321415 /* CustomNavigationController.swift */; };
 		A78685CC2824D67100321415 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78685CB2824D67100321415 /* CustomTabBarController.swift */; };
 		A78685CE2824D6AE00321415 /* TabBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78685CD2824D6AE00321415 /* TabBarProtocol.swift */; };
+		A790348B29597AEA0046CB59 /* AnimeDetailModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A790348A29597AEA0046CB59 /* AnimeDetailModule.swift */; };
+		A790348D29597B7D0046CB59 /* AnimeDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A790348C29597B7D0046CB59 /* AnimeDetailInteractor.swift */; };
+		A790348F29597B990046CB59 /* AnimeDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A790348E29597B990046CB59 /* AnimeDetailRouter.swift */; };
+		A790349129597BB40046CB59 /* AnimeDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A790349029597BB40046CB59 /* AnimeDetailScreen.swift */; };
+		A790349329597BC60046CB59 /* AnimeDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A790349229597BC60046CB59 /* AnimeDetailPresenter.swift */; };
 		A7933BF2281E35DD00D4E1B4 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7933BF1281E35DD00D4E1B4 /* Shadow.swift */; };
 		A7933BF4281E3AA100D4E1B4 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7933BF3281E3AA100D4E1B4 /* UIView+Extension.swift */; };
 		A7A275ED292F2A7D00D1E61B /* ACFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A275EC292F2A7D00D1E61B /* ACFont.swift */; };
@@ -236,6 +241,11 @@
 		A78685C92824D5CE00321415 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		A78685CB2824D67100321415 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		A78685CD2824D6AE00321415 /* TabBarProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarProtocol.swift; sourceTree = "<group>"; };
+		A790348A29597AEA0046CB59 /* AnimeDetailModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeDetailModule.swift; sourceTree = "<group>"; };
+		A790348C29597B7D0046CB59 /* AnimeDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeDetailInteractor.swift; sourceTree = "<group>"; };
+		A790348E29597B990046CB59 /* AnimeDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeDetailRouter.swift; sourceTree = "<group>"; };
+		A790349029597BB40046CB59 /* AnimeDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeDetailScreen.swift; sourceTree = "<group>"; };
+		A790349229597BC60046CB59 /* AnimeDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeDetailPresenter.swift; sourceTree = "<group>"; };
 		A7933BF1281E35DD00D4E1B4 /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		A7933BF3281E3AA100D4E1B4 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		A7A275EC292F2A7D00D1E61B /* ACFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACFont.swift; sourceTree = "<group>"; };
@@ -643,6 +653,50 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A7903488295977D30046CB59 /* AnimeDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A7903489295977E70046CB59 /* Flow */,
+				A790349429597BDC0046CB59 /* Components */,
+				A790349629597BEE0046CB59 /* Navigation */,
+				A790349529597BDF0046CB59 /* Contracts */,
+			);
+			path = AnimeDetail;
+			sourceTree = "<group>";
+		};
+		A7903489295977E70046CB59 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				A790348A29597AEA0046CB59 /* AnimeDetailModule.swift */,
+				A790348C29597B7D0046CB59 /* AnimeDetailInteractor.swift */,
+				A790348E29597B990046CB59 /* AnimeDetailRouter.swift */,
+				A790349029597BB40046CB59 /* AnimeDetailScreen.swift */,
+				A790349229597BC60046CB59 /* AnimeDetailPresenter.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		A790349429597BDC0046CB59 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		A790349529597BDF0046CB59 /* Contracts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Contracts;
+			sourceTree = "<group>";
+		};
+		A790349629597BEE0046CB59 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		A7A275EE292F2EC200D1E61B /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -714,12 +768,13 @@
 			children = (
 				A7E44A982829CC56005C0AB5 /* ScreenFactory.swift */,
 				A7C18D06293157360047C6E8 /* GenericInteractor.swift */,
+				A7C18D0A29318A600047C6E8 /* GenericPresenter.swift */,
 				A74F986B281615CC003A1073 /* Home */,
 				A75214FF2920B98B00E94104 /* Discover */,
 				A7F91DFE28190DFE00FF59C0 /* NewAnime */,
 				A7F91DFF28190E3200FF59C0 /* AnimeCalendar */,
+				A7903488295977D30046CB59 /* AnimeDetail */,
 				A7CD0D462817A11B00109B8D /* Contracts */,
-				A7C18D0A29318A600047C6E8 /* GenericPresenter.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -1140,6 +1195,7 @@
 				A77CECB729349C7300FE6D05 /* TopEndpoint.swift in Sources */,
 				A7E44A912829CAB7005C0AB5 /* RootControllerType.swift in Sources */,
 				A74F986428161279003A1073 /* NetworkManager.swift in Sources */,
+				A790349129597BB40046CB59 /* AnimeDetailScreen.swift in Sources */,
 				A7FDF60E281E038D006057D7 /* UIViewController+Extension.swift in Sources */,
 				A7231B0129569EAF0039A058 /* String+RegexFilter.swift in Sources */,
 				A7A883D22841F94E00DA8AAE /* UIImageView+Extension.swift in Sources */,
@@ -1153,6 +1209,7 @@
 				A772E923284098280095FE4F /* NewAnimeSearchResultItem.swift in Sources */,
 				A7CC37A82931FA8E005102B3 /* PromoEndpoint.swift in Sources */,
 				A78685CC2824D67100321415 /* CustomTabBarController.swift in Sources */,
+				A790348B29597AEA0046CB59 /* AnimeDetailModule.swift in Sources */,
 				A76D971F28435CD100D5FCD7 /* ComponentTableItem.swift in Sources */,
 				A77249DA293286C300487DE2 /* AnimeCellTag.swift in Sources */,
 				A76FFA0D290F202E007209E8 /* NewAnimeModule.swift in Sources */,
@@ -1160,8 +1217,10 @@
 				A7DAC1D128447A6900583F39 /* Anime.swift in Sources */,
 				A7D0F729285C2D600003709B /* ScreenComponentContainer.swift in Sources */,
 				A752150A2920BA2400E94104 /* DiscoverRouter.swift in Sources */,
+				A790348F29597B990046CB59 /* AnimeDetailRouter.swift in Sources */,
 				A7339F4D2876558000A000DB /* ScreenComponent+Extension.swift in Sources */,
 				A764DC1228BEC500005A68B0 /* UserRepository.swift in Sources */,
+				A790348D29597B7D0046CB59 /* AnimeDetailInteractor.swift in Sources */,
 				A76D971528434CB700D5FCD7 /* Component.swift in Sources */,
 				A764DC2B28BF291D005A68B0 /* ParameterEncoding.swift in Sources */,
 				A70FF51628239D77007D4F64 /* Constraints.swift in Sources */,
@@ -1243,6 +1302,7 @@
 				A7B0E329281F534900A13CD6 /* HomeScreenNavigationBar.swift in Sources */,
 				A77AD119293065DE00299F33 /* UIButton+Extension.swift in Sources */,
 				A74F98532815FD72003A1073 /* BootManager.swift in Sources */,
+				A790349329597BC60046CB59 /* AnimeDetailPresenter.swift in Sources */,
 				A7F3585C2837540100659375 /* NewAnimeNavigationBar.swift in Sources */,
 				A7B0E32F281F761300A13CD6 /* HomeDateComponent.swift in Sources */,
 				A7CD0D482817A16000109B8D /* Screen.swift in Sources */,

@@ -18,7 +18,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     private lazy var mainContainer: UIView = {
         let container = UIView(frame: .zero)
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = Color.white
+        container.backgroundColor = .clear
         contentView.addSubview(container)
         return container
     }()
@@ -97,8 +97,7 @@ private extension PromoAnimeCell {
             mainContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        #warning("Is using tooooo much memory, up to 100mb")
-      configureContainerShadow()
+//      configureContainerShadow()
     }
 
     func layoutCoverImageView() {

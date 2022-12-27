@@ -5,23 +5,30 @@
 //  Created by Leonardo  on 13/11/22.
 //
 
-import Foundation
-
-final class DiscoverModule {
+final class DiscoverModule: Modulable {
     // MARK: State
-    private let presenter: DiscoverPresentable
+    private(set) var presenter: DiscoverPresenter
+    private(set) var baseNavigation: CustomNavigationController
     
     // MARK: Initializers
     init(animeRepository: AnimeRepository) {
+        let navigation = CustomNavigationController()
+        
+        let router = DiscoverRouter(baseController: navigation)
         let interacor = DiscoverInteractor(repository: animeRepository)
-        let router = DiscoverRouter()
-        presenter = DiscoverPresenter(interactor: interacor, router: router)
+        
+        self.baseNavigation = navigation
+        self.presenter = DiscoverPresenter(interactor: interacor, router: router)
     }
     
     // MARK: Methods
     /// Initiates and returns the DiscoverScreen (UIViewController)
     /// - Returns: Screen
-    func start() -> Screen {
-        presenter.start()
+    func start() -> CustomNavigationController {
+        let screen = presenter.start()
+        baseNavigation.setViewControllers([screen], animated: false)
+        
+        self.presenter.view = screen
+        return baseNavigation
     }
 }

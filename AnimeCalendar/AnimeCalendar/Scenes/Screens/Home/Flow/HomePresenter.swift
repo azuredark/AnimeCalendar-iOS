@@ -18,6 +18,7 @@ final class HomePresenter: NSObject {
     // MARK: State
     private let interactor: HomeInteractive
     private let router: HomeRoutable
+    weak var view: Screen?
 
     // MARK: Initializer
     init(interactor: HomeInteractive, router: HomeRoutable) {

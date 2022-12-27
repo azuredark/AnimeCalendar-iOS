@@ -8,14 +8,16 @@
 import UIKit
 
 final class CustomNavigationController: UINavigationController {
+    /// # State
     override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
 
-    init(_ rootViewController: Screen) {
-        super.init(rootViewController: rootViewController)
+    /// # Initializers
+    init() {
+        super.init(nibName: nil, bundle: nil)
 
         /// Settings
         navigationBar.backgroundColor = Color.cream
-        
+
         /// Remove Navigations bar's line (iOS 14 and below)
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()

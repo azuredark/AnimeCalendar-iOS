@@ -15,6 +15,7 @@ final class CalendarPresenter: NSObject {
     // MARK: State
     private let interactor: CalendarInteractive
     private let router: CalendarRoutable
+    weak var view: Screen?
 
     // MARK: Initializer
     init(interactor: CalendarInteractive, router: CalendarRoutable) {

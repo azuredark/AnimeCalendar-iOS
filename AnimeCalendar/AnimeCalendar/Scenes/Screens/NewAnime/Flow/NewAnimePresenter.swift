@@ -20,6 +20,7 @@ final class NewAnimePresenter: NSObject {
     // MARK: State
     private let interactor: NewAnimeInteractive
     private let router: NewAnimeRoutable
+    weak var view: NewAnimeScreen?
 
     // MARK: Initializers
     init(interactor: NewAnimeInteractive, router: NewAnimeRoutable) {

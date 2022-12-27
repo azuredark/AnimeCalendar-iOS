@@ -5,26 +5,61 @@
 //  Created by Leonardo  on 13/11/22.
 //
 
-import Foundation
+import UIKit
 
 protocol DiscoverRoutable {
+    /// Creates the DiscoverScreen.
+    /// - Parameter presenter: Home's presenter.
+    /// - Returns: Screen
     func start(presenter: DiscoverPresentable) -> Screen
+
+    /// Handles **actions** made in the DiscoverScreen.
+    /// - Parameter action: Action to execute.
+    func handle(action: DiscoverAction)
 }
 
 final class DiscoverRouter {
     // MARK: State
-    
+    private weak var baseNavigation: UINavigationController?
+
     // MARK: Initializers
-    init() {}
-    
-    // MARK: Methods
+    init(baseController: UINavigationController?) {
+        baseController?.modalPresentationStyle = .pageSheet
+        self.baseNavigation = baseController
+    }
 }
 
 extension DiscoverRouter: DiscoverRoutable {
-    /// Creates the DiscoverScreen.
-    /// - Parameter presenter: Home's presenter.
-    /// - Returns: Screen
     func start(presenter: DiscoverPresentable) -> Screen {
-       return DiscoverScreen(presenter: presenter)
+        return DiscoverScreen(presenter: presenter)
     }
+
+    func handle(action: DiscoverAction) {
+        switch action {
+            case .transition(let screen):
+                handleTransition(to: screen)
+        }
+    }
+}
+
+private extension DiscoverRouter {
+    func handleTransition(to screen: ScreenType) {
+        switch screen {
+            case .animeDetailScreen:
+                openDetailScreen()
+            default: break
+        }
+    }
+
+    func openDetailScreen() {
+        let animeDetail = AnimeCalendarModule.shared.getAnimeDetailModule()
+        let controller = animeDetail.start()
+
+        baseNavigation?.present(controller, animated: true)
+    }
+}
+
+/// Actions to execute in **Discover**
+enum DiscoverAction {
+    case transition(to: ScreenType)
 }

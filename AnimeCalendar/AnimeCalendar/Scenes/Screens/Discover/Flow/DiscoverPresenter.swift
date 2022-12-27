@@ -14,6 +14,12 @@ protocol DiscoverPresentable: NSObject {
     func updateRecentPromosAnime()
     func updateTopAnime(by order: AnimeOrderType)
     func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag]
+    func didTapSearchButton()
+
+    /// Handles **actions** made in the DiscoverScreen.
+    /// - Parameter action: Action to execute.
+    func handle(action: DiscoverAction)
+    
     var feed: DiscoverFeed { get }
 }
 
@@ -23,6 +29,7 @@ final class DiscoverPresenter: NSObject {
     private let interactor: DiscoverInteractive
     /// # Router
     private let router: DiscoverRoutable
+    weak var view: Screen?
 
     // MARK: Initializers
     init(interactor: DiscoverInteractive, router: DiscoverRoutable) {
@@ -58,5 +65,13 @@ extension DiscoverPresenter: DiscoverPresentable {
     
     func updateTopAnime(by order: AnimeOrderType) {
         interactor.updateTopAnime(by: order)
+    }
+    
+    func didTapSearchButton() {
+        CacheManager.shared.getCache(from: .discoverScreen)?.deleteAllObjects()
+    }
+    
+    func handle(action: DiscoverAction) {
+        router.handle(action: action)
     }
 }

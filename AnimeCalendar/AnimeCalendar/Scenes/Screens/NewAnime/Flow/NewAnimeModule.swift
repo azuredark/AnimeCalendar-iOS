@@ -5,22 +5,27 @@
 //  Created by Leonardo  on 30/10/22.
 //
 
-import Foundation
-
-final class NewAnimeModule {
+final class NewAnimeModule: Modulable {
     // MARK: State
-    private let presenter: NewAnimePresentable
+    private(set) var presenter: NewAnimePresenter
+    private(set) var baseNavigation: CustomNavigationController
 
     // MARK: Initializers
     init(animeRepository: AnimeRepository) {
+        let navigation = CustomNavigationController()
+        
+        let router = NewAnimeRouter(baseNavigation: navigation)
         let interactor = NewAnimeInteractor(repository: animeRepository)
-        let router = NewAnimeRouter()
+        
+        self.baseNavigation = navigation
         self.presenter = NewAnimePresenter(interactor: interactor, router: router)
     }
-}
-
-extension NewAnimeModule {
-    func start() -> Screen {
-        return presenter.start()
+    
+    func start() -> CustomNavigationController {
+        let screen = presenter.start()
+        baseNavigation.setViewControllers([screen], animated: false)
+        
+        presenter.view = screen as? NewAnimeScreen
+        return baseNavigation
     }
 }

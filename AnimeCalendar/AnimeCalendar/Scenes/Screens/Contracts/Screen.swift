@@ -9,7 +9,7 @@ import Foundation
 import UIKit.UIViewController
 
 /// # All Screens must conform to `RootViewController`
-protocol Screen: UIViewController, RootViewController {
+protocol Screen: UIViewController {
     func configureNavigationItems()
     func configureRightNavigationItems()
     func configureLeftNavigationItems()

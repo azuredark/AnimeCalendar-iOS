@@ -21,6 +21,7 @@ final class DiscoverSearchBar: UIView {
     private lazy var searchButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapSearch), for: .touchUpInside)
         fullContainer.addSubview(button)
         return button
     }()
@@ -44,10 +45,14 @@ final class DiscoverSearchBar: UIView {
     }()
     
     private var hasShadowAndRadius: Bool = false
+    
+    /// # Presenter
+    private weak var presenter: DiscoverPresentable?
 
     // MARK: Initializers
-    init() {
+    init(presenter: DiscoverPresentable?) {
         super.init(frame: .zero)
+        self.presenter = presenter
         configureUI()
     }
     
@@ -147,6 +152,13 @@ private extension DiscoverSearchBar {
             textField.topAnchor.constraint(equalTo: textFieldContainer.topAnchor, constant: yInset),
             textField.bottomAnchor.constraint(equalTo: textFieldContainer.bottomAnchor, constant: -yInset)
         ])
+    }
+}
+
+private extension DiscoverSearchBar {
+    @objc func didTapSearch(_ button: UIButton) {
+        print("senku [DEBUG] \(String(describing: type(of: self))) - didTapSearch")
+        presenter?.didTapSearchButton()
     }
 }
 

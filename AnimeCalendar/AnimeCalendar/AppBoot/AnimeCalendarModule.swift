@@ -12,9 +12,9 @@ protocol AnimeCalendarModular {
     func getNewAnimeModule() -> NewAnimeModule
     func getCalendarModule() -> CalendarModule
     func getDiscoverModule() -> DiscoverModule
+    func getAnimeDetailModule() -> AnimeDetailModule
 }
 
-// TODO: Module dependencies should have a dictionary of repositories? Or make them Singletons?
 final class AnimeCalendarModule {
     // MARK: State
     private lazy var requestsManager = RequestsManager()
@@ -30,6 +30,7 @@ final class AnimeCalendarModule {
     private lazy var newAnimeModule = NewAnimeModule(animeRepository: animeRepository)
     private lazy var calendarModule = CalendarModule(animeRepository: animeRepository)
     private lazy var discoverModule = DiscoverModule(animeRepository: animeRepository)
+    private lazy var animeDetailModule = AnimeDetailModule(animeRepository: animeRepository)
 
     // MARK: Initializers
     private init() {}
@@ -43,4 +44,13 @@ extension AnimeCalendarModule: AnimeCalendarModular {
     func getCalendarModule() -> CalendarModule { calendarModule }
     
     func getDiscoverModule() -> DiscoverModule { discoverModule }
+    
+    func getAnimeDetailModule() -> AnimeDetailModule { animeDetailModule }
+}
+
+protocol Modulable {
+    associatedtype T
+    var presenter: T { get }
+    
+    func start() -> CustomNavigationController
 }

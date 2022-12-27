@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         /// - .discover
         /// i.e.: bootManager.getRootController(.rootScreen(screen: .discoverScreen))
         let rootController = bootManager.getRootController(.rootScreen(screen: .discoverScreen))
-        let rootViewController: UIViewController = rootController.getRootViewController()
+        let rootViewController: UIViewController = rootController
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene

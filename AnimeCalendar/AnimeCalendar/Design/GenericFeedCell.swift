@@ -22,7 +22,7 @@ class GenericFeedCell: UICollectionViewCell {
     private(set) lazy var mainContainer: UIView = {
         let container = UIView(frame: .zero)
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = Color.white
+        container.backgroundColor = .clear
         container.accessibilityIdentifier = accessId.containerId
         contentView.addSubview(container)
         return container
@@ -74,7 +74,7 @@ private extension GenericFeedCell {
             mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         #warning("Is using tooooo much memory, up to 100mb")
-        configureContainerShadow()
+//        configureContainerShadow()
     }
 
     func layoutCoverImageView() {

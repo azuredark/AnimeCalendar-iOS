@@ -158,10 +158,3 @@ extension NewAnimeScreen {
         navigationBar.configureRightNavigationItems()
     }
 }
-
-// MARK: - RootViewController
-extension NewAnimeScreen: RootViewController {
-    func getRootViewController() -> UIViewController {
-        return CustomNavigationController(self)
-    }
-}

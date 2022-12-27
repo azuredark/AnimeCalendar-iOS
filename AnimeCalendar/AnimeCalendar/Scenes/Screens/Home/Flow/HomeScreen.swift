@@ -36,7 +36,6 @@ final class HomeScreen: UIViewController, Screen {
         super.viewDidLoad()
         configureBindings()
         configureScreen()
-        print("senku [DEBUG] \(String(describing: type(of: self))) - navigation controlllelr: \(navigationController)")
     }
 }
 
@@ -127,13 +126,6 @@ extension HomeScreen {
 
     func configureRightNavigationItems() {
         navigationBar.configureRightNavigationItems()
-    }
-}
-
-// MARK: - Root view controller
-extension HomeScreen: RootViewController {
-    func getRootViewController() -> UIViewController {
-        return CustomNavigationController(self)
     }
 }
 
