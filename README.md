@@ -49,11 +49,6 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 | --- | --- |
 | <img src="images/ui/home/figma.png" width=250 /> | <img src="images/ui/home/ios.png" width=250 /> |
 
-### Schedule new anime
-| Figma | iOS |
-| --- | --- |
-| <img src="images/ui/new-anime/figma1.png" width=250 /> | <img src="images/ui/new-anime/ios1.png" width=250 /> |
-
 ### Discover (New!)
 | Figma | iOS |
 | --- | --- |
