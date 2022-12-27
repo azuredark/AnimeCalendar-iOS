@@ -11,11 +11,11 @@ AnimecCalendar uses the **VIPER** arch., with some twists, for creating and main
 - Factory
 
 ## 🌇 UI
-Uses Xibs and some programmatic views.
+Uses mostly programmatic views and some Xibs. No storyboards.
 
 ## ⚙️  Dependencies
 Current dependencies used, not planning to add more:
-- [RxSwift] (https://github.com/ReactiveX/RxSwift)
+- [RxSwift](https://github.com/ReactiveX/RxSwift)
 - [youtube-ios-player-helper](https://github.com/youtube/youtube-ios-player-helper)
 
 ## ⛩️ Setup
