@@ -69,6 +69,7 @@ struct Promo: Decodable, Hashable {
 struct Trailer: Decodable {
     let url: String
     let image: AnimeImage
+    var youtubeId: String
     
     enum CodingKeys: String, CodingKey {
         case url
@@ -77,18 +78,21 @@ struct Trailer: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.url = try container.decodeIfPresent(String.self, forKey: .url) ?? ""
-        self.image = try container.decodeIfPresent(AnimeImage.self, forKey: .image) ?? AnimeImage()
+        url = try container.decodeIfPresent(String.self, forKey: .url) ?? ""
+        image = try container.decodeIfPresent(AnimeImage.self, forKey: .image) ?? AnimeImage()
+        youtubeId = url.getYoutubeId() ?? "Trailer Has No Id"
     }
     
     // MARK: Initializers
-    init(url: String, image: AnimeImage) {
+    init(url: String, image: AnimeImage, youtubeId: String) {
         self.url = url
         self.image = image
+        self.youtubeId = youtubeId
     }
     
     init() {
         self.url = "Empty URL"
         self.image = AnimeImage()
+        self.youtubeId = "e8YBesRKq_U"
     }
 }

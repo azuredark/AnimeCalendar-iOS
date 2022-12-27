@@ -5,19 +5,31 @@
 //  Created by Leonardo  on 26/12/22.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
 
-protocol AnimeDetailInteractive {}
+protocol AnimeDetailInteractive {
+    func updateAnime(with anime: Anime)
+    var animeObservable: Driver<Anime> { get }
+}
 
 final class AnimeDetailInteractor: GenericInteractor<AnimeRepository> {
     // MARK: State
+    private let animeStorage = BehaviorRelay<Anime>(value: Anime())
 
     // MARK: Initializers
     init(repository: AnimeRepository) {
-        super.init(repository: repository, screen: .animeDetailScreen)
+        super.init(repository: repository, screen: .animeDetailScreen())
     }
 
     // MARK: Methods
+    func updateAnime(with anime: Anime) {
+        animeStorage.accept(anime)
+    }
 }
 
-extension AnimeDetailInteractor: AnimeDetailInteractive {}
+extension AnimeDetailInteractor: AnimeDetailInteractive {
+    var animeObservable: Driver<Anime> {
+        return animeStorage.asDriver(onErrorJustReturn: Anime())
+    }
+}

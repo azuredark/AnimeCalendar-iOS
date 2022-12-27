@@ -9,6 +9,7 @@ import UIKit
 
 protocol FeedDataSourceable {
     func updateSnapshot(for section: FeedSection, with: [AnyHashable], animating: Bool)
+    func getItem<T: Hashable>(at indexPath: IndexPath) -> T?
 }
 
 final class FeedDataSource {
@@ -110,6 +111,13 @@ extension FeedDataSource: FeedDataSourceable {
         }
         currentSnapshot.appendItems(items, toSection: section)
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
+    }
+
+    /// Get item at **index path**
+    /// - Parameter indexPath: Index path of the collection view.
+    /// - Returns: Item of the generic inferred type.
+    func getItem<T: Hashable>(at indexPath: IndexPath) -> T? {
+        return dataSource?.itemIdentifier(for: indexPath) as? T
     }
 }
 

@@ -10,5 +10,5 @@ enum ScreenType {
     case newAnimeScreen
     case calendarScreen
     case discoverScreen
-    case animeDetailScreen
+    case animeDetailScreen(anime: Anime? = nil)
 }

@@ -15,7 +15,8 @@ Uses Xibs and some programmatic views.
 
 ## ⚙️  Dependencies
 Current dependencies used, not planning to add more:
-- RxSwift (w/ RxCocoa/RxRelay)
+- [RxSwift] (https://github.com/ReactiveX/RxSwift)
+- [youtube-ios-player-helper](https://github.com/youtube/youtube-ios-player-helper)
 
 ## ⛩️ Setup
 Currently, the project structure aims to make every screen a *root screen* meaning the app can boot from any screen in the app. The `BootManager.swift` module is in charge of said logic. You can boot the app with `.rootTabBar` or a specific `.rootScreen(ScreenType)`.
@@ -38,9 +39,9 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 ```
 
 ## 📹 Demos
-| Home | New Anime (Deprecated UI) | Discover |
+| Home | Discover | Anime Detail |
 | ---| --- | --- |
-| <img src="images/ui/home/home-demo.gif" width=250 /> | <img src="images/ui/new-anime/new-anime-demo.gif" width=250 /> | <img src="images/ui/discover/discover-demo1.gif" width=250 /> |
+| <img src="images/ui/home/home-demo.gif" width=250 /> | <img src="images/ui/discover/discover-demo1.gif" width=250 /> | <img src="images/ui/anime-detail/anime-detail-demo1.gif" width=250 /> |
 
 ## 📸 Screenshots
 ### Home
@@ -57,6 +58,11 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 | Figma | iOS |
 | --- | --- |
 | <img src="images/ui/discover/figma.png" width=250 /> | <img src="images/ui/discover/ios1.png" width=250 /> |
+
+### Anime Detail (New!)
+| Figma | iOS |
+| --- | --- |
+| | <img src="images/ui/anime-detail/ios1.png" width=250 /> |
 
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 

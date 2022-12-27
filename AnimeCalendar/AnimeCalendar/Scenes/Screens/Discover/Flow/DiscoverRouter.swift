@@ -45,15 +45,17 @@ extension DiscoverRouter: DiscoverRoutable {
 private extension DiscoverRouter {
     func handleTransition(to screen: ScreenType) {
         switch screen {
-            case .animeDetailScreen:
-                openDetailScreen()
+            case .animeDetailScreen(let anime):
+                openDetailScreen(with: anime)
             default: break
         }
     }
 
-    func openDetailScreen() {
-        let animeDetail = AnimeCalendarModule.shared.getAnimeDetailModule()
-        let controller = animeDetail.start()
+    func openDetailScreen(with anime: Anime?) {
+        guard let anime = anime else { return }
+        let module = AnimeCalendarModule.shared.getAnimeDetailModule()
+        let controller = module.start()
+        module.build(with: anime)
 
         baseNavigation?.present(controller, animated: true)
     }

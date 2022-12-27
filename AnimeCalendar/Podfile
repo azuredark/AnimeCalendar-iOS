@@ -5,7 +5,12 @@ target 'AnimeCalendar' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   # Pods for AnimeCalendar
+
+  # Reactive
   pod 'RxSwift'
   pod 'RxCocoa'
+
+  # Youtube trailer player
+  pod 'youtube-ios-player-helper'
 
 end

@@ -28,7 +28,10 @@ final class ScreenFactory {
                 return discoverModule.start()
             case .animeDetailScreen:
                 let animeDetailModule = AnimeCalendarModule.shared.getAnimeDetailModule()
-                return animeDetailModule.start()
+                let controller = animeDetailModule.start()
+                
+                animeDetailModule.build(with: Anime())
+                return controller
         }
     }
 }

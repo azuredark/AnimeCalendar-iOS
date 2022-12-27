@@ -34,6 +34,7 @@ struct Anime: Decodable, Hashable {
     var id: Int
     var titleOrg: String
     var titleEng: String
+    var titleKanji: String
     var imageType: AnimeImageType
     var malURL: String
     var synopsis: String
@@ -43,12 +44,14 @@ struct Anime: Decodable, Hashable {
     var year: Int
     var members: Int
     var genres: [AnimeGenre]
+    var trailer: Trailer
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
         case id            = "mal_id"
         case titleOrg      = "title"
         case titleEng      = "title_english"
+        case titleKanji    = "title_japanese"
         case malURL        = "url"
         case imageType     = "images"
         case synopsis
@@ -58,6 +61,7 @@ struct Anime: Decodable, Hashable {
         case year
         case members
         case genres
+        case trailer
     }
 
     // MARK: Decoding Technique
@@ -66,6 +70,7 @@ struct Anime: Decodable, Hashable {
         id = try container.decode(Int.self, forKey: .id)
         titleOrg = try container.decode(String.self, forKey: .titleOrg)
         titleEng = try container.decodeIfPresent(String.self, forKey: .titleEng) ?? titleOrg
+        titleKanji = try container.decodeIfPresent(String.self, forKey: .titleKanji) ?? titleOrg
         malURL = try container.decodeIfPresent(String.self, forKey: .malURL) ?? ""
         imageType = try container.decode(AnimeImageType.self, forKey: .imageType)
         synopsis = try container.decodeIfPresent(String.self, forKey: .synopsis) ?? ""
@@ -75,6 +80,7 @@ struct Anime: Decodable, Hashable {
         year = try container.decodeIfPresent(Int.self, forKey: .year) ?? 0
         members = try container.decodeIfPresent(Int.self, forKey: .members) ?? -1
         genres = try container.decodeIfPresent([AnimeGenre].self, forKey: .genres) ?? [AnimeGenre]()
+        trailer = try container.decodeIfPresent(Trailer.self, forKey: .trailer) ?? Trailer()
     }
 
     // MARK: Initializers
@@ -82,6 +88,7 @@ struct Anime: Decodable, Hashable {
         self.id = 69
         self.titleEng = ""
         self.titleOrg = ""
+        self.titleKanji = "BLEACH 千年血戦篇"
         self.imageType = AnimeImageType()
         self.malURL = ""
         self.synopsis = ""
@@ -91,6 +98,7 @@ struct Anime: Decodable, Hashable {
         self.year = 0
         self.members = 0
         self.genres = [AnimeGenre]()
+        self.trailer = Trailer()
     }
 
     // MARK: IMPORTANT: UUID is used due to repeated ids in the SeasonAnime & TopAnime sections, as the airing anime could also appear on the top.

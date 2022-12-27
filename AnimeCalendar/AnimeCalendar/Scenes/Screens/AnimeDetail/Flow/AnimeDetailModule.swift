@@ -8,7 +8,6 @@
 final class AnimeDetailModule: Modulable {
     // MARK: State
     private(set) var presenter: AnimeDetailPresenter
-//    private(set) var baseNavigation: CustomNavigationController
     
     // MARK: Initializers
     init(animeRepository: AnimeRepository) {
@@ -17,7 +16,6 @@ final class AnimeDetailModule: Modulable {
         let router = AnimeDetailRouter(baseController: navigation)
         let interactor = AnimeDetailInteractor(repository: animeRepository)
         
-//        self.baseNavigation = navigation
         self.presenter = AnimeDetailPresenter(router: router, interactor: interactor)
     }
     
@@ -28,7 +26,12 @@ final class AnimeDetailModule: Modulable {
         
         baseNavigation.setViewControllers([screen], animated: false)
         
-        self.presenter.view = screen
+        presenter.view = screen as? AnimeDetailScreen
         return baseNavigation
+    }
+    
+    /// Builds with anime by **emiting** event.
+    func build(with anime: Anime) {
+        presenter.updateAnime(with: anime)
     }
 }
