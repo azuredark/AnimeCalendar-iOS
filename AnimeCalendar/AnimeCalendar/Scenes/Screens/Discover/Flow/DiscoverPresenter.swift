@@ -60,7 +60,11 @@ extension DiscoverPresenter: DiscoverPresentable {
     }
 
     func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag] {
-        interactor.getTags(episodes: episodes, score: score, rank: rank)
+        DispatchQueue.global(qos: .userInitiated).sync(execute: { [weak self] in
+            let tags = self?.interactor.getTags(episodes: episodes, score: score, rank: rank)
+            guard let tags = tags else { return [AnimeTag]() }
+            return tags
+        })
     }
     
     func updateTopAnime(by order: AnimeOrderType) {

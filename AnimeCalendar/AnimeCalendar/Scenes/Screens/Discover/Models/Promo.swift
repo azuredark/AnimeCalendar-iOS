@@ -66,7 +66,7 @@ struct Promo: Decodable, Hashable {
     }
 }
 
-struct Trailer: Decodable {
+struct Trailer: Decodable, Hashable {
     let url: String
     let image: AnimeImage
     var youtubeId: String
@@ -76,11 +76,22 @@ struct Trailer: Decodable {
         case image = "images"
     }
     
+    /// # Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(youtubeId)
+    }
+    
+    /// # Equatable
+    static func == (lhs: Trailer, rhs: Trailer) -> Bool {
+        return lhs.youtubeId == rhs.youtubeId
+    }
+    
+    /// # Decoding strategy
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         url = try container.decodeIfPresent(String.self, forKey: .url) ?? ""
         image = try container.decodeIfPresent(AnimeImage.self, forKey: .image) ?? AnimeImage()
-        youtubeId = url.getYoutubeId() ?? "Trailer Has No Id"
+        youtubeId = url.getYoutubeId() ?? ""
     }
     
     // MARK: Initializers

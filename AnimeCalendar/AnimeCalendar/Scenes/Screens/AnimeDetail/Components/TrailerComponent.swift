@@ -8,7 +8,7 @@
 import UIKit
 import youtube_ios_player_helper
 
-protocol TrailerCompatible {
+protocol TrailerCompatible: AnyObject {
     func loadTrailer(withId id: String)
     func startTrailer()
     func getContainer() -> UIView
@@ -19,8 +19,6 @@ final class TrailerComponent: NSObject {
     private lazy var playerView: YTPlayerView = {
         let view = YTPlayerView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        view.alpha = 0
         return view
     }()
     
@@ -43,15 +41,25 @@ extension TrailerComponent: Component {
 
     func configureView() {}
 
-    func configureSubviews() {}
+    func configureSubviews() {
+        playerView.delegate = self
+    }
 }
 
 extension TrailerComponent: YTPlayerViewDelegate {
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+        presenter?.trailerLoaded.accept(true)
         print("senku [DEBUG] \(String(describing: type(of: self))) - PLAAYER READYY")
-        UIView.animate(withDuration: 0.25) {
-            playerView.alpha = 1
-        }
+    }
+    
+    func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
+        let a = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        a.backgroundColor = Color.black
+        return a
+    }
+    
+    func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
+        print("senku [DEBUG] \(String(describing: type(of: self))) - Player error: \(error)")
     }
 }
 

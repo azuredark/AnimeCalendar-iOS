@@ -18,28 +18,16 @@ final class AnimeDetailScreen: UIViewController, Screen {
     }()
 
     /// # Components
-    private(set) lazy var trailerComponent: TrailerCompatible = {
-        let trailer = TrailerComponent(presenter: presenter)
-        return trailer
-    }()
+//    private(set) lazy var trailerComponent: TrailerCompatible = {
+//        let trailer = TrailerComponent(presenter: presenter)
+//        return trailer
+//    }()
 
-    private lazy var descriptionContainer: UIView = {
-        let container = UIView(frame: .zero)
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = Color.cream
-        view.addSubview(container)
-        return container
-    }()
-
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 3
-        label.textColor = Color.black
-        label.textAlignment = .left
-        label.font = .boldSystemFont(ofSize: 24)
-        view.addSubview(label)
-        return label
+    /// # Main collection
+    private lazy var detailFeed: DetailFeed = {
+        let feed = DetailFeed(presenter: presenter)
+//        feed.setTrailerComponent(trailerComponent)
+        return feed
     }()
 
     private lazy var disposeBag = DisposeBag()
@@ -64,6 +52,7 @@ final class AnimeDetailScreen: UIViewController, Screen {
 extension AnimeDetailScreen {
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("senku [DEBUG] \(String(describing: type(of: self))) - viewDidLoad")
         configureScreen()
         bindAnime()
     }
@@ -81,6 +70,8 @@ extension AnimeDetailScreen {
 private extension AnimeDetailScreen {
     func configureScreen() {
         view.backgroundColor = Color.cream
+        configureNavigationItems()
+        layoutCollection()
     }
 
     func bindAnime() {
@@ -88,8 +79,6 @@ private extension AnimeDetailScreen {
             .drive(onNext: { [weak self] anime in
                 guard let self = self else { return }
                 self.configureNavigationTitle(with: anime.titleKanji)
-                self.configureTrailer(with: anime.trailer.youtubeId)
-                self.configureDescriptionContainer(with: anime)
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX NAVIGATION TITLE")
             }).disposed(by: disposeBag)
     }
@@ -113,46 +102,26 @@ extension AnimeDetailScreen {
 
 // MARK: - Anime configuration
 private extension AnimeDetailScreen {
+    func layoutCollection() {
+        let mainCollection = detailFeed.getCollection()
+        view.addSubview(mainCollection)
+
+        NSLayoutConstraint.activate([
+            mainCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mainCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+
     func configureNavigationTitle(with title: String) {
         navigationBar.configureTitle(with: title)
     }
+}
 
-    func configureTrailer(with youtubeId: String) {
-        let trailerContainer: UIView = trailerComponent.getContainer()
-        view.addSubview(trailerContainer)
-
-        let scale: CGFloat = 9 / 16
-        NSLayoutConstraint.activate([
-            trailerContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            trailerContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            trailerContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            trailerContainer.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: scale)
-        ])
-        
-        trailerComponent.loadTrailer(withId: youtubeId)
-    }
-    
-    func configureDescriptionContainer(with anime: Anime) {
-        let xInset: CGFloat = 10.0
-        let yInset: CGFloat = 5.0
-        
-        NSLayoutConstraint.activate([
-            descriptionContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: xInset),
-            descriptionContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -xInset),
-            descriptionContainer.topAnchor.constraint(equalTo: trailerComponent.getContainer().bottomAnchor, constant: yInset),
-            descriptionContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        
-        configureTitleLabel(with: anime.titleEng)
-    }
-
-    func configureTitleLabel(with title: String) {
-        titleLabel.text = title
-
-        NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: descriptionContainer.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: descriptionContainer.trailingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: descriptionContainer.topAnchor)
-        ])
+// MARK: - Delegates
+extension AnimeDetailScreen {
+    func getDetailFeed() -> DetailFeed {
+        return detailFeed
     }
 }

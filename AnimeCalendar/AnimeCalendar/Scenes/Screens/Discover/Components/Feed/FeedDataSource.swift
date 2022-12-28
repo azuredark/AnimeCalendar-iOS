@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FeedDataSourceable {
-    func updateSnapshot(for section: FeedSection, with: [AnyHashable], animating: Bool)
+    func updateSnapshot<T: CaseIterable>(for section: T, with: [AnyHashable], animating: Bool)
     func getItem<T: Hashable>(at indexPath: IndexPath) -> T?
 }
 
@@ -22,7 +22,6 @@ final class FeedDataSource {
     private var dataSource: DiffableDataSource?
     private var currentSnapshot = Snapshot()
     private weak var presenter: DiscoverPresentable?
-    private var existingSections = [FeedSection]()
 
     // MARK: Initializers
     init(for collectionView: UICollectionView, presenter: DiscoverPresentable?) {
@@ -105,7 +104,8 @@ extension FeedDataSource: FeedDataSourceable {
     /// - Parameter section: The section to update
     /// - Parameter animes: The animes to update for the specified section
     /// Updates the **items** for the current **section**
-    func updateSnapshot(for section: FeedSection, with items: [AnyHashable], animating: Bool = false) {
+    func updateSnapshot<T: CaseIterable>(for section: T, with items: [AnyHashable], animating: Bool = false) {
+        guard let section = section as? FeedSection else { return }
         if currentSnapshot.indexOfSection(section) == nil {
             currentSnapshot.appendSections([section])
         }
@@ -121,26 +121,9 @@ extension FeedDataSource: FeedDataSourceable {
     }
 }
 
-// MARK: - Private implementations
-private extension FeedDataSource {
-    static func getCell<T: FeedCell>(with collection: UICollectionView, at indexPath: IndexPath) -> T {
-        guard let cell = collection.dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
-            fatalError("ACError - Error dequeing cell of type: \(T.self)")
-        }
-        return cell
-    }
-}
-
 /// All section types
 enum FeedSection: String, CaseIterable {
     case animeSeason = "Current Season"
     case animePromos = "Promos"
     case animeTop    = "Top All-time"
-}
-
-/// All item types
-enum FeedItem: CaseIterable {
-    case anime
-    case promo
-    case top
 }

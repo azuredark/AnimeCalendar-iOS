@@ -50,7 +50,6 @@ final class NetworkManager: Requestable {
         // Check for the resource in the cache first
         if let cacheValue = cache?.load(from: path), let unwrapped = cacheValue.value as? Data {
             completion(.success(unwrapped))
-            print("senku [DEBUG] \(String(describing: type(of: self))) - FOUND IN CACHE")
             return
         }
 
