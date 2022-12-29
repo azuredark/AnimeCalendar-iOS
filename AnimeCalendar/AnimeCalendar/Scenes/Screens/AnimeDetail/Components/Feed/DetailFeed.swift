@@ -58,8 +58,10 @@ private extension DetailFeed {
 
             let section = DetailFeedSection.allCases[sectionIndex]
             switch section {
-                case .animeTrailer, .animeBasicInfo, .animeCharacters, .animeReviews:
+                case .animeTrailer, .animeCharacters, .animeReviews:
                     return self.getTrailerSection()
+                case .animeBasicInfo:
+                    return self.getBasicInfoSection()
             }
         }
 
@@ -86,8 +88,20 @@ private extension DetailFeed {
     }
 
     /// #  Basic Info. Section
-    func getBasicInfoSection() -> NSCollectionLayoutSection? {
-        return nil
+    func getBasicInfoSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .absolute(200.0))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
     }
 
     /// # Characters Section

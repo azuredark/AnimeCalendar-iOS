@@ -17,7 +17,6 @@ final class DetailFeedDataSource {
     // MARK: State
     /// # Presenter
     private weak var presenter: AnimeDetailPresentable?
-//    weak var trailerComponent: TrailerCompatible?
 
     /// # Components
     private(set) lazy var trailerComponent: TrailerCompatible = {
@@ -55,17 +54,28 @@ private extension DetailFeedDataSource {
             cell.setup()
         }
 
+        let basicInfoCell = UICollectionView.CellRegistration<BasicInfoCell, Anime> { cell, _, anime in
+            cell.anime = anime
+            cell.setup()
+        }
+
         guard let collectionView = collectionView else { return }
 
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            let section = DetailFeedSection.allCases[indexPath.section]
-
+            guard let item = item as? (any ModelSectionable) else { return nil }
+            let section = item.detailFeedSection
+//            let section = DetailFeedSection.allCases[indexPath.section]
             switch section {
-                case .animeTrailer, .animeBasicInfo, .animeCharacters, .animeReviews:
+                case .animeTrailer, .animeCharacters, .animeReviews:
                     guard let trailer = item as? Trailer else { return nil }
                     return collectionView.dequeueConfiguredReusableCell(using: trailerCell,
                                                                         for: indexPath,
                                                                         item: trailer)
+                case .animeBasicInfo:
+                    guard let anime = item as? Anime else { return nil }
+                    return collectionView.dequeueConfiguredReusableCell(using: basicInfoCell,
+                                                                        for: indexPath,
+                                                                        item: anime)
             }
         }
     }
@@ -76,23 +86,40 @@ private extension DetailFeedDataSource {
         // MARK: Cells
         // Trailer Cell
         collectionView?.register(TrailerCell.self, forCellWithReuseIdentifier: TrailerCell.reuseIdentifier)
+
+        // Basic info. Cell
+        collectionView?.register(BasicInfoCell.self, forCellWithReuseIdentifier: BasicInfoCell.reuseIdentifier)
+        print("senku [DEBUG] \(String(describing: type(of: self))) - CELLS REGISTERED")
     }
 }
 
 extension DetailFeedDataSource: FeedDataSourceable {
-    func updateSnapshot<T: CaseIterable>(for section: T, with items: [AnyHashable], animating: Bool) {
+    func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil) {
         guard let section = section as? DetailFeedSection else { return }
+        let finalItems = setModelSection(for: section, with: items)
 
         // Append section only if it doesn't exist already
         if currentSnapshot.indexOfSection(section) == nil {
-            currentSnapshot.appendSections([section])
+            if let before = before as? DetailFeedSection {
+                currentSnapshot.insertSections([section], beforeSection: before)
+            } else {
+                currentSnapshot.appendSections([section])
+            }
         }
-        currentSnapshot.appendItems(items, toSection: section)
+        currentSnapshot.appendItems(finalItems, toSection: section)
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
     }
 
-    func getItem<T>(at indexPath: IndexPath) -> T? where T: Hashable {
+    func getItem<T: Hashable>(at indexPath: IndexPath) -> T? {
         return nil
+    }
+
+    func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable] {
+        guard let section = section as? DetailFeedSection else { return [] }
+        var items = items.compactMap { $0 as? (any ModelSectionable) }
+        items.indices.forEach { items[$0].detailFeedSection = section }
+        guard let finalItems = items as? [AnyHashable] else { return [] }
+        return finalItems
     }
 }
 
@@ -105,6 +132,12 @@ extension DetailFeedDataSource {
 
     func bindAnime() {
         presenter?.anime
+            .drive(onNext: { [weak self] anime in
+                guard let self = self else { return }
+                self.updateSnapshot(for: DetailFeedSection.animeBasicInfo, with: [anime], animating: true)
+            }).disposed(by: disposeBag)
+
+        presenter?.anime
             .filter { !$0.trailer.youtubeId.isEmpty }
             .drive(onNext: { [weak self] anime in
                 guard let self = self else { return }
@@ -115,12 +148,22 @@ extension DetailFeedDataSource {
     }
 
     func bindTrailer() {
-        presenter?.didFinishLoadingAnimeAndTrailer
+        guard let presenter = presenter else { return }
+
+        presenter.didFinishLoadingAnimeAndTrailer
             .drive { [weak self] anime, _ in
                 guard let self = self else { return }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING TRAILER")
-                self.updateSnapshot(for: DetailFeedSection.animeTrailer, with: [anime.trailer], animating: true)
+                self.updateSnapshot(for: DetailFeedSection.animeTrailer, with: [anime.trailer], animating: true, before: .animeBasicInfo)
             }.disposed(by: disposeBag)
+
+//        Observable.combineLatest(presenter.didFinishLoadingAnimeAndTrailer.asObservable(),
+//                                 presenter.anime.asObservable())
+//            .asDriver(onErrorJustReturn: ((Anime(), false), Anime()))
+//            .drive { [weak self] didLoad, anime in
+//                guard let self = self else { return }
+//
+//            }.disposed(by: disposeBag)
     }
 }
 

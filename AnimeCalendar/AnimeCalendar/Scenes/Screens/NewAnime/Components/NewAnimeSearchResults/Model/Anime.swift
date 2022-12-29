@@ -7,6 +7,11 @@
 
 import Foundation
 
+protocol ModelSectionable: Hashable, Equatable {
+    var detailFeedSection: DetailFeedSection { get set }
+    var feedSection: FeedSection { get set }
+}
+
 struct AnimeResult: Decodable {
     // MARK: Parameters
     var data: [Anime] = []
@@ -28,7 +33,7 @@ struct AnimeResult: Decodable {
     }
 }
 
-struct Anime: Decodable, Hashable {
+struct Anime: Decodable, ModelSectionable {
     // MARK: Parameters
     var uuid = UUID()
     var id: Int
@@ -112,6 +117,10 @@ struct Anime: Decodable, Hashable {
     static func == (lhs: Anime, rhs: Anime) -> Bool {
         return lhs.uuid == rhs.uuid
     }
+    
+    // MARK: Additional methods/properties
+    var detailFeedSection: DetailFeedSection = .animeTrailer
+    var feedSection: FeedSection = .animePromos
 }
 
 struct AnimeImageType: Decodable {

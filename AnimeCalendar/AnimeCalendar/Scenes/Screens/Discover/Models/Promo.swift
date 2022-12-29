@@ -21,7 +21,7 @@ struct PromoResult: Decodable {
 }
 
 // TODO: Create Id from promo & Anime instead of UUID if possible!
-struct Promo: Decodable, Hashable {
+struct Promo: Decodable, ModelSectionable {
     var id = UUID()
     var title: String
     var anime: Anime
@@ -64,9 +64,13 @@ struct Promo: Decodable, Hashable {
         self.anime = Anime()
         self.trailer = Trailer()
     }
+
+    var detailFeedSection: DetailFeedSection = .animeTrailer
+     
+    var feedSection: FeedSection = .animeSeason
 }
 
-struct Trailer: Decodable, Hashable {
+struct Trailer: Decodable, ModelSectionable {
     let url: String
     let image: AnimeImage
     var youtubeId: String
@@ -106,4 +110,9 @@ struct Trailer: Decodable, Hashable {
         self.image = AnimeImage()
         self.youtubeId = "e8YBesRKq_U"
     }
+    
+    // MARK: Addional properties
+    var detailFeedSection: DetailFeedSection = .animeTrailer
+    
+    var feedSection: FeedSection = .animeSeason
 }
