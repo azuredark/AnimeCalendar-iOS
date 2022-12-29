@@ -120,8 +120,4 @@ private extension AnimeDetailScreen {
 }
 
 // MARK: - Delegates
-extension AnimeDetailScreen {
-    func getDetailFeed() -> DetailFeed {
-        return detailFeed
-    }
-}
+extension AnimeDetailScreen {}

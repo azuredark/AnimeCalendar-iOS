@@ -7,7 +7,7 @@
 
 import UIKit
 
-fileprivate enum AccessId: String {
+private enum AccessId: String {
     case titleLabel = "title_label"
     case synopsisLabel = "synopsis_label"
 }
@@ -20,19 +20,8 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
         didSet { setupUI() }
     }
 
-    /// Title label.
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 3
-        label.font = .boldSystemFont(ofSize: 24)
-        label.textColor = Color.black
-        label.accessibilityIdentifier = AccessId.titleLabel.rawValue
-        contentView.addSubview(label)
-        return label
-    }()
-
     /// Details (Year, score, community, studio, etc)
+    ///  ...
 
     /// Synopsis label.
     private lazy var synopsisLabel: UILabel = {
@@ -41,46 +30,61 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 16)
         label.textColor = Color.gray
+        label.textAlignment = .left
         label.accessibilityIdentifier = AccessId.synopsisLabel.rawValue
         contentView.addSubview(label)
         return label
     }()
 
+    private lazy var mainStack: ACStack = {
+        let stack = ACStack(axis: .vertical)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.backgroundColor = .clear
+        stack.alignment = .leading
+        stack.distribution = .equalSpacing
+        contentView.addSubview(stack)
+        return stack
+    }()
+    
+    // TODO: Add read more mechanisim? That will be banger.
+
     // MARK: Methods
     override func prepareForReuse() {
         super.prepareForReuse()
-        titleLabel.text = nil
-        synopsisLabel.text = nil
+        mainStack.reset()
     }
 
     func setup() {
-        titleLabel.text = anime?.titleEng
-        synopsisLabel.text = anime?.synopsis
+        mainStack.setup(with: getStackComponents())
     }
 }
 
 private extension BasicInfoCell {
     func setupUI() {
-        layoutTitle()
-        layoutSynopsis()
+        layoutStack()
     }
-    
-    func layoutTitle() {
-        let xInset = 10.0
+
+    func layoutStack() {
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: xInset),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -xInset),
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    
-    func layoutSynopsis() {
-        let xInset = 10.0
-        NSLayoutConstraint.activate([
-            synopsisLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: xInset),
-            synopsisLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -xInset),
-            synopsisLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5.0),
-            synopsisLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -5.0)
-        ])
+
+    func getStackComponents() -> [ACStackItem] {
+        var components = [ACStackItem]()
+        var textStyle = ACStack.Text()
+        textStyle.alignment = .left
+
+        if let synopsis = anime?.synopsis {
+            textStyle.lines = 5
+            textStyle.textColor = Color.gray
+            textStyle.font = .systemFont(ofSize: 16, weight: .regular)
+            components.append(.text(value: synopsis, style: textStyle))
+        }
+
+        return components
     }
 }

@@ -29,7 +29,7 @@ final class ACStack: UIStackView {
     func setup(with components: [ACStackItem]) {
         self.components = components
     }
-    
+
     /// Deletes the arranged superviews
     func reset() {
         arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -44,8 +44,8 @@ private extension ACStack {
             switch component {
                 case .icon(let image):
                     self.layoutImageView(with: image, color: Color.cream)
-                case .text(let text):
-                    self.layoutText(text: text, color: Color.cream, alignment: .center)
+                case .text(let text, let style):
+                    self.layoutText(text, style: style)
                 case .image: break
                 case .spacer:
                     self.layoutSpacer(size: CGSize(width: 8.0, height: 0))
@@ -60,37 +60,56 @@ private extension ACStack {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = color
-        
+
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalToConstant: 14.0)
         ])
-        
+
         addArrangedSubview(imageView)
         return imageView
     }
-    
+
     /// Layout text label.
     @discardableResult
-    func layoutText(text: String, color: UIColor, alignment: NSTextAlignment) -> UILabel {
+    func layoutText(_ value: String, style: Text) -> UILabel {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = text
-        label.textColor = color
-        label.textAlignment = alignment
-        label.font = .systemFont(ofSize: 12, weight: .medium)
-        
+        label.numberOfLines = style.lines
+        label.text = value
+        label.textColor = style.textColor
+        label.textAlignment = style.alignment
+        label.font = style.font
+
         addArrangedSubview(label)
         return label
     }
-    
+
     func layoutSpacer(size: CGSize) {
         let view = UIView(frame: .zero)
-        
+
         NSLayoutConstraint.activate([
             view.widthAnchor.constraint(equalToConstant: size.width)
         ])
-        
+
         addArrangedSubview(view)
+    }
+}
+
+extension ACStack {
+    struct Text {
+        var lines: Int = 0
+        var alignment: NSTextAlignment = .left
+        var textColor: UIColor = Color.cream
+        var font: UIFont = .systemFont(ofSize: 12, weight: .medium)
+
+        init(lines: Int, alignment: NSTextAlignment, textColor: UIColor, font: UIFont) {
+            self.lines = lines
+            self.alignment = alignment
+            self.textColor = textColor
+            self.font = font
+        }
+
+        init() {}
     }
 }
 
@@ -100,7 +119,7 @@ typealias AsyncImage = (UIImage?) -> Void
 /// Items for the ACStack component
 enum ACStackItem {
     case icon(UIImage)
-    case text(String)
+    case text(value: String, style: ACStack.Text)
     case image(AsyncImage)
     case spacer
 }

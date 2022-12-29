@@ -35,7 +35,6 @@ final class DetailFeedDataSource {
         self.collectionView = collectionView
         self.presenter = presenter
 
-        print("senku [DEBUG] \(String(describing: type(of: self))) - PReSENTER?: \(self.presenter != nil)")
         configureCollection()
         buildDataSource()
     }
@@ -78,6 +77,18 @@ private extension DetailFeedDataSource {
                                                                         item: anime)
             }
         }
+        
+        dataSource?.supplementaryViewProvider = {
+            [weak self] collection, kind, indexPath -> UICollectionReusableView? in
+            guard let self = self else { return nil }
+            let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                         withReuseIdentifier: BasicInfoHeader.reuseIdentifier,
+                                                                         for: indexPath) as? BasicInfoHeader
+            guard let item = self.dataSource?.itemIdentifier(for: indexPath) as? Anime else { return nil }
+            headerView?.setupTitle(with: item.titleEng)
+            
+            return headerView
+        }
     }
 }
 
@@ -89,6 +100,13 @@ private extension DetailFeedDataSource {
 
         // Basic info. Cell
         collectionView?.register(BasicInfoCell.self, forCellWithReuseIdentifier: BasicInfoCell.reuseIdentifier)
+        
+        // MARK: Headers
+        // Basic info. header (Anime title)
+        collectionView?.register(BasicInfoHeader.self,
+                                 forSupplementaryViewOfKind: DetailFeed.sectionHeaderKind,
+                                 withReuseIdentifier: BasicInfoHeader.reuseIdentifier)
+        collectionView?.dataSource = dataSource
         print("senku [DEBUG] \(String(describing: type(of: self))) - CELLS REGISTERED")
     }
 }
@@ -98,11 +116,13 @@ extension DetailFeedDataSource: FeedDataSourceable {
         guard let section = section as? DetailFeedSection else { return }
         let finalItems = setModelSection(for: section, with: items)
 
-        // Append section only if it doesn't exist already
-        if currentSnapshot.indexOfSection(section) == nil {
-            if let before = before as? DetailFeedSection {
+        // Append section only if it doesn't exist already.
+        if !sectionExists(section: section) {
+            // Insert before specific section if exists.
+            if let before = before as? DetailFeedSection, sectionExists(section: before) {
                 currentSnapshot.insertSections([section], beforeSection: before)
             } else {
+                // Append to the stack in order instead.
                 currentSnapshot.appendSections([section])
             }
         }
@@ -120,6 +140,10 @@ extension DetailFeedDataSource: FeedDataSourceable {
         items.indices.forEach { items[$0].detailFeedSection = section }
         guard let finalItems = items as? [AnyHashable] else { return [] }
         return finalItems
+    }
+    
+    private func sectionExists(section: DetailFeedSection) -> Bool {
+        return currentSnapshot.indexOfSection(section) != nil
     }
 }
 
@@ -156,14 +180,6 @@ extension DetailFeedDataSource {
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING TRAILER")
                 self.updateSnapshot(for: DetailFeedSection.animeTrailer, with: [anime.trailer], animating: true, before: .animeBasicInfo)
             }.disposed(by: disposeBag)
-
-//        Observable.combineLatest(presenter.didFinishLoadingAnimeAndTrailer.asObservable(),
-//                                 presenter.anime.asObservable())
-//            .asDriver(onErrorJustReturn: ((Anime(), false), Anime()))
-//            .drive { [weak self] didLoad, anime in
-//                guard let self = self else { return }
-//
-//            }.disposed(by: disposeBag)
     }
 }
 
@@ -172,4 +188,14 @@ enum DetailFeedSection: String, CaseIterable {
     case animeBasicInfo
     case animeCharacters
     case animeReviews
+    
+    init(_ index: Int) {
+        switch index {
+            case 0: self = .animeTrailer
+            case 1: self = .animeBasicInfo
+            case 2: self = .animeCharacters
+            case 3: self = .animeReviews
+            default: self = .animeBasicInfo
+        }
+    }
 }

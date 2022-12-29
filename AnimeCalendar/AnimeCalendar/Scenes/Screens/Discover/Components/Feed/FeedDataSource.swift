@@ -121,8 +121,10 @@ extension FeedDataSource: FeedDataSourceable {
     
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable] {
         guard let section = section as? FeedSection else { return [] }
+        
         var items = items.compactMap { $0 as? (any ModelSectionable) }
         items.indices.forEach { items[$0].feedSection = section }
+        
         guard let finalItems = items as? [AnyHashable] else { return [] }
         return finalItems
     }

@@ -263,7 +263,7 @@ private extension TopAnimeCell {
             detailStack.heightAnchor.constraint(equalToConstant: 20.0)
         ])
     }
-    
+
     func layoutTitleContainer() {
         NSLayoutConstraint.activate([
             titleContainer.centerYAnchor.constraint(equalTo: infoContainer.centerYAnchor),
@@ -278,9 +278,9 @@ private extension TopAnimeCell {
 
     func layoutJapTitleLabel() {
         titleContainer.addArrangedSubview(japTilteLabel)
-        
+
         if let superView = self.genresLabel.superview as? UIStackView {
-           // Add custom spacing
+            // Add custom spacing
         }
     }
 
@@ -313,27 +313,38 @@ private extension TopAnimeCell {
         guard let anime = anime else { return [ACStackItem]() }
         var components = [ACStackItem]()
 
+        var textStyle = ACStack.Text()
+        textStyle.lines = 1
+
         if anime.year > 0 {
-            components.append(.icon(ACIcon.calendar))
-            components.append(.text(String(anime.year)))
-            components.append(.spacer)
+            components.append(contentsOf: [
+                .icon(ACIcon.calendar),
+                .text(value: String(anime.year), style: textStyle),
+                .spacer
+            ])
         }
 
         if anime.episodesCount > 0 {
-            components.append(.icon(ACIcon.tvFilled))
-            components.append(.text(String(anime.episodesCount)))
-            components.append(.spacer)
+            components.append(contentsOf: [
+                .icon(ACIcon.tvFilled),
+                .text(value: String(anime.episodesCount), style: textStyle),
+                .spacer
+            ])
         }
 
         if anime.score >= 0 {
-            components.append(.icon(ACIcon.starFilled))
-            components.append(.text("\(anime.score)"))
-            components.append(.spacer)
+            components.append(contentsOf: [
+                .icon(ACIcon.starFilled),
+                .text(value: "\(anime.score)", style: textStyle),
+                .spacer
+            ])
         }
 
-        if anime.members >= 0 {
-            components.append(.icon(ACIcon.twoPeopleFilled))
-            components.append(.text("\(anime.members)"))
+        if anime.members > 0 {
+            components.append(contentsOf: [
+                .icon(ACIcon.twoPeopleFilled),
+                .text(value: "\(anime.members)", style: textStyle)
+            ])
         }
 
         return components

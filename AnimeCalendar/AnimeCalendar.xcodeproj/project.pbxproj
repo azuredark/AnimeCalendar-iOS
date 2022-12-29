@@ -17,6 +17,7 @@
 		A720AA0E295B620400FEB7EE /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A720AA0D295B620400FEB7EE /* ReviewCell.swift */; };
 		A7231B0129569EAF0039A058 /* String+RegexFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7231B0029569EAF0039A058 /* String+RegexFilter.swift */; };
 		A7263D672957FA9A00FD5DFE /* String+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7263D662957FA9A00FD5DFE /* String+Format.swift */; };
+		A72FCFD6295D57B800B4D1F6 /* BasicInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72FCFD5295D57B800B4D1F6 /* BasicInfoHeader.swift */; };
 		A731E003281D12FA00036077 /* Xibs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A731E002281D12FA00036077 /* Xibs.swift */; };
 		A731E005281D13EE00036077 /* AnimeCalendarScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A731E004281D13EE00036077 /* AnimeCalendarScreenView.xib */; };
 		A731E007281D140200036077 /* NewAnimeScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A731E006281D140200036077 /* NewAnimeScreenView.xib */; };
@@ -179,6 +180,7 @@
 		A720AA0D295B620400FEB7EE /* ReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
 		A7231B0029569EAF0039A058 /* String+RegexFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RegexFilter.swift"; sourceTree = "<group>"; };
 		A7263D662957FA9A00FD5DFE /* String+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Format.swift"; sourceTree = "<group>"; };
+		A72FCFD5295D57B800B4D1F6 /* BasicInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoHeader.swift; sourceTree = "<group>"; };
 		A731E002281D12FA00036077 /* Xibs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xibs.swift; sourceTree = "<group>"; };
 		A731E004281D13EE00036077 /* AnimeCalendarScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimeCalendarScreenView.xib; sourceTree = "<group>"; };
 		A731E006281D140200036077 /* NewAnimeScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAnimeScreenView.xib; sourceTree = "<group>"; };
@@ -357,8 +359,17 @@
 				A720AA09295B61B400FEB7EE /* BasicInfoCell.swift */,
 				A720AA0B295B61BE00FEB7EE /* CharacterCell.swift */,
 				A720AA0D295B620400FEB7EE /* ReviewCell.swift */,
+				A72FCFD4295D578700B4D1F6 /* Headers */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		A72FCFD4295D578700B4D1F6 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A72FCFD5295D57B800B4D1F6 /* BasicInfoHeader.swift */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 		A73A81782931EF5E00B25EBC /* Models */ = {
@@ -1267,6 +1278,7 @@
 				A7445F2D292DCA68008A4696 /* GenericFeedCell.swift in Sources */,
 				A764DC1628BEC512005A68B0 /* MangaRepository.swift in Sources */,
 				A76D972128435D3A00D5FCD7 /* ComponenCollectionItem.swift in Sources */,
+				A72FCFD6295D57B800B4D1F6 /* BasicInfoHeader.swift in Sources */,
 				A78685CA2824D5CE00321415 /* CustomNavigationController.swift in Sources */,
 				A731E009281D1B0D00036077 /* Color.swift in Sources */,
 				A7D0F737285C34870003709B /* NewAnimeSelectedTypeComponent.swift in Sources */,
