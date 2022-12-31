@@ -57,7 +57,7 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 ### Anime Detail (New!)
 | Figma | iOS |
 | --- | --- |
-| | <img src="images/ui/anime-detail/ios1.png" width=250 /> |
+| <img src="images/ui/anime-detail/figma.png" width=250 /> | <img src="images/ui/anime-detail/ios1.png" width=250 /> |
 
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 
