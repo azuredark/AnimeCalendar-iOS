@@ -23,19 +23,7 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
     /// Details (Year, score, community, studio, etc)
     ///  ...
 
-    /// Synopsis label.
-    private lazy var synopsisLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 16)
-        label.textColor = Color.gray
-        label.textAlignment = .left
-        label.accessibilityIdentifier = AccessId.synopsisLabel.rawValue
-        contentView.addSubview(label)
-        return label
-    }()
-
+    /// Stack containing **snynopsis**.
     private lazy var mainStack: ACStack = {
         let stack = ACStack(axis: .vertical)
         stack.translatesAutoresizingMaskIntoConstraints = false

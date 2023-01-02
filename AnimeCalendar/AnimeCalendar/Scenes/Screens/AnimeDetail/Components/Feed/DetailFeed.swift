@@ -115,7 +115,7 @@ private extension DetailFeed {
 
         // Header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .estimated(44))
+                                                heightDimension: .estimated(60))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
                                                                  elementKind: Self.sectionHeaderKind,
                                                                  alignment: .top)

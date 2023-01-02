@@ -33,6 +33,28 @@ struct AnimeResult: Decodable {
     }
 }
 
+/// Types of show with it's parsed representation.
+enum ShowType: String {
+    case tv      = "TV Show"
+    case special = "TV Special"
+    case movie   = "Movie"
+    case ova     = "OVA"
+    case ona     = "Web Anime (ONA)"
+    case music   = "Music"
+    
+    init(from raw: String) {
+        switch raw.lowercased() {
+            case "tv": self = .tv
+            case "movie": self = .movie
+            case "special": self = .special
+            case "ova": self = .ova
+            case "ona": self = .ona
+            case "music": self = .music
+            default: self = .tv
+        }
+    }
+}
+
 struct Anime: Decodable, ModelSectionable {
     // MARK: Parameters
     var uuid = UUID()
@@ -50,6 +72,7 @@ struct Anime: Decodable, ModelSectionable {
     var members: Int
     var genres: [AnimeGenre]
     var trailer: Trailer
+    var showType: ShowType
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -67,6 +90,7 @@ struct Anime: Decodable, ModelSectionable {
         case members
         case genres
         case trailer
+        case showType      = "type"
     }
 
     // MARK: Decoding Technique
@@ -86,6 +110,7 @@ struct Anime: Decodable, ModelSectionable {
         members = try container.decodeIfPresent(Int.self, forKey: .members) ?? -1
         genres = try container.decodeIfPresent([AnimeGenre].self, forKey: .genres) ?? [AnimeGenre]()
         trailer = try container.decodeIfPresent(Trailer.self, forKey: .trailer) ?? Trailer()
+        showType = ShowType(from: try container.decodeIfPresent(String.self, forKey: .showType) ?? "")
     }
 
     // MARK: Initializers
@@ -104,6 +129,7 @@ struct Anime: Decodable, ModelSectionable {
         self.members = 0
         self.genres = [AnimeGenre]()
         self.trailer = Trailer()
+        self.showType = .tv
     }
 
     // MARK: IMPORTANT: UUID is used due to repeated ids in the SeasonAnime & TopAnime sections, as the airing anime could also appear on the top.

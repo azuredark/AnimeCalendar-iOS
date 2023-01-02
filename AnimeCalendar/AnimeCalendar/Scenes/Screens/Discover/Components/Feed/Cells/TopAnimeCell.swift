@@ -316,33 +316,40 @@ private extension TopAnimeCell {
         var textStyle = ACStack.Text()
         textStyle.lines = 1
 
+        /// Icon model for the images in the **ACStack** view.
+        var icon = ACStack.Image()
+        icon.size = .init(width: 14.0)
+        icon.tint = Color.cream
+
+        let spacer: ACStackItem = .spacer(type: .empty, space: 4.0)
+
         if anime.year > 0 {
             components.append(contentsOf: [
-                .icon(ACIcon.calendar),
+                .icon(image: icon.with(image: ACIcon.calendar)),
                 .text(value: String(anime.year), style: textStyle),
-                .spacer
+                spacer
             ])
         }
 
         if anime.episodesCount > 0 {
             components.append(contentsOf: [
-                .icon(ACIcon.tvFilled),
+                .icon(image: icon.with(image: ACIcon.tvFilled)),
                 .text(value: String(anime.episodesCount), style: textStyle),
-                .spacer
+                spacer
             ])
         }
 
         if anime.score >= 0 {
             components.append(contentsOf: [
-                .icon(ACIcon.starFilled),
+                .icon(image: icon.with(image: ACIcon.starFilled)),
                 .text(value: "\(anime.score)", style: textStyle),
-                .spacer
+                spacer
             ])
         }
 
         if anime.members > 0 {
             components.append(contentsOf: [
-                .icon(ACIcon.twoPeopleFilled),
+                .icon(image: icon.with(image: ACIcon.twoPeopleFilled)),
                 .text(value: "\(anime.members)", style: textStyle)
             ])
         }

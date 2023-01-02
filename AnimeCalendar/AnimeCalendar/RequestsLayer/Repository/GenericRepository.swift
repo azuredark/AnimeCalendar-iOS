@@ -22,6 +22,7 @@ class GenericRepository {
                 case .success(let data):
                     completion(data)
                 case .failure(let error):
+                    print("senku [❌] \(String(describing: type(of: self))) - Error: \(error)")
                     completion(nil)
             }
         }

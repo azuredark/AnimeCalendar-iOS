@@ -84,8 +84,9 @@ private extension DetailFeedDataSource {
             let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
                                                                          withReuseIdentifier: BasicInfoHeader.reuseIdentifier,
                                                                          for: indexPath) as? BasicInfoHeader
-            guard let item = self.dataSource?.itemIdentifier(for: indexPath) as? Anime else { return nil }
-            headerView?.setupTitle(with: item.titleEng)
+            guard let anime = self.dataSource?.itemIdentifier(for: indexPath) as? Anime else { return nil }
+            headerView?.anime = anime
+            headerView?.setup()
             
             return headerView
         }
@@ -112,6 +113,7 @@ private extension DetailFeedDataSource {
 }
 
 extension DetailFeedDataSource: FeedDataSourceable {
+    #warning("Create methods x Model type (Anime, Promo, Trailer) instead of using Dynamic Dispatch (any Model)")
     func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil) {
         guard let section = section as? DetailFeedSection else { return }
         let finalItems = setModelSection(for: section, with: items)
@@ -136,9 +138,12 @@ extension DetailFeedDataSource: FeedDataSourceable {
 
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable] {
         guard let section = section as? DetailFeedSection else { return [] }
+        
         var items = items.compactMap { $0 as? (any ModelSectionable) }
         items.indices.forEach { items[$0].detailFeedSection = section }
+        
         guard let finalItems = items as? [AnyHashable] else { return [] }
+        
         return finalItems
     }
     
