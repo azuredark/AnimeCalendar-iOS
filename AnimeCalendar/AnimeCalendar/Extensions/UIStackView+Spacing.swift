@@ -20,7 +20,7 @@ extension UIStackView {
         guard neighbors.count <= 2 else { return }
 
         // There cannot be a neighbor list with all repeated elments.
-        guard !neighbors.allItemsAreRepeated else { return }
+        if neighbors.count == 2, neighbors.allItemsAreRepeated { return }
 
         /// # Check view is already in **arrangedSubviews** of the **stack**.
         // This check may not be necessary as the API already makes this check.

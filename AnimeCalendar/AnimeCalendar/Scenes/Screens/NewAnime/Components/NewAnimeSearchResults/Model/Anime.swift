@@ -203,7 +203,7 @@ struct AnimeImage: Decodable {
     }
 }
 
-struct AnimeGenre: Decodable {
+struct AnimeGenre: Decodable, Hashable {
     // MARK: Parameters
     var id: Int
     var name: String

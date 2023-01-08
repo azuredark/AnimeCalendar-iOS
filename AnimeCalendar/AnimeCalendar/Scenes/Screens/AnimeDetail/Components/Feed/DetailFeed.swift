@@ -123,7 +123,7 @@ private extension DetailFeed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
         section.boundarySupplementaryItems = [header]
-        section.contentInsets = .init(top: 0, leading: 10.0, bottom: 0, trailing: 10.0)
+        section.contentInsets = .init(top: 15.0, leading: 10.0, bottom: 0, trailing: 10.0)
 
         return section
     }

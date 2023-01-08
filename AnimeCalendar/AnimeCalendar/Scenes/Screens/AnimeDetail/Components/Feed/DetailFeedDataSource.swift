@@ -47,7 +47,7 @@ final class DetailFeedDataSource {
 private extension DetailFeedDataSource {
     func buildDataSource() {
         let trailerCell = UICollectionView.CellRegistration<TrailerCell, Trailer> {
-            [weak self] cell, _, trailer in
+            [weak self] (cell, _, trailer) in
             cell.trailerComponent = self?.trailerComponent
             cell.trailer = trailer
             cell.setup()
@@ -62,22 +62,18 @@ private extension DetailFeedDataSource {
 
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let item = item as? (any ModelSectionable) else { return nil }
+            
             let section = item.detailFeedSection
-//            let section = DetailFeedSection.allCases[indexPath.section]
             switch section {
                 case .animeTrailer, .animeCharacters, .animeReviews:
                     guard let trailer = item as? Trailer else { return nil }
-                    return collectionView.dequeueConfiguredReusableCell(using: trailerCell,
-                                                                        for: indexPath,
-                                                                        item: trailer)
+                    return trailerCell.cellProvider(collectionView, indexPath, trailer)
                 case .animeBasicInfo:
                     guard let anime = item as? Anime else { return nil }
-                    return collectionView.dequeueConfiguredReusableCell(using: basicInfoCell,
-                                                                        for: indexPath,
-                                                                        item: anime)
+                    return basicInfoCell.cellProvider(collectionView, indexPath, anime)
             }
         }
-        
+
         dataSource?.supplementaryViewProvider = {
             [weak self] collection, kind, indexPath -> UICollectionReusableView? in
             guard let self = self else { return nil }
@@ -87,7 +83,7 @@ private extension DetailFeedDataSource {
             guard let anime = self.dataSource?.itemIdentifier(for: indexPath) as? Anime else { return nil }
             headerView?.anime = anime
             headerView?.setup()
-            
+
             return headerView
         }
     }
@@ -101,7 +97,7 @@ private extension DetailFeedDataSource {
 
         // Basic info. Cell
         collectionView?.register(BasicInfoCell.self, forCellWithReuseIdentifier: BasicInfoCell.reuseIdentifier)
-        
+
         // MARK: Headers
         // Basic info. header (Anime title)
         collectionView?.register(BasicInfoHeader.self,
@@ -138,15 +134,15 @@ extension DetailFeedDataSource: FeedDataSourceable {
 
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable] {
         guard let section = section as? DetailFeedSection else { return [] }
-        
+
         var items = items.compactMap { $0 as? (any ModelSectionable) }
         items.indices.forEach { items[$0].detailFeedSection = section }
-        
+
         guard let finalItems = items as? [AnyHashable] else { return [] }
-        
+
         return finalItems
     }
-    
+
     private func sectionExists(section: DetailFeedSection) -> Bool {
         return currentSnapshot.indexOfSection(section) != nil
     }
@@ -193,7 +189,7 @@ enum DetailFeedSection: String, CaseIterable {
     case animeBasicInfo
     case animeCharacters
     case animeReviews
-    
+
     init(_ index: Int) {
         switch index {
             case 0: self = .animeTrailer

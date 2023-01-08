@@ -7,13 +7,12 @@
 
 import UIKit
 
-final class ACStack: UIStackView {
+final class ACStack: UIStackView, ACUIDesignable {
     private var components = [ACStackItem]() {
         didSet { configure() }
     }
 
-    init(axis: NSLayoutConstraint.Axis,
-         frame: CGRect = .zero) {
+    init(axis: NSLayoutConstraint.Axis, frame: CGRect = .zero) {
         super.init(frame: frame)
         self.axis = axis
         self.alignment = .center
@@ -49,9 +48,10 @@ private extension ACStack {
                 case .image: break
                 case .spacer(let spacer, let space):
                     self.layoutSpacer(spacer, space: space)
+                case .customView(let view):
+                    self.layoutCustomView(with: view)
             }
         }
-        print("senku [DEBUG] \(String(describing: type(of: self))) - All arranged subviews #: \(arrangedSubviews.count)")
     }
 
     /// Layout image view.
@@ -97,6 +97,15 @@ private extension ACStack {
         return label
     }
 
+    /// Add custom view to the **arranged suviews** stack.
+    ///
+    /// - Warning: The customView **must** have either *intrinsic size* or *fixed height & width*.
+    /// - Parameter view: The custom view to add to the stack.
+    func layoutCustomView(with view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addArrangedSubview(view)
+    }
+
     /// Creates an empty view which serves as a *spacer*.
     ///
     /// - Warning: This will apply the **space** to both the **previous** and **next** neighbors.
@@ -127,7 +136,6 @@ private extension ACStack {
     @discardableResult
     func layoutEmptySpacerView(space: CGFloat) -> UIView {
         let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
         addArrangedSubview(view)
         return view
     }
@@ -148,4 +156,5 @@ enum ACStackItem {
     case image(AsyncImage)
     /// Should always be in the **middle** of other 2 items.
     case spacer(type: SpacerType, space: CGFloat)
+    case customView(UIView)
 }
