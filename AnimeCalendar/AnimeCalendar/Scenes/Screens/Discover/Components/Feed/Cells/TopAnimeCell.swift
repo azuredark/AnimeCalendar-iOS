@@ -12,7 +12,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     private var shadowExists: Bool = false
 
     // MARK: State
-    var anime: Anime? { didSet { setupUI() } }
+    var anime: Anime? { didSet { layoutUI() } }
     var index: Int?
     weak var presenter: DiscoverPresentable?
 
@@ -136,8 +136,8 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     ///
     /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
-        setupBackgroundImage()
         setupRankLabel()
+        setupBackgroundImage()
         setupTitleLabel()
         setupAnimeDetail()
         setupJapTitleLabel()
@@ -151,12 +151,8 @@ private extension TopAnimeCell {
     }
 
     func setupBackgroundImage() {
-        let imagePath: String = anime?.imageType.jpgImage.normal ?? ""
-        presenter?.getImageResource(path: imagePath, completion: { [weak self] image in
-            DispatchQueue.main.async {
-                self?.coverImageView.image = image
-            }
-        })
+        guard let path: String = anime?.imageType.jpgImage.normal else { return }
+        coverImageView.loadImage(from: path)
     }
 
     func setupAnimeDetail() {
@@ -180,7 +176,7 @@ private extension TopAnimeCell {
 }
 
 private extension TopAnimeCell {
-    func setupUI() {
+    func layoutUI() {
         layoutContainer()
         layoutCoverImageView()
         layoutBlurView()
@@ -278,10 +274,6 @@ private extension TopAnimeCell {
 
     func layoutJapTitleLabel() {
         titleContainer.addArrangedSubview(japTilteLabel)
-
-        if let superView = self.genresLabel.superview as? UIStackView {
-            // Add custom spacing
-        }
     }
 
     func layoutGenreLabel() {

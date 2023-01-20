@@ -15,7 +15,7 @@ final class BasicInfoHeader: UICollectionReusableView {
         didSet { setupUI() }
     }
     
-    var genreCollection: GenreCollection?
+    private var genreCollection: GenreCollection?
     
     /// Item title.
     private lazy var titleLabel: UILabel = {

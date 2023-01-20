@@ -32,21 +32,21 @@ final class SeasonAnimeCell: GenericFeedCell, FeedCell {
     ///
     /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
+        setupCoverImage()
         blurView.configure(with: anime?.titleEng ?? "", lines: 2)
-
-        let imagePath = anime?.imageType.jpgImage.normal ?? ""
-        presenter?.getImageResource(path: imagePath) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.coverImageView.image = image
-            }
-        }
-
-        #warning("Is using tooooo much memory, up to 600mb")
         layoutCellTag()
     }
 }
 
 private extension SeasonAnimeCell {
+    func setupCoverImage() {
+        guard let path = anime?.imageType.jpgImage.normal else { return }
+        coverImageView.loadImage(from: path, cellType: self)
+    }
+}
+
+private extension SeasonAnimeCell {
+    #warning("Is using tooooo much memory, up to 600mb")
     func layoutCellTag() {
         // List of, sorted by priority, AnimeTags
         guard let tags = presenter?.getTags(episodes: anime?.episodesCount,

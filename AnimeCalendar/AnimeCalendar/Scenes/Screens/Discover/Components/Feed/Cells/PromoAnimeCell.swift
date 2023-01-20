@@ -71,14 +71,15 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     ///
     /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
+        setupCoverImage()
         blurView.configure(with: promo?.anime.titleEng ?? "", lines:  1)
+    }
+}
 
-        let imagePath: String = promo?.trailer.image.large ?? ""
-        presenter?.getImageResource(path: imagePath, completion: { [weak self] image in
-            DispatchQueue.main.async {
-                self?.coverImageView.image = image
-            }
-        })
+private extension PromoAnimeCell {
+    func setupCoverImage() {
+        guard let imagePath: String = promo?.trailer.image.large else { return }
+        coverImageView.loadImage(from: imagePath)
     }
 }
 
