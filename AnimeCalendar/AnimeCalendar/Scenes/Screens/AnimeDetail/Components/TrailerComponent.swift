@@ -12,6 +12,7 @@ protocol TrailerCompatible: AnyObject {
     func loadTrailer(withId id: String)
     func startTrailer()
     func getContainer() -> UIView
+    func disposePlayer()
 }
 
 final class TrailerComponent: NSObject {
@@ -21,7 +22,7 @@ final class TrailerComponent: NSObject {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     /// # Presenter
     private weak var presenter: AnimeDetailPresentable?
 
@@ -51,27 +52,33 @@ extension TrailerComponent: YTPlayerViewDelegate {
         presenter?.trailerLoaded.accept(true)
         print("senku [DEBUG] \(String(describing: type(of: self))) - PLAAYER READYY")
     }
-    
+
     func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
-        let a = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        a.backgroundColor = Color.black
-        return a
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        view.backgroundColor = Color.black
+        return nil
     }
-    
+
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
         print("senku [DEBUG] \(String(describing: type(of: self))) - Player error: \(error)")
     }
 }
 
-
 extension TrailerComponent: TrailerCompatible {
     func loadTrailer(withId id: String) {
-        presenter?.loadTrailer(in: playerView, id: id)
+        playerView.load(withVideoId: id, playerVars: ["playerisinline": 1])
     }
-    
+
     func startTrailer() {}
 
     func getContainer() -> UIView {
         return playerView
+    }
+
+    func disposePlayer() {
+        playerView.stopVideo()
+        playerView.pauseVideo()
+        playerView.subviews.forEach { $0.removeFromSuperview() }
+        playerView.removeFromSuperview()
     }
 }

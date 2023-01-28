@@ -9,7 +9,6 @@ import UIKit
 
 final class CustomNavigationController: UINavigationController {
     /// # State
-    override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
 
     /// # Initializers
     init() {

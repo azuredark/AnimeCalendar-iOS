@@ -197,7 +197,7 @@ extension Feed: UICollectionViewDelegate {
         cellIsSelectable = false
 
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.expand(lasting: 0.15, end: .reset, toScale: 1.05) { [weak self] in
+        cell?.expand(durationInSeconds: 0.15, end: .reset, toScale: 0.95) { [weak self] in
             self?.cellIsSelectable = true
         }
 

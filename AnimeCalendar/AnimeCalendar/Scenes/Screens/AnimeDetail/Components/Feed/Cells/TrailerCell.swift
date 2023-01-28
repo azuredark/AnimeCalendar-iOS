@@ -21,10 +21,7 @@ final class TrailerCell: UICollectionViewCell, FeedCell {
     }
 
     // MARK: Methods
-    func setup() {
-        // Play video ...
-//        trailerComponent?.loadTrailer(withId: trailer?.youtubeId ?? "")
-    }
+    func setup() {}
 }
 
 private extension TrailerCell {

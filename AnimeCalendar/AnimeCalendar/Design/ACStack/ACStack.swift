@@ -7,7 +7,24 @@
 
 import UIKit
 
+protocol ACStackable {
+    var stack: ACStack { get }
+    func getStack() -> ACStack
+    func reset()
+}
+
+extension ACStackable {
+    func reset() {
+        stack.reset()
+    }
+
+    func getStack() -> ACStack {
+        return stack
+    }
+}
+
 final class ACStack: UIStackView, ACUIDesignable {
+    private typealias AccessId = ACStackIdentifiers
     private var components = [ACStackItem]() {
         didSet { configure() }
     }
@@ -17,6 +34,7 @@ final class ACStack: UIStackView, ACUIDesignable {
         self.axis = axis
         self.alignment = .center
         self.spacing = 2.0
+        self.accessibilityIdentifier = AccessId.stack
     }
 
     @available(*, unavailable)
@@ -48,8 +66,8 @@ private extension ACStack {
                 case .image: break
                 case .spacer(let spacer, let space):
                     self.layoutSpacer(spacer, space: space)
-                case .customView(let view):
-                    self.layoutCustomView(with: view)
+                case .customView(let view, let callback):
+                    self.layoutCustomView(with: view, callback: callback)
             }
         }
     }
@@ -59,6 +77,7 @@ private extension ACStack {
     func layoutImageView(with icon: ACStack.Image) -> UIImageView {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.accessibilityIdentifier = AccessId.imageView
         imageView.contentMode = .scaleAspectFit
 
         if let color = icon.tint {
@@ -71,11 +90,13 @@ private extension ACStack {
         // Depending on the **axis** either the **height** or **width** will **not** be set.
         // As the **contentMode** is set to **.scaleAspectFit**.
         if let width = icon.size.width, width != .zero {
-            imageView.widthAnchor.constraint(equalToConstant: width).isActive = true
+            let widthConstraint = imageView.widthAnchor.constraint(equalToConstant: width)
+            imageView.setPriorityForConstraints([widthConstraint], with: .defaultHigh)
         }
 
         if let height = icon.size.height, height != .zero {
-            imageView.heightAnchor.constraint(equalToConstant: height).isActive = true
+            let heightConstraint = imageView.heightAnchor.constraint(equalToConstant: height)
+            imageView.setPriorityForConstraints([heightConstraint], with: .defaultHigh)
         }
 
         addArrangedSubview(imageView)
@@ -87,6 +108,7 @@ private extension ACStack {
     func layoutText(_ value: String, style: Text) -> UILabel {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = AccessId.text
         label.numberOfLines = style.lines
         label.text = value
         label.textColor = style.textColor
@@ -94,6 +116,7 @@ private extension ACStack {
         label.font = style.font
 
         addArrangedSubview(label)
+        style.callback?(label, self)
         return label
     }
 
@@ -101,9 +124,11 @@ private extension ACStack {
     ///
     /// - Warning: The customView **must** have either *intrinsic size* or *fixed height & width*.
     /// - Parameter view: The custom view to add to the stack.
-    func layoutCustomView(with view: UIView) {
+    func layoutCustomView(with view: UIView, callback: ViewCallback? = nil) {
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessId.customView
         addArrangedSubview(view)
+        callback?(view, self)
     }
 
     /// Creates an empty view which serves as a *spacer*.
@@ -136,6 +161,8 @@ private extension ACStack {
     @discardableResult
     func layoutEmptySpacerView(space: CGFloat) -> UIView {
         let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessId.spacer
         addArrangedSubview(view)
         return view
     }
@@ -143,6 +170,7 @@ private extension ACStack {
 
 /// Closure alias for async images.
 typealias AsyncImage = (UIImage?) -> Void
+typealias ViewCallback = (_ view: UIView, _ stackView: ACStack) -> Void
 
 enum SpacerType {
     case empty
@@ -156,5 +184,5 @@ enum ACStackItem {
     case image(AsyncImage)
     /// Should always be in the **middle** of other 2 items.
     case spacer(type: SpacerType, space: CGFloat)
-    case customView(UIView)
+    case customView(UIView, callback: ViewCallback? = nil)
 }

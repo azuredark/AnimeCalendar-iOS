@@ -13,7 +13,7 @@ protocol AnimeDetailPresentable: AnyObject {
     /// Weak reference towards the view
     func start() -> Screen
     func updateAnime(with anime: Anime)
-    func loadTrailer(in player: YTPlayerView, id: String)
+    func disposeTrailerComponent()
     var anime: Driver<Anime> { get }
     var trailerLoaded: PublishRelay<Bool> { get }
     var didFinishLoadingAnimeAndTrailer: Driver<(Anime, Bool)> { get }
@@ -43,10 +43,10 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     func updateAnime(with anime: Anime) {
         interactor.updateAnime(with: anime)
     }
-
-    /// Preloads the trailer when a new **anime** event has been fired.
-    func loadTrailer(in player: YTPlayerView, id: String) {
-        player.load(withVideoId: id, playerVars: ["playerisinline": 1])
+    
+    func disposeTrailerComponent() {
+        let component = view?.getDetailFeed().getTrailerComponent()
+        component?.disposePlayer()
     }
 
     /// Tracks when a new **anime** event is fired.

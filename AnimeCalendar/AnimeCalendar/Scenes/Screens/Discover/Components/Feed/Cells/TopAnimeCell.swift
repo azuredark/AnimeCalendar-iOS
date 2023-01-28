@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 final class TopAnimeCell: UICollectionViewCell, FeedCell {
     static var reuseIdentifier: String = "TOP_ANIME_CELL_REUSE_ID"
@@ -15,6 +17,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     var anime: Anime? { didSet { layoutUI() } }
     var index: Int?
     weak var presenter: DiscoverPresentable?
+    private var imageDisposable: Disposable?
 
     private lazy var mainContainer: UIView = {
         let container = UIView(frame: .zero)
@@ -28,6 +31,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.addCornerRadius(radius: 10.0)
         mainContainer.addSubview(imageView)
         return imageView
@@ -54,7 +58,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     private lazy var rankLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Color.white
+        label.textColor = Color.staticWhite
         label.font = .systemFont(ofSize: 32.0, weight: .bold)
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -91,7 +95,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     private lazy var engTitleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Color.white
+        label.textColor = Color.staticWhite
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 18.0, weight: .bold)
         label.numberOfLines = 2
@@ -101,7 +105,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     private lazy var japTilteLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Color.subtitle
+        label.textColor = Color.lightGray
         label.textAlignment = .left
         label.font = .italicSystemFont(ofSize: 12.0)
         label.numberOfLines = 1
@@ -111,7 +115,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     private lazy var genresLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Color.cream
+        label.textColor = Color.staticWhite
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 12.0, weight: .medium)
         label.numberOfLines = 1
@@ -130,29 +134,35 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
         genresLabel.text = nil
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        configureContainerShadow()
+    }
+
     #warning("Rank should be related to the id")
     // MARK: Methods
     /// The setup is run for **every new cell dequed**. In contrast with **setupUI** which only configure constraints on each run and its UI elements are saved in the *new initialized cell's* memory.
     ///
     /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
-        setupRankLabel()
         setupBackgroundImage()
-        setupTitleLabel()
-        setupAnimeDetail()
-        setupJapTitleLabel()
-        setupGenresLabel()
     }
 }
 
 private extension TopAnimeCell {
-    func setupRankLabel() {
-        rankLabel.text = "\(index ?? 0)"
+    func setupBackgroundImage() {
+        let path: String? = anime?.imageType.jpgImage.normal
+        coverImageView.loadImage(from: path) { [weak self] _ in
+            self?.setupRankLabel()
+            self?.setupTitleLabel()
+            self?.setupAnimeDetail()
+            self?.setupJapTitleLabel()
+            self?.setupGenresLabel()
+        }
     }
 
-    func setupBackgroundImage() {
-        guard let path: String = anime?.imageType.jpgImage.normal else { return }
-        coverImageView.loadImage(from: path)
+    func setupRankLabel() {
+        rankLabel.text = "\(index ?? 0)"
     }
 
     func setupAnimeDetail() {
@@ -202,7 +212,6 @@ private extension TopAnimeCell {
             mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         #warning("Is using tooooo much memory, up to 100mb")
-        configureContainerShadow()
     }
 
     func layoutCoverImageView() {
@@ -288,8 +297,6 @@ private extension TopAnimeCell {
 private extension TopAnimeCell {
     func configureContainerShadow() {
         if !shadowExists {
-            mainContainer.setNeedsLayout()
-            mainContainer.layoutIfNeeded()
             let shadow = ShadowBuilder().getTemplate(type: .full)
                 .with(opacity: 0.25)
                 .with(cornerRadius: 10.0)
@@ -307,11 +314,12 @@ private extension TopAnimeCell {
 
         var textStyle = ACStack.Text()
         textStyle.lines = 1
+        textStyle.textColor = Color.staticWhite
 
         /// Icon model for the images in the **ACStack** view.
         var icon = ACStack.Image()
         icon.size = .init(width: 14.0)
-        icon.tint = Color.cream
+        icon.tint = Color.staticWhite
 
         let spacer: ACStackItem = .spacer(type: .empty, space: 4.0)
 

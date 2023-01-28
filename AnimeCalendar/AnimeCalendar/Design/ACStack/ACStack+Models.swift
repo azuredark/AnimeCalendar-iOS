@@ -49,13 +49,19 @@ extension ACStack {
         var alignment: NSTextAlignment = .left
         var textColor: UIColor = Color.cream
         var font: UIFont = .systemFont(ofSize: 12, weight: .medium)
+        var callback: ViewCallback?
 
         /// # Initializers
-        init(lines: Int, alignment: NSTextAlignment, textColor: UIColor, font: UIFont) {
+        init(lines: Int,
+             alignment: NSTextAlignment,
+             textColor: UIColor,
+             font: UIFont,
+             callback: ViewCallback? = nil) {
             self.lines = lines
             self.alignment = alignment
             self.textColor = textColor
             self.font = font
+            self.callback = callback
         }
 
         init() {}

@@ -10,7 +10,7 @@ import UIKit
 typealias AnimationCompleted = () -> Void
 
 extension UIView {
-    func expand(lasting duration: TimeInterval, end: AnimationEnd, toScale scale: CGFloat, _ animationCompleted: AnimationCompleted? = nil ) {
+    func expand(durationInSeconds duration: TimeInterval, end: AnimationEnd, toScale scale: CGFloat, _ animationCompleted: AnimationCompleted? = nil ) {
         let completionReset: (Bool) -> Void = { _ in
             if case .reset = end {
                 UIView.animate(withDuration: duration) { [weak self] in
@@ -26,6 +26,20 @@ extension UIView {
         }
 
         UIView.animate(withDuration: duration, animations: animation, completion:  completionReset)
+    }
+    
+    func fadeIn(duration: CGFloat, delay: CGFloat = 0, _ animationCompleted: AnimationCompleted? = nil) {
+        self.alpha = 0
+        
+        let animation: () -> Void = {
+            self.alpha = 1
+        }
+        
+        let completion: (Bool) -> Void = { _ in
+            animationCompleted?()
+        }
+        
+        UIView.animate(withDuration: duration, delay: delay, animations: animation, completion: completion)
     }
 }
 

@@ -11,8 +11,8 @@ import RxCocoa
 
 final class DetailFeedDataSource {
     // MARK: Aliases
-    private typealias DiffableDataSource = UICollectionViewDiffableDataSource<DetailFeedSection, AnyHashable>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<DetailFeedSection, AnyHashable>
+    typealias DiffableDataSource = UICollectionViewDiffableDataSource<DetailFeedSection, AnyHashable>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<DetailFeedSection, AnyHashable>
 
     // MARK: State
     /// # Presenter
@@ -28,7 +28,7 @@ final class DetailFeedDataSource {
 
     private weak var collectionView: UICollectionView?
     private var dataSource: DiffableDataSource?
-    private var currentSnapshot = Snapshot()
+    private(set) var currentSnapshot = Snapshot()
 
     // MARK: Initializers
     init(for collectionView: UICollectionView?, presenter: AnimeDetailPresentable?) {
@@ -62,7 +62,7 @@ private extension DetailFeedDataSource {
 
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let item = item as? (any ModelSectionable) else { return nil }
-            
+
             let section = item.detailFeedSection
             switch section {
                 case .animeTrailer, .animeCharacters, .animeReviews:
@@ -119,6 +119,8 @@ extension DetailFeedDataSource: FeedDataSourceable {
             // Insert before specific section if exists.
             if let before = before as? DetailFeedSection, sectionExists(section: before) {
                 currentSnapshot.insertSections([section], beforeSection: before)
+            } else if let after = after as? DetailFeedSection, sectionExists(section: after) {
+                currentSnapshot.insertSections([section], afterSection: after)
             } else {
                 // Append to the stack in order instead.
                 currentSnapshot.appendSections([section])
@@ -126,6 +128,11 @@ extension DetailFeedDataSource: FeedDataSourceable {
         }
         currentSnapshot.appendItems(finalItems, toSection: section)
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
+    }
+    
+    func updateSnapshot(completion: (_ snapshot: Snapshot) -> Snapshot) {
+        let newSnapshot = completion(currentSnapshot)
+        dataSource?.apply(newSnapshot, animatingDifferences: true)
     }
 
     func getItem<T: Hashable>(at indexPath: IndexPath) -> T? {
@@ -142,8 +149,10 @@ extension DetailFeedDataSource: FeedDataSourceable {
 
         return finalItems
     }
+}
 
-    private func sectionExists(section: DetailFeedSection) -> Bool {
+private extension DetailFeedDataSource {
+    func sectionExists(section: DetailFeedSection) -> Bool {
         return currentSnapshot.indexOfSection(section) != nil
     }
 }

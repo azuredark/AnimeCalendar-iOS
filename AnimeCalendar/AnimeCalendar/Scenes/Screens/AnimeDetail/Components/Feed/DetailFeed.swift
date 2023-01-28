@@ -15,7 +15,7 @@ final class DetailFeed: NSObject {
     private lazy var containerCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: getLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = .clear
+        collection.backgroundColor = Color.gray5
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
         return collection
@@ -48,6 +48,10 @@ extension DetailFeed {
     func getCollection() -> UICollectionView {
         return containerCollection
     }
+    
+    func getTrailerComponent() -> TrailerCompatible {
+        return dataSource.trailerComponent
+   }
 }
 
 // MARK: - Sections
@@ -123,7 +127,7 @@ private extension DetailFeed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
         section.boundarySupplementaryItems = [header]
-        section.contentInsets = .init(top: 15.0, leading: 10.0, bottom: 0, trailing: 10.0)
+        section.contentInsets = .init(top: 5.0, leading: 0, bottom: 0, trailing: 0)
 
         return section
     }

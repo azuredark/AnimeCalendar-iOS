@@ -41,7 +41,7 @@ enum ShowType: String {
     case ova     = "OVA"
     case ona     = "Web Anime (ONA)"
     case music   = "Music"
-    
+
     init(from raw: String) {
         switch raw.lowercased() {
             case "tv": self = .tv
@@ -73,6 +73,8 @@ struct Anime: Decodable, ModelSectionable {
     var genres: [AnimeGenre]
     var trailer: Trailer
     var showType: ShowType
+    var studios: [AnimeStudio]
+    var producers: [AnimeProducer]
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -91,6 +93,8 @@ struct Anime: Decodable, ModelSectionable {
         case genres
         case trailer
         case showType      = "type"
+        case studios
+        case producers
     }
 
     // MARK: Decoding Technique
@@ -111,6 +115,8 @@ struct Anime: Decodable, ModelSectionable {
         genres = try container.decodeIfPresent([AnimeGenre].self, forKey: .genres) ?? [AnimeGenre]()
         trailer = try container.decodeIfPresent(Trailer.self, forKey: .trailer) ?? Trailer()
         showType = ShowType(from: try container.decodeIfPresent(String.self, forKey: .showType) ?? "")
+        studios = try container.decodeIfPresent([AnimeStudio].self, forKey: .studios) ?? [AnimeStudio]()
+        producers = try container.decodeIfPresent([AnimeProducer].self, forKey: .producers) ?? [AnimeProducer]()
     }
 
     // MARK: Initializers
@@ -130,6 +136,8 @@ struct Anime: Decodable, ModelSectionable {
         self.genres = [AnimeGenre]()
         self.trailer = Trailer()
         self.showType = .tv
+        self.studios = [AnimeStudio]()
+        self.producers = [AnimeProducer]()
     }
 
     // MARK: IMPORTANT: UUID is used due to repeated ids in the SeasonAnime & TopAnime sections, as the airing anime could also appear on the top.
@@ -143,7 +151,7 @@ struct Anime: Decodable, ModelSectionable {
     static func == (lhs: Anime, rhs: Anime) -> Bool {
         return lhs.uuid == rhs.uuid
     }
-    
+
     // MARK: Additional methods/properties
     var detailFeedSection: DetailFeedSection = .animeTrailer
     var feedSection: FeedSection = .animePromos
@@ -229,5 +237,71 @@ struct AnimeGenre: Decodable, Hashable {
         self.id = 0
         self.name = "DEFAULT_NAME"
         self.url = "DEFAULT_URL"
+    }
+}
+
+struct AnimeStudio: Decodable {
+    // MARK: Parameters
+    var id: Int
+    var type: String
+    var name: String
+    var url: String
+
+    // MARK: Parameter mapping
+    enum CodingKeys: String, CodingKey {
+        case id = "mal_id"
+        case type
+        case name
+        case url
+    }
+
+    // MARK: Decoding Technique
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? ""
+        self.name = try container.decode(String.self, forKey: .name)
+        self.url = try container.decodeIfPresent(String.self, forKey: .url) ?? ""
+    }
+
+    // MARK: Initializers
+    init() {
+        self.id = 100
+        self.type = "STUDIO_ID"
+        self.name = "STUDIO_NAME"
+        self.url = "STUDIO_URL"
+    }
+}
+
+struct AnimeProducer: Decodable {
+    // MARK: Parameters
+    var id: Int
+    var type: String
+    var name: String
+    var url: String
+
+    // MARK: Parameter mapping
+    enum CodingKeys: String, CodingKey {
+        case id = "mal_id"
+        case type
+        case name
+        case url
+    }
+
+    // MARK: Decoding Technique
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? ""
+        self.name = try container.decode(String.self, forKey: .name)
+        self.url = try container.decodeIfPresent(String.self, forKey: .url) ?? ""
+    }
+
+    // MARK: Initializers
+    init() {
+        self.id = 100
+        self.type = "PRODUCER_ID"
+        self.name = "PRODUCER__NAME"
+        self.url = "PRODUCER_URL"
     }
 }

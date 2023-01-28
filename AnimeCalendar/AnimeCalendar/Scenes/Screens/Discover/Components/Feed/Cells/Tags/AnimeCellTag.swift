@@ -34,7 +34,7 @@ final class AnimeCellTag: UIView {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.tintColor = Color.white
+        imageView.tintColor = Color.staticWhite
         mainContainer.addSubview(imageView)
         return imageView
     }()
@@ -43,7 +43,7 @@ final class AnimeCellTag: UIView {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.textColor = Color.white
+        label.textColor = Color.staticWhite
         label.font = .systemFont(ofSize: 11, weight: .medium)
         label.numberOfLines = 1
         mainContainer.addSubview(label)

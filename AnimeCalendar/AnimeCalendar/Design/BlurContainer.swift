@@ -14,7 +14,7 @@ final class BlurContainer: UIView {
     private let config: BlurContainer.Config
 
     private lazy var blurView: UIView = {
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .systemMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
@@ -59,7 +59,7 @@ private extension BlurContainer {
         let titleLabel = UILabel(frame: .zero)
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textColor = Color.white
+        titleLabel.textColor = Color.staticWhite
         titleLabel.textAlignment = .center
         titleLabel.font = .systemFont(ofSize: 14, weight: .bold)
         titleLabel.numberOfLines = lines

@@ -10,17 +10,20 @@ import UIKit
 final class BasicInfoHeader: UICollectionReusableView {
     // MARK: State
     static let reuseIdentifier = "HEADER_REUSE_IDENTIFIER"
+    private typealias AccessId = BasicInfoCellIdentifiers
     
     var anime: Anime? {
         didSet { setupUI() }
     }
     
+    /// ACCollection containing the anime's genres.
     private var genreCollection: GenreCollection?
     
     /// Item title.
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = AccessId.title
         label.adjustsFontForContentSizeCategory = true
         label.textColor = Color.black
         label.font = .systemFont(ofSize: 24, weight: .bold)
@@ -35,19 +38,17 @@ final class BasicInfoHeader: UICollectionReusableView {
         let stack = ACStack(axis: .vertical)
         stack.spacing = 4.0
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.accessibilityIdentifier = AccessId.stack
         stack.backgroundColor = .clear
         stack.alignment = .leading
         addSubview(stack)
         return stack
     }()
-    
-    private lazy var genreCollection2: GenreCollection = {
-        return GenreCollection()
-    }()
 
     // MARK: Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = Color.cream
     }
     
     @available(*, unavailable)
@@ -77,19 +78,22 @@ private extension BasicInfoHeader {
     
     func layoutTitleLabel() {
         let yInset: CGFloat = 5.0
+        let xInset: CGFloat = 10.0
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: xInset),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -xInset),
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: yInset)
         ])
     }
     
     func layoutBasicInfoStack() {
+        let xInset: CGFloat = 10.0
+        let yInset: CGFloat = 4.0
         NSLayoutConstraint.activate([
-            basicInfoStack.leadingAnchor.constraint(equalTo: leadingAnchor),
-            basicInfoStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            basicInfoStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: xInset),
+            basicInfoStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -xInset),
             basicInfoStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-            basicInfoStack.bottomAnchor.constraint(equalTo: bottomAnchor)
+            basicInfoStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -yInset)
         ])
     }
 }
@@ -99,8 +103,7 @@ private extension BasicInfoHeader {
         var components = [ACStackItem]()
         
         let detailsStack = DetailsStack()
-        detailsStack.anime = anime
-        detailsStack.setup()
+        detailsStack.setup(with: anime)
         components.append(.customView(detailsStack.getStack()))
         
         guard let genres = anime?.genres,
@@ -112,7 +115,8 @@ private extension BasicInfoHeader {
         genresCollection.updateSnapshot()
 
         let collectionView = genresCollection.getCollectionView()
-        collectionView.setSize(width: bounds.size.width, height: 20.0)
+        let xInset: CGFloat = 20.0
+        collectionView.setSize(width: bounds.size.width-xInset, height: 20.0)
         components.append(.customView(collectionView))
         
         genreCollection = genresCollection

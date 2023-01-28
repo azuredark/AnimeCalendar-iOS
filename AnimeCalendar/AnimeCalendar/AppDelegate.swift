@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ImagePipeline.shared = pipeline
         
         // MARK: Setting-up Nuke ImageLoadingOptions
-        let options = ImageLoadingOptions(placeholder: UIImage(named: "new-anime-item-placeholder"),
+        let options = ImageLoadingOptions(placeholder: UIImage(named: "anime-placeholder"),
                                           transition: .fadeIn(duration: 0.4, options: .layoutSubviews),
                                           failureImage: UIImage(named: "new-anime-item-placeholder"),
                                           contentModes: .init(success: .scaleAspectFill,
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ImageLoadingOptions.shared = options
         
         /// # For `debugging` purposes only
-//        ImagePipeline.shared.cache.removeAll()
+        ImagePipeline.shared.cache.removeAll()
         
         return true
     }

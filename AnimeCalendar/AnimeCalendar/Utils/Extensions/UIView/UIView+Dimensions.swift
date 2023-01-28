@@ -12,6 +12,7 @@ extension UIView {
     typealias Dimensions = (width: Dimension, height: Dimension)
 
     /// Set the **width and height** of the current view by **custom** settings of **on/off**.
+    @available(*, deprecated, message: "Too much boiler for simple problem")
     func setSize(by dimensions: Dimensions) {
         self.translatesAutoresizingMaskIntoConstraints = false
 

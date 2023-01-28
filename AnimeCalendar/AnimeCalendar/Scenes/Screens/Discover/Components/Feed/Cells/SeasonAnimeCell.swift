@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class SeasonAnimeCell: GenericFeedCell, FeedCell {
     // MARK: Reference object
@@ -33,15 +35,20 @@ final class SeasonAnimeCell: GenericFeedCell, FeedCell {
     /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
         setupCoverImage()
-        blurView.configure(with: anime?.titleEng ?? "", lines: 2)
-        layoutCellTag()
     }
 }
 
 private extension SeasonAnimeCell {
     func setupCoverImage() {
-        guard let path = anime?.imageType.jpgImage.normal else { return }
-        coverImageView.loadImage(from: path, cellType: self)
+        let path: String? = anime?.imageType.jpgImage.normal
+        coverImageView.loadImage(from: path, cellType: self) { [weak self] _ in
+            self?.layoutCellTag()
+            self?.setupTitle()
+        }
+    }
+
+    func setupTitle() {
+        blurView.configure(with: anime?.titleEng ?? "", lines: 2)
     }
 }
 
@@ -138,6 +145,8 @@ private extension SeasonAnimeCell {
 
             default: break
         }
+
+        cellTags.forEach { $0.fadeIn(duration: 0.4) }
     }
 
     func alignTag(_ tag: AnimeCellTag, tagsCount: Int, position: TagPosition, _ completion: ((AnimeCellTag) -> Void)? = nil) {

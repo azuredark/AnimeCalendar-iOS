@@ -7,50 +7,38 @@
 
 import UIKit
 
-final class DetailsStack {
-    var anime: Anime?
-
+final class DetailsStack: ACStackable {
     // MARK: State
-    private lazy var stack: ACStack = {
+    private(set) lazy var stack: ACStack = {
         let _stack = ACStack(axis: .horizontal)
+        _stack.translatesAutoresizingMaskIntoConstraints = false
         _stack.backgroundColor = .clear
         _stack.alignment = .center
         return _stack
     }()
 
-    // MARK: Initializers
-    init() {}
-
     // MARK: Methods
-    func setup() {
-        stack.setup(with: getStackComponents())
-    }
-
-    func reset() {
-        stack.reset()
-    }
-
-    func getStack() -> UIStackView {
-        stack
+    func setup(with anime: Anime?) {
+        stack.setup(with: getStackComponents(with: anime))
     }
 }
 
 private extension DetailsStack {
-    func getStackComponents() -> [ACStackItem] {
+    func getStackComponents(with anime: Anime?) -> [ACStackItem] {
         var components = [ACStackItem]()
         guard let anime = anime else { return [] }
 
         var textStyle = ACStack.Text()
         textStyle.font = .systemFont(ofSize: 12, weight: .medium)
-        textStyle.textColor = Color.subtitle
+        textStyle.textColor = Color.gray
         textStyle.lines = 1
 
         /// Icon model for the images in the **ACStack** view.
         var icon = ACStack.Image()
         icon.size = .init(width: 14.0)
-        icon.tint = Color.subtitle
+        icon.tint = Color.gray
 
-        let spacer: ACStackItem = .spacer(type: .circle(tint: Color.subtitle),
+        let spacer: ACStackItem = .spacer(type: .circle(tint: Color.gray),
                                           space: 5.0)
 
         // Show type

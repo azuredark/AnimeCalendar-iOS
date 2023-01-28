@@ -19,6 +19,7 @@ protocol ACColllectionLayoutable: AnyObject {
 final class ACCollection<Section: Hashable, Item: Hashable>: ACUIDesignable {
     // MARK: State
     /// # Typealias
+    private typealias AccessId = ACCollectionIdentifiers
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
 
@@ -26,6 +27,7 @@ final class ACCollection<Section: Hashable, Item: Hashable>: ACUIDesignable {
     private lazy var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: getLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.accessibilityIdentifier = AccessId.collection
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
         collection.alwaysBounceVertical = false

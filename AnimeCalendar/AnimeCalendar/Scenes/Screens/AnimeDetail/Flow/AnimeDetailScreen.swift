@@ -16,17 +16,10 @@ final class AnimeDetailScreen: UIViewController, Screen {
     private lazy var navigationBar: ScreenNavigationBar = {
         AnimeDetailNavigationBar(self)
     }()
-
-    /// # Components
-//    private(set) lazy var trailerComponent: TrailerCompatible = {
-//        let trailer = TrailerComponent(presenter: presenter)
-//        return trailer
-//    }()
-
+    
     /// # Main collection
     private lazy var detailFeed: DetailFeed = {
         let feed = DetailFeed(presenter: presenter)
-//        feed.setTrailerComponent(trailerComponent)
         return feed
     }()
 
@@ -46,6 +39,10 @@ final class AnimeDetailScreen: UIViewController, Screen {
     deinit {
         print("senku [DEBUG] \(String(describing: type(of: self))) - deinted")
     }
+    
+    func getDetailFeed() -> DetailFeed {
+        return detailFeed
+    }
 }
 
 // MARK: - Life Cycle
@@ -59,6 +56,7 @@ extension AnimeDetailScreen {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        presenter?.disposeTrailerComponent()
         print("senku [DEBUG] \(String(describing: type(of: self))) - viewDidDisappear")
     }
 
@@ -69,7 +67,6 @@ extension AnimeDetailScreen {
 
 private extension AnimeDetailScreen {
     func configureScreen() {
-        view.backgroundColor = Color.cream
         configureNavigationItems()
         layoutCollection()
     }

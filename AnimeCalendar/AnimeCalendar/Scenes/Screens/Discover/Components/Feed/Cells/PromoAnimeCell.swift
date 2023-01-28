@@ -39,7 +39,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         coverImageView.addSubview(view)
         return view
     }()
-    
+
     private lazy var gradientLayer: CAGradientLayer = {
         let gradient = CAGradientLayer()
         gradient.type = .axial
@@ -50,7 +50,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         gradient.locations = [0, 1]
         return gradient
     }()
-    
+
     private lazy var gradientView: UIView = {
         let gradient = GradientView(colors: [.clear, .black])
         gradient.translatesAutoresizingMaskIntoConstraints = false
@@ -72,14 +72,15 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
         setupCoverImage()
-        blurView.configure(with: promo?.anime.titleEng ?? "", lines:  1)
     }
 }
 
 private extension PromoAnimeCell {
     func setupCoverImage() {
-        guard let imagePath: String = promo?.trailer.image.large else { return }
-        coverImageView.loadImage(from: imagePath)
+        let imagePath: String? = promo?.trailer.image.large
+        coverImageView.loadImage(from: imagePath) { [weak self] _ in
+            self?.blurView.configure(with: self?.promo?.anime.titleEng ?? "", lines: 1)
+        }
     }
 }
 
@@ -119,13 +120,13 @@ private extension PromoAnimeCell {
             blurView.heightAnchor.constraint(equalToConstant: height)
         ])
     }
-    
+
     func layoutGradientLayer() {
         NSLayoutConstraint.activate([
             gradientView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
             gradientView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
             gradientView.topAnchor.constraint(equalTo: coverImageView.topAnchor),
-            gradientView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor)
         ])
     }
 }
