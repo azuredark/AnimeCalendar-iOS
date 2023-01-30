@@ -11,6 +11,7 @@ enum BasicInfoCellIdentifiers {
     private static let id: String = "basic_info_cell."
     /// # BasicInfoCell
     static var mainStack: String { "\(id)main_stack" }
+    static var innerStack: String { "\(id)inner_stack" }
     static var producersStack: String { "\(id)producers_stack" }
     
     /// # BasicInfoHeader

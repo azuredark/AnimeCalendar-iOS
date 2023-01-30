@@ -12,9 +12,10 @@ import RxSwift
 final class TopAnimeCell: UICollectionViewCell, FeedCell {
     static var reuseIdentifier: String = "TOP_ANIME_CELL_REUSE_ID"
     private var shadowExists: Bool = false
+    private var radius: CGFloat { 10.0 }
 
     // MARK: State
-    var anime: Anime? { didSet { layoutUI() } }
+    var anime: Anime?
     var index: Int?
     weak var presenter: DiscoverPresentable?
     private var imageDisposable: Disposable?
@@ -32,7 +33,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.addCornerRadius(radius: 10.0)
+        imageView.addCornerRadius(radius: radius)
         mainContainer.addSubview(imageView)
         return imageView
     }()
@@ -122,6 +123,16 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
         infoContainer.addSubview(label)
         return label
     }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layoutUI()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -296,13 +307,14 @@ private extension TopAnimeCell {
 
 private extension TopAnimeCell {
     func configureContainerShadow() {
+        print("senku [DEBUG] \(String(describing: type(of: self))) - configureContainerShadow")
         if !shadowExists {
             let shadow = ShadowBuilder().getTemplate(type: .full)
                 .with(opacity: 0.25)
-                .with(cornerRadius: 10.0)
+                .with(cornerRadius: radius)
                 .build()
             mainContainer.addShadow(with: shadow)
-            shadowExists = true
+            shadowExists.toggle()
         }
     }
 }

@@ -13,7 +13,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     private var shadowExists: Bool = false
 
     weak var presenter: DiscoverPresentable?
-    var promo: Promo? { didSet { setupUI() }}
+    var promo: Promo?
 
     private lazy var mainContainer: UIView = {
         let container = UIView(frame: .zero)
@@ -58,6 +58,16 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
         return gradient
     }()
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layoutUI()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     /// Reset cell's state when preparing for reusing
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -85,11 +95,10 @@ private extension PromoAnimeCell {
 }
 
 private extension PromoAnimeCell {
-    func setupUI() {
+    func layoutUI() {
         layoutContainer()
         layoutCoverImageView()
         layoutBlurView()
-//        layoutGradientLayer()
     }
 
     func layoutContainer() {
@@ -99,7 +108,6 @@ private extension PromoAnimeCell {
             mainContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-//      configureContainerShadow()
     }
 
     func layoutCoverImageView() {

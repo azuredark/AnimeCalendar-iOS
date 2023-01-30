@@ -17,6 +17,7 @@ protocol FeedCell {
 class GenericFeedCell: UICollectionViewCell {
     // MARK: Accessibility id
     private let accessId = GenericFeedCellIdentifiers()
+    private var radius: CGFloat { 5.0 }
 
     // MARK: State
     private var shadowExists: Bool = false
@@ -35,7 +36,7 @@ class GenericFeedCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleToFill
         view.backgroundColor = .clear
-        view.addCornerRadius(radius: 10.0)
+        view.addCornerRadius(radius: radius)
         mainContainer.addSubview(view)
         return view
     }()
@@ -47,23 +48,16 @@ class GenericFeedCell: UICollectionViewCell {
         coverImageView.addSubview(view)
         return view
     }()
-    
-    private lazy var gradientView: UIView = {
-        let gradient = GradientView(colors: [.clear, Color.black.withAlphaComponent(0.8)])
-        gradient.translatesAutoresizingMaskIntoConstraints = false
-        coverImageView.addSubview(gradient)
-        return gradient
-    }()
+
 }
 
 extension GenericFeedCell {
     /// The UI layout here is **constant** which will always be the same, as only so many UICollectionViewCells are initialized in total.
-    func setupUI() {
+    func layoutUI() {
         backgroundColor = .clear
         layoutContainer()
         layoutCoverImageView()
         layoutBlurView()
-//        layoutGradientView()
     }
 }
 
@@ -75,8 +69,6 @@ private extension GenericFeedCell {
             mainContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        #warning("Is using tooooo much memory, up to 100mb")
-//        configureContainerShadow()
     }
 
     func layoutCoverImageView() {
@@ -97,15 +89,6 @@ private extension GenericFeedCell {
             blurView.heightAnchor.constraint(equalToConstant: height)
         ])
     }
-    
-    func layoutGradientView() {
-        NSLayoutConstraint.activate([
-            gradientView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
-            gradientView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
-            gradientView.topAnchor.constraint(equalTo: coverImageView.topAnchor),
-            gradientView.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
-        ])
-    }
 }
 
 private extension GenericFeedCell {
@@ -115,7 +98,7 @@ private extension GenericFeedCell {
             mainContainer.layoutIfNeeded()
             let shadow = ShadowBuilder().getTemplate(type: .full)
                 .with(opacity: 0.25)
-                .with(cornerRadius: 10.0)
+                .with(cornerRadius: radius)
                 .build()
             mainContainer.addShadow(with: shadow)
             shadowExists = true

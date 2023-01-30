@@ -88,7 +88,7 @@ private extension BasicInfoHeader {
     
     func layoutBasicInfoStack() {
         let xInset: CGFloat = 10.0
-        let yInset: CGFloat = 4.0
+        let yInset: CGFloat = 8.0
         NSLayoutConstraint.activate([
             basicInfoStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: xInset),
             basicInfoStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -xInset),

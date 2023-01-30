@@ -18,9 +18,7 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
     static var reuseIdentifier: String = "DETAIL_FEED_BASIC_INFO_CELL_REUSE_ID"
     private static let xPadding: CGFloat = 10.0
 
-    var anime: Anime? {
-        didSet { setupUI() }
-    }
+    var anime: Anime?
 
     /// Stack containing **snynopsis**.
     private lazy var mainStack: ACStack = {
@@ -28,9 +26,9 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.accessibilityIdentifier = AccessId.mainStack
         stack.backgroundColor = .clear
-        stack.alignment = .leading
+        stack.alignment = .center
         stack.distribution = .fill
-        stack.spacing = 0
+        stack.spacing = 4
         contentView.addSubview(stack)
         return stack
     }()
@@ -39,6 +37,7 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = Color.cream
+        layoutUI()
     }
 
     @available(*, unavailable)
@@ -60,23 +59,23 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
 }
 
 private extension BasicInfoCell {
-    func setupUI() {
+    func layoutUI() {
         layoutStack()
     }
 
     func layoutStack() {
+        let yPadding: CGFloat = 4.0
         NSLayoutConstraint.activate([
-            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Self.xPadding),
+            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4.0),
+            mainStack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
 
         let constraints = [
-            mainStack.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor,
-                                                constant: -Self.xPadding),
+            mainStack.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor),
+            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -yPadding)
         ]
 
-        mainStack.setPriorityForConstraints(constraints, with: .defaultHigh)
+        mainStack.setPriorityForConstraints(constraints, with: .init(999))
     }
 }
 
@@ -84,72 +83,123 @@ private extension BasicInfoCell {
     func getStackComponents() -> [ACStackItem] {
         guard let anime = anime else { return [] }
         var components = [ACStackItem]()
-        var textStyle = ACStack.Text()
-        textStyle.alignment = .left
+        let spacer = getLineSpacerItem()
 
-        let emptyView = getEmptyView()
-        let spacer: ACStackItem = .customView(emptyView, callback: { [weak self] (view, _) in
+        /// # Studios & Producers
+        let studiosAndProducersStack: ACStack = getStudiosAndProducerStack(with: anime)
+        
+        components.append(.customView(studiosAndProducersStack, callback: { [weak self] (view, _) in
             guard let self = self else { return }
-            let constraints = [
-                view.widthAnchor.constraint(equalTo: self.contentView.widthAnchor,
-                                            constant: -Self.xPadding * 2),
-            ]
-            view.setPriorityForConstraints(constraints, with: .defaultHigh)
-        })
+            let constraint = view.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, constant: -Self.xPadding * 2)
+            view.setPriorityForConstraints([constraint], with: .init(999))
+        }))
 
-        if !anime.studios.isEmpty {
-            let producersStack = StudiosStack()
-            producersStack.setup(with: anime.studios)
-
-            let stack = producersStack.getStack()
-            let scrollView = ACSCroll(axis: .horizontal)
-            scrollView.setup(with: stack)
-            components.append(.customView(scrollView, callback: { [weak self] (view, _) in
-                guard let self = self else { return }
-                let constraint = view.widthAnchor.constraint(lessThanOrEqualTo: self.contentView.widthAnchor,
-                                                             constant: -Self.xPadding * 2)
-                view.setPriorityForConstraints([constraint], with: .defaultHigh)
-            }))
-        }
-
-        if !anime.producers.isEmpty {
-            textStyle.lines = 2
-            textStyle.textColor = Color.gray
-            textStyle.font = .systemFont(ofSize: 14, weight: .regular)
-            let text: String = anime.producers.map { $0.name }.formatList(by: ",", endSeparator: "&")
-            components.append(.text(value: text, style: textStyle))
-        }
-
-        // Line Separator
+        /// # Line Separator
         if !anime.producers.isEmpty || !anime.studios.isEmpty {
             components.append(spacer)
         }
 
+        /// # Synopsis
         if !anime.synopsis.isEmpty {
-            textStyle.lines = 5
-            textStyle.alignment = .justified
-            textStyle.textColor = Color.gray
-            textStyle.font = .systemFont(ofSize: 14, weight: .regular)
-            textStyle.callback = { [weak self] (view, _) in
+            let synopsisStack: ACStack = getSynopsisStack(with: anime.synopsis)
+            components.append(.customView(synopsisStack, callback: { [weak self] (view, _) in
                 guard let self = self else { return }
-                let constraint = view.widthAnchor.constraint(lessThanOrEqualTo: self.contentView.widthAnchor,
-                                                             constant: -Self.xPadding * 2)
-                view.setPriorityForConstraints([constraint], with: .defaultHigh)
-            }
-            components.append(.text(value: anime.synopsis, style: textStyle))
+                let constraint = view.widthAnchor.constraint(lessThanOrEqualTo: self.contentView.widthAnchor, constant: -Self.xPadding * 2)
+                view.setPriorityForConstraints([constraint], with: .init(999))
+            }))
         }
 
         return components
     }
+}
 
-    func getEmptyView() -> UIView {
+private extension BasicInfoCell {
+    func getStudiosAndProducerStack(with anime: Anime) -> ACStack {
+        /// # Stack Container
+        // Components
+        var components = [ACStackItem]()
+        let container = ACStack(axis: .vertical)
+        container.alignment = .leading
+        container.distribution = .fill
+        container.spacing = 0
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
+        /// # Studios
+        if !anime.studios.isEmpty {
+            let producersStack = StudiosStack()
+            producersStack.setup(with: anime.studios)
+            
+            let stack = producersStack.getStack()
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            let scrollView = ACSCroll(axis: .horizontal)
+            scrollView.setup(with: stack)
+            
+            components.append(.customView(scrollView))
+        }
+        
+        /// # Producers
+        if !anime.producers.isEmpty {
+            var textStyle = ACStack.Text()
+            textStyle.lines = 2
+            textStyle.textColor = Color.gray
+            textStyle.font = .systemFont(ofSize: 14, weight: .regular)
+            let text: String = anime.producers.map { $0.name }.formatList(by: ",", endSeparator: "&")
+            
+            components.append(.text(value: text, style: textStyle))
+        }
+        
+        // Setup Stack Container's components
+        container.setup(with: components)
+        
+        return container
+    }
+    
+    func getSynopsisStack(with synopsis: String) -> ACStack {
+        var components = [ACStackItem]()
+        let container = ACStack(axis: .vertical)
+        container.alignment = .leading
+        container.distribution = .fill
+        container.spacing = 0
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
+        var textStyle = ACStack.Text()
+        // Synopsis title
+        textStyle.lines = 1
+        textStyle.alignment = .left
+        textStyle.textColor = Color.gray
+        textStyle.font = .systemFont(ofSize: 14, weight: .bold)
+        components.append(.text(value: "Synopsis", style: textStyle))
+
+        
+        // Synopsis content
+        textStyle.lines = 0
+        textStyle.alignment = .justified
+        textStyle.textColor = Color.gray
+        textStyle.font = .systemFont(ofSize: 14, weight: .regular)
+        components.append(.text(value: synopsis, style: textStyle))
+        
+        
+        container.setup(with: components)
+        
+        return container
+    }
+}
+
+private extension BasicInfoCell {
+    func getLineSpacerItem() -> ACStackItem {
         let emptyView = UIView(frame: .zero)
         emptyView.translatesAutoresizingMaskIntoConstraints = false
         emptyView.backgroundColor = Color.gray5
 
         let constraint = emptyView.heightAnchor.constraint(equalToConstant: 5.0)
-        emptyView.setPriorityForConstraints([constraint], with: .defaultHigh)
-        
-        return emptyView
+        emptyView.setPriorityForConstraints([constraint], with: .init(999))
+
+        return .customView(emptyView, callback: { [weak self] (view, _) in
+            guard let self = self else { return }
+            let constraints = [
+                view.widthAnchor.constraint(equalTo: self.contentView.widthAnchor),
+            ]
+            view.setPriorityForConstraints(constraints, with: .init(999))
+        })
     }
 }

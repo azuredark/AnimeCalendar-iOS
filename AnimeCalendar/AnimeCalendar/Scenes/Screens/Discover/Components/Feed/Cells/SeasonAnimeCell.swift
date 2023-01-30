@@ -11,13 +11,23 @@ import RxCocoa
 
 final class SeasonAnimeCell: GenericFeedCell, FeedCell {
     // MARK: Reference object
-    var anime: Anime? { didSet { setupUI() } }
+    var anime: Anime?
     var cellTags: [AnimeCellTag?] = []
 
     weak var presenter: DiscoverPresentable?
 
     // MARK: State
     static var reuseIdentifier: String = "SEASON_ANIME_CELL_RESUSE_ID"
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layoutUI()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     /// Reset cell's state when preparing for reusing
     override func prepareForReuse() {

@@ -92,7 +92,7 @@ private extension Feed {
         section.orthogonalScrollingBehavior = .continuous
         section.boundarySupplementaryItems = [header]
         section.contentInsets = .init(top: 0, leading: 20.0, bottom: 15.0, trailing: 20.0)
-        section.interGroupSpacing = 30.0
+        section.interGroupSpacing = 15.0
 
         return section
     }
