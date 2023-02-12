@@ -7,9 +7,22 @@
 
 import UIKit
 
-final class BasicInfoHeader: UICollectionReusableView {
+protocol FeedHeaderProtocol: UICollectionReusableView {
+    static var sectionHeaderKind: String { get set }
+    static var reuseIdentifier: String { get set }
+    func setup()
+}
+
+extension FeedHeaderProtocol {
+    static var sectionHeaderKind: String {
+        get { "" }
+        set {}
+    }
+}
+
+final class BasicInfoHeader: UICollectionReusableView, FeedHeaderProtocol {
     // MARK: State
-    static let reuseIdentifier = "HEADER_REUSE_IDENTIFIER"
+    static var reuseIdentifier = "HEADER_REUSE_IDENTIFIER"
     private typealias AccessId = BasicInfoCellIdentifiers
     
     var anime: Anime? {
@@ -48,7 +61,8 @@ final class BasicInfoHeader: UICollectionReusableView {
     // MARK: Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Color.cream
+        backgroundColor = .clear
+//        backgroundColor = Color.cream
     }
     
     @available(*, unavailable)
@@ -88,12 +102,11 @@ private extension BasicInfoHeader {
     
     func layoutBasicInfoStack() {
         let xInset: CGFloat = 10.0
-        let yInset: CGFloat = 8.0
         NSLayoutConstraint.activate([
             basicInfoStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: xInset),
             basicInfoStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -xInset),
             basicInfoStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-            basicInfoStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -yInset)
+            basicInfoStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }
@@ -116,7 +129,7 @@ private extension BasicInfoHeader {
 
         let collectionView = genresCollection.getCollectionView()
         let xInset: CGFloat = 20.0
-        collectionView.setSize(width: bounds.size.width-xInset, height: 20.0)
+        collectionView.setSize(width: bounds.size.width - xInset, height: 20.0)
         components.append(.customView(collectionView))
         
         genreCollection = genresCollection

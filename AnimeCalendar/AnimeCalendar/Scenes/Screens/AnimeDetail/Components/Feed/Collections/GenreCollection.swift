@@ -15,7 +15,7 @@ final class GenreCollection {
     // MARK: State
     var genres: [AnimeGenre]?
 
-    private lazy var collectionObj: ACCollection<GenreSection, AnimeGenre> = {
+    private(set) lazy var collection: ACCollection<GenreSection, AnimeGenre> = {
         let _collection = ACCollection<GenreSection, AnimeGenre>()
         return _collection
     }()
@@ -29,25 +29,25 @@ final class GenreCollection {
 
     // MARK: Initializers
     init() {
-        collectionObj.layoutDelegate = self
-        collectionObj.dataSourceDelegate = self
+        collection.layoutDelegate = self
+        collection.dataSourceDelegate = self
     }
 
     // MARK: Methods
     func setup() {
-        collectionObj.setup()
+        collection.setup()
     }
 
     func reset() {
-        collectionObj.reset()
+        collection.reset()
     }
 
     func getCollectionView() -> UICollectionView {
-        collectionObj.getCollection()
+        collection.getCollection()
     }
 
     func updateSnapshot() {
-        collectionObj.updateSnapshot { [weak self] in
+        collection.updateSnapshot { [weak self] in
             guard let self = self else { return (GenreSection.genre, nil) }
             return (GenreSection.genre, self.genres)
         }
@@ -77,7 +77,7 @@ extension GenreCollection: ACColllectionLayoutable {
 
 extension GenreCollection: ACCollectionDataSourceable {
     func registerCells() {
-        collectionObj.getCollection().register(GenreCell.self,
+        collection.getCollection().register(GenreCell.self,
                                                forCellWithReuseIdentifier: GenreCell.reuseIdentifier)
     }
 

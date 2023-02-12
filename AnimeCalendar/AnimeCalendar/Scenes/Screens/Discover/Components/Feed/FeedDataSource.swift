@@ -61,7 +61,6 @@ final class FeedDataSource {
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let item = item as? (any ModelSectionable) else { return nil }
             let section: FeedSection = item.feedSection
-//            let section = FeedSection.allCases[indexPath.section]
             switch section {
                 case .animeSeason:
                     guard let anime = item as? Anime else { return nil }

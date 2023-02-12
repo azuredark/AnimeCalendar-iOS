@@ -11,24 +11,44 @@ import RxCocoa
 final class AnimeDetailScreen: UIViewController, Screen {
     // MARK: State
     private weak var presenter: AnimeDetailPresentable?
+    weak var coverImage: UIImage?
 
     /// # Navigation Bar
     private lazy var navigationBar: ScreenNavigationBar = {
         AnimeDetailNavigationBar(self)
     }()
-    
+
     /// # Main collection
     private lazy var detailFeed: DetailFeed = {
         let feed = DetailFeed(presenter: presenter)
         return feed
+    }()
+    
+    /// # Background Image
+    private lazy var coverImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = coverImage
+        view.insertSubview(imageView, at: 0)
+        return imageView
+    }()
+    
+    private lazy var blurView: BlurContainer = {
+        let config = BlurContainer.Config(opacity: 0.9, style: .systemThickMaterial)
+        let blur = BlurContainer(config: config)
+        blur.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(blur, aboveSubview: coverImageView)
+        return blur
     }()
 
     private lazy var disposeBag = DisposeBag()
 
     // MARK: Initializers
     init(presenter: AnimeDetailPresentable) {
-        super.init(nibName: nil, bundle: nil)
         self.presenter = presenter
+
+        super.init(nibName: nil, bundle: nil)
     }
 
     @available(*, unavailable)
@@ -37,9 +57,10 @@ final class AnimeDetailScreen: UIViewController, Screen {
     }
 
     deinit {
-        print("senku [DEBUG] \(String(describing: type(of: self))) - deinted")
+        print("senku [DEBUG] \(String(describing: type(of: self))) - DE-INTIALIZED")
+        presenter?.cleanRequests()
     }
-    
+
     func getDetailFeed() -> DetailFeed {
         return detailFeed
     }
@@ -49,15 +70,18 @@ final class AnimeDetailScreen: UIViewController, Screen {
 extension AnimeDetailScreen {
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("senku [DEBUG] \(String(describing: type(of: self))) - viewDidLoad")
+        print("\n")
+        print("senku [DEBUG] \(String(describing: type(of: self))) - VIEW DID LOAD")
         configureScreen()
         bindAnime()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        presenter?.disposeTrailerComponent()
-        print("senku [DEBUG] \(String(describing: type(of: self))) - viewDidDisappear")
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,14 +93,17 @@ private extension AnimeDetailScreen {
     func configureScreen() {
         configureNavigationItems()
         layoutCollection()
+        layoutCoverImageView()
+        layoutBlurView()
     }
 
     func bindAnime() {
         presenter?.anime
-            .drive(onNext: { [weak self] anime in
+            .drive(onNext: { [weak self] (anime) in
                 guard let self = self else { return }
                 self.configureNavigationTitle(with: anime.titleKanji)
-                print("senku [DEBUG] \(String(describing: type(of: self))) - RX NAVIGATION TITLE")
+                self.presenter?.updateCharacters(animeId: anime.id)
+                print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID LOAD ANIME: \(anime.titleEng)")
             }).disposed(by: disposeBag)
     }
 }
@@ -109,6 +136,14 @@ private extension AnimeDetailScreen {
             mainCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    func layoutCoverImageView() {
+        coverImageView.fitViewTo(view)
+    }
+    
+    func layoutBlurView() {
+        blurView.fitViewTo(view)
     }
 
     func configureNavigationTitle(with title: String) {

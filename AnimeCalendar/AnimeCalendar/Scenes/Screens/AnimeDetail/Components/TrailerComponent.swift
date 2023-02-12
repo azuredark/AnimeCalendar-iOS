@@ -9,14 +9,29 @@ import UIKit
 import youtube_ios_player_helper
 
 protocol TrailerCompatible: AnyObject {
+    var presenter: AnimeDetailPresentable? { get set }
+    var wof: Bool { get set }
+    var playerIsAlreadyLoaded: Bool { get }
     func loadTrailer(withId id: String)
-    func startTrailer()
+    func queueVideo(withId id: String)
     func getContainer() -> UIView
     func disposePlayer()
 }
 
+enum PlayerState {
+    case loaded
+    case loading
+    case error
+    case idle
+}
+
 final class TrailerComponent: NSObject {
     // MARK: State
+    private let TIME_OUT_SECONDS: CGFloat = 4.0
+    private var playerState: PlayerState = .idle
+    var wof: Bool = false
+    private var playerWebViewDidLoad: Bool = false
+
     private lazy var playerView: YTPlayerView = {
         let view = YTPlayerView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -24,13 +39,15 @@ final class TrailerComponent: NSObject {
     }()
 
     /// # Presenter
-    private weak var presenter: AnimeDetailPresentable?
+    weak var presenter: AnimeDetailPresentable?
 
     // MARK: Initializers
-    init(presenter: AnimeDetailPresentable?) {
+    override init() {
         super.init()
-        self.presenter = presenter
+
+        self.playerState = .idle
         configureComponent()
+        print("senku [DEBUG] \(String(describing: type(of: self))) - ****** TRAILER COMPONENT INITED")
     }
 }
 
@@ -49,8 +66,11 @@ extension TrailerComponent: Component {
 
 extension TrailerComponent: YTPlayerViewDelegate {
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        presenter?.trailerLoaded.accept(true)
-        print("senku [DEBUG] \(String(describing: type(of: self))) - PLAAYER READYY")
+        if playerState != .error {
+            print("senku [DEBUG] \(String(describing: type(of: self))) - PLAYER READY")
+            playerState = .loaded
+            presenter?.trailerLoaded.accept(true)
+        }
     }
 
     func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
@@ -60,16 +80,51 @@ extension TrailerComponent: YTPlayerViewDelegate {
     }
 
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
+        playerState = .error
         print("senku [DEBUG] \(String(describing: type(of: self))) - Player error: \(error)")
+    }
+
+    func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {}
+
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
+        guard playerState != .error else { return }
+        if case .cued = state {
+            print("senku [DEBUG] \(String(describing: type(of: self))) - PLAYER DID QUEUE")
+            presenter?.trailerLoaded.accept(true)
+            playerState = .loaded
+        }
     }
 }
 
 extension TrailerComponent: TrailerCompatible {
+    var playerIsAlreadyLoaded: Bool { !(playerView.webView == nil) }
+    
     func loadTrailer(withId id: String) {
-        playerView.load(withVideoId: id, playerVars: ["playerisinline": 1])
+        guard !id.isEmpty else {
+            playerState = .idle
+            presenter?.trailerLoaded.accept(false)
+            print("senku [DEBUG] \(String(describing: type(of: self))) - PLAYER NO ID: \(id)")
+            return
+        }
+
+        playerState = .loading
+        timeOut()
+        playerView.load(withVideoId: id,
+                        playerVars: ["playerisinline": 1,
+                                     "cc_load_policy": 1,
+                                     "cc_lang_pref": "en",
+                                     "rel": 0])
     }
 
-    func startTrailer() {}
+    func queueVideo(withId id: String) {
+        // Load the playerView for the first time, then only queue new videos up.
+        if playerView.webView == nil {
+            loadTrailer(withId: id)
+            playerWebViewDidLoad = true
+        } else {
+            playerView.cueVideo(byId: id, startSeconds: 0)
+        }
+    }
 
     func getContainer() -> UIView {
         return playerView
@@ -80,5 +135,18 @@ extension TrailerComponent: TrailerCompatible {
         playerView.pauseVideo()
         playerView.subviews.forEach { $0.removeFromSuperview() }
         playerView.removeFromSuperview()
+    }
+}
+
+private extension TrailerComponent {
+    func timeOut() {
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + TIME_OUT_SECONDS) {
+            [weak self] in
+            guard let self = self else { return }
+            guard self.playerState == .loading else { return }
+            self.playerState = .error
+            self.presenter?.trailerLoaded.accept(false)
+            print("senku [DEBUG] \(String(describing: type(of: self))) - PLAYER TIME-OUT")
+        }
     }
 }

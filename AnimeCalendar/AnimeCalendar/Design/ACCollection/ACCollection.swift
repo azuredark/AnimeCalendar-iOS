@@ -9,7 +9,14 @@ import UIKit
 
 protocol ACCollectionDataSourceable: AnyObject {
     func registerCells()
+    func registerHeaders()
     func provideCell<T: Hashable>(_ collection: UICollectionView, _ indexPath: IndexPath, _ item: T) -> UICollectionViewCell?
+    func provideHeader(_ collection: UICollectionView, _ indexPath: IndexPath, _ kind: String) -> UICollectionReusableView?
+}
+
+extension ACCollectionDataSourceable {
+    func registerHeaders() {}
+    func provideHeader(_ collection: UICollectionView, _ indexPath: IndexPath, _ kind: String) -> UICollectionReusableView? { return nil }
 }
 
 protocol ACColllectionLayoutable: AnyObject {
@@ -22,7 +29,7 @@ final class ACCollection<Section: Hashable, Item: Hashable>: ACUIDesignable {
     private typealias AccessId = ACCollectionIdentifiers
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
-
+    
     /// # CollectionView
     private lazy var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: getLayout())
@@ -31,7 +38,7 @@ final class ACCollection<Section: Hashable, Item: Hashable>: ACUIDesignable {
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
         collection.alwaysBounceVertical = false
-        collection.backgroundColor = Color.cream
+        collection.backgroundColor = .clear
         return collection
     }()
     
@@ -39,24 +46,23 @@ final class ACCollection<Section: Hashable, Item: Hashable>: ACUIDesignable {
     private var snapshot = Snapshot()
     
     /// # DataSource
-    private lazy var dataSource: DataSource? = {
-        let ds = getDataSource()
-        collectionView.dataSource = ds
-        return ds
-    }()
+    private var dataSource: DataSource?
 
     /// # Delegates
     weak var dataSourceDelegate: ACCollectionDataSourceable?
     weak var layoutDelegate: ACColllectionLayoutable?
     
     // MARK: Initializers
-    init() {}
+    init() {
+        buildDataSource()
+    }
 
     // MARK: Methods
     
     /// Must be called before any other method.
     func setup() {
         registerCells()
+        registerHeaders()
     }
     
     func getCollection() -> UICollectionView {
@@ -65,6 +71,7 @@ final class ACCollection<Section: Hashable, Item: Hashable>: ACUIDesignable {
     
     func updateSnapshot(completion: () -> (Section, [Item]?)) {
         let sectionItem: (section: Section, item: [Item]?) = completion()
+        guard !(snapshot.itemIdentifiers == sectionItem.item) else { return }
         
         // Check if section already exists
         if snapshot.indexOfSection(sectionItem.section) == nil {
@@ -87,11 +94,22 @@ private extension ACCollection {
         dataSourceDelegate?.registerCells()
     }
     
-    func getDataSource() -> DataSource {
-        return DataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
+    func registerHeaders() {
+        dataSourceDelegate?.registerHeaders()
+    }
+    
+    func buildDataSource()  {
+        dataSource = DataSource(collectionView: collectionView) { [weak self] (collectionView, indexPath, item) in
             guard let self = self else { return nil }
             return self.dataSourceDelegate?.provideCell(collectionView, indexPath, item)
-        })
+        }
+        
+        dataSource?.supplementaryViewProvider = { [weak self] (collection, kind, indexPath) -> UICollectionReusableView? in
+            guard let self = self else { return EmptyHeader() }
+            return self.dataSourceDelegate?.provideHeader(collection, indexPath, kind)
+        }
+
+        collectionView.dataSource = dataSource
     }
     
     func getLayout() -> UICollectionViewCompositionalLayout {

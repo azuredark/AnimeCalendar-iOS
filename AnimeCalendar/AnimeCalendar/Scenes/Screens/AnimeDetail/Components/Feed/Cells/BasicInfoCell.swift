@@ -36,7 +36,7 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
     /// # Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = Color.cream
+        contentView.backgroundColor = .clear
         layoutUI()
     }
 
@@ -83,10 +83,14 @@ private extension BasicInfoCell {
     func getStackComponents() -> [ACStackItem] {
         guard let anime = anime else { return [] }
         var components = [ACStackItem]()
-        let spacer = getLineSpacerItem()
+        let firstSpacer = getLineSpacerItem()
+        let secondSpacer = getLineSpacerItem()
 
         /// # Studios & Producers
         let studiosAndProducersStack: ACStack = getStudiosAndProducerStack(with: anime)
+        
+        /// # Top initial spacer
+        components.append(firstSpacer)
         
         components.append(.customView(studiosAndProducersStack, callback: { [weak self] (view, _) in
             guard let self = self else { return }
@@ -96,7 +100,7 @@ private extension BasicInfoCell {
 
         /// # Line Separator
         if !anime.producers.isEmpty || !anime.studios.isEmpty {
-            components.append(spacer)
+            components.append(secondSpacer)
         }
 
         /// # Synopsis
@@ -104,7 +108,7 @@ private extension BasicInfoCell {
             let synopsisStack: ACStack = getSynopsisStack(with: anime.synopsis)
             components.append(.customView(synopsisStack, callback: { [weak self] (view, _) in
                 guard let self = self else { return }
-                let constraint = view.widthAnchor.constraint(lessThanOrEqualTo: self.contentView.widthAnchor, constant: -Self.xPadding * 2)
+                let constraint = view.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, constant: -Self.xPadding * 2)
                 view.setPriorityForConstraints([constraint], with: .init(999))
             }))
         }
@@ -167,7 +171,7 @@ private extension BasicInfoCell {
         textStyle.lines = 1
         textStyle.alignment = .left
         textStyle.textColor = Color.gray
-        textStyle.font = .systemFont(ofSize: 14, weight: .bold)
+        textStyle.font = ACFont.bold.sectionTitle2
         components.append(.text(value: "Synopsis", style: textStyle))
 
         

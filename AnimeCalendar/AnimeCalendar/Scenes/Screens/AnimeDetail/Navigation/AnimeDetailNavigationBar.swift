@@ -25,6 +25,10 @@ extension AnimeDetailNavigationBar {
 
         screen?.navigationItem.title = title
         screen?.navigationController?.navigationBar.titleTextAttributes = titleAttributes
+        if let navigation = screen?.navigationController as? CustomNavigationController {
+//            navigation.setBackground(with: Color.cream.withAlphaComponent(0.4))
+            navigation.setBackground(with: .clear)
+        }
     }
 
     func configureLeftNavigationItems() {

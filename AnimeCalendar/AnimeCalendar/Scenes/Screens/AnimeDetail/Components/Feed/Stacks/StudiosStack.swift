@@ -31,7 +31,7 @@ private extension StudiosStack {
         textStyle.alignment = .left
         textStyle.textColor = Color.gray
         textStyle.lines = 1
-        textStyle.font = .systemFont(ofSize: 14, weight: .bold)
+        textStyle.font = ACFont.bold.sectionTitle2
 
         let spacer: ACStackItem = .spacer(type: .circle(tint: Color.subtitle),
                                           space: 5.0)

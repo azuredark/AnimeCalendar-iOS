@@ -27,6 +27,8 @@ struct Promo: Decodable, ModelSectionable {
     var anime: Anime
     var trailer: Trailer
     
+    var isLoading: Bool = false
+    
     enum CodingKeys: String, CodingKey {
         case title
         case anime = "entry"
@@ -75,6 +77,8 @@ struct Trailer: Decodable, ModelSectionable {
     let image: AnimeImage
     var youtubeId: String
     
+    var isLoading: Bool = false
+    
     enum CodingKeys: String, CodingKey {
         case url
         case image = "images"
@@ -83,11 +87,14 @@ struct Trailer: Decodable, ModelSectionable {
     /// # Hashable
     func hash(into hasher: inout Hasher) {
         hasher.combine(youtubeId)
+//        print("senku [DEBUG] \(String(describing: type(of: self))) - TRAILER ID: \(youtubeId)")
     }
     
     /// # Equatable
     static func == (lhs: Trailer, rhs: Trailer) -> Bool {
-        return lhs.youtubeId == rhs.youtubeId
+        let result = lhs.youtubeId == rhs.youtubeId
+//        print("senku [DEBUG] \(String(describing: type(of: self))) - TRAILER EQUATE RESULT - lhs: \(lhs.youtubeId) | rhs: \(rhs.youtubeId) -> \(result)")
+        return result
     }
     
     /// # Decoding strategy
@@ -113,6 +120,5 @@ struct Trailer: Decodable, ModelSectionable {
     
     // MARK: Addional properties
     var detailFeedSection: DetailFeedSection = .animeTrailer
-    
     var feedSection: FeedSection = .animeSeason
 }

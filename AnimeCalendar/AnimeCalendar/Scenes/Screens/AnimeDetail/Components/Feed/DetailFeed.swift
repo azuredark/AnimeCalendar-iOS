@@ -15,7 +15,7 @@ final class DetailFeed: NSObject {
     private lazy var containerCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: getLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = Color.gray5
+        collection.backgroundColor = .clear
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
         return collection
@@ -48,29 +48,39 @@ extension DetailFeed {
     func getCollection() -> UICollectionView {
         return containerCollection
     }
-    
-    func getTrailerComponent() -> TrailerCompatible {
-        return dataSource.trailerComponent
-   }
+
+    func getTrailerComponent() -> TrailerCompatible? {
+        return presenter?.playerComponent
+    }
 }
 
 // MARK: - Sections
 private extension DetailFeed {
     func getLayout() -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) in
             guard let self = self else { fatalError("No DetailFeed reference while generating collection layout") }
-            let section = self.getSection(from: sectionIndex)
-            switch section {
-                case .animeTrailer, .animeCharacters, .animeReviews:
+            guard let model = self.dataSource.getDataSource()?.itemIdentifier(for: IndexPath(row: 0, section: sectionIndex)) as? (any ModelSectionable) else {
+                return nil
+            }
+
+            switch model.detailFeedSection {
+                case .animeTrailer:
                     return self.getTrailerSection()
                 case .animeBasicInfo:
                     return self.getBasicInfoSection()
+                case .animeCharacters:
+                    return self.getCharactersSection()
+                case .animeReviews:
+                    return self.getReviewsSection()
+                // Loader
+                case .spinner:
+                    return self.getSpinnerSection()
             }
         }
 
         return layout
     }
-    
+
     /// Get the **correct** section for its corresponding layout.
     ///
     /// **Warning**: This is needed as the **TrailerCell** will appear afterwards and take first spot. Until that happens, the **sectionIndex** will be 0 and point to the **.animeTrailer** enum which is wrong as the first cell before **Trailer** will always be **BasicInfo**.
@@ -115,7 +125,7 @@ private extension DetailFeed {
         // Group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                heightDimension: .estimated(50))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         // Header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -134,7 +144,40 @@ private extension DetailFeed {
 
     /// # Characters Section
     func getCharactersSection() -> NSCollectionLayoutSection? {
-        return nil
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        // Group
+        let headerWithInsets: CGFloat = 25.0
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .absolute(420.0 + headerWithInsets))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .none
+        section.contentInsets = .init(top: 5.0, leading: 0, bottom: 0, trailing: 0)
+
+        return section
+    }
+
+    func getSpinnerSection() -> NSCollectionLayoutSection? {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        // Group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .absolute(50.0))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .none // Prevent scrolling
+
+        return section
     }
 
     /// # Reviews Section

@@ -15,4 +15,13 @@ extension UIView {
             $0.isActive = true
         }
     }
+
+    func fitViewTo(_ view: UIView, padding: CGFloat = 0) {
+        NSLayoutConstraint.activate([
+            self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            self.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
+            self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding)
+        ])
+    }
 }

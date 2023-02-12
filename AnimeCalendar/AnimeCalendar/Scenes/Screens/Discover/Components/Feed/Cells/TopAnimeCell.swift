@@ -158,6 +158,10 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     func setup() {
         setupBackgroundImage()
     }
+
+    func getCoverImage() -> UIImage? {
+        return coverImageView.image
+    }
 }
 
 private extension TopAnimeCell {
@@ -307,7 +311,6 @@ private extension TopAnimeCell {
 
 private extension TopAnimeCell {
     func configureContainerShadow() {
-        print("senku [DEBUG] \(String(describing: type(of: self))) - configureContainerShadow")
         if !shadowExists {
             let shadow = ShadowBuilder().getTemplate(type: .full)
                 .with(opacity: 0.25)

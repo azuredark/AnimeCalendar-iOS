@@ -15,4 +15,8 @@ struct FontBold {
     var medium1: UIFont {
         return .boldSystemFont(ofSize: 24.0)
     }
+    
+    var sectionTitle2: UIFont {
+        return .boldSystemFont(ofSize: 16.0)
+    }
 }

@@ -1,30 +1,36 @@
 //
-//  AnimeDetailPresenter.swift
-//  AnimeCalendar
+//  AnimeDetailPresenter.swift //  AnimeCalendar
 //
 //  Created by Leonardo  on 26/12/22.
 //
 
 import RxCocoa
 import RxSwift
-import youtube_ios_player_helper
 
 protocol AnimeDetailPresentable: AnyObject {
-    /// Weak reference towards the view
-    func start() -> Screen
-    func updateAnime(with anime: Anime)
-    func disposeTrailerComponent()
+    var playerComponent: TrailerCompatible? { get set }
     var anime: Driver<Anime> { get }
+    var characters: Driver<CharacterData> { get }
     var trailerLoaded: PublishRelay<Bool> { get }
     var didFinishLoadingAnimeAndTrailer: Driver<(Anime, Bool)> { get }
+
+    /// Weak reference towards the view
+    func start() -> Screen
+    func setCoverImage(with image: UIImage?)
+    func updateAnime(with anime: Anime)
+    func updateCharacters(animeId: Int)
+    func disposeTrailerComponent()
+    func cleanRequests()
 }
 
 final class AnimeDetailPresenter: AnimeDetailPresentable {
     // MARK: State
     private var router: AnimeDetailRoutable
     private var interactor: AnimeDetailInteractive
-    weak var view: AnimeDetailScreen?
     
+    weak var view: AnimeDetailScreen?
+    weak var playerComponent: TrailerCompatible?
+
     private let disposeBag = DisposeBag()
 
     // MARK: Initializers
@@ -34,34 +40,51 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     }
 
     // MARK: Methods
+    /// Tracks when a new **anime** event is fired.
+    var anime: Driver<Anime> {
+        interactor.animeObservable
+    }
+
+    /// Anime characters (Main & secondary)
+    var characters: Driver<CharacterData> {
+        interactor.animeCharactersObservable
+    }
+
+    /// Tracks when the **trailer** has loaded and will be displayed.
+    var trailerLoaded: PublishRelay<Bool> {
+        interactor.animeTrailerLoadedObservable
+    }
+
+    /// Tracks when both the **anime** & **trailer** have finished loading and emits an event.
+    /// This event fires up a new section being added into the **mainCollection**
+    var didFinishLoadingAnimeAndTrailer: Driver<(Anime, Bool)> {
+        interactor.didFinishLoadingTrailerObservable
+    }
+
     /// Ask router to create the main module **Screen**.
     func start() -> Screen {
         return router.start(presenter: self)
+    }
+    
+    func setCoverImage(with image: UIImage?) {
+        view?.coverImage = image
     }
 
     /// Sends a new **anime** event.
     func updateAnime(with anime: Anime) {
         interactor.updateAnime(with: anime)
     }
-    
+
+    func updateCharacters(animeId: Int) {
+        interactor.updateCharacters(animeId: animeId)
+    }
+
     func disposeTrailerComponent() {
         let component = view?.getDetailFeed().getTrailerComponent()
         component?.disposePlayer()
     }
-
-    /// Tracks when a new **anime** event is fired.
-    var anime: Driver<Anime> {
-        interactor.animeObservable
-    }
     
-    /// Tracks when the **trailer** has loaded and will be displayed.
-    var trailerLoaded: PublishRelay<Bool> {
-        interactor.animeTrailerLoadedObservable
-    }
-    
-    /// Tracks when both the **anime** & **trailer** have finished loading and emits an event.
-    /// This event fires up a new section being added into the **mainCollection**
-    var didFinishLoadingAnimeAndTrailer: Driver<(Anime, Bool)> {
-        interactor.didFinishLoadingTrailerObservable
+    func cleanRequests() {
+        interactor.cleanRequests()
     }
 }

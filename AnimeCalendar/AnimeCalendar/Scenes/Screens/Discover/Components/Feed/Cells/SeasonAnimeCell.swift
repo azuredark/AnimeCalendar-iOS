@@ -46,6 +46,10 @@ final class SeasonAnimeCell: GenericFeedCell, FeedCell {
     func setup() {
         setupCoverImage()
     }
+
+    func getCoverImage() -> UIImage? {
+        return coverImageView.image
+    }
 }
 
 private extension SeasonAnimeCell {

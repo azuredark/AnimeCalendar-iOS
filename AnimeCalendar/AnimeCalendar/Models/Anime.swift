@@ -5,11 +5,12 @@
 //  Created by Leonardo  on 29/05/22.
 //
 
-import Foundation
+import UIKit
 
 protocol ModelSectionable: Hashable, Equatable {
     var detailFeedSection: DetailFeedSection { get set }
     var feedSection: FeedSection { get set }
+    var isLoading: Bool { get set }
 }
 
 struct AnimeResult: Decodable {
@@ -75,6 +76,8 @@ struct Anime: Decodable, ModelSectionable {
     var showType: ShowType
     var studios: [AnimeStudio]
     var producers: [AnimeProducer]
+
+    var isLoading: Bool = false
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -153,7 +156,7 @@ struct Anime: Decodable, ModelSectionable {
     }
 
     // MARK: Additional methods/properties
-    var detailFeedSection: DetailFeedSection = .animeTrailer
+    var detailFeedSection: DetailFeedSection = .animeBasicInfo
     var feedSection: FeedSection = .animePromos
 }
 
@@ -161,6 +164,7 @@ struct AnimeImageType: Decodable {
     // MARK: Parameters
     var jpgImage: AnimeImage
     var webpImage: AnimeImage
+    var coverImage: UIImage?
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -304,4 +308,30 @@ struct AnimeProducer: Decodable {
         self.name = "PRODUCER__NAME"
         self.url = "PRODUCER_URL"
     }
+}
+
+struct SpinnerModel: Decodable, ModelSectionable {
+    // MARK: Parameters
+    var uuid = UUID()
+    var isLoading: Bool = false
+
+    // MARK: Initializers
+    init(isLoading: Bool = false) {
+        self.isLoading = isLoading
+    }
+
+    init(from decoder: Decoder) throws {}
+
+    // MARK: Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
+
+    // MARK: Equatable
+    static func == (lhs: SpinnerModel, rhs: SpinnerModel) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+
+    var detailFeedSection: DetailFeedSection = .spinner
+    var feedSection: FeedSection = .animePromos
 }

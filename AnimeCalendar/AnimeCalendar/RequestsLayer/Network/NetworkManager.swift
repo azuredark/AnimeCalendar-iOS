@@ -24,7 +24,7 @@ final class NetworkManager: Requestable {
                 let httpResponse = strongSelf.handleHTTPResponse(response: response)
 
                 if case .success = httpResponse, let data = data {
-                    print("senku [DEBUG] \(String(describing: type(of: self))) - success data!!!")
+                    print("senku [DEBUG] \(String(describing: type(of: self))) - success data!!! @ \(response?.url?.absoluteString ?? "")")
                     guard let json = strongSelf.decodeData(model, from: data) else {
                         completion(.failure(JSONDecodingError.errorDecoding))
                         return

@@ -9,6 +9,12 @@ final class AnimeDetailModule: Modulable {
     // MARK: State
     private(set) var presenter: AnimeDetailPresenter
     
+    private lazy var playerComponent: TrailerCompatible = {
+        let player = TrailerComponent()
+        player.presenter = presenter
+        return player
+    }()
+
     // MARK: Initializers
     init(animeRepository: AnimeRepository) {
         let navigation = CustomNavigationController()
@@ -17,6 +23,7 @@ final class AnimeDetailModule: Modulable {
         let interactor = AnimeDetailInteractor(repository: animeRepository)
         
         self.presenter = AnimeDetailPresenter(router: router, interactor: interactor)
+        self.presenter.playerComponent = playerComponent
     }
     
     // MARK: Methods
@@ -32,6 +39,7 @@ final class AnimeDetailModule: Modulable {
     
     /// Builds with anime by **emiting** event.
     func build(with anime: Anime) {
+        presenter.setCoverImage(with: anime.imageType.coverImage)
         presenter.updateAnime(with: anime)
     }
 }

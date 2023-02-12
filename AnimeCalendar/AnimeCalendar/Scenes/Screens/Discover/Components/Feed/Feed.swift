@@ -167,19 +167,19 @@ extension Feed: Bindable {
         guard let discoverFeed = presenter?.feed else { return }
 
         let seasonAnimeFeed = discoverFeed.seasonAnime
-        seasonAnimeFeed.driver.drive { [weak self] animes in
+        seasonAnimeFeed.driver.drive { [weak self] (animes) in
             guard let strongSelf = self else { return }
             strongSelf.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes, animating: true)
         }.disposed(by: disposeBag)
 
         let recentPromosAnimeFeed = discoverFeed.recentPromosAnime
-        recentPromosAnimeFeed.driver.drive { [weak self] promos in
+        recentPromosAnimeFeed.driver.drive { [weak self] (promos) in
             guard let strongSelf = self else { return }
             strongSelf.dataSource.updateSnapshot(for: recentPromosAnimeFeed.section, with: promos, animating: true)
         }.disposed(by: disposeBag)
 
         let topAnimeFeed = discoverFeed.topAnime
-        topAnimeFeed.driver.drive { [weak self] animes in
+        topAnimeFeed.driver.drive { [weak self] (animes) in
             guard let strongSelf = self else { return }
             strongSelf.dataSource.updateSnapshot(for: topAnimeFeed.section, with: animes, animating: true)
         }.disposed(by: disposeBag)
@@ -202,7 +202,9 @@ extension Feed: UICollectionViewDelegate {
         }
 
         // Get the selected item (Anime or Promo) & present it.
-        if let anime: Anime = dataSource.getItem(at: indexPath) {
+        if var anime: Anime = dataSource.getItem(at: indexPath) {
+            let image: UIImage? = (cell as? FeedCell)?.getCoverImage() ?? UIImage(named: "new-anime-item-spyxfamily")
+            anime.imageType.coverImage = image
             presenter?.handle(action: .transition(to: .animeDetailScreen(anime: anime)))
         }
         #warning("Make it generic to work for Promos and other further types aswell.")

@@ -14,7 +14,7 @@ final class BlurContainer: UIView {
     private let config: BlurContainer.Config
 
     private lazy var blurView: UIView = {
-        let blurEffect = UIBlurEffect(style: .systemMaterialDark)
+        let blurEffect = UIBlurEffect(style: config.style)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
@@ -89,9 +89,11 @@ private extension BlurContainer {
 extension BlurContainer {
     struct Config {
         var opacity: CGFloat
+        var style: UIBlurEffect.Style
 
-        init(opacity: CGFloat) {
+        init(opacity: CGFloat, style: UIBlurEffect.Style = .systemMaterialDark) {
             self.opacity = opacity
+            self.style = style
         }
     }
 }

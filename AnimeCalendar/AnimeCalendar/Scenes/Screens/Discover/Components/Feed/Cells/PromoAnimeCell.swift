@@ -83,6 +83,10 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     func setup() {
         setupCoverImage()
     }
+    
+    func getCoverImage() -> UIImage? {
+        return coverImageView.image
+    }
 }
 
 private extension PromoAnimeCell {

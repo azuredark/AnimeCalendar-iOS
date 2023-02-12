@@ -12,6 +12,11 @@ protocol FeedCell {
     static var reuseIdentifier: String { get set }
     /// Sets up the cell with **dynamic** values *(Will update depending on the cell)*.
     func setup()
+    func getCoverImage() -> UIImage?
+}
+
+extension FeedCell {
+    func getCoverImage() -> UIImage? { return nil }
 }
 
 class GenericFeedCell: UICollectionViewCell {
