@@ -74,3 +74,4 @@ Small Todo's yet to complete, will be filling out periodically.
 - [ ] The whole scheduling service.
 - [ ] Storing scheduled anime in locally with CoreData (It's gonna hurt)
 
+###### A 🌟 would be highly appreciated!! Keeps me motivated to eventually get this app released to the AppStore by 2023!
