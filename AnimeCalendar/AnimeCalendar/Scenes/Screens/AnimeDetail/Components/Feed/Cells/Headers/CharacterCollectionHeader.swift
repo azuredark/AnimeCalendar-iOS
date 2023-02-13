@@ -53,16 +53,6 @@ private extension CharacterColletionHeader {
         layoutTitleLabel()
     }
 
-    func layoutTitleLabel() {
-        let yInset: CGFloat = 4.0
-        NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: yInset),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -yInset)
-        ])
-    }
-
     func layoutLineSpacerView() {
         /// # MAKE WIDTH OUTSIDE THE SUPERVIEW TO SHOW THE FULL LINE SPACER
         let height: CGFloat = 5.0
@@ -71,6 +61,16 @@ private extension CharacterColletionHeader {
             lineSpacerView.topAnchor.constraint(equalTo: topAnchor),
             lineSpacerView.heightAnchor.constraint(equalToConstant: height),
             lineSpacerView.widthAnchor.constraint(equalTo: widthAnchor, constant: 15.0)
+        ])
+    }
+
+    func layoutTitleLabel() {
+        let yInset: CGFloat = 4.0
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: lineSpacerView.bottomAnchor, constant: yInset),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -yInset)
         ])
     }
 }

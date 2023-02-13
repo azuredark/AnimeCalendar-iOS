@@ -6,16 +6,23 @@
 //
 
 import UIKit
+import Nuke
 
 final class CharacterCollectionCell: UICollectionViewCell, FeedCell {
     // MARK: State
     static var reuseIdentifier: String = "CHARACTER_CONTAINER_CELL_REUSE_ID"
     var charactersData: CharacterData?
+    private lazy var preheater = ImagePrefetcher(pipeline: ImagePipeline.shared)
 
     private(set) lazy var collection: ACCollection<CharacterSection, CharacterInfo> = {
         let _collection = ACCollection<CharacterSection, CharacterInfo>()
         _collection.layoutDelegate = self
         _collection.dataSourceDelegate = self
+
+        let collectionView = _collection.getCollection()
+        collectionView.alwaysBounceVertical = false
+        collectionView.prefetchDataSource = self
+
         contentView.addSubview(_collection.getCollection())
         return _collection
     }()
@@ -134,6 +141,45 @@ extension CharacterCollectionCell: ACCollectionDataSourceable {
                                                                      for: indexPath) as? CharacterColletionHeader
         headerView?.setup()
         return headerView
+    }
+}
+
+private extension CharacterCollectionCell {
+    func getImagRequests(indexPaths: [IndexPath]) -> [Nuke.ImageRequest] {
+        guard let ds = collection.getDataSource() else { return [] }
+        
+        let imagePaths = indexPaths.compactMap { indexPath in
+            return ds.itemIdentifier(for: indexPath)?.character.images?.jpgImage.normal
+        }
+        
+        let urls = imagePaths.compactMap(URL.init)
+        let requests = urls.map { Nuke.ImageRequest.init(url: $0) }
+        
+        return requests
+    }
+}
+
+extension CharacterCollectionCell: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        Task {
+            print("senku [DEBUG] \(String(describing: type(of: self))) - PREFETCHING @ INDEXPATHS: \(indexPaths)")
+//            guard let charactersInfo = charactersData?.data else { return }
+//
+//            var newIndexPaths = [IndexPath]()
+//            for i in 0...charactersInfo.count - 1 {
+//                newIndexPaths.append(IndexPath(row: i, section: 0))
+//            }
+//
+            let requests = getImagRequests(indexPaths: indexPaths)
+            preheater.startPrefetching(with: requests)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        Task {
+            let requests = getImagRequests(indexPaths: indexPaths)
+            preheater.stopPrefetching(with: requests)
+        }
     }
 }
 

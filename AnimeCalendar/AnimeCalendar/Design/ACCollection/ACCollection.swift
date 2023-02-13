@@ -69,6 +69,10 @@ final class ACCollection<Section: Hashable, Item: Hashable>: ACUIDesignable {
         return collectionView
     }
     
+    func getDataSource() -> DataSource? {
+        return dataSource
+    }
+    
     func updateSnapshot(completion: () -> (Section, [Item]?)) {
         let sectionItem: (section: Section, item: [Item]?) = completion()
         guard !(snapshot.itemIdentifiers == sectionItem.item) else { return }

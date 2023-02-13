@@ -14,9 +14,11 @@ AnimecCalendar uses the **VIPER** arch., with some twists, for creating and main
 Uses mostly programmatic views and some Xibs. No storyboards.
 
 ## ⚙️  Dependencies
-Current dependencies used, not planning to add more:
-- [RxSwift](https://github.com/ReactiveX/RxSwift)
-- [youtube-ios-player-helper](https://github.com/youtube/youtube-ios-player-helper)
+Current dependencies used:
+
+- [RxSwift](https://github.com/ReactiveX/RxSwift) - Reactivity in the app (Aiming to eventually move to Combine)
+- [Nuke](https://github.com/kean/Nuke) - Managing images in a fast/easy manner.
+- [youtube-ios-player-helper](https://github.com/youtube/youtube-ios-player-helper) - Loading trailers with a Google-YT-native player embed in the app.
 
 ## ⛩️ Setup
 Currently, the project structure aims to make every screen a *root screen* meaning the app can boot from any screen in the app. The `BootManager.swift` module is in charge of said logic. You can boot the app with `.rootTabBar` or a specific `.rootScreen(ScreenType)`.
@@ -45,38 +47,30 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 
 ## 📸 Screenshots
 ### Home
-| Figma | iOS |
-| --- | --- |
-| <img src="images/ui/home/figma.png" width=250 /> | <img src="images/ui/home/ios.png" width=250 /> |
+| iOS |
+| --- |
+| <img src="images/ui/home/ios.png" width=250 /> |
 
 ### Discover (New!)
-| Figma | iOS |
-| --- | --- |
-| <img src="images/ui/discover/figma.png" width=250 /> | <img src="images/ui/discover/ios1.png" width=250 /> |
+| iOS |
+| --- |
+| <img src="images/ui/discover/ios1.png" width=250 /> |
 
 ### Anime Detail (New!)
-| Figma | iOS |
-| --- | --- |
-| <img src="images/ui/anime-detail/figma.png" width=250 /> | <img src="images/ui/anime-detail/ios1.png" width=250 /> |
+| iOS |
+| --- |
+| <img src="images/ui/anime-detail/ios1.png" width=250 /> |
 
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 
-- [x] HomeScreen UI
-- [x] Make TabBar's View custom middle button work, presenting NewScheduledAnime screen.
-- [x] Refactor BootManager
-- [x] Convert modules into VIPER arch.
-- [ ] Cache Images retrieved from both Network & Local
-- [ ] ~~Animate NewScheduledAnime presentation when its TabBar button is pressed~~
-	- It's no longer a TabItem inside the TabBar
-- [x] Middle button presenting NewScheduledAnimeScreen
-- [x] NewScheduledAnimeScreen design, for live anime
-- [ ] NewScheduledAnimeScreen design, for live ended anime
-- [ ] NewScheduledAnimeScreen design, for live custom anime
-- [x] Cancel (dismiss NewAnime screen) attributed string title and functionality
-- [ ] ViewModels for Screen/Components
-- [ ] UseCases for Screen/Components
-- [ ] Repository (With dummy repository for reading local JSON mock data)contracts & implementation
-- [ ] NetworkLayer (Deploying TS' API)
-- [ ] CacheLayer
-- [ ] LocalStorage layer (Realm)
-- [ ] Firebase connection
+- [x] Managing images with Nuke (3rd-party).
+- [x] Loading YT trailer videos (3rd-party).
+- [] TrailerComponent black screen when loaded (Fixed when scrolling 1point).
+- [x] BasicAnimeInfoCell (Name, rating, episodes, producers, studios, snyopsis).
+- [x] Characters collection.
+- [x] Loading indicator for async. additional requests to a specific anime.
+- [] Integrate with AnimeSchedule-API for better anime schedule info & +rate-limit https://animeschedule.net/api/v3/documentation/anime
+- [] Add logging & user authentication optional for sync. with AnimeSchedule.
+- [] The whole scheduling service.
+- [] Storing scheduled anime in locally with CoreData (It's gonna hurt)
+

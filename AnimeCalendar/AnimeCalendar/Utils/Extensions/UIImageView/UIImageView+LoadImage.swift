@@ -13,19 +13,20 @@ import RxSwift
 /// Lookup **AppDelegate.swift** for PipeLine configurations.
 // MARK: Can't use .withCheckedContinuation as Nuke.loadimage(:) completion sometimes doesn't callback.
 extension UIImageView {
-    typealias Completion = @MainActor (Bool) -> Void
+    typealias Completion = @MainActor(Bool) -> Void
 
-    func loadImage(from path: String?, cellType: (any FeedCell)? = nil, _ completion: Completion? = nil) {
+    @discardableResult
+    func loadImage(from path: String?, cellType: (any FeedCell)? = nil, _ completion: Completion? = nil) -> ImageTask? {
         guard let path = path else {
             completion?(false)
-            return
+            return nil
         }
-        
+
         let processors = ImageProcessor.process(for: cellType)
         let request = ImageRequest(url: URL(string: path),
                                    processors: processors)
-
-        Nuke.loadImage(with: request, into: self) { result in
+        
+        return Nuke.loadImage(with: request, into: self) { result in
             switch result {
                 case .success:
                     completion?(true)
