@@ -65,12 +65,12 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 Small Todo's yet to complete, will be filling out periodically. 
 - [x] Managing images with Nuke (3rd-party).
 - [x] Loading YT trailer videos (3rd-party).
-- [] TrailerComponent black screen when loaded (Fixed when scrolling 1point).
+- [ ] TrailerComponent black screen when loaded (Fixed when scrolling 1point).
 - [x] BasicAnimeInfoCell (Name, rating, episodes, producers, studios, snyopsis).
 - [x] Characters collection.
 - [x] Loading indicator for async. additional requests to a specific anime.
-- [] Integrate with AnimeSchedule-API for better anime schedule info & +rate-limit https://animeschedule.net/api/v3/documentation/anime
-- [] Add logging & user authentication optional for sync. with AnimeSchedule.
-- [] The whole scheduling service.
-- [] Storing scheduled anime in locally with CoreData (It's gonna hurt)
+- [ ] Integrate with AnimeSchedule-API for better anime schedule info & +rate-limit https://animeschedule.net/api/v3/documentation/anime.
+- [ ] Add logging & user authentication optional for sync. with AnimeSchedule.
+- [ ] The whole scheduling service.
+- [ ] Storing scheduled anime in locally with CoreData (It's gonna hurt)
 
