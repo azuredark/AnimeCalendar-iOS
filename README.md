@@ -47,7 +47,7 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 
 ## 📸 Screenshots
 ### Anime Detail (New!)
-| Anime detail information |
+| Part-1 | Part-2 |
 | --- | --- |
 | <img src="images/ui/anime-detail/ios1.png" width=250 /> | <img src="images/ui/anime-detail/ios2.png" width=250 /> |
 
