@@ -46,20 +46,20 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 | <img src="images/ui/home/home-demo.gif" width=250 /> | <img src="images/ui/discover/discover-demo1.gif" width=250 /> | <img src="images/ui/anime-detail/anime-detail-demo1.gif" width=250 /> |
 
 ## 📸 Screenshots
-### Home
-| iOS |
-| --- |
-| <img src="images/ui/home/ios.png" width=250 /> |
+### Anime Detail (New!)
+| Anime detail information |
+| --- | --- |
+| <img src="images/ui/anime-detail/ios1.png" width=250 /> | <img src="images/ui/anime-detail/ios2.png" width=250 /> |
 
 ### Discover (New!)
-| iOS |
+| Discover new anime |
 | --- |
 | <img src="images/ui/discover/ios1.png" width=250 /> |
 
-### Anime Detail (New!)
-| iOS |
+### Home
+| Home (UI first version) |
 | --- |
-| <img src="images/ui/anime-detail/ios1.png" width=250 /> |
+| <img src="images/ui/home/ios.png" width=250 /> |
 
 ## Todo
 Small Todo's yet to complete, will be filling out periodically. 
