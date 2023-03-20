@@ -88,7 +88,7 @@ private extension NetworkManager {
     func attemptToRetry<T: Decodable>(_ retriesLeft: Int, _ model: T.Type, _ endpoint: EndpointType, completion: @escaping (Result<T?, Error>) -> Void) {
         if retriesLeft > 1 {
             Logger.log(.info, msg: "Retries left: \(retriesLeft-1)")
-            DispatchQueue.main.asyncAfter(deadline: .now() + SLEEP_BEFORE_RETRY_SECONDS) { [weak self] in
+            queue.asyncAfter(deadline: .now() + SLEEP_BEFORE_RETRY_SECONDS) { [weak self] in
                 guard let self else { return }
                 self.launchNetworkRequest(retries: retriesLeft-1, model, endpoint: endpoint, completion: completion)
             }
