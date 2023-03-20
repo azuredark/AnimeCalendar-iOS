@@ -10,8 +10,8 @@ import Foundation
 typealias RequestResponse = (Data?, URLResponse?, Error?) -> Void
 
 enum ResponseCodeResult<T: StringProtocol> {
-    case success
-    case failure(T)
+    case success(code: Int)
+    case failure(T, code: Int)
     case noResponse
 }
 
@@ -25,18 +25,25 @@ final class Router {
         do {
             let httpSession = URLSession(configuration: .ephemeral)
             let httpRequest: URLRequest = try buildHttpRequest(endpoint: endpoint)
-            print("senku [📡] \(String(describing: type(of: self))) - endpoint: \(httpRequest.url?.absoluteString ?? "")")
+            
+            let fullURL: String = httpRequest.url?.absoluteString ?? ""
+            Logger.log(.network, msg: "Request @ endpoint: \(fullURL)")
+            
             task = httpSession.dataTask(with: httpRequest) { data, response, error in
-                if let error = error { completion(nil, nil, error) }
+                if let error = error {
+                    Logger.log(.network, .error, msg: "Error: \(error) | @ \(fullURL)")
+                    completion(nil, nil, error)
+                }
                 if let data = data { completion(data, response, nil) }
             }
             task?.resume()
         } catch {
+            Logger.log(.network, .error, msg: "Horrid error building HTTP Request: \(error)")
             completion(nil, nil, error)
         }
     }
 
-    /// Create network request using an input URL. Should be used for images
+    /// Create network request using an input URL. **Should be used for media**.
     /// - Parameter url: URL to fetch data from.
     /// - Parameter completion: Closure of type RequestResponse which returns the output of the request
     func request(from url: URL, completion: @escaping RequestResponse) {
@@ -79,7 +86,6 @@ private extension Router {
     /*
      Call Encoders to add parameters to the HTTP Request
      */
-
     func configureParameters(bodyParameters: Parameters?, urlParameters: Parameters?, request: inout URLRequest) throws {
         do {
             if let bodyParameters = bodyParameters {
@@ -113,4 +119,11 @@ enum NetworkResponse: String {
     case noData = "Response returned with no data to decode."
     case unableToDecode = "We could not decode the response."
     case errorFound = "Request error found"
+    case notFound = "Not found" // 404
+    case internalServerError = "Internal server error. Boom :("
+    
+    // Jikan API's HTTP Status error messages.
+    case JIKAN_ERROR_BAD_REQUEST        = "You've made an invalid request. Recheck documentation." // 400
+    case JIKAN_ERROR_METHOD_NOT_ALLOWED = "Method not allowed." // 405
+    case JIKAN_ERROR_TOO_MANY_REQUEST   = "Too Many Requests." // 429
 }

@@ -37,6 +37,7 @@ final class Feed: NSObject {
     init(presenter: DiscoverPresentable?) {
         super.init()
         self.presenter = presenter
+        self.presenter?.feedView = self
 
         containerCollection.delegate = self
         configureBindings()
@@ -46,20 +47,25 @@ final class Feed: NSObject {
     func getCollection() -> UICollectionView {
         return containerCollection
     }
+
+    func getDataSource() -> FeedDataSource {
+        return dataSource
+    }
 }
 
 private extension Feed {
     func getLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
             guard let strongSelf = self else { fatalError("No Feed reference while generating collection layout") }
-            let section = FeedSection.allCases[sectionIndex]
-            switch section {
+            guard let item = strongSelf.dataSource.getItem(at: IndexPath(item: 0, section: sectionIndex)) as? (any ModelSectionable) else { return nil }
+            switch item.feedSection {
                 case .animeSeason:
                     return strongSelf.getAnimeSeasonSection()
                 case .animePromos:
                     return strongSelf.getAnimePromosSection()
                 case .animeTop:
                     return strongSelf.getAnimeTopSection()
+                case .unknown: return nil
             }
         }
         return layout
@@ -78,7 +84,6 @@ private extension Feed {
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(groupWidth),
                                                heightDimension: .absolute(groupHeight))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        //        group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 30.0)
 
         // Header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -162,42 +167,54 @@ extension Feed: Bindable {
         bindFeed()
     }
 
+    // TODO: Clean up ...
     func bindFeed() {
-        #warning("THIS COULD BE IMPROVED")
         guard let discoverFeed = presenter?.feed else { return }
 
+        // Season Anime
         let seasonAnimeFeed = discoverFeed.seasonAnime
-        seasonAnimeFeed.driver.drive { [weak self] (animes) in
-            guard let strongSelf = self else { return }
-            strongSelf.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes, animating: true)
-        }.disposed(by: disposeBag)
+        seasonAnimeFeed.observable
+            .asDriver()
+            .filter { !$0.isEmpty }
+            .drive { [weak self] (animes) in
+                guard let self else { return }
+                let loader = animes.first(where: \.isLoading); let hasLoader = (loader != nil)
+                self.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes, animating: true, deleteLoaders: !hasLoader)
+            }.disposed(by: disposeBag)
 
+        // Anime Promos
         let recentPromosAnimeFeed = discoverFeed.recentPromosAnime
-        recentPromosAnimeFeed.driver.drive { [weak self] (promos) in
-            guard let strongSelf = self else { return }
-            strongSelf.dataSource.updateSnapshot(for: recentPromosAnimeFeed.section, with: promos, animating: true)
-        }.disposed(by: disposeBag)
+        recentPromosAnimeFeed.observable
+            .asDriver()
+            .filter { !$0.isEmpty }
+            .drive { [weak self] (promos) in
+                guard let self else { return }
+                let loader = promos.first(where: \.isLoading); let hasLoader = (loader != nil)
+                self.dataSource.updateSnapshot(for: recentPromosAnimeFeed.section, with: promos, animating: true, deleteLoaders: !hasLoader)
 
+            }.disposed(by: disposeBag)
+
+        // Top Anime
         let topAnimeFeed = discoverFeed.topAnime
-        topAnimeFeed.driver.drive { [weak self] (animes) in
-            guard let strongSelf = self else { return }
-            strongSelf.dataSource.updateSnapshot(for: topAnimeFeed.section, with: animes, animating: true)
-        }.disposed(by: disposeBag)
+        topAnimeFeed.observable
+            .asDriver()
+            .filter { !$0.isEmpty }
+            .drive { [weak self] (animes) in
+                guard let self else { return }
+                let loader = animes.first(where: \.isLoading); let hasLoader = (loader != nil)
+                self.dataSource.updateSnapshot(for: topAnimeFeed.section, with: animes, animating: true, deleteLoaders: !hasLoader)
+            }.disposed(by: disposeBag)
     }
-}
-
-private extension Feed {
-    // TODO: Is there even a way to filter those?
-    func filterNoImagePromos(promos: [Promo]) {}
 }
 
 extension Feed: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath), (cell as? ACLoaderCell) == nil else { return }
+
         guard cellIsSelectable else { return }
         cellIsSelectable = false
 
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.expand(durationInSeconds: 0.15, end: .reset, toScale: 0.95) { [weak self] in
+        cell.expand(durationInSeconds: 0.15, end: .reset, toScale: 0.95) { [weak self] in
             self?.cellIsSelectable = true
         }
 

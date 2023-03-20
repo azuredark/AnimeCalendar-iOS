@@ -131,8 +131,8 @@ struct CharacterInfo: Decodable, ModelSectionable {
         return lhs.character.id == rhs.character.id
     }
 
-    var detailFeedSection: DetailFeedSection = .animeCharacters
-    var feedSection: FeedSection = .animePromos
+    var detailFeedSection: DetailFeedSection = .unknown
+    var feedSection: FeedSection = .unknown
 }
 
 struct Character: Decodable {

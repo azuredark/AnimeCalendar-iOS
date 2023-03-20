@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ImageLoadingOptions.shared = options
         
         /// # For `debugging` purposes only
-        ImagePipeline.shared.cache.removeAll()
+//        ImagePipeline.shared.cache.removeAll()
         
         return true
     }

@@ -49,6 +49,8 @@ extension TopEndpoint: EndpointType {
     }
 
     var headers: HTTPHeaders? { nil }
+    
+    var retries: Int { 3 }
 }
 
 enum AnimeOrderType: String {

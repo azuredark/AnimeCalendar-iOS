@@ -42,9 +42,9 @@ private extension NewAnimeInteractor {
     func bindSearchObservable() {
         inputSearchAnimeObservable
             .flatMapLatest { [weak self] text -> Observable<[Anime]> in
-                guard let self = self else { return Observable.just(AnimeResult().data) }
+                guard let self = self else { return Observable.just(JikanResult<Anime>().data) }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - text: \(text)")
-                return self.repository.getAnime(name: text).compactMap { $0?.data }
+                return self.repository.getAnime(name: text).asObservable().compactMap { $0?.data }
             }
             .bind(to: searchResultAnimeObservable)
             .disposed(by: disposeBag)

@@ -11,6 +11,8 @@ extension Array where Element == String {
     func formatList(by separator: String, endSeparator: String) -> String {
         var listCopy: [Element] = self.map { $0 }
         let lastElement = listCopy.removeLast()
+        guard self.count > 1 else { return "\(lastElement)" }
+        
         var finalText: String = listCopy.joined(separator: "\(separator) ")
         finalText += " \(endSeparator) \(lastElement)"
         

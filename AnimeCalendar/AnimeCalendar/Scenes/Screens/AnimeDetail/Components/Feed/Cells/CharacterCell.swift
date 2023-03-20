@@ -115,7 +115,7 @@ private extension CharacterCell {
 
         gradient.colors = [UIColor.clear.cgColor, Color.staticBlack.cgColor]
         gradient.locations = [0.0, 1.0]
-        gradient.startPoint = CGPoint(x: 0.0, y: 0.7)
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.8)
         gradient.endPoint = CGPoint(x: 0.0, y: 1) // you need to play with 0.15 to adjust gradient vertically
         gradient.frame = contentView.bounds
 

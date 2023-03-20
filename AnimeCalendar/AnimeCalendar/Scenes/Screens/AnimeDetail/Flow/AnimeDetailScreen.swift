@@ -35,7 +35,7 @@ final class AnimeDetailScreen: UIViewController, Screen {
     }()
     
     private lazy var blurView: BlurContainer = {
-        let config = BlurContainer.Config(opacity: 0.9, style: .systemThickMaterial)
+        let config = BlurContainer.Config(opacity: 1, style: .systemThickMaterial)
         let blur = BlurContainer(config: config)
         blur.translatesAutoresizingMaskIntoConstraints = false
         view.insertSubview(blur, aboveSubview: coverImageView)

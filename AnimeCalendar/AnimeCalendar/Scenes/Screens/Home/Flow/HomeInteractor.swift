@@ -41,6 +41,7 @@ extension HomeInteractor: HomeInteractive {
 
     func updateUserAnimes(name: String) {
         animeRepository.getAnime(name: name)
+            .asObservable()
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] result in
                 guard let strongSelf = self else { return }

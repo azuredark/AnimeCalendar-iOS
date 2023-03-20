@@ -45,4 +45,6 @@ extension SeasonEndpoint: EndpointType {
     }
 
     var headers: HTTPHeaders? { nil }
+    
+    var retries: Int { 3 }
 }

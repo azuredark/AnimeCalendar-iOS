@@ -75,6 +75,7 @@ private extension DetailFeed {
                 // Loader
                 case .spinner:
                     return self.getSpinnerSection()
+                case .unknown: return nil
             }
         }
 
@@ -150,7 +151,7 @@ private extension DetailFeed {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         // Group
-        let headerWithInsets: CGFloat = 25.0
+        let headerWithInsets: CGFloat = 35.0
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                heightDimension: .absolute(420.0 + headerWithInsets))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])

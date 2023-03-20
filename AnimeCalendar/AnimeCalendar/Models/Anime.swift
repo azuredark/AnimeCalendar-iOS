@@ -13,27 +13,6 @@ protocol ModelSectionable: Hashable, Equatable {
     var isLoading: Bool { get set }
 }
 
-struct AnimeResult: Decodable {
-    // MARK: Parameters
-    var data: [Anime] = []
-
-    // MARK: Parameter mapping
-    enum CodingKeys: String, CodingKey {
-        case data
-    }
-
-    // MARK: Decoding Technique
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.decodeIfPresent([Anime].self, forKey: .data) ?? [Anime]()
-    }
-
-    // MARK: Initializers
-    init() {
-        self.data = [Anime]()
-    }
-}
-
 /// Types of show with it's parsed representation.
 enum ShowType: String {
     case tv      = "TV Show"
@@ -156,8 +135,12 @@ struct Anime: Decodable, ModelSectionable {
     }
 
     // MARK: Additional methods/properties
-    var detailFeedSection: DetailFeedSection = .animeBasicInfo
-    var feedSection: FeedSection = .animePromos
+    var detailFeedSection: DetailFeedSection = .unknown
+    var feedSection: FeedSection = .unknown
+    
+    mutating func setFeedSection(to section: FeedSection) {
+        self.feedSection = section
+    }
 }
 
 struct AnimeImageType: Decodable {
@@ -333,5 +316,5 @@ struct SpinnerModel: Decodable, ModelSectionable {
     }
 
     var detailFeedSection: DetailFeedSection = .spinner
-    var feedSection: FeedSection = .animePromos
+    var feedSection: FeedSection = .unknown
 }

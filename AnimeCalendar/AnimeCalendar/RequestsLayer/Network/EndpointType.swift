@@ -12,6 +12,14 @@ protocol EndpointType {
     var httpMethod: HTTPMethod { get }
     var task: HTTPTask { get }
     var headers: HTTPHeaders? { get }
+    var retries: Int { get }
+}
+
+extension EndpointType {
+}
+
+extension EndpointType {
+    var retries: Int { 0 }
 }
 
 enum HTTPMethod: String {

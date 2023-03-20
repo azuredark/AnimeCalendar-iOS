@@ -75,7 +75,7 @@ private extension DetailFeedDataSource {
             cell.setup()
         }
 
-        guard let collectionView = collectionView else { return }
+        guard let collectionView else { return }
 
         // Dequeing cells.
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
@@ -96,6 +96,7 @@ private extension DetailFeedDataSource {
                 case .spinner:
                     guard let data = item as? SpinnerModel else { return nil }
                     return spinnerCell.cellProvider(collectionView, indexPath, data)
+                case .unknown: return nil
             }
         }
 
@@ -138,7 +139,7 @@ private extension DetailFeedDataSource {
 
 extension DetailFeedDataSource: FeedDataSourceable {
     #warning("Create methods x Model type (Anime, Promo, Trailer) instead of using Dynamic Dispatch (any Model)")
-    func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil) {
+    func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil, deleteLoaders: Bool = false) {
         guard let section = section as? DetailFeedSection else { return }
         let finalItems = setModelSection(for: section, with: items)
         if sectionExists(section: section) { return }
@@ -155,6 +156,7 @@ extension DetailFeedDataSource: FeedDataSourceable {
                 currentSnapshot.appendSections([section])
             }
         }
+        
         currentSnapshot.appendItems(finalItems, toSection: section)
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
         
@@ -278,6 +280,7 @@ enum DetailFeedSection: String, CaseIterable {
     case animeCharacters
     case animeReviews
     case spinner
+    case unknown
 
     init(_ index: Int) {
         switch index {
@@ -285,7 +288,8 @@ enum DetailFeedSection: String, CaseIterable {
             case 1: self = .animeBasicInfo
             case 2: self = .animeCharacters
             case 3: self = .animeReviews
-            default: self = .spinner
+            case 4: self = .spinner
+            default: self = .unknown
         }
     }
 }

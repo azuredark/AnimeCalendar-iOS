@@ -45,4 +45,6 @@ extension PromoEndpoint: EndpointType {
     }
 
     var headers: HTTPHeaders? { nil }
+    
+    var retries: Int { 3 }
 }

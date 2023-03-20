@@ -74,6 +74,7 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
     func updateCharacters(animeId: Int) {
         // Send empty event for loading
         repository.getAnimeCharacters(animeId: animeId)
+            .asObservable()
             .compactMap { $0 }
             .bind(to: charactersStorage)
             .disposed(by: requestDisposeBag)

@@ -195,7 +195,9 @@ private extension TopAnimeCell {
     }
 
     func setupGenresLabel() {
-        let genres: [String]? = anime?.genres.map { $0.name }
+        guard let animeGenres = anime?.genres, !animeGenres.isEmpty else { return }
+        
+        let genres: [String]? = animeGenres.map { $0.name }
         genresLabel.text = genres?.formatList(by: ",", endSeparator: "&")
     }
 }
