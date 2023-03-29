@@ -65,7 +65,6 @@ final class CharacterCollectionCell: UICollectionViewCell, FeedCell {
 private extension CharacterCollectionCell {
     func layoutUI() {
         backgroundColor = .clear
-//        backgroundColor = Color.cream
 
         let collectionView = collection.getCollection()
         let yInset: CGFloat = 5.0
@@ -149,7 +148,7 @@ private extension CharacterCollectionCell {
         guard let ds = collection.getDataSource() else { return [] }
 
         let imagePaths = indexPaths.compactMap { indexPath in
-            ds.itemIdentifier(for: indexPath)?.character.images?.jpgImage.normal
+            ds.itemIdentifier(for: indexPath)?.character.images?.jpgImage.attemptToGetImageByResolution(.large)
         }
 
         let urls = imagePaths.compactMap(URL.init)
@@ -162,7 +161,6 @@ private extension CharacterCollectionCell {
 extension CharacterCollectionCell: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         Task {
-            print("senku [DEBUG] \(String(describing: type(of: self))) - PREFETCHING @ INDEXPATHS: \(indexPaths)")
             let requests = getImagRequests(indexPaths: indexPaths)
             preheater.startPrefetching(with: requests)
         }

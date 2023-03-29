@@ -20,6 +20,7 @@ struct Loader: ModelSectionable {
 
     var detailFeedSection: DetailFeedSection = .animeBasicInfo
     var feedSection: FeedSection = .animePromos
+    var isLoadMoreItem: Bool = false
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)

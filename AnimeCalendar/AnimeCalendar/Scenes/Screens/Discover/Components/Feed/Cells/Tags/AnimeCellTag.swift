@@ -9,7 +9,7 @@ import UIKit
 
 final class AnimeCellTag: UIView {
     // MARK: State
-    private var config: AnimeCellTag.Config
+    var config: AnimeCellTag.Config
     
     private var hasDifferenteCorners: Bool = false
     
@@ -22,7 +22,7 @@ final class AnimeCellTag: UIView {
     }()
 
     private lazy var blurContainerView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .systemMaterialDark)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.translatesAutoresizingMaskIntoConstraints = false
         blurView.clipsToBounds = true
@@ -34,7 +34,6 @@ final class AnimeCellTag: UIView {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.tintColor = Color.staticWhite
         mainContainer.addSubview(imageView)
         return imageView
     }()
@@ -43,7 +42,6 @@ final class AnimeCellTag: UIView {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.textColor = Color.staticWhite
         label.font = .systemFont(ofSize: 11, weight: .medium)
         label.numberOfLines = 1
         mainContainer.addSubview(label)
@@ -61,7 +59,7 @@ final class AnimeCellTag: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if !hasDifferenteCorners {
-            mainContainer.addCornerRadius(radius: 5, corners: [.topRight, .bottomRight])
+            mainContainer.addCornerRadius(radius: config.radius, corners: config.corners)
             hasDifferenteCorners = true
         }
     }
@@ -100,6 +98,7 @@ private extension AnimeCellTag {
 
     func layoutIconImageView() {
         iconImageView.image = config.iconImage
+        iconImageView.tintColor = config.iconColor
 
         let xInset: CGFloat = 5.0
         NSLayoutConstraint.activate([
@@ -112,6 +111,7 @@ private extension AnimeCellTag {
 
     func layoutIconTextLabel() {
         iconTextLabel.text = config.iconText
+        iconTextLabel.textColor = config.iconColor
 
         let xInset: CGFloat = 5.0
         NSLayoutConstraint.activate([
@@ -126,10 +126,14 @@ extension AnimeCellTag {
     struct Config {
         var iconImage: UIImage
         var iconText: String
+        var iconColor: UIColor
+        var corners: UIRectCorner = .allCorners
+        var radius: CGFloat = 5.0
 
-        init(iconImage: UIImage, iconText: String?) {
+        init(iconImage: UIImage, iconText: String?, iconColor: UIColor) {
             self.iconImage = iconImage
             self.iconText = iconText ?? ""
+            self.iconColor = iconColor
         }
     }
 }

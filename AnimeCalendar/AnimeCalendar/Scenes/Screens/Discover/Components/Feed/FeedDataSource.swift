@@ -54,6 +54,11 @@ final class FeedDataSource {
             cell.presenter = self?.presenter
             cell.setup()
         }
+        
+        let upcomingAnimeCell = UICollectionView.CellRegistration<UpcomingAnimeCell, Anime> { cell, _, anime in
+            cell.anime = anime
+            cell.setup()
+        }
 
         let promoAnimeCell = UICollectionView.CellRegistration<PromoAnimeCell, Promo> {
             [weak self] cell, _, promo in
@@ -63,7 +68,7 @@ final class FeedDataSource {
         }
 
         let topAnimeCell = UICollectionView.CellRegistration<TopAnimeCell, Anime> {
-            [weak self] cell, indexPath, anime in
+            [weak self] (cell, indexPath, anime) in
             cell.anime = anime
             cell.index = indexPath.row + 1
             cell.presenter = self?.presenter
@@ -79,30 +84,43 @@ final class FeedDataSource {
         let animeTopLoaderCell = UICollectionView.CellRegistration<AnimeTopLoaderCell, any ModelSectionable> { (cell, _, _) in
             cell.setup()
         }
+        
+        let loaderCell = UICollectionView.CellRegistration<ACLoaderCell, any ModelSectionable> { (cell, _, _) in
+            cell.setup()
+        }
+
+        let loadMoreCell = UICollectionView.CellRegistration<ACLoadMoreItemsCell, any ModelSectionable> { [weak self] (cell, _, item) in
+            guard let presenter = self?.presenter else { return }
+            cell.section = item.feedSection
+            cell.setup(with: presenter.observablesState)
+        }
 
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let item = item as? (any ModelSectionable) else { return nil }
             let section: FeedSection = item.feedSection
+            // LoadMore Cell
+            if item.isLoadMoreItem {
+                return collectionView.dequeueConfiguredReusableCell(using: loadMoreCell, for: indexPath, item: item)
+            }
+            
+            // LoadingCell (Placeholder)
+            if item.isLoading {
+                return collectionView.dequeueConfiguredReusableCell(using: loaderCell, for: indexPath, item: item)
+            }
             
             switch section {
                 case .animeSeason:
-                    if item.isLoading {
-                        return collectionView.dequeueConfiguredReusableCell(using: animeSeasonLoaderCell, for: indexPath, item: item)
-                    }
                     guard let anime = item as? Anime else { return nil }
                     return collectionView.dequeueConfiguredReusableCell(using: seasonAnimeCell, for: indexPath, item: anime)
                 case .animePromos:
-                    if item.isLoading {
-                        return collectionView.dequeueConfiguredReusableCell(using: animePromoLoaderCell, for: indexPath, item: item)
-                    }
                     guard let promo = item as? Promo else { return nil }
                     return collectionView.dequeueConfiguredReusableCell(using: promoAnimeCell, for: indexPath, item: promo)
                 case .animeTop:
-                    if item.isLoading {
-                        return collectionView.dequeueConfiguredReusableCell(using: animeTopLoaderCell, for: indexPath, item: item)
-                    }
                     guard let anime = item as? Anime else { return nil }
                     return collectionView.dequeueConfiguredReusableCell(using: topAnimeCell, for: indexPath, item: anime)
+                case .animeUpcoming:
+                    guard let anime = item as? Anime else { return nil }
+                    return collectionView.dequeueConfiguredReusableCell(using: upcomingAnimeCell, for: indexPath, item: anime)
                 case .unknown: return nil
             }
         }
@@ -112,14 +130,14 @@ final class FeedDataSource {
             let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
                                                                          withReuseIdentifier: FeedHeader.reuseIdentifier,
                                                                          for: indexPath) as? FeedHeader
-            
+
             // If error, then send emptyheader
             guard let item = self?.getItem(at: indexPath) as? (any ModelSectionable) else {
                 return collection.dequeueReusableSupplementaryView(ofKind: kind,
                                                                    withReuseIdentifier: EmptyHeader.reuseIdentifier,
                                                                    for: indexPath) as? EmptyHeader
             }
-            
+
             let section = item.feedSection
             headerView?.setupTitle(with: section.rawValue)
             return headerView
@@ -130,6 +148,8 @@ final class FeedDataSource {
         // MARK: Cells
         // Season anime
         collectionView.register(SeasonAnimeCell.self, forCellWithReuseIdentifier: SeasonAnimeCell.reuseIdentifier)
+        // Upcoming anime
+        collectionView.register(UpcomingAnimeCell.self, forCellWithReuseIdentifier: UpcomingAnimeCell.reuseIdentifier)
         // Promos trailers
         collectionView.register(PromoAnimeCell.self, forCellWithReuseIdentifier: PromoAnimeCell.reuseIdentifier)
         // Top anime
@@ -161,7 +181,12 @@ extension FeedDataSource: FeedDataSourceable {
         }
 
         // Remove loaders from snapshot.
-        if deleteLoaders { removeLoaders(in: section) }
+        // Not necessary if the section-items are being deleted
+//        if deleteLoaders { removeLoaders(in: section) }
+
+        #warning("This may be too expensive? Deleting all the time")
+        // Delete items in section before adding more, as the items may be aggregated and result in duplicated items in snapshot.
+        currentSnapshot.deleteItems(currentSnapshot.itemIdentifiers(inSection: section))
 
         currentSnapshot.appendItems(items, toSection: section)
 
@@ -174,7 +199,7 @@ extension FeedDataSource: FeedDataSourceable {
     func getItem<T: Hashable>(at indexPath: IndexPath) -> T? {
         return dataSource?.itemIdentifier(for: indexPath) as? T
     }
-    
+
     func getItem(at indexPath: IndexPath) -> AnyHashable {
         return dataSource?.itemIdentifier(for: indexPath)
     }
@@ -182,17 +207,17 @@ extension FeedDataSource: FeedDataSourceable {
     func removeLoaders(in section: FeedSection) {
         // Find loaders
         let loaders = currentSnapshot.itemIdentifiers(inSection: section)
-            .compactMap { $0 as? (any ModelSectionable)}.filter(\.isLoading)
-        
+            .compactMap { $0 as? (any ModelSectionable) }.filter(\.isLoading)
+
         // Remove loaders from snapshot
         if let itemsToRemove = loaders as? [AnyHashable] {
             currentSnapshot.deleteItems(itemsToRemove)
         }
     }
-    
+
     func resetSnapshot() {
         currentSnapshot.deleteAllItems()
-        currentSnapshot.deleteSections([.animeSeason, .animePromos, .animeTop])
+        currentSnapshot.deleteSections([.animeSeason, .animeUpcoming, .animePromos, .animeTop])
         let emptySnapshot = Snapshot()
         dataSource?.apply(emptySnapshot, animatingDifferences: true)
     }
@@ -200,15 +225,18 @@ extension FeedDataSource: FeedDataSourceable {
 
 /// All section types
 enum FeedSection: String, CaseIterable {
-    case animeSeason = "Current Season"
-    case animePromos = "Promos"
-    case animeTop    = "Top All-time"
-    case unknown     = "Unknown"
+    case animePromos   = "📺 Promos"
+    case animeSeason   = "🔥 Current Season"
+    case animeUpcoming = "📅 Upcoming"
+    case animeTop      = "🏆 Top All-time"
+    case unknown       = "Unknown"
 
     var placeholderCount: Int {
         switch self {
-            case .animeSeason, .animePromos, .animeTop:
+            case .animeSeason, .animeTop, .animeUpcoming:
                 return 10
+            case .animePromos:
+                return 5
             case .unknown: return 0
         }
     }

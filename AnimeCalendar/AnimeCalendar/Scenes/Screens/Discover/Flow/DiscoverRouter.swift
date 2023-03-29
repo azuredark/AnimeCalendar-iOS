@@ -42,6 +42,7 @@ extension DiscoverRouter: DiscoverRoutable {
     }
 }
 
+// MARK: - Transitions
 private extension DiscoverRouter {
     func handleTransition(to screen: ScreenType) {
         switch screen {

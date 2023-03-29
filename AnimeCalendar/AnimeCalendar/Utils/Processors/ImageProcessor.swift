@@ -18,7 +18,7 @@ struct ImageProcessor {
         var processors = [ImageProcessing]()
         
         if cellType is SeasonAnimeCell {
-            let height: CGFloat = 250.0
+            let height: CGFloat = 300.0
             let width: CGFloat = height / 1.66 // 16:9
             processors.append(contentsOf: [
                 .resize(width: width),

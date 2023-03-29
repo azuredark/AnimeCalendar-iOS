@@ -10,10 +10,13 @@ import Foundation
 // https://api.jikan.moe/v4/seasons/now?page=1
 enum SeasonEndpoint: Equatable {
     case getCurrentSeasonAnime(page: Int)
-    
+    case getUpcomingSeasonAnime(page: Int)
+
     static func == (lhs: SeasonEndpoint, rhs: SeasonEndpoint) -> Bool {
         switch (lhs, rhs) {
             case (.getCurrentSeasonAnime, .getCurrentSeasonAnime): return true
+            case (.getUpcomingSeasonAnime, .getUpcomingSeasonAnime): return true
+            default: return false
         }
     }
 }
@@ -25,19 +28,22 @@ extension SeasonEndpoint: EndpointType {
         switch self {
             case .getCurrentSeasonAnime:
                 return API.getAPI(.v4) + service + "/now"
+            case .getUpcomingSeasonAnime:
+                return API.getAPI(.v4) + service + "/upcoming"
         }
     }
 
     var httpMethod: HTTPMethod {
         switch self {
-            case .getCurrentSeasonAnime:
+            case .getCurrentSeasonAnime, .getUpcomingSeasonAnime:
                 return .get
         }
     }
 
     var task: HTTPTask {
         switch self {
-            case .getCurrentSeasonAnime(let page):
+            case .getCurrentSeasonAnime(let page),
+                 .getUpcomingSeasonAnime(let page):
                 return .requestParameters(
                     bodyParameters: nil,
                     urlParameters: ["page": page])
@@ -45,6 +51,6 @@ extension SeasonEndpoint: EndpointType {
     }
 
     var headers: HTTPHeaders? { nil }
-    
+
     var retries: Int { 3 }
 }

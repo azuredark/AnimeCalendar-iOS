@@ -51,7 +51,8 @@ extension NewAnimeSearchResultItem: ComponentCollectionItem {
         animeObservable.onNext(item)
 
         /// Setting image
-        presenter?.getImageResource(path: item.imageType.jpgImage.normal, completion: { [weak self] image in
+        let imagePath: String = item.imageType.jpgImage.attemptToGetImageByResolution(.normal)
+        presenter?.getImageResource(path: imagePath, completion: { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.animeCoverImage.image = image

@@ -129,7 +129,7 @@ private extension BasicInfoHeader {
 
         let collectionView = genresCollection.getCollectionView()
         let xInset: CGFloat = 20.0
-        collectionView.setSize(width: bounds.size.width - xInset, height: 20.0)
+        collectionView.setSize(width: bounds.size.width - xInset, height: 30.0)
         components.append(.customView(collectionView))
         
         genreCollection = genresCollection

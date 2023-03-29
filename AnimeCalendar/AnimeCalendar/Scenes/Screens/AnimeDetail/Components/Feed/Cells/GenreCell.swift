@@ -35,7 +35,7 @@ final class GenreCell: UICollectionViewCell, FeedCell {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.accessibilityIdentifier = AccessId.nameLabel
-        label.font = .systemFont(ofSize: 11.0, weight: .medium)
+        label.font = .systemFont(ofSize: 16.0, weight: .medium)
         label.textColor = Color.cobalt
         label.numberOfLines = 1
         label.textAlignment = .center

@@ -11,6 +11,7 @@ protocol ModelSectionable: Hashable, Equatable {
     var detailFeedSection: DetailFeedSection { get set }
     var feedSection: FeedSection { get set }
     var isLoading: Bool { get set }
+    var isLoadMoreItem: Bool { get set }
 }
 
 /// Types of show with it's parsed representation.
@@ -137,6 +138,7 @@ struct Anime: Decodable, ModelSectionable {
     // MARK: Additional methods/properties
     var detailFeedSection: DetailFeedSection = .unknown
     var feedSection: FeedSection = .unknown
+    var isLoadMoreItem: Bool = false
     
     mutating func setFeedSection(to section: FeedSection) {
         self.feedSection = section
@@ -170,10 +172,18 @@ struct AnimeImageType: Decodable {
 }
 
 struct AnimeImage: Decodable {
+    enum Resolution {
+        case large
+        case normal
+        case small
+    }
+    
     // MARK: Parameters
-    var small: String
-    var normal: String
-    var large: String
+    private var small: String
+    private var normal: String
+    private var large: String
+    
+    var imageResolutions: [String: Resolution] = [:]
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -195,6 +205,20 @@ struct AnimeImage: Decodable {
         self.small = "JPG ERROR"
         self.normal = "JPG ERROR"
         self.large = "JPG ERROR"
+    }
+    
+    /// Looks up for a non-empty image of a certain **Resolution**, if not found then looks for a lower-res one.
+    /// - Returns: Image resource-path.
+    func attemptToGetImageByResolution(_ imageResolution: Resolution) -> String {
+        switch imageResolution {
+            case .large:
+                guard !large.isEmpty else { return attemptToGetImageByResolution(.normal) }
+                return large
+            case .normal:
+                guard !normal.isEmpty else { return attemptToGetImageByResolution(.small) }
+                return normal
+            case .small: return small
+        }
     }
 }
 
@@ -317,4 +341,5 @@ struct SpinnerModel: Decodable, ModelSectionable {
 
     var detailFeedSection: DetailFeedSection = .spinner
     var feedSection: FeedSection = .unknown
+    var isLoadMoreItem: Bool = false
 }

@@ -45,6 +45,28 @@ final class AnimeRepository: GenericRepository {
                 switch result {
                     case .success(var anime):
                         anime?.setFeedSection(to: .animeSeason)
+                        anime?.pagination.page = page
+                        single(.success(anime))
+                    case .failure(_):
+                        single(.success(nil))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func getUpcomingSeasonAnime(page: Int = 1, responsible: RequestResponsibleType = .network) -> Single<JikanResult<Anime>?> {
+        return .create { [weak self] (single) in
+            guard let strongSelf = self else { return Disposables.create() }
+            
+            let model = JikanResult<Anime>.self
+            let requestResponsible: Requestable = strongSelf.requestsManager.getRequestResponsible(responsible)
+            
+            requestResponsible.makeRequest(model, .season(.getUpcomingSeasonAnime(page: page))) { result in
+                switch result {
+                    case .success(var anime):
+                        anime?.setFeedSection(to: .animeUpcoming)
+                        anime?.pagination.page = page
                         single(.success(anime))
                     case .failure(_):
                         single(.success(nil))
@@ -65,6 +87,7 @@ final class AnimeRepository: GenericRepository {
                 switch result {
                     case .success(var promo):
                         promo?.setFeedSection(to: .animePromos)
+                        promo?.pagination.page = page
                         single(.success(promo))
                     case .failure(_):
                         single(.success(nil))
@@ -85,6 +108,7 @@ final class AnimeRepository: GenericRepository {
                 switch result {
                     case .success(var anime):
                         anime?.setFeedSection(to: .animeTop)
+                        anime?.pagination.page = page
                         single(.success(anime))
                     case .failure(_):
                         single(.success(nil))

@@ -66,9 +66,12 @@ private extension DiscoverScreen {
         presenter?.addLoaderItems()
 
         // 3. Request new data.
-        presenter?.updateSeasonAnime()
         presenter?.updateRecentPromosAnime()
-        presenter?.updateTopAnime(by: .rank)
+        presenter?.updateSeasonAnime()
+        presenter?.updateUpcomingAnime()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+            self?.presenter?.updateTopAnime(by: .rank)
+        })
     }
 }
 
@@ -104,7 +107,7 @@ extension DiscoverScreen {
 // MARK: - Configure components (UI)
 private extension DiscoverScreen {
     func configureScreenComponents() {
-        configureSearchBarView()
+//        configureSearchBarView()
         configureFeed()
         configureRefreshControl()
     }
@@ -128,11 +131,11 @@ private extension DiscoverScreen {
     func configureFeed() {
         view.addSubview(feedCollection)
 
-        let yInset: CGFloat = 10.0
+        let yInset: CGFloat = 0
         NSLayoutConstraint.activate([
             feedCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             feedCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            feedCollection.topAnchor.constraint(equalTo: searchbBar.bottomAnchor, constant: yInset),
+            feedCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: yInset),
             feedCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
@@ -144,19 +147,19 @@ private extension DiscoverScreen {
 
 private extension DiscoverScreen {
     @objc func didScrollToRefresh() {
-        #warning("Cancel if no section has been scrolled so far??")
         Logger.log(.info, msg: "Did scroll to refresh owo")
-        
+
         // 1. Wait for at least 1 new feed load to end the refreshing animation
         presenter?.recievedValidAnime
             .asObservable()
             .observe(on: MainScheduler.instance)
             .filter { $0 }
             .subscribe(onNext: { [weak self] (_) in
-                self?.refreshControl.endRefreshing()
+                guard let self else { return }
+                self.refreshControl.endRefreshing()
             })
             .disposed(by: disposeBag)
-        
+
         // 2. Request new feed.
         updateLatestFeed()
     }

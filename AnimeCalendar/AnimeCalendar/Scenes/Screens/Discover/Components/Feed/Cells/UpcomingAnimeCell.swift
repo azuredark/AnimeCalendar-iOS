@@ -1,50 +1,51 @@
 //
-//  PromoAnimeCell.swift
+//  UpcomingAnimeCell.swift
 //  AnimeCalendar
 //
-//  Created by Leonardo  on 26/11/22.
+//  Created by Leonardo  on 26/03/23.
 //
 
 import UIKit
 
-final class PromoAnimeCell: UICollectionViewCell, FeedCell {
+final class UpcomingAnimeCell: UICollectionViewCell, FeedCell {
     // MARK: State
-    static var reuseIdentifier: String = "PROMO_ANIME_CELL_REUSE_ID"
-    private var shadowExists: Bool = false
-    private var cornerRadius: CGFloat = 5.0
+    static var reuseIdentifier: String = "UPCOMING_ANIME_CELL_REUSE_ID"
+   
+    var anime: Anime?
+    
+    private let radius: CGFloat = 5.0
     private var overlayApplied: Bool = false
 
-    weak var presenter: DiscoverPresentable?
-    var promo: Promo?
-
-    private lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.addCornerRadius(radius: cornerRadius)
-        contentView.addSubview(imageView)
-        return imageView
+    private(set) lazy var coverImageView: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleToFill
+        view.backgroundColor = .clear
+        view.addCornerRadius(radius: radius)
+        contentView.addSubview(view)
+        return view
     }()
-
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 24, weight: .medium)
-        label.numberOfLines = 2
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.numberOfLines = 3
         label.textColor = Color.staticWhite
         label.textAlignment = .left
         label.alpha = 0
         
         // Shadow
-        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowColor = Color.staticBlack.cgColor
         label.layer.shadowRadius = 2.0
         label.layer.shadowOpacity = 1.0
-        label.layer.shadowOffset = CGSize(width: 1, height: 1)
+        label.layer.shadowOffset = CGSize(width: 2, height: 2)
         label.layer.masksToBounds = false
         contentView.addSubview(label)
         return label
     }()
 
+    // MARK: Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutUI()
@@ -54,70 +55,56 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         if !overlayApplied {
             applyOverlay()
         }
     }
-
-    /// Reset cell's state when preparing for reusing
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        presenter = nil
         coverImageView.image = nil
         titleLabel.text = nil
     }
 
     // MARK: Methods
-    /// The setup is run for **every new cell dequed**. In contrast with **setupUI** which only configure constraints on each run and its UI elements are saved in the *new initialized cell's* memory.
-    ///
-    /// - Important: Only so many cells are ever **initialized** in a UICollectionView or UITableViewCell
     func setup() {
-        setupCoverImage()
+        setupCoverImageView()
         setupTitleLabel()
-    }
-
-    func getCoverImage() -> UIImage? {
-        return coverImageView.image
     }
 }
 
-private extension PromoAnimeCell {
-    func setupCoverImage() {
-        let imagePath: String? = promo?.trailer.image.attemptToGetImageByResolution(.large)
-        coverImageView.loadImage(from: imagePath) { [weak self] _ in
-            guard let self else { return }
+private extension UpcomingAnimeCell {
+    func setupCoverImageView() {
+        let path: String? = anime?.imageType.jpgImage.attemptToGetImageByResolution(.large)
+        coverImageView.loadImage(from: path, cellType: self) { [weak self] _ in
             UIView.animate(withDuration: 0.4) { [weak self] in
-                self?.titleLabel.isHidden = false
-                self?.titleLabel.alpha = 1
+                guard let self else { return }
+                self.titleLabel.alpha = 1
             }
         }
     }
-
+    
     func setupTitleLabel() {
-        let title = self.promo?.anime.titleEng
-        titleLabel.text = title
+        titleLabel.text = anime?.titleEng
     }
 }
 
-private extension PromoAnimeCell {
+private extension UpcomingAnimeCell {
     func layoutUI() {
-        contentView.addCornerRadius(radius: cornerRadius)
+        contentView.clipsToBounds = true
+        contentView.addCornerRadius(radius: 5.0)
+
         layoutCoverImageView()
         layoutTitleLabel()
     }
 
     func layoutCoverImageView() {
-        NSLayoutConstraint.activate([
-            coverImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            coverImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            coverImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            coverImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
+        coverImageView.fitViewTo(contentView)
     }
-
+    
     func layoutTitleLabel() {
         let padding: CGFloat = 5.0
         NSLayoutConstraint.activate([
@@ -127,8 +114,7 @@ private extension PromoAnimeCell {
         ])
     }
 }
-
-private extension PromoAnimeCell {
+private extension UpcomingAnimeCell {
     func applyOverlay() {
         let gradient = CAGradientLayer()
 

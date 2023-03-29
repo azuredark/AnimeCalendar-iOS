@@ -63,7 +63,7 @@ extension GenreCollection: ACColllectionLayoutable {
 
         // Group
         let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(50.0),
-                                               heightDimension: .absolute(20.0))
+                                               heightDimension: .fractionalHeight(1.0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         // Section

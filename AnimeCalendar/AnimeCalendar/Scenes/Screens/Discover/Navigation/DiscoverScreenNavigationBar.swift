@@ -28,36 +28,36 @@ extension DiscoverScreenNavigationBar {
     }
 
     func configureLeftNavigationItems() {
-        // Item's image
-        let configuration = UIImage.SymbolConfiguration(weight: .heavy)
-        var settingsImage = UIImage(systemName: "xmark.circle.fill", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
-        settingsImage = settingsImage.withTintColor(Color.black)
-
-        // Navigation item
-        let settingsItem = UIBarButtonItem(image: settingsImage, style: .plain, target: self, action: #selector(dismissScreen))
-
-        let items: [UIBarButtonItem] = [settingsItem]
-        screen?.navigationItem.leftBarButtonItems = items
+//        // Item's image
+//        let configuration = UIImage.SymbolConfiguration(weight: .heavy)
+//        var settingsImage = UIImage(systemName: "xmark.circle.fill", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+//        settingsImage = settingsImage.withTintColor(Color.black)
+//
+//        // Navigation item
+//        let settingsItem = UIBarButtonItem(image: settingsImage, style: .plain, target: self, action: #selector(dismissScreen))
+//
+//        let items: [UIBarButtonItem] = [settingsItem]
+//        screen?.navigationItem.leftBarButtonItems = items
     }
 
     func configureRightNavigationItems() {
-        // Item's image
-        let configuration = UIImage.SymbolConfiguration(weight: .heavy)
-        var settingsImage: UIImage
-
-        if #available(iOS 15.0, *) {
-            settingsImage = UIImage(systemName: "line.3.horizontal.decrease.circle.fill", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
-        } else {
-            settingsImage = UIImage(systemName: "slider.horizontal.3", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
-        }
-
-        settingsImage = settingsImage.withTintColor(Color.black)
-
-        // Navigation item
-        let settingsItem = UIBarButtonItem(image: settingsImage, style: .plain, target: self, action: nil)
-
-        let items: [UIBarButtonItem] = [settingsItem]
-        screen?.navigationItem.rightBarButtonItems = items
+//        // Item's image
+//        let configuration = UIImage.SymbolConfiguration(weight: .heavy)
+//        var settingsImage: UIImage
+//
+//        if #available(iOS 15.0, *) {
+//            settingsImage = UIImage(systemName: "line.3.horizontal.decrease.circle.fill", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+//        } else {
+//            settingsImage = UIImage(systemName: "slider.horizontal.3", withConfiguration: configuration)!.withRenderingMode(.alwaysOriginal)
+//        }
+//
+//        settingsImage = settingsImage.withTintColor(Color.black)
+//
+//        // Navigation item
+//        let settingsItem = UIBarButtonItem(image: settingsImage, style: .plain, target: self, action: nil)
+//
+//        let items: [UIBarButtonItem] = [settingsItem]
+//        screen?.navigationItem.rightBarButtonItems = items
     }
 }
 

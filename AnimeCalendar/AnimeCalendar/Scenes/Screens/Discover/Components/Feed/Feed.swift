@@ -65,6 +65,8 @@ private extension Feed {
                     return strongSelf.getAnimePromosSection()
                 case .animeTop:
                     return strongSelf.getAnimeTopSection()
+                case .animeUpcoming:
+                    return strongSelf.getAnimeUpcomingSection()
                 case .unknown: return nil
             }
         }
@@ -73,6 +75,36 @@ private extension Feed {
 
     /// 1 Group vertical fit 1 item,  scrolling horizontally
     func getAnimeSeasonSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        // Group
+        let groupHeight: CGFloat = 300.0
+        let groupWidth: CGFloat = groupHeight / 1.66 // 16:9
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(groupWidth),
+                                               heightDimension: .absolute(groupHeight))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        // Header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .estimated(44))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: Self.sectionHeaderKind,
+                                                                 alignment: .top)
+
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.boundarySupplementaryItems = [header]
+        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 15.0, trailing: 20.0)
+        section.interGroupSpacing = 10.0
+
+        return section
+    }
+    
+    func getAnimeUpcomingSection() -> NSCollectionLayoutSection {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
@@ -97,7 +129,7 @@ private extension Feed {
         section.orthogonalScrollingBehavior = .continuous
         section.boundarySupplementaryItems = [header]
         section.contentInsets = .init(top: 0, leading: 20.0, bottom: 15.0, trailing: 20.0)
-        section.interGroupSpacing = 15.0
+        section.interGroupSpacing = 10.0
 
         return section
     }
@@ -110,39 +142,9 @@ private extension Feed {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         // Group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.65),
-                                               heightDimension: .fractionalWidth(1 / 3))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
+                                               heightDimension: .fractionalWidth(0.4))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-        // Header
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .estimated(44))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                                 elementKind: Self.sectionHeaderKind,
-                                                                 alignment: .top)
-
-        // Section
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-        section.boundarySupplementaryItems = [header]
-        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 15.0, trailing: 20.0)
-        section.interGroupSpacing = 30.0
-
-        return section
-    }
-
-    /// 1 Group vertical fit 2 items, scrolling horizontally
-    func getAnimeTopSection() -> NSCollectionLayoutSection {
-        // Item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .absolute(100.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        // Group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.76),
-                                               heightDimension: .absolute(216.0))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        group.interItemSpacing = .fixed(16.0)
 
         // Header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -155,8 +157,38 @@ private extension Feed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = [header]
+        section.contentInsets = .init(top: 0, leading: 20.0, bottom: 15.0, trailing: 20.0)
+        section.interGroupSpacing = 10.0
+
+        return section
+    }
+
+    /// 1 Group vertical fit 2 items, scrolling horizontally
+    func getAnimeTopSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .absolute(120.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        // Group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.76),
+                                               heightDimension: .absolute(256.0))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(16.0)
+
+        // Header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .estimated(44))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: Self.sectionHeaderKind,
+                                                                 alignment: .top)
+
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        section.boundarySupplementaryItems = [header]
         section.contentInsets = .init(top: 0, leading: 20.0, bottom: 0, trailing: 20.0)
-        section.interGroupSpacing = 30.0
+        section.interGroupSpacing = 10.0
 
         return section
     }
@@ -168,36 +200,47 @@ extension Feed: Bindable {
     }
 
     // TODO: Clean up ...
+    #warning("Maybe adding a observable(JikanResult<T>, newValues: [T]) would remove the need of deleting section items on each new sequence event.")
     func bindFeed() {
         guard let discoverFeed = presenter?.feed else { return }
 
         // Season Anime
         let seasonAnimeFeed = discoverFeed.seasonAnime
         seasonAnimeFeed.observable
-            .asDriver()
+            .asDriver(onErrorJustReturn: [])
             .filter { !$0.isEmpty }
             .drive { [weak self] (animes) in
                 guard let self else { return }
                 let loader = animes.first(where: \.isLoading); let hasLoader = (loader != nil)
                 self.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes, animating: true, deleteLoaders: !hasLoader)
             }.disposed(by: disposeBag)
+        
+        // Upcoming Anime (NextSeason)
+        let upcomingAnimeFeed = discoverFeed.upcomingAnime
+        upcomingAnimeFeed.observable
+            .asDriver(onErrorJustReturn: [])
+            .filter { !$0.isEmpty }
+            .drive { [weak self] (animes) in
+                guard let self else { return }
+                let loader = animes.first(where: \.isLoading); let hasLoader = (loader != nil)
+                self.dataSource.updateSnapshot(for: upcomingAnimeFeed.section, with: animes, animating: true, deleteLoaders: !hasLoader)
+            }.disposed(by: disposeBag)
 
         // Anime Promos
         let recentPromosAnimeFeed = discoverFeed.recentPromosAnime
         recentPromosAnimeFeed.observable
-            .asDriver()
+            .asDriver(onErrorJustReturn: [])
             .filter { !$0.isEmpty }
             .drive { [weak self] (promos) in
                 guard let self else { return }
                 let loader = promos.first(where: \.isLoading); let hasLoader = (loader != nil)
                 self.dataSource.updateSnapshot(for: recentPromosAnimeFeed.section, with: promos, animating: true, deleteLoaders: !hasLoader)
-
             }.disposed(by: disposeBag)
 
         // Top Anime
         let topAnimeFeed = discoverFeed.topAnime
         topAnimeFeed.observable
-            .asDriver()
+            .asDriver(onErrorJustReturn: [])
             .filter { !$0.isEmpty }
             .drive { [weak self] (animes) in
                 guard let self else { return }
@@ -209,7 +252,18 @@ extension Feed: Bindable {
 
 extension Feed: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath), (cell as? ACLoaderCell) == nil else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath), let presenter else { return }
+        
+        guard let item = dataSource.getItem(at: indexPath) as? (any ModelSectionable) else { return }
+        let itemType = presenter.getCellItemType(item)
+        
+        if case .loader = itemType { return }
+        if case .loadMore = itemType {
+            let loaderCell = cell as? ACLoadMoreItemsCell
+            loaderCell?.startLoadingAnimation()
+            presenter.loadMoreItems(for: item.feedSection)
+            return
+        }
 
         guard cellIsSelectable else { return }
         cellIsSelectable = false
@@ -219,11 +273,18 @@ extension Feed: UICollectionViewDelegate {
         }
 
         // Get the selected item (Anime or Promo) & present it.
-        if var anime: Anime = dataSource.getItem(at: indexPath) {
+        if var anime = item as? Anime {
             let image: UIImage? = (cell as? FeedCell)?.getCoverImage() ?? UIImage(named: "new-anime-item-spyxfamily")
             anime.imageType.coverImage = image
-            presenter?.handle(action: .transition(to: .animeDetailScreen(anime: anime)))
+            presenter.handle(action: .transition(to: .animeDetailScreen(anime: anime)))
         }
         #warning("Make it generic to work for Promos and other further types aswell.")
     }
+}
+
+/// The possible types of cell items.
+enum FeedItem {
+    case content
+    case loader
+    case loadMore
 }

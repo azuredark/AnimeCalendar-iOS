@@ -16,6 +16,7 @@ protocol FeedCell {
 }
 
 extension FeedCell {
+    func setup() { }
     func getCoverImage() -> UIImage? { return nil }
 }
 
@@ -26,23 +27,14 @@ class GenericFeedCell: UICollectionViewCell {
 
     // MARK: State
     private var shadowExists: Bool = false
-
-    private(set) lazy var mainContainer: UIView = {
-        let container = UIView(frame: .zero)
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = .clear
-        container.accessibilityIdentifier = accessId.containerId
-        contentView.addSubview(container)
-        return container
-    }()
-
+    
     private(set) lazy var coverImageView: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleToFill
         view.backgroundColor = .clear
         view.addCornerRadius(radius: radius)
-        mainContainer.addSubview(view)
+        contentView.addSubview(view)
         return view
     }()
 
@@ -60,28 +52,18 @@ extension GenericFeedCell {
     /// The UI layout here is **constant** which will always be the same, as only so many UICollectionViewCells are initialized in total.
     func layoutUI() {
         backgroundColor = .clear
-        layoutContainer()
         layoutCoverImageView()
         layoutBlurView()
     }
 }
 
 private extension GenericFeedCell {
-    func layoutContainer() {
-        NSLayoutConstraint.activate([
-            mainContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            mainContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-    }
-
     func layoutCoverImageView() {
         NSLayoutConstraint.activate([
-            coverImageView.leadingAnchor.constraint(equalTo: mainContainer.leadingAnchor),
-            coverImageView.trailingAnchor.constraint(equalTo: mainContainer.trailingAnchor),
-            coverImageView.topAnchor.constraint(equalTo: mainContainer.topAnchor),
-            coverImageView.bottomAnchor.constraint(equalTo: mainContainer.bottomAnchor)
+            coverImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            coverImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            coverImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            coverImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 
@@ -99,13 +81,10 @@ private extension GenericFeedCell {
 private extension GenericFeedCell {
     func configureContainerShadow() {
         if !shadowExists {
-            mainContainer.setNeedsLayout()
-            mainContainer.layoutIfNeeded()
             let shadow = ShadowBuilder().getTemplate(type: .full)
                 .with(opacity: 0.25)
                 .with(cornerRadius: radius)
                 .build()
-            mainContainer.addShadow(with: shadow)
             shadowExists = true
         }
     }

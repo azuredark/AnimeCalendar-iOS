@@ -55,8 +55,8 @@ struct Promo: Decodable, ModelSectionable {
     }
 
     var detailFeedSection: DetailFeedSection = .unknown
-     
     var feedSection: FeedSection = .animePromos
+    var isLoadMoreItem: Bool = false
 }
 
 struct Trailer: Decodable, ModelSectionable {
@@ -108,4 +108,5 @@ struct Trailer: Decodable, ModelSectionable {
     // MARK: Addional properties
     var detailFeedSection: DetailFeedSection = .animeTrailer
     var feedSection: FeedSection = .unknown
+    var isLoadMoreItem: Bool = false
 }

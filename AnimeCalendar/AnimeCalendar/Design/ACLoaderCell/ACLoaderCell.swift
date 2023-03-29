@@ -25,12 +25,7 @@ class ACLoaderCell: UICollectionViewCell, FeedCell {
     }
 
     // MARK: Methods
-    func setup() {
-        if !didLayoutSubviews {
-            layoutIfNeeded()
-            layoutGradientLayer()
-        }
-    }
+    func setup() {}
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -41,7 +36,8 @@ private extension ACLoaderCell {
     /// Layout **static** UI.
     func layoutUI() {
         contentView.clipsToBounds = true
-        contentView.addCornerRadius(radius: 10.0)
+        contentView.addCornerRadius(radius: 5.0)
+        contentView.backgroundColor = Color.gray5
     }
 
     func layoutGradientLayer() {

@@ -98,7 +98,7 @@ extension TrailerComponent: YTPlayerViewDelegate {
 
 extension TrailerComponent: TrailerCompatible {
     var playerIsAlreadyLoaded: Bool { !(playerView.webView == nil) }
-    
+
     func loadTrailer(withId id: String) {
         guard !id.isEmpty else {
             playerState = .idle
@@ -110,7 +110,8 @@ extension TrailerComponent: TrailerCompatible {
         playerState = .loading
         timeOut()
         playerView.load(withVideoId: id,
-                        playerVars: ["playerisinline": 1,
+                        playerVars: ["autoplay": 1,
+                                     "playsinline": 1,
                                      "cc_load_policy": 1,
                                      "cc_lang_pref": "en",
                                      "rel": 0])

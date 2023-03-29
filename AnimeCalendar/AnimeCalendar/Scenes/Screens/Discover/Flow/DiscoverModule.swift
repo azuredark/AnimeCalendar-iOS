@@ -15,10 +15,10 @@ final class DiscoverModule: Modulable {
         let navigation = CustomNavigationController()
         
         let router = DiscoverRouter(baseController: navigation)
-        let interacor = DiscoverInteractor(repository: animeRepository)
+        let interactor = DiscoverInteractor(repository: animeRepository)
         
         self.baseNavigation = navigation
-        self.presenter = DiscoverPresenter(interactor: interacor, router: router)
+        self.presenter = DiscoverPresenter(interactor: interactor, router: router)
     }
     
     // MARK: Methods
@@ -27,7 +27,6 @@ final class DiscoverModule: Modulable {
     func start() -> CustomNavigationController {
         let screen = presenter.start()
         baseNavigation.setViewControllers([screen], animated: false)
-        
         self.presenter.view = screen
         return baseNavigation
     }

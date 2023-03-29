@@ -90,6 +90,7 @@ struct CharacterData: ModelSectionable, Decodable {
 
     var detailFeedSection: DetailFeedSection = .animeCharacters
     var feedSection: FeedSection = .animePromos
+    var isLoadMoreItem: Bool = false
 }
 
 struct CharacterInfo: Decodable, ModelSectionable {
@@ -133,6 +134,7 @@ struct CharacterInfo: Decodable, ModelSectionable {
 
     var detailFeedSection: DetailFeedSection = .unknown
     var feedSection: FeedSection = .unknown
+    var isLoadMoreItem: Bool = false
 }
 
 struct Character: Decodable {

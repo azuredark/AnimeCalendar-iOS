@@ -49,8 +49,6 @@ private extension TrailerCell {
         if !ds.trailerWasPresented {
             layoutPlayerView()
             ds.trailerWasPresented = true
-//            setNeedsLayout()
-//            layoutIfNeeded()
         }
     }
 

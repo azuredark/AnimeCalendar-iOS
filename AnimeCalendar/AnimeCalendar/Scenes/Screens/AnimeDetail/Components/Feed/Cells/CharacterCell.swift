@@ -30,6 +30,14 @@ final class CharacterCell: UICollectionViewCell, FeedCell {
         label.numberOfLines = 2
         label.textAlignment = .left
         label.alpha = 0
+
+        // Shadow
+        label.layer.shadowColor = Color.staticBlack.cgColor
+        label.layer.shadowRadius = 2.0
+        label.layer.shadowOpacity = 1.0
+        label.layer.shadowOffset = CGSize(width: 2, height: 2)
+        label.layer.masksToBounds = false
+
         contentView.addSubview(label)
         return label
     }()
@@ -56,7 +64,6 @@ final class CharacterCell: UICollectionViewCell, FeedCell {
         super.prepareForReuse()
         coverImageView.image = nil
         nameLabel.text = nil
-        nameLabel.isHidden = true
     }
 
     // MARK: Methods
@@ -68,10 +75,9 @@ final class CharacterCell: UICollectionViewCell, FeedCell {
 
 private extension CharacterCell {
     func setupCoverImageView() {
-        guard let imgPath = characterInfo?.character.images?.jpgImage.normal else { return }
+        guard let imgPath = characterInfo?.character.images?.jpgImage.attemptToGetImageByResolution(.normal) else { return }
         coverImageView.loadImage(from: imgPath) { [weak self] _ in
             UIView.animate(withDuration: 0.4) {
-                self?.nameLabel.isHidden = false
                 self?.nameLabel.alpha = 1
             }
         }
@@ -113,10 +119,10 @@ private extension CharacterCell {
     func applyOverlay() {
         let gradient = CAGradientLayer()
 
-        gradient.colors = [UIColor.clear.cgColor, Color.staticBlack.cgColor]
+        gradient.colors = [UIColor.clear.cgColor, Color.staticBlack.withAlphaComponent(0.6).cgColor]
         gradient.locations = [0.0, 1.0]
-        gradient.startPoint = CGPoint(x: 0.0, y: 0.8)
-        gradient.endPoint = CGPoint(x: 0.0, y: 1) // you need to play with 0.15 to adjust gradient vertically
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 0.0, y: 1)
         gradient.frame = contentView.bounds
 
         contentView.layer.insertSublayer(gradient, above: coverImageView.layer)

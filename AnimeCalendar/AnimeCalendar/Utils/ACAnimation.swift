@@ -10,10 +10,10 @@ import UIKit
 typealias AnimationCompleted = () -> Void
 
 extension UIView {
-    func expand(durationInSeconds duration: TimeInterval, end: AnimationEnd, toScale scale: CGFloat, _ animationCompleted: AnimationCompleted? = nil ) {
+    func expand(durationInSeconds duration: TimeInterval, end: AnimationEnd, toScale scale: CGFloat, options: UIView.AnimationOptions = [], _ animationCompleted: AnimationCompleted? = nil ) {
         let completionReset: (Bool) -> Void = { _ in
             if case .reset = end {
-                UIView.animate(withDuration: duration) { [weak self] in
+                UIView.animate(withDuration: duration, delay: 0, options: options) { [weak self] in
                     self?.transform = .identity
                     animationCompleted?()
                 }

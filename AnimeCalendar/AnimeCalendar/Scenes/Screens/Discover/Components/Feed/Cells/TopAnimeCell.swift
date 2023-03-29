@@ -12,7 +12,7 @@ import RxSwift
 final class TopAnimeCell: UICollectionViewCell, FeedCell {
     static var reuseIdentifier: String = "TOP_ANIME_CELL_REUSE_ID"
     private var shadowExists: Bool = false
-    private var radius: CGFloat { 10.0 }
+    private var radius: CGFloat { 5.0 }
 
     // MARK: State
     var anime: Anime?
@@ -100,6 +100,13 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 18.0, weight: .bold)
         label.numberOfLines = 2
+        
+        // Shadow
+        label.layer.shadowColor = Color.staticBlack.cgColor
+        label.layer.shadowRadius = 2.0
+        label.layer.shadowOpacity = 1.0
+        label.layer.shadowOffset = CGSize(width: 2, height: 2)
+        label.layer.masksToBounds = false
         return label
     }()
 
@@ -166,7 +173,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
 
 private extension TopAnimeCell {
     func setupBackgroundImage() {
-        let path: String? = anime?.imageType.jpgImage.normal
+        let path: String? = anime?.imageType.jpgImage.attemptToGetImageByResolution(.normal)
         coverImageView.loadImage(from: path) { [weak self] _ in
             self?.setupRankLabel()
             self?.setupTitleLabel()

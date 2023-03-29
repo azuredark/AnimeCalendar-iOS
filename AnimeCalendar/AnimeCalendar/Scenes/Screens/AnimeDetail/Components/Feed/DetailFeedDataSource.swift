@@ -225,6 +225,7 @@ extension DetailFeedDataSource {
     func bindAnime() {
         guard let presenter = presenter else { return }
 
+        // Basic Info
         presenter.anime
             .drive(onNext: { [weak self] (anime) in
                 guard let self = self else { return }
@@ -233,6 +234,7 @@ extension DetailFeedDataSource {
                                     animating: true)
             }).disposed(by: disposeBag)
 
+        // Request trailer.
         presenter.anime
             .drive(onNext: { [weak self] (anime) in
                 guard let self = self else { return }
@@ -245,6 +247,7 @@ extension DetailFeedDataSource {
     func bindTrailer() {
         guard let presenter = presenter else { return }
 
+        // Wait for trailer finishing loading
         presenter.didFinishLoadingAnimeAndTrailer
             .filter { $1 }
             .drive { [weak self] (anime, _) in
@@ -262,7 +265,6 @@ extension DetailFeedDataSource {
 
         presenter.characters
             .debounce(.milliseconds(500))
-            .filter { !$0.data.isEmpty }
             .drive(onNext: { [weak self] (characetersData) in
                 guard let self = self else { return }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING CHARACTERS: \(characetersData.data.count)")
