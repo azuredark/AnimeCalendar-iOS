@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct JikanResult<DataModel: ModelSectionable & Decodable>: Decodable {
+final class JikanResult<DataModel: Content>: Decodable {
     var data: [DataModel] = []
     var pagination: JikanPagination
     
@@ -38,16 +38,16 @@ struct JikanResult<DataModel: ModelSectionable & Decodable>: Decodable {
         pagination = try container.decodeIfPresent(JikanPagination.self, forKey: .pagination) ?? JikanPagination(hasNextPage: false)
     }
     
-    mutating func setFeedSection(to section: FeedSection) {
+    func setFeedSection(to section: FeedSection) {
         data.enumerated().forEach { data[$0.offset].feedSection = section }
     }
     
-    mutating func setDetailFeedSection(to section: DetailFeedSection) {
+    func setDetailFeedSection(to section: DetailFeedSection) {
         data.enumerated().forEach { data[$0.offset].detailFeedSection = section }
     }
 }
 
-struct JikanPagination: Decodable {
+final class JikanPagination: Decodable {
     // MARK: Parameters
     var hasNextPage: Bool
     var page: Int = 1

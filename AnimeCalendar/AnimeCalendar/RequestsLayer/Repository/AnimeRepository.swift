@@ -43,10 +43,10 @@ final class AnimeRepository: GenericRepository {
             
             requestResponsible.makeRequest(model, .season(.getCurrentSeasonAnime(page: page))) { result in
                 switch result {
-                    case .success(var anime):
-                        anime?.setFeedSection(to: .animeSeason)
-                        anime?.pagination.page = page
-                        single(.success(anime))
+                    case .success(let result):
+                        result?.setFeedSection(to: .animeSeason)
+                        result?.pagination.page = page
+                        single(.success(result))
                     case .failure(_):
                         single(.success(nil))
                 }
@@ -64,7 +64,7 @@ final class AnimeRepository: GenericRepository {
             
             requestResponsible.makeRequest(model, .season(.getUpcomingSeasonAnime(page: page))) { result in
                 switch result {
-                    case .success(var anime):
+                    case .success(let anime):
                         anime?.setFeedSection(to: .animeUpcoming)
                         anime?.pagination.page = page
                         single(.success(anime))
@@ -85,7 +85,7 @@ final class AnimeRepository: GenericRepository {
             
             requestResponsible.makeRequest(model, .promo(.getRecentPromos(page: page))) { result in
                 switch result {
-                    case .success(var promo):
+                    case .success(let promo):
                         promo?.setFeedSection(to: .animePromos)
                         promo?.pagination.page = page
                         single(.success(promo))
@@ -106,7 +106,7 @@ final class AnimeRepository: GenericRepository {
             
             requestResponsible.makeRequest(model, .top(.getTopAnime(orderBy: order, page: page))) { result in
                 switch result {
-                    case .success(var anime):
+                    case .success(let anime):
                         anime?.setFeedSection(to: .animeTop)
                         anime?.pagination.page = page
                         single(.success(anime))
@@ -127,7 +127,7 @@ final class AnimeRepository: GenericRepository {
             
             requestResponsible.makeRequest(model, .anime(.getCharacters(animeId: animeId))) { result in
                 switch result {
-                    case .success(var characterData):
+                    case .success(let characterData):
                         characterData?.animeId = animeId
                         single(.success(characterData))
                     case .failure(_):

@@ -44,13 +44,10 @@ enum Language: String {
     }
 }
 
-struct CharacterData: ModelSectionable, Decodable {
+final class CharacterData: Content {
     // MARK: Parameters
     let data: [CharacterInfo]
-    let uuid = UUID()
     var animeId: Int?
-
-    var isLoading: Bool = false
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -58,22 +55,25 @@ struct CharacterData: ModelSectionable, Decodable {
     }
 
     // MARK: Decoding Technique
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.data = try container.decodeIfPresent([CharacterInfo].self, forKey: .data) ?? []
+        
+        try super.init(from: decoder)
     }
 
     // MARK: Initializers
-    init(isLoading: Bool = false, animeId: Int? = nil) {
+    init(animeId: Int? = nil) {
         self.data = []
-        self.isLoading = isLoading
         if let animeId = animeId { self.animeId = animeId }
+        
+        super.init()
     }
 
     // MARK: Hashable
-    func hash(into hasher: inout Hasher) {
+    override func hash(into hasher: inout Hasher) {
         guard let animeId = animeId else {
-            return hasher.combine(uuid)
+            return hasher.combine(id)
         }
 
         return hasher.combine(animeId)
@@ -82,23 +82,18 @@ struct CharacterData: ModelSectionable, Decodable {
     // MARK: Equatable
     static func == (lhs: CharacterData, rhs: CharacterData) -> Bool {
         guard let lhsAnimeId = lhs.animeId, let rhsAnimeId = rhs.animeId else {
-            return lhs.uuid == rhs.uuid
+            return lhs.id == rhs.id
         }
 
         return lhsAnimeId == rhsAnimeId
     }
-
-    var detailFeedSection: DetailFeedSection = .animeCharacters
-    var feedSection: FeedSection = .animePromos
-    var isLoadMoreItem: Bool = false
 }
 
-struct CharacterInfo: Decodable, ModelSectionable {
+final class CharacterInfo: Decodable, Hashable {
     // MARK: Parameters
     var character: Character
-    var role: CharacterRole
+    var role: CharacterRole = .main
     var voiceActors: [PersonInfo]?
-    var isLoading: Bool = false
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -110,16 +105,14 @@ struct CharacterInfo: Decodable, ModelSectionable {
     // MARK: Decoding Technique
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.character = try container.decodeIfPresent(Character.self, forKey: .character) ?? Character()
-        self.role = CharacterRole(try container.decodeIfPresent(String.self, forKey: .role) ?? "main")
+        self.character   = try container.decodeIfPresent(Character.self, forKey: .character) ?? Character()
+        self.role        = CharacterRole(try container.decodeIfPresent(String.self, forKey: .role) ?? "main")
         self.voiceActors = try container.decodeIfPresent([PersonInfo].self, forKey: .voiceActors)
     }
 
     // MARK: Initializers
     init() {
         self.character = Character()
-        self.role = .main
-        self.voiceActors = []
     }
 
     // MARK: Hashable
@@ -131,46 +124,35 @@ struct CharacterInfo: Decodable, ModelSectionable {
     static func == (lhs: CharacterInfo, rhs: CharacterInfo) -> Bool {
         return lhs.character.id == rhs.character.id
     }
-
-    var detailFeedSection: DetailFeedSection = .unknown
-    var feedSection: FeedSection = .unknown
-    var isLoadMoreItem: Bool = false
 }
 
-struct Character: Decodable {
+final class Character: Content {
     // MARK: Parameters
-    var id: Int
     var url: String?
-    var images: AnimeImageType?
-    var name: String
+    var name: String = ""
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
-        case id = "mal_id"
         case url
-        case images
         case name
     }
 
     // MARK: Decoding Technique
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(Int.self, forKey: .id)
-        self.url = try container.decodeIfPresent(String.self, forKey: .url)
-        self.images = try container.decodeIfPresent(AnimeImageType.self, forKey: .images)
+        self.url  = try container.decodeIfPresent(String.self, forKey: .url)
         self.name = try container.decodeIfPresent(String.self, forKey: .name) ?? "LEZZ DO IT"
+        
+        try super.init(from: decoder)
     }
 
     // MARK: Initializers
-    init() {
-        self.id = 69
-        self.url = nil
-        self.images = AnimeImageType()
-        self.name = "LEZZ DO IT"
+    override init() {
+        super.init()
     }
 }
 
-struct PersonInfo: Decodable {
+final class PersonInfo: Decodable {
     // MARK: Parameters
     var person: Person?
     var language: Language
@@ -184,7 +166,8 @@ struct PersonInfo: Decodable {
     // MARK: Decoding Technique
     init(from decoder: Decoder) throws {
         let decoder = try decoder.container(keyedBy: CodingKeys.self)
-        self.person = try decoder.decodeIfPresent(Person.self, forKey: .person)
+        
+        self.person   = try decoder.decodeIfPresent(Person.self, forKey: .person)
         self.language = Language(try decoder.decodeIfPresent(String.self, forKey: .language) ?? "japanese")
     }
 
@@ -195,12 +178,10 @@ struct PersonInfo: Decodable {
     }
 }
 
-struct Person: Decodable {
+final class Person: Content {
     // MARK: Parameters
-    var id: Int
     var url: String?
-    var images: AnimeImageType?
-    var name: String
+    var name: String = ""
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -211,19 +192,15 @@ struct Person: Decodable {
     }
 
     // MARK: Decoding Technique
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(Int.self, forKey: .id)
-        self.url = try container.decodeIfPresent(String.self, forKey: .url)
-        self.images = try container.decodeIfPresent(AnimeImageType.self, forKey: .images)
+        self.url  = try container.decodeIfPresent(String.self, forKey: .url)
         self.name = try container.decodeIfPresent(String.self, forKey: .name) ?? "LEZZ DO IT"
+        
+        try super.init(from: decoder)
     }
-
-    // MARK: Initializers
-    init() {
-        self.id = 69
-        self.url = nil
-        self.images = AnimeImageType()
-        self.name = "LEZZ DO IT"
+    
+    override init() {
+        super.init()
     }
 }

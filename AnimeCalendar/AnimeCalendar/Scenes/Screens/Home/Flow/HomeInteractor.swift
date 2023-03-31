@@ -45,7 +45,7 @@ extension HomeInteractor: HomeInteractive {
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] result in
                 guard let strongSelf = self else { return }
-                let animes: [Anime] = result.data
+                let animes: [Anime] = result.data.compactMap { $0 as? Anime }
                 strongSelf.animesObservable.accept(animes)
             }).disposed(by: disposeBag)
     }

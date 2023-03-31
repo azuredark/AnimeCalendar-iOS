@@ -39,7 +39,7 @@ final class AnimeDetailModule: Modulable {
     
     /// Builds with anime by **emiting** event.
     func build(with anime: Anime) {
-        presenter.setCoverImage(with: anime.imageType.coverImage)
+        presenter.setCoverImage(with: anime.imageType?.coverImage)
         presenter.updateAnime(with: anime)
     }
 }

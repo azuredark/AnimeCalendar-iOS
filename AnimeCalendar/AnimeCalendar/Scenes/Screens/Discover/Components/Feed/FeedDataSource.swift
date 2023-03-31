@@ -8,18 +8,13 @@
 import UIKit
 
 protocol FeedDataSourceable {
-    func updateSnapshot<T: CaseIterable, O: Hashable & ModelSectionable>(for section: T, with items: [O], animating: Bool, before: T?, after: T?, deleteLoaders: Bool)
+    func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T?, after: T?, deleteLoaders: Bool)
     /// Sets the **section** for an specific item.
-    func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [any ModelSectionable]
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable]
     func getItem<T: Hashable>(at indexPath: IndexPath) -> T?
 }
 
 extension FeedDataSourceable {
-    func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [any ModelSectionable] {
-        return [Anime]()
-    }
-
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable] {
         return [AnyHashable]()
     }
@@ -75,39 +70,18 @@ final class FeedDataSource {
             cell.setup()
         }
 
-        let animeSeasonLoaderCell = UICollectionView.CellRegistration<AnimeSeasonLoaderCell, any ModelSectionable> { (cell, _, _) in
+        let loaderCell = UICollectionView.CellRegistration<ACLoaderCell, LoadingPlaceholder> { (cell, _, _) in
             cell.setup()
-        }
-        let animePromoLoaderCell = UICollectionView.CellRegistration<AnimePromoLoaderCell, any ModelSectionable> { (cell, _, _) in
-            cell.setup()
-        }
-        let animeTopLoaderCell = UICollectionView.CellRegistration<AnimeTopLoaderCell, any ModelSectionable> { (cell, _, _) in
-            cell.setup()
-        }
-        
-        let loaderCell = UICollectionView.CellRegistration<ACLoaderCell, any ModelSectionable> { (cell, _, _) in
-            cell.setup()
-        }
-
-        let loadMoreCell = UICollectionView.CellRegistration<ACLoadMoreItemsCell, any ModelSectionable> { [weak self] (cell, _, item) in
-            guard let presenter = self?.presenter else { return }
-            cell.section = item.feedSection
-            cell.setup(with: presenter.observablesState)
         }
 
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            guard let item = item as? (any ModelSectionable) else { return nil }
-            let section: FeedSection = item.feedSection
-            // LoadMore Cell
-            if item.isLoadMoreItem {
-                return collectionView.dequeueConfiguredReusableCell(using: loadMoreCell, for: indexPath, item: item)
-            }
-            
+            guard let item = item as? Content else { return nil }
             // LoadingCell (Placeholder)
-            if item.isLoading {
+            if let item = item as? LoadingPlaceholder {
                 return collectionView.dequeueConfiguredReusableCell(using: loaderCell, for: indexPath, item: item)
             }
             
+            let section: FeedSection = item.feedSection
             switch section {
                 case .animeSeason:
                     guard let anime = item as? Anime else { return nil }
@@ -132,7 +106,7 @@ final class FeedDataSource {
                                                                          for: indexPath) as? FeedHeader
 
             // If error, then send emptyheader
-            guard let item = self?.getItem(at: indexPath) as? (any ModelSectionable) else {
+            guard let item = self?.getItem(at: indexPath) as? Content else {
                 return collection.dequeueReusableSupplementaryView(ofKind: kind,
                                                                    withReuseIdentifier: EmptyHeader.reuseIdentifier,
                                                                    for: indexPath) as? EmptyHeader
@@ -164,25 +138,17 @@ final class FeedDataSource {
 }
 
 extension FeedDataSource: FeedDataSourceable {
-    func setModelSection<T, O>(for section: T, with items: [O]) -> [AnyHashable] where T: CaseIterable, O: Hashable {
-        return [Anime]()
-    }
-
     /// Updates the current snapshot
     /// - Parameter section: The section to update
     /// - Parameter animes: The animes to update for the specified section
     /// Updates the **items** for the current **section**
-    func updateSnapshot<T: CaseIterable, O: Hashable & ModelSectionable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil, deleteLoaders: Bool = false) {
+    func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil, deleteLoaders: Bool = false) {
         guard let section = section as? FeedSection else { return }
 
         // Create section
         if currentSnapshot.indexOfSection(section) == nil {
             currentSnapshot.appendSections([section])
         }
-
-        // Remove loaders from snapshot.
-        // Not necessary if the section-items are being deleted
-//        if deleteLoaders { removeLoaders(in: section) }
 
         #warning("This may be too expensive? Deleting all the time")
         // Delete items in section before adding more, as the items may be aggregated and result in duplicated items in snapshot.
@@ -206,13 +172,10 @@ extension FeedDataSource: FeedDataSourceable {
 
     func removeLoaders(in section: FeedSection) {
         // Find loaders
-        let loaders = currentSnapshot.itemIdentifiers(inSection: section)
-            .compactMap { $0 as? (any ModelSectionable) }.filter(\.isLoading)
+        let loaders = currentSnapshot.itemIdentifiers(inSection: section).compactMap { $0 as? LoadingPlaceholder }
 
         // Remove loaders from snapshot
-        if let itemsToRemove = loaders as? [AnyHashable] {
-            currentSnapshot.deleteItems(itemsToRemove)
-        }
+        currentSnapshot.deleteItems(loaders)
     }
 
     func resetSnapshot() {

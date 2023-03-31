@@ -102,7 +102,7 @@ private extension AnimeDetailScreen {
             .drive(onNext: { [weak self] (anime) in
                 guard let self = self else { return }
                 self.configureNavigationTitle(with: anime.titleKanji)
-                self.presenter?.updateCharacters(animeId: anime.id)
+                self.presenter?.updateCharacters(animeId: Int(anime.id) ?? 49387)
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID LOAD ANIME: \(anime.titleEng)")
             }).disposed(by: disposeBag)
     }

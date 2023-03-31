@@ -78,7 +78,7 @@ final class UpcomingAnimeCell: UICollectionViewCell, FeedCell {
 
 private extension UpcomingAnimeCell {
     func setupCoverImageView() {
-        let path: String? = anime?.imageType.jpgImage.attemptToGetImageByResolution(.large)
+        let path: String? = anime?.imageType?.jpgImage.attemptToGetImageByResolution(.large)
         coverImageView.loadImage(from: path, cellType: self) { [weak self] _ in
             UIView.animate(withDuration: 0.4) { [weak self] in
                 guard let self else { return }

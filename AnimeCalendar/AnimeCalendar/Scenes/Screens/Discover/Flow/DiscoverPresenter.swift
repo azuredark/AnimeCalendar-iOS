@@ -20,7 +20,7 @@ protocol DiscoverPresentable: NSObject {
     func updateTopAnime(by order: AnimeOrderType)
     func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag]
     func didTapSearchButton()
-    func getCellItemType<T: ModelSectionable>(_ item: T) -> FeedItem
+    func getCellItemType(_ item: Content) -> FeedItem
     func loadMoreItems(for section: FeedSection)
 
     /// Handles **actions** made in the DiscoverScreen.
@@ -101,10 +101,10 @@ extension DiscoverPresenter: DiscoverPresentable {
     /// - Important: This determines the order on which the section will be displayed on screen.
     func addLoaderItems() {
         Task(priority: .userInitiated) {
-            await interactor.addLoaderItems(in: .animePromos, for: Promo.self)
-            await interactor.addLoaderItems(in: .animeSeason, for: Anime.self)
-            await interactor.addLoaderItems(in: .animeUpcoming, for: Anime.self)
-            await interactor.addLoaderItems(in: .animeTop, for: Anime.self)
+            await interactor.addLoaderItems(in: .animePromos)
+            await interactor.addLoaderItems(in: .animeSeason)
+            await interactor.addLoaderItems(in: .animeUpcoming)
+            await interactor.addLoaderItems(in: .animeTop)
         }
     }
     
@@ -112,9 +112,8 @@ extension DiscoverPresenter: DiscoverPresentable {
         interactor.resetAllAnimeData()
     }
     
-    func getCellItemType<T: ModelSectionable>(_ item: T) -> FeedItem {
-        if item.isLoading { return .loader }
-        if item.isLoadMoreItem { return .loadMore }
+    func getCellItemType(_ item: Content) -> FeedItem {
+        if item is LoadingPlaceholder { return .loader }
         return .content
     }
     

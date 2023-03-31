@@ -19,10 +19,10 @@ typealias FeedSectionsState = [FeedSection: ObservableState]
 typealias ObservableState = (observable: any ObservableType, state: SequenceState)
 
 typealias DiscoverFeed = (
-    seasonAnime: (observable: Observable<[Anime]>, section: FeedSection),
-    upcomingAnime: (observable: Observable<[Anime]>, section: FeedSection),
-    recentPromosAnime: (observable: Observable<[Promo]>, section: FeedSection),
-    topAnime: (observable: Observable<[Anime]>, section: FeedSection)
+    seasonAnime: (observable: Observable<[Content]>, section: FeedSection),
+    upcomingAnime: (observable: Observable<[Content]>, section: FeedSection),
+    recentPromosAnime: (observable: Observable<[Content]>, section: FeedSection),
+    topAnime: (observable: Observable<[Content]>, section: FeedSection)
 )
 
 protocol DiscoverInteractive {
@@ -34,10 +34,10 @@ protocol DiscoverInteractive {
     func updateUpcomingAnime(page: Int)
     func updateRecentPromosAnime(page: Int)
     func updateTopAnime(by order: AnimeOrderType, page: Int)
-    
+
     func getImageResource(path: String, completion: @escaping ImageSetting)
     func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag]
-    func addLoaderItems<T: ModelSectionable>(in section: FeedSection, for mode: T.Type) async
+    func addLoaderItems(in section: FeedSection) async
     func resetAllAnimeData()
     func loadMoreItems(in section: FeedSection)
 }
@@ -47,10 +47,10 @@ final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
     private let disposeBag = DisposeBag()
 
     /// # Observables
-    private let seasonAnimeObservable = BehaviorRelay<JikanResult<Anime>>(value: JikanResult<Anime>())
-    private let upcomingAnimeObservable = BehaviorRelay<JikanResult<Anime>>(value: JikanResult<Anime>())
-    private let recentPromosAnimeObservable = BehaviorRelay<JikanResult<Promo>>(value: JikanResult<Promo>())
-    private let topAnimeObservable = BehaviorRelay<JikanResult<Anime>>(value: JikanResult<Anime>())
+    private let seasonAnimeObservable = BehaviorRelay<JikanResult<Content>>(value: JikanResult<Content>())
+    private let upcomingAnimeObservable = BehaviorRelay<JikanResult<Content>>(value: JikanResult<Content>())
+    private let recentPromosAnimeObservable = BehaviorRelay<JikanResult<Content>>(value: JikanResult<Content>())
+    private let topAnimeObservable = BehaviorRelay<JikanResult<Content>>(value: JikanResult<Content>())
 
     private let recievedValidAnimeObservable = PublishRelay<Bool>()
 
@@ -79,21 +79,19 @@ extension DiscoverInteractor {
 
             // If one of them returns a value then transform to true and update.
             .flatMapLatest {
-                let result: Bool = false
-
-                let season = $0.0.first(where: { $0.isLoading })
+                let season = $0.0.first(where: { $0 is LoadingPlaceholder })
                 if season == nil { return Observable.just(true) }
 
-                let upcoming = $0.1.first(where: { $0.isLoading })
+                let upcoming = $0.1.first(where: { $0 is LoadingPlaceholder })
                 if upcoming == nil { return Observable.just(true) }
 
-                let promos = $0.2.first(where: { $0.isLoading })
+                let promos = $0.2.first(where: { $0 is LoadingPlaceholder })
                 if promos == nil { return Observable.just(true) }
 
-                let top = $0.3.first(where: { $0.isLoading })
+                let top = $0.3.first(where: { $0 is LoadingPlaceholder })
                 if top == nil { return Observable.just(true) }
 
-                return Observable.just(result)
+                return Observable.just(false)
             }
             .asObservable()
             .bind(to: recievedValidAnimeObservable)
@@ -106,7 +104,9 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
         updateSequenceState(.animeSeason, to: .requesting)
         repository.getSeasonAnime(page: page)
             .asObservable()
-            .bind(to: rx.addLoadMoreItem(in: .animeSeason, model: Anime.self))
+            .compactMap { $0 }
+            .flatMapLatest(resultToContent)
+            .bind(to: seasonAnimeObservable)
             .disposed(by: disposeBag)
     }
 
@@ -114,7 +114,9 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
         updateSequenceState(.animeUpcoming, to: .requesting)
         repository.getUpcomingSeasonAnime(page: page)
             .asObservable()
-            .bind(to: rx.addLoadMoreItem(in: .animeUpcoming, model: Anime.self))
+            .compactMap { $0 }
+            .flatMapLatest(resultToContent)
+            .bind(to: upcomingAnimeObservable)
             .disposed(by: disposeBag)
     }
 
@@ -122,7 +124,9 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
         updateSequenceState(.animePromos, to: .requesting)
         repository.getRecentPromos(page: page)
             .asObservable()
-            .bind(to: rx.addLoadMoreItem(in: .animePromos, model: Promo.self))
+            .compactMap { $0 }
+            .flatMapLatest(resultToContent)
+            .bind(to: recentPromosAnimeObservable)
             .disposed(by: disposeBag)
     }
 
@@ -130,7 +134,9 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
         updateSequenceState(.animeTop, to: .requesting)
         repository.getTopAnime(by: order, page: page)
             .asObservable()
-            .bind(to: rx.addLoadMoreItem(in: .animeTop, model: Anime.self))
+            .compactMap { $0 }
+            .flatMapLatest(resultToContent)
+            .bind(to: topAnimeObservable)
             .disposed(by: disposeBag)
     }
 
@@ -181,68 +187,26 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
 
     var recievedValidAnime: PublishRelay<Bool> { recievedValidAnimeObservable }
 
-    func addLoaderItems<T: ModelSectionable>(in section: FeedSection, for model: T.Type) async {
+    func addLoaderItems(in section: FeedSection) async {
+        let loaders = createLoaders(in: section)
+        let result = JikanResult<Content>(data: loaders)
         switch section {
             case .animeSeason:
-                let loaders = createLoaders(of: Anime.self, in: .animeSeason)
-                seasonAnimeObservable.accept(JikanResult<Anime>(data: loaders))
+                seasonAnimeObservable.accept(result)
             case .animeUpcoming:
-                let loaders = createLoaders(of: Anime.self, in: .animeUpcoming)
-                upcomingAnimeObservable.accept(JikanResult<Anime>(data: loaders))
+                upcomingAnimeObservable.accept(result)
             case .animePromos:
-                let loaders = createLoaders(of: Promo.self, in: .animePromos)
-                recentPromosAnimeObservable.accept(JikanResult<Promo>(data: loaders))
+                recentPromosAnimeObservable.accept(result)
             case .animeTop:
-                let loaders = createLoaders(of: Anime.self, in: .animeTop)
-                topAnimeObservable.accept(JikanResult<Anime>(data: loaders))
-            case .unknown: break
-        }
-    }
-
-    #warning("Optimize & Clean this code u.u")
-    func addLoadMoreItem<T: ModelSectionable & Decodable>(in section: FeedSection, for model: T.Type, result: JikanResult<T>, hasNextPage: Bool) {
-        updateSequenceState(section, to: .completed)
-        switch section {
-            case .animeSeason:
-                guard let loadMoreItem = createLoadMoreItem(of: Anime.self, in: .animeSeason) else { return }
-                guard let newItems = result.data as? [Anime] else { return }
-
-                var newData = seasonAnimeObservable.value.data.filter { !($0.isLoading || $0.isLoadMoreItem) } + newItems
-                if hasNextPage { newData += [loadMoreItem] }
-                seasonAnimeObservable.accept(JikanResult<Anime>(data: newData,
-                                                                pagination: JikanPagination(hasNextPage: hasNextPage, page: result.pagination.page)))
-            case .animeUpcoming:
-                guard let loadMoreItem = createLoadMoreItem(of: Anime.self, in: .animeUpcoming) else { return }
-                guard let newItems = result.data as? [Anime] else { return }
-
-                var newData = upcomingAnimeObservable.value.data.filter { !($0.isLoading || $0.isLoadMoreItem) } + newItems
-                if hasNextPage { newData += [loadMoreItem] }
-                upcomingAnimeObservable.accept(JikanResult<Anime>(data: newData,
-                                                                  pagination: JikanPagination(hasNextPage: hasNextPage, page: result.pagination.page)))
-            case .animePromos:
-                guard let loadMoreItem = createLoadMoreItem(of: Promo.self, in: .animePromos) else { return }
-                guard let newItems = result.data as? [Promo] else { return }
-
-                var newData = recentPromosAnimeObservable.value.data.filter { !($0.isLoading || $0.isLoadMoreItem) } + newItems
-                if hasNextPage { newData += [loadMoreItem] }
-                recentPromosAnimeObservable.accept(JikanResult<Promo>(data: newData,
-                                                                      pagination: JikanPagination(hasNextPage: hasNextPage, page: result.pagination.page)))
-            case .animeTop:
-                guard let loadMoreItem = createLoadMoreItem(of: Anime.self, in: .animeTop) else { return }
-                guard let newItems = result.data as? [Anime] else { return }
-                var newData = topAnimeObservable.value.data.filter { !($0.isLoading || $0.isLoadMoreItem) } + newItems
-
-                if hasNextPage { newData += [loadMoreItem] }
-                topAnimeObservable.accept(JikanResult<Anime>(data: newData,
-                                                             pagination: JikanPagination(hasNextPage: hasNextPage, page: result.pagination.page)))
+                topAnimeObservable.accept(result)
             case .unknown: break
         }
     }
 
     func resetAllAnimeData() {
-        seasonAnimeObservable.accept(JikanResult<Anime>())
-        recentPromosAnimeObservable.accept(JikanResult<Promo>())
-        topAnimeObservable.accept(JikanResult<Anime>())
+        seasonAnimeObservable.accept(JikanResult<Content>())
+        recentPromosAnimeObservable.accept(JikanResult<Content>())
+        topAnimeObservable.accept(JikanResult<Content>())
         recievedValidAnimeObservable.accept(false)
     }
 
@@ -271,50 +235,25 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
 
 private extension DiscoverInteractor {
     /// Creates loaders of a specfic type.
-    func createLoaders<T: ModelSectionable>(of type: T.Type, in section: FeedSection) -> [T] {
-        var loaders = [T?]()
+    func createLoaders(in section: FeedSection) -> [LoadingPlaceholder] {
+        var loaders = [LoadingPlaceholder]()
 
         for _ in 0 ..< section.placeholderCount {
-            var loader: T?
-            if type is Anime.Type {
-                loader = Anime() as? T
-            } else if type is Promo.Type {
-                loader = Promo() as? T
-            }
+            let loader = LoadingPlaceholder()
+            loader.feedSection = section
 
-            loader?.isLoading = true
-            loader?.feedSection = section
             loaders.append(loader)
         }
 
-        return loaders.compactMap { $0 }
-    }
-
-    func createLoadMoreItem<T: ModelSectionable>(of type: T.Type, in section: FeedSection) -> T? {
-        var loadMoreItem: T? = Anime() as? T
-
-        if type is Anime.Type {
-            loadMoreItem = Anime() as? T
-        } else if type is Promo.Type {
-            loadMoreItem = Promo() as? T
-        }
-
-        loadMoreItem?.feedSection = section
-        loadMoreItem?.isLoadMoreItem = true
-
-        return loadMoreItem
+        return loaders
     }
 
     func updateSequenceState(_ section: FeedSection, to state: SequenceState) {
         sequencesState[section]?.state = state
     }
-}
 
-extension Reactive where Base: DiscoverInteractor {
-    func addLoadMoreItem<T: ModelSectionable>(in section: FeedSection, model: T.Type) -> Binder<JikanResult<T>?> {
-        return Binder<JikanResult<T>?>(self.base, binding: { interactor, result in
-            guard let result else { return }
-            interactor.addLoadMoreItem(in: section, for: model, result: result, hasNextPage: result.pagination.hasNextPage)
-        })
+    func resultToContent<T: Content>(_ result: JikanResult<T>) -> Observable<JikanResult<Content>> {
+        let content = result.data.compactMap { $0 as Content }
+        return Observable.just(JikanResult<Content>(data: content))
     }
 }

@@ -148,7 +148,7 @@ private extension CharacterCollectionCell {
         guard let ds = collection.getDataSource() else { return [] }
 
         let imagePaths = indexPaths.compactMap { indexPath in
-            ds.itemIdentifier(for: indexPath)?.character.images?.jpgImage.attemptToGetImageByResolution(.large)
+            ds.itemIdentifier(for: indexPath)?.character.imageType?.jpgImage.attemptToGetImageByResolution(.large)
         }
 
         let urls = imagePaths.compactMap(URL.init)

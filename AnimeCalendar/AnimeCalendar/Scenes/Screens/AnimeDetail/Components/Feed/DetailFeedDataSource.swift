@@ -79,7 +79,7 @@ private extension DetailFeedDataSource {
 
         // Dequeing cells.
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            guard let item = item as? (any ModelSectionable) else { return nil }
+            guard let item = item as? Content else { return nil }
 
             let section = item.detailFeedSection
             switch section {
@@ -94,7 +94,7 @@ private extension DetailFeedDataSource {
                     return characterCell.cellProvider(collectionView, indexPath, charactersData)
                 case .animeReviews: return nil
                 case .spinner:
-                    guard let data = item as? SpinnerModel else { return nil }
+                    guard let data = item as? LoadingSpinner else { return nil }
                     return spinnerCell.cellProvider(collectionView, indexPath, data)
                 case .unknown: return nil
             }
@@ -180,7 +180,7 @@ extension DetailFeedDataSource: FeedDataSourceable {
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable] {
         guard let section = section as? DetailFeedSection else { return [] }
 
-        var items = items.compactMap { $0 as? (any ModelSectionable) }
+        let items = items.compactMap { $0 as? Content }
         items.indices.forEach { items[$0].detailFeedSection = section }
 
         guard let finalItems = items as? [AnyHashable] else { return [] }
@@ -217,7 +217,7 @@ extension DetailFeedDataSource {
 
     func loadSpinner() {
         updateSnapshot(for: DetailFeedSection.spinner,
-                       with: [SpinnerModel(isLoading: true)],
+                       with: [LoadingSpinner()],
                        animating: true,
                        after: DetailFeedSection.animeBasicInfo)
     }
@@ -237,8 +237,8 @@ extension DetailFeedDataSource {
         // Request trailer.
         presenter.anime
             .drive(onNext: { [weak self] (anime) in
-                guard let self = self else { return }
-                let id = anime.trailer.youtubeId
+                guard let self else { return }
+                guard let id = anime.trailer?.youtubeId else { return }
                 self.presenter?.playerComponent?.queueVideo(withId: id)
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX PLAY ANIME")
             }).disposed(by: disposeBag)
@@ -252,9 +252,10 @@ extension DetailFeedDataSource {
             .filter { $1 }
             .drive { [weak self] (anime, _) in
                 guard let self = self else { return }
+                guard let trailer = anime.trailer else  {return }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING TRAILER")
                 self.updateSnapshot(for: DetailFeedSection.animeTrailer,
-                                    with: [anime.trailer],
+                                    with: [trailer],
                                     animating: true,
                                     before: .animeBasicInfo)
             }.disposed(by: disposeBag)

@@ -59,11 +59,11 @@ private extension DetailFeed {
     func getLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) in
             guard let self = self else { fatalError("No DetailFeed reference while generating collection layout") }
-            guard let model = self.dataSource.getDataSource()?.itemIdentifier(for: IndexPath(row: 0, section: sectionIndex)) as? (any ModelSectionable) else {
+            guard let content = self.dataSource.getDataSource()?.itemIdentifier(for: IndexPath(row: 0, section: sectionIndex)) as? Content else {
                 return nil
             }
 
-            switch model.detailFeedSection {
+            switch content.detailFeedSection {
                 case .animeTrailer:
                     return self.getTrailerSection()
                 case .animeBasicInfo:

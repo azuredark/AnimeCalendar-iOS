@@ -57,7 +57,7 @@ private extension Feed {
     func getLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
             guard let strongSelf = self else { fatalError("No Feed reference while generating collection layout") }
-            guard let item = strongSelf.dataSource.getItem(at: IndexPath(item: 0, section: sectionIndex)) as? (any ModelSectionable) else { return nil }
+            guard let item = strongSelf.dataSource.getItem(at: IndexPath(item: 0, section: sectionIndex)) as? Content else { return nil }
             switch item.feedSection {
                 case .animeSeason:
                     return strongSelf.getAnimeSeasonSection()
@@ -209,10 +209,9 @@ extension Feed: Bindable {
         seasonAnimeFeed.observable
             .asDriver(onErrorJustReturn: [])
             .filter { !$0.isEmpty }
-            .drive { [weak self] (animes) in
+            .drive { [weak self] (content) in
                 guard let self else { return }
-                let loader = animes.first(where: \.isLoading); let hasLoader = (loader != nil)
-                self.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: animes, animating: true, deleteLoaders: !hasLoader)
+                self.dataSource.updateSnapshot(for: seasonAnimeFeed.section, with: content, animating: true)
             }.disposed(by: disposeBag)
         
         // Upcoming Anime (NextSeason)
@@ -220,10 +219,9 @@ extension Feed: Bindable {
         upcomingAnimeFeed.observable
             .asDriver(onErrorJustReturn: [])
             .filter { !$0.isEmpty }
-            .drive { [weak self] (animes) in
+            .drive { [weak self] (content) in
                 guard let self else { return }
-                let loader = animes.first(where: \.isLoading); let hasLoader = (loader != nil)
-                self.dataSource.updateSnapshot(for: upcomingAnimeFeed.section, with: animes, animating: true, deleteLoaders: !hasLoader)
+                self.dataSource.updateSnapshot(for: upcomingAnimeFeed.section, with: content, animating: true)
             }.disposed(by: disposeBag)
 
         // Anime Promos
@@ -231,10 +229,9 @@ extension Feed: Bindable {
         recentPromosAnimeFeed.observable
             .asDriver(onErrorJustReturn: [])
             .filter { !$0.isEmpty }
-            .drive { [weak self] (promos) in
+            .drive { [weak self] (content) in
                 guard let self else { return }
-                let loader = promos.first(where: \.isLoading); let hasLoader = (loader != nil)
-                self.dataSource.updateSnapshot(for: recentPromosAnimeFeed.section, with: promos, animating: true, deleteLoaders: !hasLoader)
+                self.dataSource.updateSnapshot(for: recentPromosAnimeFeed.section, with: content, animating: true)
             }.disposed(by: disposeBag)
 
         // Top Anime
@@ -242,10 +239,9 @@ extension Feed: Bindable {
         topAnimeFeed.observable
             .asDriver(onErrorJustReturn: [])
             .filter { !$0.isEmpty }
-            .drive { [weak self] (animes) in
+            .drive { [weak self] (content) in
                 guard let self else { return }
-                let loader = animes.first(where: \.isLoading); let hasLoader = (loader != nil)
-                self.dataSource.updateSnapshot(for: topAnimeFeed.section, with: animes, animating: true, deleteLoaders: !hasLoader)
+                self.dataSource.updateSnapshot(for: topAnimeFeed.section, with: content, animating: true)
             }.disposed(by: disposeBag)
     }
 }
@@ -254,16 +250,11 @@ extension Feed: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath), let presenter else { return }
         
-        guard let item = dataSource.getItem(at: indexPath) as? (any ModelSectionable) else { return }
+        guard let item = dataSource.getItem(at: indexPath) as? Content else { return }
         let itemType = presenter.getCellItemType(item)
         
         if case .loader = itemType { return }
-        if case .loadMore = itemType {
-            let loaderCell = cell as? ACLoadMoreItemsCell
-            loaderCell?.startLoadingAnimation()
-            presenter.loadMoreItems(for: item.feedSection)
-            return
-        }
+//        presenter.loadMoreItems(for: item.feedSection)
 
         guard cellIsSelectable else { return }
         cellIsSelectable = false
@@ -273,9 +264,9 @@ extension Feed: UICollectionViewDelegate {
         }
 
         // Get the selected item (Anime or Promo) & present it.
-        if var anime = item as? Anime {
+        if let anime = item as? Anime {
             let image: UIImage? = (cell as? FeedCell)?.getCoverImage() ?? UIImage(named: "new-anime-item-spyxfamily")
-            anime.imageType.coverImage = image
+            anime.imageType?.coverImage = image
             presenter.handle(action: .transition(to: .animeDetailScreen(anime: anime)))
         }
         #warning("Make it generic to work for Promos and other further types aswell.")
@@ -286,5 +277,4 @@ extension Feed: UICollectionViewDelegate {
 enum FeedItem {
     case content
     case loader
-    case loadMore
 }

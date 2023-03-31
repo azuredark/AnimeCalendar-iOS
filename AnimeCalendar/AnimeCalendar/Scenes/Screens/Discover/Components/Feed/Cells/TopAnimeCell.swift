@@ -173,7 +173,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
 
 private extension TopAnimeCell {
     func setupBackgroundImage() {
-        let path: String? = anime?.imageType.jpgImage.attemptToGetImageByResolution(.normal)
+        let path: String? = anime?.imageType?.jpgImage.attemptToGetImageByResolution(.normal)
         coverImageView.loadImage(from: path) { [weak self] _ in
             self?.setupRankLabel()
             self?.setupTitleLabel()
