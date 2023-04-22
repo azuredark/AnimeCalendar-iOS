@@ -49,17 +49,17 @@ extension HomeAnimeItem: ComponentCollectionItem {
         animeTitle.text = item.titleEng
 
         // TODO: Clean this up ... add caching ...
-        let httpSession = URLSession(configuration: .default)
-        guard let imagePath: String = item.imageType?.jpgImage.attemptToGetImageByResolution(.large),
-              let url = URL(string: imagePath) else { return }
-        let httpRequest = URLRequest(url: url)
-        let httpTask = httpSession.dataTask(with: httpRequest) { [weak self] data, _, error in
-            guard let data = data, error == nil else { print("senku - request error : ("); return }
-            DispatchQueue.main.async {
-                self?.animeCoverPicture.image = UIImage(data: data)
-            }
-        }
-        httpTask.resume()
+//        let httpSession = URLSession(configuration: .default)
+//        guard let imagePath: String = item.imageType?.jpgImage.attemptToGetImageByResolution(.large),
+//              let url = URL(string: imagePath) else { return }
+//        let httpRequest = URLRequest(url: url)
+//        let httpTask = httpSession.dataTask(with: httpRequest) { [weak self] data, _, error in
+//            guard let data = data, error == nil else { print("senku - request error : ("); return }
+//            DispatchQueue.main.async {
+//                self?.animeCoverPicture.image = UIImage(data: data)
+//            }
+//        }
+//        httpTask.resume()
 
 //        configureCoverViewShadow()
         updateEpisodeProgress()

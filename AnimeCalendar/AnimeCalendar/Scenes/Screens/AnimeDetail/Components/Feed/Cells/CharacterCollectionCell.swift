@@ -160,17 +160,17 @@ private extension CharacterCollectionCell {
 
 extension CharacterCollectionCell: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        Task {
-            let requests = getImagRequests(indexPaths: indexPaths)
-            preheater.startPrefetching(with: requests)
-        }
+//        Task {
+//            let requests = getImagRequests(indexPaths: indexPaths)
+//            preheater.startPrefetching(with: requests)
+//        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        Task {
-            let requests = getImagRequests(indexPaths: indexPaths)
-            preheater.stopPrefetching(with: requests)
-        }
+//        Task {
+//            let requests = getImagRequests(indexPaths: indexPaths)
+//            preheater.stopPrefetching(with: requests)
+//        }
     }
 }
 

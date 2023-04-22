@@ -47,4 +47,6 @@ extension PromoEndpoint: EndpointType {
     var headers: HTTPHeaders? { nil }
     
     var retries: Int { 3 }
+    
+    var timeOut: CGFloat { 5.0 }
 }

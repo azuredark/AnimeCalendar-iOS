@@ -28,7 +28,7 @@ typealias DiscoverFeed = (
 protocol DiscoverInteractive {
     var feed: DiscoverFeed { get }
     var recievedValidAnime: PublishRelay<Bool> { get }
-    var observablesState: [FeedSection: ObservableState] { get }
+    var observablesState: [FeedSection: SequenceState] { get }
 
     func updateSeasonAnime(page: Int)
     func updateUpcomingAnime(page: Int)
@@ -37,9 +37,10 @@ protocol DiscoverInteractive {
 
     func getImageResource(path: String, completion: @escaping ImageSetting)
     func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag]
-    func addLoaderItems(in section: FeedSection) async
+    func addLoaderItems(in section: FeedSection)
     func resetAllAnimeData()
     func loadMoreItems(in section: FeedSection)
+    func checkSectionState(_ section: FeedSection, not state: SequenceState) ->  Bool
 }
 
 final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
@@ -54,11 +55,11 @@ final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
 
     private let recievedValidAnimeObservable = PublishRelay<Bool>()
 
-    private lazy var sequencesState: [FeedSection: ObservableState] = [
-        .animeSeason: (observable: seasonAnimeObservable, state: .initial),
-        .animeUpcoming: (observable: upcomingAnimeObservable, state: .initial),
-        .animePromos: (observable: recentPromosAnimeObservable, state: .initial),
-        .animeTop: (observable: topAnimeObservable, state: .initial)
+    private lazy var sequencesState: [FeedSection: SequenceState] = [
+        .animeSeason: .initial,
+        .animeUpcoming: .initial,
+        .animePromos: .initial,
+        .animeTop: .initial
     ]
 
     /// # Initalizers
@@ -70,30 +71,18 @@ final class DiscoverInteractor: GenericInteractor<AnimeRepository> {
 
 extension DiscoverInteractor {
     func bindRecievedAtLeastOneResponse() {
-        Observable.combineLatest(seasonAnimeObservable.map(\.data).asObservable(),
+        Observable.combineLatest(recentPromosAnimeObservable.map(\.data).asObservable(),
+                                 seasonAnimeObservable.map(\.data).asObservable(),
                                  upcomingAnimeObservable.map(\.data).asObservable(),
-                                 recentPromosAnimeObservable.map(\.data).asObservable(),
                                  topAnimeObservable.map(\.data).asObservable())
-            // Ignore if any of them is empty.
-            .filter { !($0.0.isEmpty || $0.1.isEmpty || $0.2.isEmpty || $0.3.isEmpty) }
-
-            // If one of them returns a value then transform to true and update.
-            .flatMapLatest {
-                let season = $0.0.first(where: { $0 is LoadingPlaceholder })
-                if season == nil { return Observable.just(true) }
-
-                let upcoming = $0.1.first(where: { $0 is LoadingPlaceholder })
-                if upcoming == nil { return Observable.just(true) }
-
-                let promos = $0.2.first(where: { $0 is LoadingPlaceholder })
-                if promos == nil { return Observable.just(true) }
-
-                let top = $0.3.first(where: { $0 is LoadingPlaceholder })
-                if top == nil { return Observable.just(true) }
-
-                return Observable.just(false)
+            .filter { !$0.0.isEmpty && !$0.1.isEmpty && !$0.2.isEmpty && !$0.3.isEmpty }
+            .flatMapLatest { (promo, season, upcoming, top) -> Observable<Bool> in
+                let result: Bool = !promo.contains(where: { $0 is LoadingPlaceholder })
+                    && !season.contains(where: { $0 is LoadingPlaceholder })
+                    && !upcoming.contains(where: { $0 is LoadingPlaceholder })
+                    && !top.contains(where: { $0 is LoadingPlaceholder })
+                return Observable.just(result)
             }
-            .asObservable()
             .bind(to: recievedValidAnimeObservable)
             .disposed(by: disposeBag)
     }
@@ -106,7 +95,7 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
             .asObservable()
             .compactMap { $0 }
             .flatMapLatest(resultToContent)
-            .bind(to: seasonAnimeObservable)
+            .bind(to: rx.updateSequence())
             .disposed(by: disposeBag)
     }
 
@@ -116,7 +105,7 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
             .asObservable()
             .compactMap { $0 }
             .flatMapLatest(resultToContent)
-            .bind(to: upcomingAnimeObservable)
+            .bind(to: rx.updateSequence())
             .disposed(by: disposeBag)
     }
 
@@ -126,7 +115,7 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
             .asObservable()
             .compactMap { $0 }
             .flatMapLatest(resultToContent)
-            .bind(to: recentPromosAnimeObservable)
+            .bind(to: rx.updateSequence())
             .disposed(by: disposeBag)
     }
 
@@ -136,7 +125,7 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
             .asObservable()
             .compactMap { $0 }
             .flatMapLatest(resultToContent)
-            .bind(to: topAnimeObservable)
+            .bind(to: rx.updateSequence())
             .disposed(by: disposeBag)
     }
 
@@ -183,11 +172,11 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
         )
     }
 
-    var observablesState: [FeedSection: ObservableState] { sequencesState }
+    var observablesState: [FeedSection: SequenceState] { sequencesState }
 
     var recievedValidAnime: PublishRelay<Bool> { recievedValidAnimeObservable }
 
-    func addLoaderItems(in section: FeedSection) async {
+    func addLoaderItems(in section: FeedSection) {
         let loaders = createLoaders(in: section)
         let result = JikanResult<Content>(data: loaders)
         switch section {
@@ -204,8 +193,9 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
     }
 
     func resetAllAnimeData() {
-        seasonAnimeObservable.accept(JikanResult<Content>())
         recentPromosAnimeObservable.accept(JikanResult<Content>())
+        seasonAnimeObservable.accept(JikanResult<Content>())
+        upcomingAnimeObservable.accept(JikanResult<Content>())
         topAnimeObservable.accept(JikanResult<Content>())
         recievedValidAnimeObservable.accept(false)
     }
@@ -231,6 +221,11 @@ extension DiscoverInteractor: DiscoverInteractive, ReactiveCompatible {
             case .unknown: break
         }
     }
+
+    func checkSectionState(_ section: FeedSection, not state: SequenceState) ->  Bool {
+        guard let actualState = sequencesState[section] else { return false }
+        return actualState != state
+    }
 }
 
 private extension DiscoverInteractor {
@@ -249,11 +244,84 @@ private extension DiscoverInteractor {
     }
 
     func updateSequenceState(_ section: FeedSection, to state: SequenceState) {
-        sequencesState[section]?.state = state
+        sequencesState[section] = state
     }
 
     func resultToContent<T: Content>(_ result: JikanResult<T>) -> Observable<JikanResult<Content>> {
         let content = result.data.compactMap { $0 as Content }
-        return Observable.just(JikanResult<Content>(data: content))
+        let newResult = JikanResult<Content>(data: content, pagination: result.pagination)
+        return Observable.just(newResult)
+    }
+
+    func observableHasMorePages(result: JikanResult<Content>) -> Bool {
+        return result.pagination.hasNextPage
+    }
+
+    func aggregateSequence(result: JikanResult<Content>) {
+        guard let section = result.data.first?.feedSection else { return }
+        guard let currentSequenceValue = getCurrentSequenceValue(from: section) else { return }
+
+        // Delete placeholders
+        currentSequenceValue.data.removeAll(where: { $0 is LoadingPlaceholder })
+        if let spinnerIndex = currentSequenceValue.data.firstIndex(where: { $0 is LoadingSpinner }) {
+            currentSequenceValue.data.remove(at: spinnerIndex)
+        }
+
+        // Update current sequence with new values from result.
+        currentSequenceValue.data += result.data
+        currentSequenceValue.pagination = result.pagination
+
+        // Add Load-More-Item if there is a next page.
+        if observableHasMorePages(result: currentSequenceValue) {
+            let loadMoreItem = LoadingSpinner()
+            loadMoreItem.feedSection = section
+            currentSequenceValue.data.append(loadMoreItem)
+        }
+
+        // Update sequences.
+        updateSequence(in: section, newValue: currentSequenceValue)
+    }
+
+    func getCurrentSequenceValue(from section: FeedSection) -> JikanResult<Content>? {
+        switch section {
+            case .animePromos:
+                return recentPromosAnimeObservable.value
+            case .animeSeason:
+                return seasonAnimeObservable.value
+            case .animeUpcoming:
+                return upcomingAnimeObservable.value
+            case .animeTop:
+                return topAnimeObservable.value
+            case .unknown: return nil
+        }
+    }
+
+    func updateSequence(in section: FeedSection, newValue: JikanResult<Content>) {
+        switch section {
+            case .animePromos:
+                recentPromosAnimeObservable.accept(newValue)
+            case .animeSeason:
+                seasonAnimeObservable.accept(newValue)
+            case .animeUpcoming:
+                upcomingAnimeObservable.accept(newValue)
+            case .animeTop:
+                topAnimeObservable.accept(newValue)
+            case .unknown: break
+        }
+
+        // Update Sequences state.
+        updateSequenceState(section, to: .completed)
+    }
+
+    func getSection(from result: JikanResult<Content>) -> FeedSection {
+        return result.data.first?.feedSection ?? .unknown
+    }
+}
+
+extension Reactive where Base: DiscoverInteractor {
+    func updateSequence() -> Binder<JikanResult<Content>> {
+        return Binder(self.base) { (interactor, result) in
+            interactor.aggregateSequence(result: result)
+        }
     }
 }

@@ -43,27 +43,24 @@ final class FeedDataSource {
     // MARK: Provider
     private func buildDataSource() {
         /// # Cells
-        let seasonAnimeCell = UICollectionView.CellRegistration<SeasonAnimeCell, Anime> {
-            [weak self] cell, _, anime in
+        let seasonAnimeCell = UICollectionView.CellRegistration<SeasonAnimeCell, Anime> { [weak self] cell, _, anime in
             cell.anime = anime
             cell.presenter = self?.presenter
             cell.setup()
         }
-        
+
         let upcomingAnimeCell = UICollectionView.CellRegistration<UpcomingAnimeCell, Anime> { cell, _, anime in
             cell.anime = anime
             cell.setup()
         }
 
-        let promoAnimeCell = UICollectionView.CellRegistration<PromoAnimeCell, Promo> {
-            [weak self] cell, _, promo in
+        let promoAnimeCell = UICollectionView.CellRegistration<PromoAnimeCell, Promo> { [weak self] cell, _, promo in
             cell.promo = promo
             cell.presenter = self?.presenter
             cell.setup()
         }
 
-        let topAnimeCell = UICollectionView.CellRegistration<TopAnimeCell, Anime> {
-            [weak self] (cell, indexPath, anime) in
+        let topAnimeCell = UICollectionView.CellRegistration<TopAnimeCell, Anime> { [weak self] (cell, indexPath, anime) in
             cell.anime = anime
             cell.index = indexPath.row + 1
             cell.presenter = self?.presenter
@@ -74,13 +71,25 @@ final class FeedDataSource {
             cell.setup()
         }
 
-        dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
-            guard let item = item as? Content else { return nil }
-            // LoadingCell (Placeholder)
+        let loadMoreItemsCell = UICollectionView.CellRegistration<ACLoadMoreItemsCell, LoadingSpinner> { (cell, _, _) in
+            cell.setup()
+        }
+
+        dataSource = DiffableDataSource(collectionView: collectionView) { [weak presenter] collectionView, indexPath, item in
+            guard let item = item as? Content, let presenter else { return nil }
+            // Loading-Cell (Placeholder).
             if let item = item as? LoadingPlaceholder {
                 return collectionView.dequeueConfiguredReusableCell(using: loaderCell, for: indexPath, item: item)
             }
-            
+
+            // Loading-More-Items cell.
+            if let item = item as? LoadingSpinner {
+                // Handle pagination.
+                let section = item.feedSection
+                presenter.handlePagination(for: section)
+                return collectionView.dequeueConfiguredReusableCell(using: loadMoreItemsCell, for: indexPath, item: item)
+            }
+
             let section: FeedSection = item.feedSection
             switch section {
                 case .animeSeason:
@@ -144,18 +153,22 @@ extension FeedDataSource: FeedDataSourceable {
     /// Updates the **items** for the current **section**
     func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil, deleteLoaders: Bool = false) {
         guard let section = section as? FeedSection else { return }
+        
+        // Create new snapshot from the current one.
+        guard var currentSnapshot = dataSource?.snapshot() else { return }
 
         // Create section
         if currentSnapshot.indexOfSection(section) == nil {
             currentSnapshot.appendSections([section])
         }
 
-        #warning("This may be too expensive? Deleting all the time")
-        // Delete items in section before adding more, as the items may be aggregated and result in duplicated items in snapshot.
+        // Delete items section before adding more, as the items may be aggregated and result in duplicated items in snapshot.
         currentSnapshot.deleteItems(currentSnapshot.itemIdentifiers(inSection: section))
 
+        // Add items.
         currentSnapshot.appendItems(items, toSection: section)
-
+        
+        // Apply the snapshot.
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
     }
 
@@ -170,17 +183,8 @@ extension FeedDataSource: FeedDataSourceable {
         return dataSource?.itemIdentifier(for: indexPath)
     }
 
-    func removeLoaders(in section: FeedSection) {
-        // Find loaders
-        let loaders = currentSnapshot.itemIdentifiers(inSection: section).compactMap { $0 as? LoadingPlaceholder }
-
-        // Remove loaders from snapshot
-        currentSnapshot.deleteItems(loaders)
-    }
-
     func resetSnapshot() {
         currentSnapshot.deleteAllItems()
-        currentSnapshot.deleteSections([.animeSeason, .animeUpcoming, .animePromos, .animeTop])
         let emptySnapshot = Snapshot()
         dataSource?.apply(emptySnapshot, animatingDifferences: true)
     }

@@ -22,7 +22,7 @@ final class DetailFeedDataSource {
     /// # Components
     private(set) lazy var playerComponent: TrailerCompatible = {
         guard let player = presenter?.playerComponent else {
-            let component = TrailerComponent()
+            let component = TrailerComponent.shared
             component.presenter = presenter
             return component
         }
@@ -183,9 +183,7 @@ extension DetailFeedDataSource: FeedDataSourceable {
         let items = items.compactMap { $0 as? Content }
         items.indices.forEach { items[$0].detailFeedSection = section }
 
-        guard let finalItems = items as? [AnyHashable] else { return [] }
-
-        return finalItems
+        return items
     }
 
     func removeSpinnerIfNeeded() {
@@ -249,9 +247,8 @@ extension DetailFeedDataSource {
 
         // Wait for trailer finishing loading
         presenter.didFinishLoadingAnimeAndTrailer
-            .filter { $1 }
-            .drive { [weak self] (anime, _) in
-                guard let self = self else { return }
+            .drive { [weak self] (trailerState, anime) in
+                guard let self else { return }
                 guard let trailer = anime.trailer else  {return }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING TRAILER")
                 self.updateSnapshot(for: DetailFeedSection.animeTrailer,
@@ -268,7 +265,7 @@ extension DetailFeedDataSource {
             .debounce(.milliseconds(500))
             .drive(onNext: { [weak self] (characetersData) in
                 guard let self = self else { return }
-                print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING CHARACTERS: \(characetersData.data.count)")
+                print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING CHARACTERS: \(characetersData?.data.count ?? 0)")
                 self.updateSnapshot(for: DetailFeedSection.animeCharacters,
                                     with: [characetersData],
                                     animating: true,

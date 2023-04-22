@@ -15,7 +15,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     private var overlayApplied: Bool = false
 
     weak var presenter: DiscoverPresentable?
-    var promo: Promo?
+    weak var promo: Promo?
 
     private lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -87,7 +87,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
 private extension PromoAnimeCell {
     func setupCoverImage() {
         let imagePath: String? = promo?.trailer.image.attemptToGetImageByResolution(.large)
-        coverImageView.loadImage(from: imagePath) { [weak self] _ in
+        coverImageView.loadImage(from: imagePath, cellType: self) { [weak self] _ in
             guard let self else { return }
             UIView.animate(withDuration: 0.4) { [weak self] in
                 self?.titleLabel.isHidden = false

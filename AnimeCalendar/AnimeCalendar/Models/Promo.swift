@@ -48,7 +48,7 @@ final class Promo: Content {
     }
     
     // Equatable
-    static func == (lhs: Promo, rhs: Promo) -> Bool {
+    static func ==(lhs: Promo, rhs: Promo) -> Bool {
         return lhs.id == rhs.id
     }
     

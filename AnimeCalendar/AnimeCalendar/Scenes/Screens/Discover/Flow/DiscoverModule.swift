@@ -5,6 +5,8 @@
 //  Created by Leonardo  on 13/11/22.
 //
 
+import UIKit
+
 final class DiscoverModule: Modulable {
     // MARK: State
     private(set) var presenter: DiscoverPresenter
@@ -19,6 +21,9 @@ final class DiscoverModule: Modulable {
         
         self.baseNavigation = navigation
         self.presenter = DiscoverPresenter(interactor: interactor, router: router)
+        
+        // Initalize trailer component
+        _ = TrailerComponent.shared
     }
     
     // MARK: Methods

@@ -45,6 +45,7 @@ final class NewAnimeScreen: UIViewController, Screen {
     // MARK: Initializers
     init(presenter: NewAnimePresentable) {
         super.init(nibName: Xibs.newAnimeScreenView, bundle: Bundle.main)
+        configureTabItem()
         self.presenter = presenter
     }
 
@@ -156,5 +157,16 @@ extension NewAnimeScreen {
 
     func configureRightNavigationItems() {
         navigationBar.configureRightNavigationItems()
+    }
+}
+
+// MARK: - TabBar item
+extension NewAnimeScreen: ScreenWithTabItem {
+    func configureTabItem() {
+        let configuration = UIImage.SymbolConfiguration(weight: UIImage.SymbolWeight.medium)
+        let icon = ACIcon.magnifyingglass
+            .withConfiguration(configuration)
+        
+        tabBarItem = UITabBarItem(title: "Search", image: icon, selectedImage: icon)
     }
 }

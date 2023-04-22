@@ -132,9 +132,10 @@ extension HomeScreen {
 // MARK: - TabBar item
 extension HomeScreen: ScreenWithTabItem {
     func configureTabItem() {
-        view.autoresizingMask = .flexibleHeight
-        let configuration = UIImage.SymbolConfiguration(weight: UIImage.SymbolWeight.bold)
-        let tabImage = UIImage(systemName: "house", withConfiguration: configuration)!.withBaselineOffset(fromBottom: UIFont.systemFontSize * 1.5)
-        tabBarItem = UITabBarItem(title: nil, image: tabImage, selectedImage: tabImage)
+        let configuration = UIImage.SymbolConfiguration(weight: UIImage.SymbolWeight.medium)
+        let icon = ACIcon.house
+            .withConfiguration(configuration)
+        
+        tabBarItem = UITabBarItem(title: "Home", image: icon, selectedImage: icon)
     }
 }

@@ -10,12 +10,12 @@ import youtube_ios_player_helper
 
 protocol TrailerCompatible: AnyObject {
     var presenter: AnimeDetailPresentable? { get set }
-    var wof: Bool { get set }
     var playerIsAlreadyLoaded: Bool { get }
     func loadTrailer(withId id: String)
     func queueVideo(withId id: String)
-    func getContainer() -> UIView
+    func getContainer() -> UIView?
     func disposePlayer()
+    func createPlayer()
 }
 
 enum PlayerState {
@@ -27,40 +27,35 @@ enum PlayerState {
 
 final class TrailerComponent: NSObject {
     // MARK: State
-    private let TIME_OUT_SECONDS: CGFloat = 4.0
+    private let TIME_OUT_SECONDS: CGFloat = 8.0
     private var playerState: PlayerState = .idle
-    var wof: Bool = false
-    private var playerWebViewDidLoad: Bool = false
 
-    private lazy var playerView: YTPlayerView = {
-        let view = YTPlayerView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private var playerView: YTPlayerView?
+    private var ytVideoId: String = ""
 
     /// # Presenter
     weak var presenter: AnimeDetailPresentable?
 
-    // MARK: Initializers
-    override init() {
-        super.init()
+    static let shared = TrailerComponent()
 
-        self.playerState = .idle
+    // MARK: Initializers
+    override private init() {
+        super.init()
         configureComponent()
         print("senku [DEBUG] \(String(describing: type(of: self))) - ****** TRAILER COMPONENT INITED")
     }
 }
 
-extension TrailerComponent: Component {
-    func configureComponent() {
-        configureView()
-        configureSubviews()
-    }
-
-    func configureView() {}
-
-    func configureSubviews() {
-        playerView.delegate = self
+extension TrailerComponent {
+    func configureComponent(preheated: Bool = true) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.playerView = YTPlayerView(frame: .zero)
+            self.playerView?.translatesAutoresizingMaskIntoConstraints = false
+            self.playerView?.delegate = self
+            self.playerState = .idle
+            if preheated { self.queueVideo(withId: "a9tq0aS5Zu8") }
+        }
     }
 }
 
@@ -97,7 +92,7 @@ extension TrailerComponent: YTPlayerViewDelegate {
 }
 
 extension TrailerComponent: TrailerCompatible {
-    var playerIsAlreadyLoaded: Bool { !(playerView.webView == nil) }
+    var playerIsAlreadyLoaded: Bool { !(playerView?.webView == nil) }
 
     func loadTrailer(withId id: String) {
         guard !id.isEmpty else {
@@ -107,45 +102,51 @@ extension TrailerComponent: TrailerCompatible {
             return
         }
 
-        playerState = .loading
-        timeOut()
-        playerView.load(withVideoId: id,
-                        playerVars: ["autoplay": 1,
-                                     "playsinline": 1,
-                                     "cc_load_policy": 1,
-                                     "cc_lang_pref": "en",
-                                     "rel": 0])
+        timeOut(for: ytVideoId)
+        playerView?.load(withVideoId: id,
+                         playerVars: ["autoplay": 1,
+                                      "playsinline": 1,
+                                      "cc_load_policy": 1,
+                                      "cc_lang_pref": "en",
+                                      "rel": 0])
     }
 
     func queueVideo(withId id: String) {
         // Load the playerView for the first time, then only queue new videos up.
-        if playerView.webView == nil {
+        ytVideoId = id
+        playerState = .loading
+        if playerView?.webView == nil {
             loadTrailer(withId: id)
-            playerWebViewDidLoad = true
         } else {
-            playerView.cueVideo(byId: id, startSeconds: 0)
+            playerView?.cueVideo(byId: id, startSeconds: 0)
         }
     }
 
-    func getContainer() -> UIView {
+    func getContainer() -> UIView? {
         return playerView
     }
 
     func disposePlayer() {
-        playerView.stopVideo()
-        playerView.pauseVideo()
-        playerView.subviews.forEach { $0.removeFromSuperview() }
-        playerView.removeFromSuperview()
+        Task { @MainActor in
+            playerView?.stopVideo()
+            playerView?.pauseVideo()
+            playerView?.subviews.forEach { $0.removeFromSuperview() }
+            playerView?.removeFromSuperview()
+            playerView = nil
+        }
+    }
+
+    func createPlayer() {
+        configureComponent()
     }
 }
 
 private extension TrailerComponent {
-    func timeOut() {
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + TIME_OUT_SECONDS) {
-            [weak self] in
-            guard let self = self else { return }
+    func timeOut(for ytVideoId: String) {
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + TIME_OUT_SECONDS) { [weak self, ytVideoId] in
+            guard let self else { return }
+            guard ytVideoId == self.ytVideoId else { return }
             guard self.playerState == .loading else { return }
-            self.playerState = .error
             self.presenter?.trailerLoaded.accept(false)
             print("senku [DEBUG] \(String(describing: type(of: self))) - PLAYER TIME-OUT")
         }

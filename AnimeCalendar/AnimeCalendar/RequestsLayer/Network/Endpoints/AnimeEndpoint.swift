@@ -35,23 +35,30 @@ extension AnimeEndpoint: EndpointType {
                 return API.getAPI(.v4)+service+"/\(animeId)/characters"
         }
     }
-  
+    
     var httpMethod: HTTPMethod {
         switch self {
             case .getAnime, .getAnimes, .getCharacters:
                 return .get
         }
     }
-  
+    
     var task: HTTPTask {
         switch self {
             case .getAnime(let name):
                 return .requestParameters(bodyParameters: nil, urlParameters:
-                    ["q": name])
+                                            ["q": name])
             case .getAnimes, .getCharacters:
                 return .request
         }
     }
-  
+    
     var headers: HTTPHeaders? { nil }
+    
+    var retries: Int { 3 }
+    
+    var timeOut: CGFloat {
+        if case .getCharacters = self { return 5.0 }
+        return 8.0
+    }
 }

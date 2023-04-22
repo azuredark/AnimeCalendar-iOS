@@ -11,11 +11,10 @@ import RxSwift
 
 final class TopAnimeCell: UICollectionViewCell, FeedCell {
     static var reuseIdentifier: String = "TOP_ANIME_CELL_REUSE_ID"
-    private var shadowExists: Bool = false
     private var radius: CGFloat { 5.0 }
 
     // MARK: State
-    var anime: Anime?
+    weak var anime: Anime?
     var index: Int?
     weak var presenter: DiscoverPresentable?
     private var imageDisposable: Disposable?
@@ -154,7 +153,6 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        configureContainerShadow()
     }
 
     #warning("Rank should be related to the id")
@@ -174,7 +172,7 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
 private extension TopAnimeCell {
     func setupBackgroundImage() {
         let path: String? = anime?.imageType?.jpgImage.attemptToGetImageByResolution(.normal)
-        coverImageView.loadImage(from: path) { [weak self] _ in
+        coverImageView.loadImage(from: path, cellType: self) { [weak self] _ in
             self?.setupRankLabel()
             self?.setupTitleLabel()
             self?.setupAnimeDetail()
@@ -315,19 +313,6 @@ private extension TopAnimeCell {
             genresLabel.trailingAnchor.constraint(lessThanOrEqualTo: infoContainer.trailingAnchor),
             genresLabel.bottomAnchor.constraint(equalTo: infoContainer.bottomAnchor)
         ])
-    }
-}
-
-private extension TopAnimeCell {
-    func configureContainerShadow() {
-        if !shadowExists {
-            let shadow = ShadowBuilder().getTemplate(type: .full)
-                .with(opacity: 0.25)
-                .with(cornerRadius: radius)
-                .build()
-            mainContainer.addShadow(with: shadow)
-            shadowExists.toggle()
-        }
     }
 }
 

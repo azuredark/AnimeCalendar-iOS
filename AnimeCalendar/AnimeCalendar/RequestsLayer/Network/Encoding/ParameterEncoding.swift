@@ -22,4 +22,5 @@ enum NetworkError: String, Error {
     case errorCreatingUrlComponents = "ACError - Can't create URLComponents."
     case errorTest                  = "ACError - Error for testing purposes."
     case errorHttpCode              = "ACError - HTTP Code is not successful."
+    case errorTimeOut               = "ACError - Request timed-out."
 }

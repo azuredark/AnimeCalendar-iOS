@@ -35,7 +35,7 @@ final class AnimeDetailScreen: UIViewController, Screen {
     }()
     
     private lazy var blurView: BlurContainer = {
-        let config = BlurContainer.Config(opacity: 1, style: .systemThickMaterial)
+        let config = BlurContainer.Config(opacity: 0.98, style: .systemThickMaterial)
         let blur = BlurContainer(config: config)
         blur.translatesAutoresizingMaskIntoConstraints = false
         view.insertSubview(blur, aboveSubview: coverImageView)
@@ -70,8 +70,6 @@ final class AnimeDetailScreen: UIViewController, Screen {
 extension AnimeDetailScreen {
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("\n")
-        print("senku [DEBUG] \(String(describing: type(of: self))) - VIEW DID LOAD")
         configureScreen()
         bindAnime()
     }
@@ -133,7 +131,7 @@ private extension AnimeDetailScreen {
         NSLayoutConstraint.activate([
             mainCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mainCollection.topAnchor.constraint(equalTo: view.topAnchor),
             mainCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }

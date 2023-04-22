@@ -11,7 +11,6 @@ import UIKit
 final class CustomTabBarController: UITabBarController, TabBarProtocol {
     // MARK: State
     private lazy var newScheduledAnimeButton: TabBarButton = NewScheduledAnimeButton()
-    override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
 
     // MARK: Initializers
     init() {
@@ -27,18 +26,20 @@ final class CustomTabBarController: UITabBarController, TabBarProtocol {
 
 extension CustomTabBarController: TabBarWithMiddleButton {
     func configureTabBar() {
-        tabBar.backgroundColor = Color.white
-        tabBar.barTintColor = Color.white
+//        tabBar.barTintColor = Color.white
         tabBar.unselectedItemTintColor = Color.lightGray
-        tabBar.tintColor = Color.cobalt
+        tabBar.tintColor = Color.pink
         tabBar.itemPositioning = .centered
         tabBar.itemSpacing = CGFloat(180)
-        
-        /// Remove TabBar's line (iOS 14 and below)
-        let appearance = tabBar.standardAppearance
-        appearance.shadowImage = nil
-        appearance.shadowColor = nil
-        tabBar.standardAppearance = appearance
+        tabBar.isTranslucent = true
+
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithDefaultBackground()
+
+        tabBar.standardAppearance = tabBarAppearance
+        if #available(iOS 15, *) {
+            tabBar.scrollEdgeAppearance = tabBarAppearance
+        }
 
         tabBar.layoutIfNeeded()
     }

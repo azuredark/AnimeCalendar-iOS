@@ -15,4 +15,7 @@ enum ACIcon {
     static var starFilled: UIImage { UIImage(systemName: "star.fill") ?? UIImage(named: "icon-trophy")! }
     static var twoPeopleFilled: UIImage { UIImage(systemName: "person.2.fill") ?? UIImage(named: "icon-trophy")! }
     static var circleFilled: UIImage { UIImage(systemName: "circle.fill") ?? UIImage() }
+    static var globe: UIImage { UIImage(systemName: "globe") ?? UIImage() }
+    static var magnifyingglass: UIImage { UIImage(systemName: "magnifyingglass") ?? UIImage() }
+    static var house: UIImage { UIImage(systemName: "house") ?? UIImage() }
 }

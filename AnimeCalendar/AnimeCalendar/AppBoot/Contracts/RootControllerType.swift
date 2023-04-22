@@ -8,6 +8,6 @@
 import Foundation
 
 enum RootControllerType {
-  case rootTabBar
-  case rootScreen(screen: ScreenType)
+    case rootTabBar(screens: [ScreenType], middleButton: Bool = false)
+    case rootScreen(screen: ScreenType)
 }

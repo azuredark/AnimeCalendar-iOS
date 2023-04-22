@@ -10,7 +10,7 @@ final class AnimeDetailModule: Modulable {
     private(set) var presenter: AnimeDetailPresenter
     
     private lazy var playerComponent: TrailerCompatible = {
-        let player = TrailerComponent()
+        let player = TrailerComponent.shared
         player.presenter = presenter
         return player
     }()

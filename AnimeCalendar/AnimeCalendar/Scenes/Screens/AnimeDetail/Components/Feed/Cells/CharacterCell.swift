@@ -76,7 +76,7 @@ final class CharacterCell: UICollectionViewCell, FeedCell {
 private extension CharacterCell {
     func setupCoverImageView() {
         guard let imgPath = characterInfo?.character.imageType?.jpgImage.attemptToGetImageByResolution(.normal) else { return }
-        coverImageView.loadImage(from: imgPath) { [weak self] _ in
+        coverImageView.loadImage(from: imgPath, options: [.disableMemoryCache, .disableDiskCache]) { [weak self] _ in
             UIView.animate(withDuration: 0.4) {
                 self?.nameLabel.alpha = 1
             }

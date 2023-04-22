@@ -32,4 +32,6 @@ extension UserEndpoint: EndpointType {
     }
 
     var headers: HTTPHeaders? { nil }
+    
+    var timeOut: CGFloat { 5.0 }
 }

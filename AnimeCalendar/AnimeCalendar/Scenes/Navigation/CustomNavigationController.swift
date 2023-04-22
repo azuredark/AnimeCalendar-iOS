@@ -12,23 +12,14 @@ final class CustomNavigationController: UINavigationController {
 
     /// # Initializers
     init() {
-        super.init(nibName: nil, bundle: nil)
-
         /// Settings
-        navigationBar.backgroundColor = Color.cream
-
-        /// Remove Navigations bar's line (iOS 14 and below)
-        navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationBar.shadowImage = UIImage()
-        navigationBar.layoutIfNeeded()
-        
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-
+        
+        super.init(nibName: nil, bundle: nil)
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance
-        navigationBar.scrollEdgeAppearance = appearance
+//        navigationBar.backgroundColor = Color.cream
     }
 
     @available(*, unavailable)
@@ -37,6 +28,5 @@ final class CustomNavigationController: UINavigationController {
     }
     
     func setBackground(with color: UIColor) {
-        navigationBar.backgroundColor = color
     }
 }

@@ -10,9 +10,9 @@ import RxSwift
 protocol AnimeDetailPresentable: AnyObject {
     var playerComponent: TrailerCompatible? { get set }
     var anime: Driver<Anime> { get }
-    var characters: Driver<CharacterData> { get }
+    var characters: Driver<CharacterData?> { get }
     var trailerLoaded: PublishRelay<Bool> { get }
-    var didFinishLoadingAnimeAndTrailer: Driver<(Anime, Bool)> { get }
+    var didFinishLoadingAnimeAndTrailer: Driver<(Bool, Anime)> { get }
 
     /// Weak reference towards the view
     func start() -> Screen
@@ -46,7 +46,7 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     }
 
     /// Anime characters (Main & secondary)
-    var characters: Driver<CharacterData> {
+    var characters: Driver<CharacterData?> {
         interactor.animeCharactersObservable
     }
 
@@ -57,7 +57,7 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
 
     /// Tracks when both the **anime** & **trailer** have finished loading and emits an event.
     /// This event fires up a new section being added into the **mainCollection**
-    var didFinishLoadingAnimeAndTrailer: Driver<(Anime, Bool)> {
+    var didFinishLoadingAnimeAndTrailer: Driver<(Bool, Anime)> {
         interactor.didFinishLoadingTrailerObservable
     }
 

@@ -21,7 +21,7 @@ final class NewAnimeNavigationBar: ScreenNavigationBar {
 
 private extension NewAnimeNavigationBar {
     func configureNavigationBar() {
-        screen?.navigationController?.navigationBar.barTintColor = Color.cream
+//        screen?.navigationController?.navigationBar.barTintColor = Color.cream
     }
 }
 

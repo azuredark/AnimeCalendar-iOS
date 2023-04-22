@@ -11,8 +11,8 @@ import RxCocoa
 protocol AnimeDetailInteractive {
     var animeObservable: Driver<Anime> { get }
     var animeTrailerLoadedObservable: PublishRelay<Bool> { get }
-    var animeCharactersObservable: Driver<CharacterData> { get }
-    var didFinishLoadingTrailerObservable: Driver<(Anime, Bool)> { get }
+    var animeCharactersObservable: Driver<CharacterData?> { get }
+    var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> { get }
     
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
@@ -22,10 +22,10 @@ protocol AnimeDetailInteractive {
 final class AnimeDetailInteractor: GenericInteractor<AnimeRepository> {
     // MARK: State
     private let animeStorage = BehaviorRelay<Anime>(value: Anime())
-    private let charactersStorage = PublishRelay<CharacterData>()
+    private let charactersStorage = PublishRelay<CharacterData?>()
 
     private let animeTrailerLoaded = PublishRelay<Bool>()
-    private let didFinishLoadingTrailer = PublishRelay<(Anime, Bool)>()
+    private let didFinishLoadingTrailer = BehaviorRelay<((Bool, Anime))>(value: (false, Anime()))
 
     private var disposeBag = DisposeBag()
     private lazy var requestDisposeBag = DisposeBag()
@@ -37,14 +37,13 @@ final class AnimeDetailInteractor: GenericInteractor<AnimeRepository> {
         bindTrailerLoaded()
     }
 
-//    #error("WHEN REQUESTING FAST THE VIEW MAY HAVE BEEN DESTROYED AND RE-OPENED, OLD EVENTS ARE QUEING UP")
     private func bindTrailerLoaded() {
-        Observable.zip(animeStorage.asObservable(), animeTrailerLoaded.asObservable())
-            .asDriver(onErrorJustReturn: (Anime(), false))
-            .drive(onNext: { [weak self] (anime, trailerState) in
-                guard let self = self else { return }
-                self.didFinishLoadingTrailer.accept((anime, trailerState))
-            }).disposed(by: disposeBag)
+        animeTrailerLoaded.asObservable().withLatestFrom(animeStorage.asObservable()) { trailerDidLoad, anime in
+            return (trailerDidLoad, anime)
+        }
+        .filter { $0.0 && $0.1.detailFeedSection != .unknown }
+        .bind(to: didFinishLoadingTrailer)
+        .disposed(by: disposeBag)
     }
 }
 
@@ -57,12 +56,12 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
         animeTrailerLoaded
     }
 
-    var animeCharactersObservable: Driver<CharacterData> {
+    var animeCharactersObservable: Driver<CharacterData?> {
         charactersStorage.asDriver(onErrorJustReturn: CharacterData())
     }
     
-    var didFinishLoadingTrailerObservable: Driver<(Anime, Bool)> {
-        didFinishLoadingTrailer.asDriver(onErrorJustReturn: (Anime(), false))
+    var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> {
+        didFinishLoadingTrailer.skip(1).asDriver(onErrorJustReturn: (false, Anime()))
     }
 
 //    #error("WHEN REQUESTING FAST THE VIEW MAY HAVE BEEN DESTROYED AND RE-OPENED, OLD EVENTS ARE QUEING UP")
@@ -75,7 +74,6 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
         // Send empty event for loading
         repository.getAnimeCharacters(animeId: animeId)
             .asObservable()
-            .compactMap { $0 }
             .bind(to: charactersStorage)
             .disposed(by: requestDisposeBag)
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol FeedCell {
+protocol FeedCell: UICollectionViewCell {
     /// Unique Identifier for properly reusing cells
     static var reuseIdentifier: String { get set }
     /// Sets up the cell with **dynamic** values *(Will update depending on the cell)*.

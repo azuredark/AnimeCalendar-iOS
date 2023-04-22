@@ -11,7 +11,7 @@ import RxCocoa
 
 final class SeasonAnimeCell: UICollectionViewCell, FeedCell {
     // MARK: Reference object
-    var anime: Anime?
+    weak var anime: Anime?
     var cellTags: [AnimeCellTag?] = []
     private var overlayApplied: Bool = false
     private let cornerRadius: CGFloat = 5.0
@@ -161,19 +161,29 @@ private extension SeasonAnimeCell {
     /// Creates tags by AnimeTag
     func createTag(tag: AnimeTag) -> AnimeCellTag {
         switch tag {
-            case .episodes(let value):
+            case .episodes(let count):
                 let icon = ACIcon.tvFilled.withRenderingMode(.alwaysTemplate)
-                let config = AnimeCellTag.Config(iconImage: icon, iconText: "\(value)", iconColor: Color.staticWhite)
+                let config = AnimeCellTag.Config(iconImage: icon,
+                                                 iconText: parseInt(rawInt: count),
+                                                 iconColor: Color.staticWhite)
                 return AnimeCellTag(config: config)
-            case .score(let value):
+            case .score(let score):
                 let icon = ACIcon.starFilled.withRenderingMode(.alwaysTemplate)
-                let config = AnimeCellTag.Config(iconImage: icon, iconText: "\(value)", iconColor: Color.staticWhite)
+                let config = AnimeCellTag.Config(iconImage: icon,
+                                                 iconText: parseInt(rawInt: score),
+                                                 iconColor: Color.staticWhite)
                 return AnimeCellTag(config: config)
-            case .rank(let value):
+            case .rank(let rank):
                 let icon = ACIcon.trophy.withRenderingMode(.alwaysTemplate)
-                let config = AnimeCellTag.Config(iconImage: icon, iconText: "\(value)", iconColor: Color.staticWhite)
+                let config = AnimeCellTag.Config(iconImage: icon,
+                                                 iconText: parseInt(rawInt: rank),
+                                                 iconColor: Color.staticWhite)
                 return AnimeCellTag(config: config)
         }
+    }
+    
+    func parseInt<T: SignedNumeric>(rawInt: T) -> String {
+        return rawInt == 0 ? "TBD" : "\(rawInt)"
     }
 
     /// Align all available AnimeCellTags, according to the amount of them.

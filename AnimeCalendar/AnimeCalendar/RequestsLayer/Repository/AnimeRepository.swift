@@ -20,7 +20,7 @@ final class AnimeRepository: GenericRepository {
             guard let strongSelf = self else { return Disposables.create() }
 
             let model = JikanResult<Anime>.self
-            let requestResponsible: Requestable = strongSelf.requestsManager.getRequestResponsible(responsible)
+            let requestResponsible: Requestable = strongSelf.requestsManager.getRequestResponsible(.mock)
             
             requestResponsible.makeRequest(model, .anime(.getAnime(name: name))) { result in
                 switch result {

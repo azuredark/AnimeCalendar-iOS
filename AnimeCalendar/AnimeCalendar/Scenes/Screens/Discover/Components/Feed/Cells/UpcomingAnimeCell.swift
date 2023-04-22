@@ -11,7 +11,7 @@ final class UpcomingAnimeCell: UICollectionViewCell, FeedCell {
     // MARK: State
     static var reuseIdentifier: String = "UPCOMING_ANIME_CELL_REUSE_ID"
    
-    var anime: Anime?
+    weak var anime: Anime?
     
     private let radius: CGFloat = 5.0
     private var overlayApplied: Bool = false
@@ -67,12 +67,17 @@ final class UpcomingAnimeCell: UICollectionViewCell, FeedCell {
         super.prepareForReuse()
         coverImageView.image = nil
         titleLabel.text = nil
+        titleLabel.alpha = 0
     }
 
     // MARK: Methods
     func setup() {
         setupCoverImageView()
         setupTitleLabel()
+    }
+    
+    func getCoverImage() -> UIImage? {
+        return coverImageView.image
     }
 }
 

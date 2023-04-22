@@ -7,21 +7,24 @@
 
 import UIKit
 import RxRelay
+import Nuke
 
 protocol DiscoverPresentable: NSObject {
     var feedView: Feed? { get set }
-    var observablesState: [FeedSection: ObservableState] { get }
-    
+    var observablesState: [FeedSection: SequenceState] { get }
+
     func start() -> Screen
     func getImageResource(path: String, completion: @escaping ImageSetting)
-    func updateSeasonAnime()
-    func updateUpcomingAnime()
-    func updateRecentPromosAnime()
-    func updateTopAnime(by order: AnimeOrderType)
+    func updateSeasonAnime() async
+    func updateUpcomingAnime() async
+    func updateRecentPromosAnime() async
+    func updateTopAnime(by order: AnimeOrderType) async
     func getTags(episodes: Int?, score: CGFloat?, rank: Int?) -> [AnimeTag]
     func didTapSearchButton()
     func getCellItemType(_ item: Content) -> FeedItem
     func loadMoreItems(for section: FeedSection)
+    func handlePagination(for section: FeedSection)
+    func deleteCache()
 
     /// Handles **actions** made in the DiscoverScreen.
     /// - Parameter action: Action to execute.
@@ -29,7 +32,6 @@ protocol DiscoverPresentable: NSObject {
 
     var feed: DiscoverFeed { get }
     var recievedValidAnime: PublishRelay<Bool> { get }
-    func addLoaderItems()
     func resetAllAnimeData()
 }
 
@@ -59,24 +61,32 @@ extension DiscoverPresenter: DiscoverPresentable {
     }
 
     var feed: DiscoverFeed { interactor.feed }
-    
-    var observablesState: [FeedSection : ObservableState] { interactor.observablesState }
-    
+
+    var observablesState: [FeedSection: SequenceState] { interactor.observablesState }
+
     var recievedValidAnime: PublishRelay<Bool> { interactor.recievedValidAnime }
 
-    func updateSeasonAnime() {
+    func updateSeasonAnime() async {
+        guard interactor.checkSectionState(.animeSeason, not: .requesting) else { return }
+        interactor.addLoaderItems(in: .animeSeason)
         interactor.updateSeasonAnime(page: 1)
     }
-    
-    func updateUpcomingAnime() {
+
+    func updateUpcomingAnime() async {
+        guard interactor.checkSectionState(.animeUpcoming, not: .requesting) else { return }
+        interactor.addLoaderItems(in: .animeUpcoming)
         interactor.updateUpcomingAnime(page: 1)
     }
 
-    func updateRecentPromosAnime() {
+    func updateRecentPromosAnime() async {
+        guard interactor.checkSectionState(.animePromos, not: .requesting) else { return }
+        interactor.addLoaderItems(in: .animePromos)
         interactor.updateRecentPromosAnime(page: 1)
     }
 
-    func updateTopAnime(by order: AnimeOrderType) {
+    func updateTopAnime(by order: AnimeOrderType) async {
+        guard interactor.checkSectionState(.animeTop, not: .requesting) else { return }
+        interactor.addLoaderItems(in: .animeTop)
         interactor.updateTopAnime(by: order, page: 1)
     }
 
@@ -95,29 +105,31 @@ extension DiscoverPresenter: DiscoverPresentable {
     func handle(action: DiscoverAction) {
         router.handle(action: action)
     }
-    
-    /// Adding loader items to the section's observable state.
-    ///
-    /// - Important: This determines the order on which the section will be displayed on screen.
-    func addLoaderItems() {
-        Task(priority: .userInitiated) {
-            await interactor.addLoaderItems(in: .animePromos)
-            await interactor.addLoaderItems(in: .animeSeason)
-            await interactor.addLoaderItems(in: .animeUpcoming)
-            await interactor.addLoaderItems(in: .animeTop)
-        }
-    }
-    
+
     func resetAllAnimeData() {
         interactor.resetAllAnimeData()
     }
-    
+
     func getCellItemType(_ item: Content) -> FeedItem {
         if item is LoadingPlaceholder { return .loader }
         return .content
     }
-    
+
     func loadMoreItems(for section: FeedSection) {
         interactor.loadMoreItems(in: section)
     }
+
+    func handlePagination(for section: FeedSection) {
+        // Start pagination.
+        if let state = observablesState[section], state != .requesting {
+            loadMoreItems(for: section)
+        }
+    }
+
+    func deleteCache() {
+        Nuke.DataLoader.sharedUrlCache.removeAllCachedResponses()
+    }
+}
+
+private extension DiscoverPresenter {
 }

@@ -14,13 +14,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Setting-up Nuke PipeLine
         // Disable default disk-cache. Prevent caching an image twice.
         DataLoader.sharedUrlCache.diskCapacity = 0
+        DataLoader.sharedUrlCache.memoryCapacity = 50 * 1024 * 1024
+        
         // Create new pipeline
         let pipeline = ImagePipeline { config in
             // Create new Cache
             let dataCache = try? DataCache(name: "net.estremadoyro.Anime-Calendar.image-cache")
 
-            // Size limit
-            dataCache?.sizeLimit = 300 * 1024 * 1024 // In bytes. (300MB)
+            // Size limit -> Default 150MB
+            dataCache?.sizeLimit = 50 * 1024 * 1024
             // Update DataCache in config
             config.dataCache = dataCache
         }
@@ -28,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ImagePipeline.shared = pipeline
 
         // MARK: Setting-up Nuke ImageLoadingOptions
-        let options = ImageLoadingOptions(placeholder: UIImage(named: "anime-placeholder"),
+        let options = ImageLoadingOptions(placeholder: UIImage(named: "image-loading-placeholder"),
                                           transition: .fadeIn(duration: 0.4, options: .layoutSubviews),
                                           failureImage: UIImage(named: "new-anime-item-placeholder"),
                                           contentModes: .init(success: .scaleAspectFill,
@@ -36,10 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                               placeholder: .scaleAspectFill))
         /// # Override ImageLoadingOptions
         ImageLoadingOptions.shared = options
-
-        /// # For `debugging` purposes only
-//        ImagePipeline.shared.cache.removeAll()
-
+        
         return true
     }
 

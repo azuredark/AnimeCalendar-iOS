@@ -55,7 +55,7 @@ final class Feed: NSObject {
 
 private extension Feed {
     func getLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, ctx) in
             guard let strongSelf = self else { fatalError("No Feed reference while generating collection layout") }
             guard let item = strongSelf.dataSource.getItem(at: IndexPath(item: 0, section: sectionIndex)) as? Content else { return nil }
             switch item.feedSection {
@@ -254,7 +254,6 @@ extension Feed: UICollectionViewDelegate {
         let itemType = presenter.getCellItemType(item)
         
         if case .loader = itemType { return }
-//        presenter.loadMoreItems(for: item.feedSection)
 
         guard cellIsSelectable else { return }
         cellIsSelectable = false

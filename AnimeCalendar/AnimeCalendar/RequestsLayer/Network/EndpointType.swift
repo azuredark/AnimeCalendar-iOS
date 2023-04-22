@@ -13,9 +13,7 @@ protocol EndpointType {
     var task: HTTPTask { get }
     var headers: HTTPHeaders? { get }
     var retries: Int { get }
-}
-
-extension EndpointType {
+    var timeOut: CGFloat { get }
 }
 
 extension EndpointType {

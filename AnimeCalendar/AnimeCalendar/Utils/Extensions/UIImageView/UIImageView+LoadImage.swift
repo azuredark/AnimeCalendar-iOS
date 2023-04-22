@@ -5,10 +5,8 @@
 //  Created by Leonardo  on 20/01/23.
 //
 
-import UIKit
+import class UIKit.UIImageView
 import Nuke
-import RxCocoa
-import RxSwift
 
 /// Lookup **AppDelegate.swift** for PipeLine configurations.
 // MARK: Can't use .withCheckedContinuation as Nuke.loadimage(:) completion sometimes doesn't callback.
@@ -16,16 +14,20 @@ extension UIImageView {
     typealias Completion = @MainActor(Bool) -> Void
 
     @discardableResult
-    func loadImage(from path: String?, cellType: (any FeedCell)? = nil, _ completion: Completion? = nil) -> ImageTask? {
-        guard let path = path else {
-            completion?(false)
-            return nil
-        }
+    func loadImage(from path: String?,
+                   cellType: (any FeedCell)? = nil,
+                   options: ImageRequest.Options = [],
+                   completion: Completion? = nil) -> ImageTask? {
+        guard let path = path else { completion?(false); return nil }
 
-        let processors = ImageProcessor.process(for: cellType)
+        // Image processing
+        let processors = ImageProcessor.getProcessors(for: cellType)
+
+        // Image request
         let request = ImageRequest(url: URL(string: path),
-                                   processors: processors)
-        
+                                   processors: processors,
+                                   options: options)
+
         return Nuke.loadImage(with: request, into: self) { result in
             switch result {
                 case .success:
@@ -35,11 +37,5 @@ extension UIImageView {
                     completion?(false)
             }
         }
-    }
-}
-
-extension Reactive where Base: UIImageView {
-    var imageSet: Observable<UIImage?> {
-        observe(UIImage.self, "image")
     }
 }

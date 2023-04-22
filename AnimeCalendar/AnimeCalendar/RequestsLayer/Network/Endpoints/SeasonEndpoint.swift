@@ -53,4 +53,6 @@ extension SeasonEndpoint: EndpointType {
     var headers: HTTPHeaders? { nil }
 
     var retries: Int { 3 }
+    
+    var timeOut: CGFloat { 8.0 }
 }
