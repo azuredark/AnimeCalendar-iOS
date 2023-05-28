@@ -65,10 +65,14 @@ private extension DetailFeedDataSource {
             cell.setup()
         }
 
-        let characterCell = UICollectionView.CellRegistration<CharacterCollectionCell, CharacterData> { cell, _, charactersData in
-            cell.charactersData = charactersData
+        let characterCell = UICollectionView.CellRegistration<CharacterCell, CharacterInfo> { (cell, _, characterInfo) in
+            cell.characterInfo = characterInfo
             cell.setup()
-            cell.updateSnapshot()
+        }
+
+        let reviewCell = UICollectionView.CellRegistration<ReviewCell, ReviewInfo> { (cell, _, reviewInfo) in
+            cell.reviewInfo = reviewInfo
+            cell.setup()
         }
 
         let spinnerCell = UICollectionView.CellRegistration<SpinnerCell, AnyHashable> { cell, _, _ in
@@ -90,9 +94,11 @@ private extension DetailFeedDataSource {
                     guard let anime = item as? Anime else { return nil }
                     return basicInfoCell.cellProvider(collectionView, indexPath, anime)
                 case .animeCharacters:
-                    guard let charactersData = item as? CharacterData else { return nil }
-                    return characterCell.cellProvider(collectionView, indexPath, charactersData)
-                case .animeReviews: return nil
+                    guard let characterInfo = item as? CharacterInfo else { return nil }
+                    return characterCell.cellProvider(collectionView, indexPath, characterInfo)
+                case .animeReviews:
+                    guard let reviewInfo = item as? ReviewInfo else { return nil }
+                    return reviewCell.cellProvider(collectionView, indexPath, reviewInfo)
                 case .spinner:
                     guard let data = item as? LoadingSpinner else { return nil }
                     return spinnerCell.cellProvider(collectionView, indexPath, data)
@@ -100,16 +106,25 @@ private extension DetailFeedDataSource {
             }
         }
 
-        dataSource?.supplementaryViewProvider = {
-            [weak self] (collection, kind, indexPath) -> UICollectionReusableView? in
-            guard let self = self else { return nil }
-            let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                         withReuseIdentifier: BasicInfoHeader.reuseIdentifier,
-                                                                         for: indexPath) as? BasicInfoHeader
-            guard let anime = self.dataSource?.itemIdentifier(for: indexPath) as? Anime else { return nil }
-            headerView?.anime = anime
-            headerView?.setup()
+        dataSource?.supplementaryViewProvider = { [weak self] (collection, kind, indexPath) -> UICollectionReusableView? in
+            guard let self, let content = self.dataSource?.itemIdentifier(for: indexPath) as? Content else { return nil }
 
+            if let anime = content as? Anime {
+                let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                             withReuseIdentifier: BasicInfoHeader.reuseIdentifier,
+                                                                             for: indexPath) as? BasicInfoHeader
+                headerView?.anime = anime
+                headerView?.setup()
+
+                return headerView
+            }
+
+            let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                         withReuseIdentifier: DetailFeedHeader.reuseId,
+                                                                         for: indexPath) as? DetailFeedHeader
+            var model = FeedHeaderModel(text: content.detailFeedSection.rawValue)
+            model.title.font = ACFont.bold.sectionTitle2
+            headerView?.setup(with: model)
             return headerView
         }
     }
@@ -125,13 +140,18 @@ private extension DetailFeedDataSource {
         collectionView?.register(BasicInfoCell.self, forCellWithReuseIdentifier: BasicInfoCell.reuseIdentifier)
 
         // Characters Cell
-        collectionView?.register(CharacterCollectionCell.self, forCellWithReuseIdentifier: CharacterCollectionCell.reuseIdentifier)
+        collectionView?.register(CharacterCell.self, forCellWithReuseIdentifier: CharacterCell.reuseIdentifier)
 
         // MARK: Headers
         // Basic info. header (Anime title)
         collectionView?.register(BasicInfoHeader.self,
-                                 forSupplementaryViewOfKind: DetailFeed.sectionHeaderKind,
+                                 forSupplementaryViewOfKind: DetailFeed.basicInfoHeaderKind,
                                  withReuseIdentifier: BasicInfoHeader.reuseIdentifier)
+
+        // Feed Header.
+        collectionView?.register(DetailFeedHeader.self,
+                                 forSupplementaryViewOfKind: DetailFeed.feedHeaderKind,
+                                 withReuseIdentifier: DetailFeedHeader.reuseId)
 
         collectionView?.dataSource = dataSource
     }
@@ -156,10 +176,10 @@ extension DetailFeedDataSource: FeedDataSourceable {
                 currentSnapshot.appendSections([section])
             }
         }
-        
+
         currentSnapshot.appendItems(finalItems, toSection: section)
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
-        
+
         // Removes the spinner after **CharacterSection & AnimeBasicInfo** has been loaded.
         removeSpinnerIfNeeded()
     }
@@ -211,6 +231,7 @@ extension DetailFeedDataSource {
         loadSpinner()
         bindTrailer()
         bindCharacters()
+        bindReviews()
     }
 
     func loadSpinner() {
@@ -247,9 +268,9 @@ extension DetailFeedDataSource {
 
         // Wait for trailer finishing loading
         presenter.didFinishLoadingAnimeAndTrailer
-            .drive { [weak self] (trailerState, anime) in
+            .drive { [weak self] (_, anime) in
                 guard let self else { return }
-                guard let trailer = anime.trailer else  {return }
+                guard let trailer = anime.trailer else  { return }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING TRAILER")
                 self.updateSnapshot(for: DetailFeedSection.animeTrailer,
                                     with: [trailer],
@@ -259,17 +280,31 @@ extension DetailFeedDataSource {
     }
 
     func bindCharacters() {
-        guard let presenter = presenter else { return }
+        guard let presenter else { return }
 
         presenter.characters
             .debounce(.milliseconds(500))
-            .drive(onNext: { [weak self] (characetersData) in
+            .drive(onNext: { [weak self] (characters) in
                 guard let self = self else { return }
-                print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING CHARACTERS: \(characetersData?.data.count ?? 0)")
+                print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING CHARACTERS: \(characters.count)")
                 self.updateSnapshot(for: DetailFeedSection.animeCharacters,
-                                    with: [characetersData],
+                                    with: characters,
                                     animating: true,
                                     after: .animeBasicInfo)
+            }).disposed(by: disposeBag)
+    }
+
+    func bindReviews() {
+        guard let presenter else { return }
+
+        presenter.reviews
+            .debounce(.microseconds(600))
+            .drive(onNext: { [weak self] (reviews) in
+                guard let self else { return }
+                self.updateSnapshot(for: DetailFeedSection.animeReviews,
+                                    with: reviews,
+                                    animating: true,
+                                    after: .animeCharacters)
             }).disposed(by: disposeBag)
     }
 }
@@ -277,8 +312,8 @@ extension DetailFeedDataSource {
 enum DetailFeedSection: String, CaseIterable {
     case animeTrailer
     case animeBasicInfo
-    case animeCharacters
-    case animeReviews
+    case animeCharacters = "Characters"
+    case animeReviews    = "Reviews"
     case spinner
     case unknown
 

@@ -10,7 +10,8 @@ import RxSwift
 protocol AnimeDetailPresentable: AnyObject {
     var playerComponent: TrailerCompatible? { get set }
     var anime: Driver<Anime> { get }
-    var characters: Driver<CharacterData?> { get }
+    var characters: Driver<[CharacterInfo]> { get }
+    var reviews: Driver<[ReviewInfo]> { get }
     var trailerLoaded: PublishRelay<Bool> { get }
     var didFinishLoadingAnimeAndTrailer: Driver<(Bool, Anime)> { get }
 
@@ -19,6 +20,7 @@ protocol AnimeDetailPresentable: AnyObject {
     func setCoverImage(with image: UIImage?)
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
+    func updateReviews(animeId: Int)
     func disposeTrailerComponent()
     func cleanRequests()
 }
@@ -46,8 +48,12 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     }
 
     /// Anime characters (Main & secondary)
-    var characters: Driver<CharacterData?> {
+    var characters: Driver<[CharacterInfo]> {
         interactor.animeCharactersObservable
+    }
+    
+    var reviews: Driver<[ReviewInfo]> {
+        interactor.animeReviewsObservable
     }
 
     /// Tracks when the **trailer** has loaded and will be displayed.
@@ -77,6 +83,10 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
 
     func updateCharacters(animeId: Int) {
         interactor.updateCharacters(animeId: animeId)
+    }
+    
+    func updateReviews(animeId: Int) {
+        interactor.updateReviews(animeId: animeId)
     }
 
     func disposeTrailerComponent() {

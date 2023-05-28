@@ -44,52 +44,7 @@ enum Language: String {
     }
 }
 
-final class CharacterData: Content {
-    // MARK: Parameters
-    let data: [CharacterInfo]
-    var animeId: Int?
-
-    // MARK: Parameter mapping
-    enum CodingKeys: String, CodingKey {
-        case data
-    }
-
-    // MARK: Decoding Technique
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.data = try container.decodeIfPresent([CharacterInfo].self, forKey: .data) ?? []
-        
-        try super.init(from: decoder)
-    }
-
-    // MARK: Initializers
-    init(animeId: Int? = nil) {
-        self.data = []
-        if let animeId = animeId { self.animeId = animeId }
-        
-        super.init()
-    }
-
-    // MARK: Hashable
-    override func hash(into hasher: inout Hasher) {
-        guard let animeId = animeId else {
-            return hasher.combine(id)
-        }
-
-        return hasher.combine(animeId)
-    }
-
-    // MARK: Equatable
-    static func == (lhs: CharacterData, rhs: CharacterData) -> Bool {
-        guard let lhsAnimeId = lhs.animeId, let rhsAnimeId = rhs.animeId else {
-            return lhs.id == rhs.id
-        }
-
-        return lhsAnimeId == rhsAnimeId
-    }
-}
-
-final class CharacterInfo: Decodable, Hashable {
+final class CharacterInfo: Content {
     // MARK: Parameters
     var character: Character
     var role: CharacterRole = .main
@@ -103,20 +58,23 @@ final class CharacterInfo: Decodable, Hashable {
     }
 
     // MARK: Decoding Technique
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.character   = try container.decodeIfPresent(Character.self, forKey: .character) ?? Character()
         self.role        = CharacterRole(try container.decodeIfPresent(String.self, forKey: .role) ?? "main")
         self.voiceActors = try container.decodeIfPresent([PersonInfo].self, forKey: .voiceActors)
+        
+        try super.init(from: decoder)
     }
 
     // MARK: Initializers
-    init() {
+    override init() {
         self.character = Character()
+        super.init()
     }
 
     // MARK: Hashable
-    func hash(into hasher: inout Hasher) {
+    override func hash(into hasher: inout Hasher) {
         hasher.combine(character.id)
     }
 

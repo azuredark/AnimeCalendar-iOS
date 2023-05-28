@@ -34,14 +34,15 @@ final class AnimeDetailScreen: UIViewController, Screen {
         return imageView
     }()
     
-    private lazy var blurView: BlurContainer = {
-        let config = BlurContainer.Config(opacity: 0.98, style: .systemThickMaterial)
-        let blur = BlurContainer(config: config)
-        blur.translatesAutoresizingMaskIntoConstraints = false
-        view.insertSubview(blur, aboveSubview: coverImageView)
-        return blur
+    private lazy var blurView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemChromeMaterial)
+        let visualEffect = UIVisualEffectView(effect: blurEffect)
+        visualEffect.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.insertSubview(visualEffect, aboveSubview: coverImageView)
+        return visualEffect
     }()
-
+    
     private lazy var disposeBag = DisposeBag()
 
     // MARK: Initializers
@@ -99,9 +100,11 @@ private extension AnimeDetailScreen {
         presenter?.anime
             .drive(onNext: { [weak self] (anime) in
                 guard let self = self else { return }
+                Logger.log(.info, msg: "RX DID LOAD ANIME: \(anime.titleEng)")
+                
                 self.configureNavigationTitle(with: anime.titleKanji)
                 self.presenter?.updateCharacters(animeId: Int(anime.id) ?? 49387)
-                print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID LOAD ANIME: \(anime.titleEng)")
+                self.presenter?.updateReviews(animeId: Int(anime.id) ?? 49387)
             }).disposed(by: disposeBag)
     }
 }
@@ -138,10 +141,11 @@ private extension AnimeDetailScreen {
     
     func layoutCoverImageView() {
         coverImageView.fitViewTo(view)
+        view.layoutIfNeeded()
     }
     
     func layoutBlurView() {
-        blurView.fitViewTo(view)
+        blurView.fitViewTo(coverImageView)
     }
 
     func configureNavigationTitle(with title: String) {

@@ -11,18 +11,21 @@ import RxCocoa
 protocol AnimeDetailInteractive {
     var animeObservable: Driver<Anime> { get }
     var animeTrailerLoadedObservable: PublishRelay<Bool> { get }
-    var animeCharactersObservable: Driver<CharacterData?> { get }
+    var animeCharactersObservable: Driver<[CharacterInfo]> { get }
+    var animeReviewsObservable: Driver<[ReviewInfo]> { get }
     var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> { get }
     
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
+    func updateReviews(animeId: Int)
     func cleanRequests()
 }
 
 final class AnimeDetailInteractor: GenericInteractor<AnimeRepository> {
     // MARK: State
     private let animeStorage = BehaviorRelay<Anime>(value: Anime())
-    private let charactersStorage = PublishRelay<CharacterData?>()
+    private let charactersStorage = PublishRelay<JikanResult<CharacterInfo>?>()
+    private let reviewsStoreage = PublishRelay<JikanResult<ReviewInfo>?>()
 
     private let animeTrailerLoaded = PublishRelay<Bool>()
     private let didFinishLoadingTrailer = BehaviorRelay<((Bool, Anime))>(value: (false, Anime()))
@@ -56,26 +59,35 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
         animeTrailerLoaded
     }
 
-    var animeCharactersObservable: Driver<CharacterData?> {
-        charactersStorage.asDriver(onErrorJustReturn: CharacterData())
+    var animeCharactersObservable: Driver<[CharacterInfo]> {
+        charactersStorage.compactMap(\.?.data).asDriver(onErrorJustReturn: [])
+    }
+    
+    var animeReviewsObservable: Driver<[ReviewInfo]> {
+        reviewsStoreage.compactMap(\.?.data).asDriver(onErrorJustReturn: [])
     }
     
     var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> {
         didFinishLoadingTrailer.skip(1).asDriver(onErrorJustReturn: (false, Anime()))
     }
 
-//    #error("WHEN REQUESTING FAST THE VIEW MAY HAVE BEEN DESTROYED AND RE-OPENED, OLD EVENTS ARE QUEING UP")
     func updateAnime(with anime: Anime) {
         animeStorage.accept(anime)
     }
 
-//    #error("WHEN REQUESTING FAST THE VIEW MAY HAVE BEEN DESTROYED AND RE-OPENED, OLD EVENTS ARE QUEING UP")
     func updateCharacters(animeId: Int) {
         // Send empty event for loading
         repository.getAnimeCharacters(animeId: animeId)
             .asObservable()
             .bind(to: charactersStorage)
             .disposed(by: requestDisposeBag)
+    }
+    
+    func updateReviews(animeId: Int) {
+        repository.getAnimeReviews(animeId: animeId)
+            .asObservable()
+            .bind(to: reviewsStoreage)
+            .disposed(by: disposeBag)
     }
     
     func cleanRequests() {

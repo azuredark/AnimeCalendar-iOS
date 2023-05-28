@@ -118,18 +118,38 @@ final class AnimeRepository: GenericRepository {
         }
     }
     
-    func getAnimeCharacters(animeId: Int, responsible: RequestResponsibleType = .network) -> Single<CharacterData?> {
+    func getAnimeCharacters(animeId: Int, responsible: RequestResponsibleType = .network) -> Single<JikanResult<CharacterInfo>?> {
         return .create { [weak self] (single) in
             guard let strongSelf = self else { return Disposables.create() }
             
-            let model = CharacterData.self
+            let model = JikanResult<CharacterInfo>.self
             let requestResponsible: Requestable = strongSelf.requestsManager.getRequestResponsible(responsible)
             
             requestResponsible.makeRequest(model, .anime(.getCharacters(animeId: animeId))) { result in
                 switch result {
-                    case .success(let characterData):
-                        characterData?.animeId = animeId
-                        single(.success(characterData))
+                    case .success(let characterInfo):
+                        single(.success(characterInfo))
+                    case .failure(_):
+                        single(.success(nil))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func getAnimeReviews(animeId: Int, responsible: RequestResponsibleType = .network) -> Single<JikanResult<ReviewInfo>?> {
+        return .create { [weak self] (single) in
+            guard let strongSelf = self else { return Disposables.create() }
+            
+            let model = JikanResult<ReviewInfo>.self
+            let requestResponsible: Requestable = strongSelf.requestsManager.getRequestResponsible(responsible)
+            
+            requestResponsible.makeRequest(model, .anime(.getReviews(animeId: animeId))) { result in
+                switch result {
+                    case .success(let characterInfo):
+                        characterInfo?.setDetailFeedSection(to: .animeReviews)
+                        single(.success(characterInfo))
                     case .failure(_):
                         single(.success(nil))
                 }

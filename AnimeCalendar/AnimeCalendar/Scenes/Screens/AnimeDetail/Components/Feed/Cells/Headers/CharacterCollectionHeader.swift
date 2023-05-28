@@ -17,7 +17,7 @@ final class CharacterColletionHeader: UICollectionReusableView, FeedHeaderProtoc
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
         label.textAlignment = .left
-        label.textColor = Color.gray
+        label.textColor = Color.black
         label.font = ACFont.bold.sectionTitle2
         label.text = "Characters"
         addSubview(label)
@@ -56,11 +56,12 @@ private extension CharacterColletionHeader {
     func layoutLineSpacerView() {
         /// # MAKE WIDTH OUTSIDE THE SUPERVIEW TO SHOW THE FULL LINE SPACER
         let height: CGFloat = 5.0
+        let width: CGFloat = UIScreen.main.bounds.size.width
         NSLayoutConstraint.activate([
-            lineSpacerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            lineSpacerView.centerXAnchor.constraint(equalTo: centerXAnchor),
             lineSpacerView.topAnchor.constraint(equalTo: topAnchor),
             lineSpacerView.heightAnchor.constraint(equalToConstant: height),
-            lineSpacerView.widthAnchor.constraint(equalTo: widthAnchor, constant: 15.0)
+            lineSpacerView.widthAnchor.constraint(equalToConstant: width)
         ])
     }
 

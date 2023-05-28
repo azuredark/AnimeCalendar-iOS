@@ -29,7 +29,7 @@ private extension StudiosStack {
         var components = [ACStackItem]()
         var textStyle = ACStack.Text()
         textStyle.alignment = .left
-        textStyle.textColor = Color.gray
+        textStyle.textColor = Color.black
         textStyle.lines = 1
         textStyle.font = ACFont.bold.sectionTitle2
 

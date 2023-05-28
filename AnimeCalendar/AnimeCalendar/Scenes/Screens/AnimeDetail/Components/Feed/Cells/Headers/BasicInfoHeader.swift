@@ -119,8 +119,7 @@ private extension BasicInfoHeader {
         detailsStack.setup(with: anime)
         components.append(.customView(detailsStack.getStack()))
         
-        guard let genres = anime?.genres,
-              !genres.isEmpty else { return [] }
+        guard let genres = anime?.genres, !genres.isEmpty else { return components }
         
         let genresCollection = GenreCollection()
         genresCollection.genres = genres

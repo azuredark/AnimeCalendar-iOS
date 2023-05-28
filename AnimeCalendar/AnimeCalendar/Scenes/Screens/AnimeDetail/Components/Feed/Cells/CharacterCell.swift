@@ -10,7 +10,9 @@ import UIKit
 final class CharacterCell: UICollectionViewCell, FeedCell {
     // MARK: State
     static var reuseIdentifier: String = "CHARACTER_CELL_REUSE_ID"
+    
     var characterInfo: CharacterInfo?
+    
     private var overlayApplied: Bool = false
 
     private lazy var coverImageView: UIImageView = {
@@ -76,7 +78,7 @@ final class CharacterCell: UICollectionViewCell, FeedCell {
 private extension CharacterCell {
     func setupCoverImageView() {
         guard let imgPath = characterInfo?.character.imageType?.jpgImage.attemptToGetImageByResolution(.normal) else { return }
-        coverImageView.loadImage(from: imgPath, options: [.disableMemoryCache, .disableDiskCache]) { [weak self] _ in
+        coverImageView.loadImage(from: imgPath, options: [.disableDiskCache]) { [weak self] _ in
             UIView.animate(withDuration: 0.4) {
                 self?.nameLabel.alpha = 1
             }
@@ -84,8 +86,8 @@ private extension CharacterCell {
     }
 
     func setupLabel() {
-        guard let characterInfo = characterInfo, !characterInfo.character.name.isEmpty else { return }
-        nameLabel.text = characterInfo.character.name
+        guard let character = characterInfo?.character, !character.name.isEmpty else { return }
+        nameLabel.text = character.name
     }
 }
 

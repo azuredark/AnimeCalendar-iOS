@@ -13,12 +13,14 @@ enum AnimeEndpoint: Equatable {
     case getAnime(name: String)
     case getAnimes
     case getCharacters(animeId: Int)
+    case getReviews(animeId: Int)
     
     static func == (lhs: AnimeEndpoint, rhs: AnimeEndpoint) -> Bool {
         switch (lhs, rhs) {
             case (.getAnime, .getAnime): return true
             case (.getAnimes, .getAnimes): return true
             case (.getCharacters, .getCharacters): return true
+            case (.getReviews, .getReviews): return true
             default: return false
         }
     }
@@ -33,12 +35,14 @@ extension AnimeEndpoint: EndpointType {
                 return API.getAPI(.v4)+service
             case .getCharacters(let animeId):
                 return API.getAPI(.v4)+service+"/\(animeId)/characters"
+            case .getReviews(let animeId):
+                return API.getAPI(.v4)+service+"/\(animeId)/reviews"
         }
     }
     
     var httpMethod: HTTPMethod {
         switch self {
-            case .getAnime, .getAnimes, .getCharacters:
+            case .getAnime, .getAnimes, .getCharacters, .getReviews:
                 return .get
         }
     }
@@ -46,9 +50,8 @@ extension AnimeEndpoint: EndpointType {
     var task: HTTPTask {
         switch self {
             case .getAnime(let name):
-                return .requestParameters(bodyParameters: nil, urlParameters:
-                                            ["q": name])
-            case .getAnimes, .getCharacters:
+                return .requestParameters(bodyParameters: nil, urlParameters: ["q": name])
+            case .getAnimes, .getCharacters, .getReviews:
                 return .request
         }
     }

@@ -9,22 +9,24 @@ import UIKit
 
 final class FeedHeader: UICollectionReusableView {
     static let reuseIdentifier = "HEADER_REUSE_IDENTIFIER"
-
-    private lazy var headerLabel: UILabel = {
+    
+    private lazy var headerTitleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
-        label.textColor = Color.black
-        label.font = ACFont.bold.medium1
-        label.textAlignment = .left
         addSubview(label)
         return label
     }()
-
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        headerTitleLabel.text = nil
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
-        layoutHeader()
+        layoutHeaderLabel()
     }
     
     @available(*, unavailable)
@@ -32,19 +34,43 @@ final class FeedHeader: UICollectionReusableView {
         fatalError()
     }
     
-    func setupTitle(with text: String) {
-        headerLabel.text = text
+    func setup(with model: FeedHeaderModel) {
+        configureHeaderTitle(with: model.title)
     }
 }
 
-extension FeedHeader {
-    func layoutHeader() {
+private extension FeedHeader {
+    func configureHeaderTitle(with model: FeedHeaderTitleModel) {
+        headerTitleLabel.font          = model.font
+        headerTitleLabel.textColor     = model.color
+        headerTitleLabel.textAlignment = model.alignment
+        headerTitleLabel.text          = model.text
+    }
+}
+
+private extension FeedHeader {
+    func layoutHeaderLabel() {
         let inset: CGFloat = 10.0
         NSLayoutConstraint.activate([
-            headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            headerLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-            headerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
+            headerTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            headerTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            headerTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
+            headerTitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
         ])
     }
+}
+
+struct FeedHeaderModel {
+    var title: FeedHeaderTitleModel
+    
+    init(text: String) {
+        title = FeedHeaderTitleModel(text: text)
+    }
+}
+
+struct FeedHeaderTitleModel {
+    var font: UIFont = ACFont.bold.medium1
+    var color: UIColor = Color.black
+    var alignment: NSTextAlignment = .left
+    var text: String = ""
 }

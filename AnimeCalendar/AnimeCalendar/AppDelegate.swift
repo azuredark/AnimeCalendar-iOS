@@ -39,6 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /// # Override ImageLoadingOptions
         ImageLoadingOptions.shared = options
         
+        // MARK: Setting up filters.
+        let filterSource = ACFilterSource.shared
+        filterSource.preloadFilters([.all])
+        
         return true
     }
 

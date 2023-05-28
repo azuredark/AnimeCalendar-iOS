@@ -98,13 +98,11 @@ private extension BasicInfoCell {
             view.setPriorityForConstraints([constraint], with: .init(999))
         }))
 
-        /// # Line Separator
-        if !anime.producers.isEmpty || !anime.studios.isEmpty {
-            components.append(secondSpacer)
-        }
-
         /// # Synopsis
         if !anime.synopsis.isEmpty {
+            // Line separator
+            components.append(secondSpacer)
+            
             let synopsisStack: ACStack = getSynopsisStack(with: anime.synopsis)
             components.append(.customView(synopsisStack, callback: { [weak self] (view, _) in
                 guard let self = self else { return }
@@ -145,7 +143,7 @@ private extension BasicInfoCell {
         if !anime.producers.isEmpty {
             var textStyle = ACStack.Text()
             textStyle.lines = 2
-            textStyle.textColor = Color.gray
+            textStyle.textColor = Color.lightGray
             textStyle.font = .systemFont(ofSize: 14, weight: .regular)
             let text: String = anime.producers.map { $0.name }.formatList(by: ",", endSeparator: "&")
             
@@ -170,18 +168,16 @@ private extension BasicInfoCell {
         // Synopsis title
         textStyle.lines = 1
         textStyle.alignment = .left
-        textStyle.textColor = Color.gray
+        textStyle.textColor = Color.black
         textStyle.font = ACFont.bold.sectionTitle2
         components.append(.text(value: "Synopsis", style: textStyle))
 
-        
         // Synopsis content
         textStyle.lines = 0
         textStyle.alignment = .justified
-        textStyle.textColor = Color.gray
+        textStyle.textColor = Color.lightGray
         textStyle.font = .systemFont(ofSize: 14, weight: .regular)
         components.append(.text(value: synopsis, style: textStyle))
-        
         
         container.setup(with: components)
         

@@ -30,7 +30,7 @@ private extension DetailsStack {
 
         var textStyle = ACStack.Text()
         textStyle.font = .systemFont(ofSize: 12, weight: .medium)
-        textStyle.textColor = Color.gray
+        textStyle.textColor = Color.lightGray
         textStyle.lines = 1
 
         /// Icon model for the images in the **ACStack** view.
@@ -66,7 +66,7 @@ private extension DetailsStack {
         }
 
         // Show score
-        if anime.score >= 0 {
+        if anime.score > 0 {
             components.append(contentsOf: [
                 .icon(image: icon.with(image: ACIcon.starFilled)),
                 .text(value: "\(anime.score)", style: textStyle),

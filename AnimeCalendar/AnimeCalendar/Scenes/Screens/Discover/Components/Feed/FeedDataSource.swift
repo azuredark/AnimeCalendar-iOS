@@ -122,7 +122,8 @@ final class FeedDataSource {
             }
 
             let section = item.feedSection
-            headerView?.setupTitle(with: section.rawValue)
+            let model = FeedHeaderModel(text: section.rawValue)
+            headerView?.setup(with: model)
             return headerView
         }
     }
