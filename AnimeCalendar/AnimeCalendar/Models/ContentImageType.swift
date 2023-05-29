@@ -11,7 +11,10 @@ struct ContentImageType: Decodable {
     // MARK: Parameters
     var jpgImage: ContentImage
     var webpImage: ContentImage
-    var coverImage: UIKit.UIImage?
+    var coverImage: UIImage?
+    var themeColor: UIColor?
+
+    var contentId: String?
 
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
@@ -22,8 +25,14 @@ struct ContentImageType: Decodable {
     // MARK: Decoding Technique
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        jpgImage = try container.decodeIfPresent(ContentImage.self, forKey: .jpgImage) ?? ContentImage()
-        webpImage = try container.decodeIfPresent(ContentImage.self, forKey: .webpImage) ?? ContentImage()
+        
+        var jpgImage = try container.decodeIfPresent(ContentImage.self, forKey: .jpgImage) ?? ContentImage()
+        jpgImage.contentId = contentId
+        self.jpgImage = jpgImage
+        
+        var webpImage = try container.decodeIfPresent(ContentImage.self, forKey: .webpImage) ?? ContentImage()
+        webpImage.contentId = contentId
+        self.webpImage = webpImage
     }
 
     // MARK: Initializers
@@ -34,17 +43,19 @@ struct ContentImageType: Decodable {
 }
 
 struct ContentImage: Decodable {
+    var contentId: String?
+    
     enum Resolution {
         case large
         case normal
         case small
     }
-    
+
     // MARK: Parameters
     private var small: String
     private var normal: String
     private var large: String
-    
+
     var imageResolutions: [String: Resolution] = [:]
 
     // MARK: Parameter mapping
@@ -68,7 +79,7 @@ struct ContentImage: Decodable {
         self.normal = "JPG ERROR"
         self.large = "JPG ERROR"
     }
-    
+
     /// Looks up for a non-empty image of a certain **Resolution**, if not found then looks for a lower-res one.
     /// - Returns: Image resource-path.
     func attemptToGetImageByResolution(_ imageResolution: Resolution) -> String {
@@ -79,7 +90,17 @@ struct ContentImage: Decodable {
             case .normal:
                 guard !normal.isEmpty else { return attemptToGetImageByResolution(.small) }
                 return normal
-            case .small: return small
+            case .small:
+                if !small.isEmpty { return small }
+
+                if !normal.isEmpty {
+                    return attemptToGetImageByResolution(.normal)
+                } else if !large.isEmpty {
+                    return attemptToGetImageByResolution(.large)
+                } else {
+                    Logger.log(.info, .error, msg: "Image for \(contentId ?? "") not found on any source.")
+                    return ""
+                }
         }
     }
 }

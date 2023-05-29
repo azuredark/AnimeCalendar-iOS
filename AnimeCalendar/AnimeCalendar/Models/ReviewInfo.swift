@@ -7,6 +7,26 @@
 
 import Foundation
 
+enum ReviewTag: String {
+    case recommended    = "Recommended"
+    case mixedFeedlings = "Mixed Feelings"
+    case notRecommended = "Not Recommended"
+    case preliminary    = "Preliminary"
+    case wellWritten    = "Well Written"
+    case unknown
+    
+    init(str: String) {
+        switch str {
+            case "recommended": self     = .recommended
+            case "not-recommended": self = .notRecommended
+            case "mixed-feelings": self  = .mixedFeedlings
+            case "preliminary": self     = .preliminary
+            case "well-written": self    = .wellWritten
+            default: self = .unknown
+        }
+    }
+}
+
 final class ReviewInfo: Content {
     // MARK: Parameters
     var url: String?
@@ -18,18 +38,22 @@ final class ReviewInfo: Content {
     var isSpoiler: Bool = false
     var isPreliminary: Bool = false
     var user: User?
+    var tags: [ReviewTag] = []
+    var episodesWatched: Int?
     
     // MARK: Parameter mapping
     enum CodingKeys: String, CodingKey {
         case url
         case type
-        case reaction      = "reactions"
-        case dateStr       = "date"
+        case reaction        = "reactions"
+        case dateStr         = "date"
         case review
         case score
-        case isSpoiler     = "is_spoiler"
-        case isPreliminary = "is_preliminary"
+        case isSpoiler       = "is_spoiler"
+        case isPreliminary   = "is_preliminary"
         case user
+        case tags
+        case episodesWatched = "episodes_watched"
     }
     
     // MARK: Decoding Technique
@@ -45,12 +69,25 @@ final class ReviewInfo: Content {
         self.isPreliminary = try container.decode(Bool.self, forKey: .isPreliminary)
         self.user          = try container.decodeIfPresent(User.self, forKey: .user) ?? nil
         
+        let rawTags = try container.decodeIfPresent([String].self, forKey: .tags) ?? []
+        self.tags   = Self.formatTags(raw: rawTags)
+        
+        self.episodesWatched = try container.decodeIfPresent(Int.self, forKey: .episodesWatched) ?? nil
+        
         try super.init(from: decoder)
     }
     
     // MARK: Initializers
     override init() {
         super.init()
+    }
+    
+    private static func formatTags(raw: [String]) -> [ReviewTag] {
+        let lowerCasedTags = raw.map { $0.lowercased() }
+        let parsedTags     = lowerCasedTags.compactMap { $0.filterV2(by: [.spaces], replace: .custom("-")) }
+        let formattedTags  = parsedTags.compactMap { ReviewTag(str: $0) }
+        
+        return formattedTags
     }
 }
 

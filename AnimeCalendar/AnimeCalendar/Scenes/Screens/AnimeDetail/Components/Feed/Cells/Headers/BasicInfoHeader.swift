@@ -121,7 +121,7 @@ private extension BasicInfoHeader {
         
         guard let genres = anime?.genres, !genres.isEmpty else { return components }
         
-        let genresCollection = GenreCollection()
+        let genresCollection = GenreCollection(anime: anime)
         genresCollection.genres = genres
         genresCollection.setup()
         genresCollection.updateSnapshot()

@@ -22,7 +22,8 @@ extension String {
         
         /// Final **regex** expression.
         let regex: String = "[\(blackList.map { getRegex(with: $0) }.joined())]"
-        print("senku [DEBUG] \(String(describing: type(of: self))) - Final regex: \(regex)")
+        Logger.log(.info, msg: "Final regex: \(regex)", active: false)
+
         
         /// Letters to replace **blacklisted characters** with.
         let replacement: String = Self.getReplacerString(with: replace)
@@ -42,7 +43,6 @@ extension String {
         /// Create the regex from the **BlackList**
         //  let regex: String = "/\(blackList.map { getRegex(with: $0) }.joined())/gm"
         let regex: String = "[\(blackList.map { getRegex(with: $0) }.joined())]"
-        print("senku [DEBUG] \(String(describing: type(of: self))) - Final regex: \(regex)")
         
         /// Get all the matching ranges
         let matchRanges: [Range<Index>] = matches(for: regex)
@@ -64,6 +64,8 @@ extension String {
                 regex += "\(filterLetter(by: letterStyle))"
             case .numbers:
                 regex += "0-9"
+            case .spaces:
+                regex += "\\s" // Needs 2 scapes to override swift's default.
             case .special(let blackListed):
                 let blackList = blackListed.flatMap { $0.asList }
                 regex += "\(Self.parseSpecialElements(blackList))"
@@ -197,6 +199,7 @@ enum CommonSpecialCharacter: String, CaseIterable {
 enum BlackList {
     case letters(LetterStyle)
     case numbers
+    case spaces
     case special([CommonSpecialCharacter])
 }
 

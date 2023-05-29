@@ -26,6 +26,10 @@ struct User: Decodable {
         self.url = try container.decodeIfPresent(String.self, forKey: .url)
         self.username = try container.decodeIfPresent(String.self, forKey: .username) ?? ""
         self.images = try container.decodeIfPresent(ContentImageType.self, forKey: .images)
+        
+        var imageType = try container.decodeIfPresent(ContentImageType.self, forKey: .images)
+        imageType?.contentId = username
+        self.images = imageType
     }
 
     // MARK: Initializers

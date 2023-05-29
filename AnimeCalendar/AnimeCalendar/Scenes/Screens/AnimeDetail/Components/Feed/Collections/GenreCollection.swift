@@ -14,7 +14,8 @@ enum GenreSection: Hashable {
 final class GenreCollection {
     // MARK: State
     var genres: [AnimeGenre]?
-
+    static weak var anime: Anime?
+    
     private(set) lazy var collection: ACCollection<GenreSection, AnimeGenre> = {
         let _collection = ACCollection<GenreSection, AnimeGenre>()
         return _collection
@@ -23,12 +24,15 @@ final class GenreCollection {
     /// # Cell Registrations
     typealias GenreCellRegistration = UICollectionView.CellRegistration<GenreCell, AnimeGenre>
     private let genreCell = GenreCellRegistration { (cell, _, genre) in
+        cell.anime = GenreCollection.anime
         cell.genre = genre
         cell.setup()
     }
 
     // MARK: Initializers
-    init() {
+    init(anime: Anime?) {
+        Self.anime = anime
+        
         collection.layoutDelegate = self
         collection.dataSourceDelegate = self
     }

@@ -46,10 +46,11 @@ final class Logger {
     private init() {}
 
     // MARK: Methods
-    static func log(_ event: LogEvent = .info, _ result: LogResult = .other, msg: String) {
+    static func log(_ event: LogEvent = .info, _ result: LogResult = .other, msg: String, active: Bool = true) {
         let emojiEventStr: String = Self.getLogEmoji(event)
         let emojiResultStr: String = Self.getLogEmoji(result)
 
+        guard active else { return }
         print("Logger - [\(emojiEventStr)\(emojiResultStr)] | \(msg)")
     }
 }

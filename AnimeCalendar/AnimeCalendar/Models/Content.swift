@@ -25,7 +25,10 @@ class Content: Hashable, Decodable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id        = String(try container.decodeIfPresent(Int.self, forKey: .id) ?? 0)
-        self.imageType = try container.decodeIfPresent(ContentImageType.self, forKey: .imageType)
+        
+        var imageType = try container.decodeIfPresent(ContentImageType.self, forKey: .imageType)
+        imageType?.contentId = self.id
+        self.imageType = imageType
     }
     
     init() {}

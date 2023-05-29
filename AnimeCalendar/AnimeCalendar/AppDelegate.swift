@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // MARK: Setting up filters.
         let filterSource = ACFilterSource.shared
-        filterSource.preloadFilters([.all])
+        filterSource.preloadFilters([.areaAverage])
         
         return true
     }

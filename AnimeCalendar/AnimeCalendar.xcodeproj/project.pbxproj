@@ -25,6 +25,8 @@
 		A7339F4D2876558000A000DB /* ScreenComponent+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7339F4C2876558000A000DB /* ScreenComponent+Extension.swift */; };
 		A73A81772931DC1000B25EBC /* ACAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73A81762931DC1000B25EBC /* ACAnimation.swift */; };
 		A73A817A2931EF6A00B25EBC /* Promo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73A81792931EF6A00B25EBC /* Promo.swift */; };
+		A73AB1B02A2410B7004B1DD4 /* AreaAverageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73AB1AF2A2410B7004B1DD4 /* AreaAverageFilter.swift */; };
+		A73AB1B32A241989004B1DD4 /* UIImage+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73AB1B22A241989004B1DD4 /* UIImage+Filter.swift */; };
 		A7445F22292DC0A6008A4696 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F21292DC0A6008A4696 /* Feed.swift */; };
 		A7445F25292DC0D4008A4696 /* SeasonAnimeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F24292DC0D4008A4696 /* SeasonAnimeSection.swift */; };
 		A7445F28292DC166008A4696 /* TopAnimeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F27292DC166008A4696 /* TopAnimeSection.swift */; };
@@ -52,6 +54,8 @@
 		A74F986828161291003A1073 /* MocksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74F986728161291003A1073 /* MocksManager.swift */; };
 		A74F986A2816129D003A1073 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74F98692816129D003A1073 /* CacheManager.swift */; };
 		A74F9874281624FC003A1073 /* Pods_AnimeCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28ADD1CAD4B24F96213C086B /* Pods_AnimeCalendar.framework */; };
+		A751BE582A248E050064745D /* ReviewTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751BE572A248E050064745D /* ReviewTagView.swift */; };
+		A751BE5B2A24A8170064745D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751BE5A2A24A8170064745D /* UIColor+Extension.swift */; };
 		A75215042920BA0700E94104 /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75215032920BA0700E94104 /* DiscoverScreen.swift */; };
 		A75215062920BA1300E94104 /* DiscoverPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75215052920BA1300E94104 /* DiscoverPresenter.swift */; };
 		A75215082920BA1E00E94104 /* DiscoverInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75215072920BA1E00E94104 /* DiscoverInteractor.swift */; };
@@ -239,6 +243,8 @@
 		A7339F4C2876558000A000DB /* ScreenComponent+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenComponent+Extension.swift"; sourceTree = "<group>"; };
 		A73A81762931DC1000B25EBC /* ACAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACAnimation.swift; sourceTree = "<group>"; };
 		A73A81792931EF6A00B25EBC /* Promo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promo.swift; sourceTree = "<group>"; };
+		A73AB1AF2A2410B7004B1DD4 /* AreaAverageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaAverageFilter.swift; sourceTree = "<group>"; };
+		A73AB1B22A241989004B1DD4 /* UIImage+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Filter.swift"; sourceTree = "<group>"; };
 		A7445F21292DC0A6008A4696 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		A7445F24292DC0D4008A4696 /* SeasonAnimeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonAnimeSection.swift; sourceTree = "<group>"; };
 		A7445F27292DC166008A4696 /* TopAnimeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAnimeSection.swift; sourceTree = "<group>"; };
@@ -265,6 +271,8 @@
 		A74F986528161284003A1073 /* RequestsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsManager.swift; sourceTree = "<group>"; };
 		A74F986728161291003A1073 /* MocksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocksManager.swift; sourceTree = "<group>"; };
 		A74F98692816129D003A1073 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		A751BE572A248E050064745D /* ReviewTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTagView.swift; sourceTree = "<group>"; };
+		A751BE5A2A24A8170064745D /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		A75215032920BA0700E94104 /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
 		A75215052920BA1300E94104 /* DiscoverPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPresenter.swift; sourceTree = "<group>"; };
 		A75215072920BA1E00E94104 /* DiscoverInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverInteractor.swift; sourceTree = "<group>"; };
@@ -449,6 +457,7 @@
 			children = (
 				A720AA01295B3E9100FEB7EE /* DetailFeed.swift */,
 				A720AA04295B430000FEB7EE /* DetailFeedDataSource.swift */,
+				A751BE562A248DF40064745D /* Views */,
 				A78E213C2A22F8A1004412A3 /* Headers */,
 				A720AA06295B618400FEB7EE /* Cells */,
 				A79042E6296A6F92007FDE5D /* Stacks */,
@@ -488,6 +497,14 @@
 				A7D322A42997753D0073F5D5 /* CharacterCollectionHeader.swift */,
 			);
 			path = Headers;
+			sourceTree = "<group>";
+		};
+		A73AB1B12A241981004B1DD4 /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				A73AB1B22A241989004B1DD4 /* UIImage+Filter.swift */,
+			);
+			path = UIImage;
 			sourceTree = "<group>";
 		};
 		A7445F23292DC0AD008A4696 /* Groups */ = {
@@ -613,6 +630,22 @@
 				A7B0E331281F88C900A13CD6 /* Contracts */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		A751BE562A248DF40064745D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A751BE572A248E050064745D /* ReviewTagView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A751BE592A24A8020064745D /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				A751BE5A2A24A8170064745D /* UIColor+Extension.swift */,
+			);
+			path = UIColor;
 			sourceTree = "<group>";
 		};
 		A75214FF2920B98B00E94104 /* Discover */ = {
@@ -863,6 +896,7 @@
 			children = (
 				A78E21362A227E14004412A3 /* BlurImageFilter.swift */,
 				A78E21382A228CAB004412A3 /* ClampImageFilter.swift */,
+				A73AB1AF2A2410B7004B1DD4 /* AreaAverageFilter.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -1415,6 +1449,8 @@
 		A7FDF60C281E0338006057D7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A751BE592A24A8020064745D /* UIColor */,
+				A73AB1B12A241981004B1DD4 /* UIImage */,
 				A7D5E582297A6555008C412A /* UIImageView */,
 				A79042DE2966B55E007FDE5D /* CollectionView */,
 				A79042DD2966B53A007FDE5D /* UIView */,
@@ -1598,6 +1634,7 @@
 				A7F91E0F28190F6D00FF59C0 /* TabBarManager.swift in Sources */,
 				A78E21412A22F8DA004412A3 /* AnimeDetailSeparatorView.swift in Sources */,
 				A752150C2920BA2B00E94104 /* DiscoverModule.swift in Sources */,
+				A751BE582A248E050064745D /* ReviewTagView.swift in Sources */,
 				A7A275ED292F2A7D00D1E61B /* ACFont.swift in Sources */,
 				A772E923284098280095FE4F /* NewAnimeSearchResultItem.swift in Sources */,
 				A7CC37A82931FA8E005102B3 /* PromoEndpoint.swift in Sources */,
@@ -1609,6 +1646,7 @@
 				A77249DA293286C300487DE2 /* AnimeCellTag.swift in Sources */,
 				A76FFA0D290F202E007209E8 /* NewAnimeModule.swift in Sources */,
 				A7445F22292DC0A6008A4696 /* Feed.swift in Sources */,
+				A751BE5B2A24A8170064745D /* UIColor+Extension.swift in Sources */,
 				A7DAC1D128447A6900583F39 /* Anime.swift in Sources */,
 				A78E213B2A229831004412A3 /* UIImageView+Filter.swift in Sources */,
 				A7D0F729285C2D600003709B /* ScreenComponentContainer.swift in Sources */,
@@ -1724,6 +1762,7 @@
 				A7D5030C29D3F8FD00E0CD23 /* ContentImageType.swift in Sources */,
 				A760E62A295AA29C00BB8275 /* String+Search.swift in Sources */,
 				A7D8127329DBDF5300BD069F /* SceneManager.swift in Sources */,
+				A73AB1B32A241989004B1DD4 /* UIImage+Filter.swift in Sources */,
 				A7DAC1C8284413FC00583F39 /* NewAnimeSearchResultGenreItem.swift in Sources */,
 				A720AA02295B3E9100FEB7EE /* DetailFeed.swift in Sources */,
 				A7B0E33B281F95E500A13CD6 /* HomeAnimeItem.swift in Sources */,
@@ -1742,6 +1781,7 @@
 				A7B0E329281F534900A13CD6 /* HomeScreenNavigationBar.swift in Sources */,
 				A7AD49CF29821B5C005C18A1 /* ACScroll.swift in Sources */,
 				A77AD119293065DE00299F33 /* UIButton+Extension.swift in Sources */,
+				A73AB1B02A2410B7004B1DD4 /* AreaAverageFilter.swift in Sources */,
 				A7D8127929DBE5E600BD069F /* LocalKeys.swift in Sources */,
 				A74F98532815FD72003A1073 /* BootManager.swift in Sources */,
 				A790349329597BC60046CB59 /* AnimeDetailPresenter.swift in Sources */,

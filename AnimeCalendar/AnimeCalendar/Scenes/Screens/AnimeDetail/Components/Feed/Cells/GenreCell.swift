@@ -8,22 +8,18 @@
 import UIKit
 
 final class GenreCell: UICollectionViewCell, FeedCell {
-    
     // MARK: State
     static var reuseIdentifier: String = "GENRE_CELL_REUSE_IDENTIFIER"
     private typealias AccessId = GenreCellIdentifiers
     
-    var genre: AnimeGenre? {
-        didSet { layoutUI() }
-    }
+    var genre: AnimeGenre?
+    weak var anime: Anime?
     
     /// Contains the whole cell
     private lazy var container: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.accessibilityIdentifier = AccessId.container
-        view.backgroundColor = Color.cobalt.withAlphaComponent(0.20)
-        view.layer.borderColor = Color.cobalt.withAlphaComponent(0.20).cgColor
         view.layer.borderWidth = 1.0
         view.addCornerRadius(radius: 5.0)
         contentView.addSubview(view)
@@ -36,7 +32,6 @@ final class GenreCell: UICollectionViewCell, FeedCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.accessibilityIdentifier = AccessId.nameLabel
         label.font = .systemFont(ofSize: 16.0, weight: .medium)
-        label.textColor = Color.cobalt
         label.numberOfLines = 1
         label.textAlignment = .center
         container.addSubview(label)
@@ -49,19 +44,43 @@ final class GenreCell: UICollectionViewCell, FeedCell {
     }
 
     // MARK: Methods
-    /// Setup dynamic cell values.
     func setup() {
         nameLabel.text = genre?.name
+        
+        // Re-use theme-color
+        if let themeColor = anime?.imageType?.themeColor {
+            configureThemeColor(color: themeColor); return
+        }
+        
+        // Make theme-color.
+        anime?.imageType?.coverImage?.getThemeColor(completion: { [weak self] (color) in
+            guard let color = color else { return }
+            
+            self?.configureThemeColor(color: color)
+            self?.anime?.imageType?.themeColor = color
+        })
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityIdentifier = AccessId.cell
         contentView.accessibilityIdentifier = AccessId.contentView
+        layoutUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+private extension GenreCell {
+    func configureThemeColor(color: UIColor) {
+        Task { @MainActor in
+            container.layer.borderColor = color.cgColor
+            container.backgroundColor = color.withAlphaComponent(0.2)
+            nameLabel.textColor = Color.black
+        }
     }
 }
 
@@ -85,7 +104,7 @@ private extension GenreCell {
     func layoutNameLabel() {
         let xInset: CGFloat = 5.0
         NSLayoutConstraint.activate([
-            nameLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+            nameLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
         ])
         
         /// # When working with `dynamic` cell sizes or any `constraint` which is calculated in `run-time`,

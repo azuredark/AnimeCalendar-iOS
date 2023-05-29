@@ -9,13 +9,16 @@ import UIKit
 
 enum ACIcon {
     // IOS 13.0+
-    static var trophy: UIImage { UIImage(named: "icon-trophy")! }
-    static var calendar: UIImage { UIImage(systemName: "calendar") ?? UIImage(named: "icon-trophy")! }
-    static var tvFilled: UIImage { UIImage(systemName: "tv.fill") ?? UIImage(named: "icon-trophy")! }
-    static var starFilled: UIImage { UIImage(systemName: "star.fill") ?? UIImage(named: "icon-trophy")! }
-    static var twoPeopleFilled: UIImage { UIImage(systemName: "person.2.fill") ?? UIImage(named: "icon-trophy")! }
-    static var circleFilled: UIImage { UIImage(systemName: "circle.fill") ?? UIImage() }
-    static var globe: UIImage { UIImage(systemName: "globe") ?? UIImage() }
-    static var magnifyingglass: UIImage { UIImage(systemName: "magnifyingglass") ?? UIImage() }
-    static var house: UIImage { UIImage(systemName: "house") ?? UIImage() }
+    static var trophy: UIImage           { UIImage(named: "icon-trophy")! }
+    static var calendar: UIImage         { UIImage(systemName: "calendar") ?? UIImage() }
+    static var tvFilled: UIImage         { UIImage(systemName: "tv.fill") ?? UIImage() }
+    static var starFilled: UIImage       { UIImage(systemName: "star.fill") ?? UIImage() }
+    static var twoPeopleFilled: UIImage  { UIImage(systemName: "person.2.fill") ?? UIImage() }
+    static var circleFilled: UIImage     { UIImage(systemName: "circle.fill") ?? UIImage() }
+    static var globe: UIImage            { UIImage(systemName: "globe") ?? UIImage() }
+    static var magnifyingglass: UIImage  { UIImage(systemName: "magnifyingglass") ?? UIImage() }
+    static var house: UIImage            { UIImage(systemName: "house") ?? UIImage() }
+    static var faStarFilled: UIImage     { UIImage(named: "fa-star-filled") ?? UIImage() }
+    static var faStarFilledHalf: UIImage { UIImage(named: "fa-star-filled-half") ?? UIImage() }
+    static var faStar: UIImage           { UIImage(named: "fa-star") ?? UIImage() }
 }
