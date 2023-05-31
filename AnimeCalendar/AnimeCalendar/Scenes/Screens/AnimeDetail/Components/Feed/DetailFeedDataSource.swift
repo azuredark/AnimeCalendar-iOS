@@ -74,6 +74,12 @@ private extension DetailFeedDataSource {
             cell.reviewInfo = reviewInfo
             cell.setup()
         }
+        
+        let recommendationCell = UICollectionView.CellRegistration<RecommendedCell, RecommendationInfo> {
+            (cell, _, recommendationInfo) in
+            cell.animeInfo = recommendationInfo
+            cell.setup()
+        }
 
         let spinnerCell = UICollectionView.CellRegistration<SpinnerCell, AnyHashable> { cell, _, _ in
             cell.setup()
@@ -99,6 +105,9 @@ private extension DetailFeedDataSource {
                 case .animeReviews:
                     guard let reviewInfo = item as? ReviewInfo else { return nil }
                     return reviewCell.cellProvider(collectionView, indexPath, reviewInfo)
+                case .animeRecommendations:
+                    guard let recommendationInfo = item as? RecommendationInfo else { return nil }
+                    return recommendationCell.cellProvider(collectionView, indexPath, recommendationInfo)
                 case .spinner:
                     guard let data = item as? LoadingSpinner else { return nil }
                     return spinnerCell.cellProvider(collectionView, indexPath, data)
@@ -109,7 +118,7 @@ private extension DetailFeedDataSource {
         dataSource?.supplementaryViewProvider = { [weak self] (collection, kind, indexPath) -> UICollectionReusableView? in
             guard let self, let content = self.dataSource?.itemIdentifier(for: indexPath) as? Content else { return nil }
 
-            if let anime = content as? Anime {
+            if content.detailFeedSection == .animeBasicInfo, let anime = content as? Anime {
                 let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
                                                                              withReuseIdentifier: BasicInfoHeader.reuseIdentifier,
                                                                              for: indexPath) as? BasicInfoHeader
@@ -141,6 +150,12 @@ private extension DetailFeedDataSource {
 
         // Characters Cell
         collectionView?.register(CharacterCell.self, forCellWithReuseIdentifier: CharacterCell.reuseIdentifier)
+        
+        // Reviews Cell
+        collectionView?.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reuseIdentifier)
+        
+        // Recommended Cell
+        collectionView?.register(RecommendedCell.self, forCellWithReuseIdentifier: RecommendedCell.reuseIdentifier)
 
         // MARK: Headers
         // Basic info. header (Anime title)
@@ -232,6 +247,7 @@ extension DetailFeedDataSource {
         bindTrailer()
         bindCharacters()
         bindReviews()
+        bindRecommendations()
     }
 
     func loadSpinner() {
@@ -283,7 +299,7 @@ extension DetailFeedDataSource {
         guard let presenter else { return }
 
         presenter.characters
-            .debounce(.milliseconds(500))
+            .debounce(.milliseconds(200))
             .drive(onNext: { [weak self] (characters) in
                 guard let self = self else { return }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING CHARACTERS: \(characters.count)")
@@ -298,7 +314,7 @@ extension DetailFeedDataSource {
         guard let presenter else { return }
 
         presenter.reviews
-            .debounce(.microseconds(600))
+            .debounce(.microseconds(300))
             .drive(onNext: { [weak self] (reviews) in
                 guard let self else { return }
                 Logger.log(.info, msg: "Review tags: \(reviews.flatMap { $0.tags }.map { $0.rawValue } )", active: false)
@@ -308,13 +324,29 @@ extension DetailFeedDataSource {
                                     after: .animeCharacters)
             }).disposed(by: disposeBag)
     }
+    
+    func bindRecommendations() {
+        guard let presenter else { return }
+        presenter.recommendations
+            .filter { !$0.isEmpty }
+            .debounce(.microseconds(400))
+            .drive(onNext: { [weak self] (animesInfo) in
+                guard let self else { return }
+                Logger.log(.info, msg: "Recommended animes: \(animesInfo.map { $0.anime?.titleEng ?? ""})")
+                self.updateSnapshot(for: DetailFeedSection.animeRecommendations,
+                                    with: animesInfo,
+                                    animating: true,
+                                    before: .animeReviews)
+            }).disposed(by: disposeBag)
+    }
 }
 
 enum DetailFeedSection: String, CaseIterable {
     case animeTrailer
     case animeBasicInfo
-    case animeCharacters = "Characters"
-    case animeReviews    = "Reviews"
+    case animeCharacters      = "Characters"
+    case animeReviews         = "Reviews"
+    case animeRecommendations = "Recommended"
     case spinner
     case unknown
 
@@ -324,7 +356,8 @@ enum DetailFeedSection: String, CaseIterable {
             case 1: self = .animeBasicInfo
             case 2: self = .animeCharacters
             case 3: self = .animeReviews
-            case 4: self = .spinner
+            case 4: self = .animeRecommendations
+            case 5: self = .spinner
             default: self = .unknown
         }
     }

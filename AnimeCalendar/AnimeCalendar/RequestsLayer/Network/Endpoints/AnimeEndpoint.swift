@@ -14,6 +14,7 @@ enum AnimeEndpoint: Equatable {
     case getAnimes
     case getCharacters(animeId: Int)
     case getReviews(animeId: Int)
+    case getAnimeRecommendations(animeId: Int)
     
     static func == (lhs: AnimeEndpoint, rhs: AnimeEndpoint) -> Bool {
         switch (lhs, rhs) {
@@ -21,6 +22,7 @@ enum AnimeEndpoint: Equatable {
             case (.getAnimes, .getAnimes): return true
             case (.getCharacters, .getCharacters): return true
             case (.getReviews, .getReviews): return true
+            case (.getAnimeRecommendations, .getAnimeRecommendations): return true
             default: return false
         }
     }
@@ -37,12 +39,14 @@ extension AnimeEndpoint: EndpointType {
                 return API.getAPI(.v4)+service+"/\(animeId)/characters"
             case .getReviews(let animeId):
                 return API.getAPI(.v4)+service+"/\(animeId)/reviews"
+            case .getAnimeRecommendations(let animeId):
+                return API.getAPI(.v4)+service+"/\(animeId)/recommendations"
         }
     }
     
     var httpMethod: HTTPMethod {
         switch self {
-            case .getAnime, .getAnimes, .getCharacters, .getReviews:
+            case .getAnime, .getAnimes, .getCharacters, .getReviews, .getAnimeRecommendations:
                 return .get
         }
     }
@@ -51,7 +55,7 @@ extension AnimeEndpoint: EndpointType {
         switch self {
             case .getAnime(let name):
                 return .requestParameters(bodyParameters: nil, urlParameters: ["q": name])
-            case .getAnimes, .getCharacters, .getReviews:
+            case .getAnimes, .getCharacters, .getReviews, .getAnimeRecommendations:
                 return .request
         }
     }

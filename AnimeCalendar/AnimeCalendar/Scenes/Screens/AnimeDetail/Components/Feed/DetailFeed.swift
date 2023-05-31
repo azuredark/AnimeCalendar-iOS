@@ -10,6 +10,7 @@ import RxCocoa
 
 final class DetailFeed: NSObject {
     // MARK: State
+    // These have to be created for EACH KIND (If there is a different HeaderView, then add a new one)
     static let basicInfoHeaderKind: String = "BASIC_INFO_HEADER_KIND"
     static let feedHeaderKind: String      = "FEED_HEADER_KIND"
 
@@ -73,6 +74,8 @@ private extension DetailFeed {
                     return self.getCharactersSection()
                 case .animeReviews:
                     return self.getReviewsSection()
+                case .animeRecommendations:
+                    return self.getRecommendedSection()
                 // Loader
                 case .spinner:
                     return self.getSpinnerSection()
@@ -222,6 +225,38 @@ private extension DetailFeed {
         section.contentInsets = .init(top: 0, leading: 10, bottom: 8.0, trailing: 10)
         section.interGroupSpacing = 10.0
 
+        return section
+    }
+    
+    func getRecommendedSection() -> NSCollectionLayoutSection? {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let aspectRatio: CGFloat = 16/9
+        let widthRatio: CGFloat  = 0.20
+        let titleHeight: CGFloat = 15.0 / UIScreen.main.bounds.size.height
+        let heightRatio: CGFloat = (widthRatio * aspectRatio) + titleHeight
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(widthRatio),
+                                               heightDimension: .fractionalWidth(heightRatio))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        // Header
+        let headerWidth: CGFloat = UIScreen.main.bounds.size.width
+        let headerSize = NSCollectionLayoutSize(widthDimension: .absolute(headerWidth),
+                                                heightDimension: .estimated(70))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: Self.feedHeaderKind,
+                                                                 alignment: .top)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        section.boundarySupplementaryItems = [header]
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 8.0, trailing: 10)
+        section.interGroupSpacing = 10.0
+        
         return section
     }
 }

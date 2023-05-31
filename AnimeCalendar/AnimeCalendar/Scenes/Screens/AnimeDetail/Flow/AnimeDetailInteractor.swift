@@ -13,11 +13,14 @@ protocol AnimeDetailInteractive {
     var animeTrailerLoadedObservable: PublishRelay<Bool> { get }
     var animeCharactersObservable: Driver<[CharacterInfo]> { get }
     var animeReviewsObservable: Driver<[ReviewInfo]> { get }
+    var animeRecommendationsObservable: Driver<[RecommendationInfo]> { get }
     var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> { get }
     
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
     func updateReviews(animeId: Int)
+    func updateRecommendations(animeId: Int)
+    
     func cleanRequests()
 }
 
@@ -25,7 +28,8 @@ final class AnimeDetailInteractor: GenericInteractor<AnimeRepository> {
     // MARK: State
     private let animeStorage = BehaviorRelay<Anime>(value: Anime())
     private let charactersStorage = PublishRelay<JikanResult<CharacterInfo>?>()
-    private let reviewsStoreage = PublishRelay<JikanResult<ReviewInfo>?>()
+    private let reviewsStorage = PublishRelay<JikanResult<ReviewInfo>?>()
+    private let recommendationsStorage = PublishRelay<JikanResult<RecommendationInfo>?>()
 
     private let animeTrailerLoaded = PublishRelay<Bool>()
     private let didFinishLoadingTrailer = BehaviorRelay<((Bool, Anime))>(value: (false, Anime()))
@@ -64,7 +68,11 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
     }
     
     var animeReviewsObservable: Driver<[ReviewInfo]> {
-        reviewsStoreage.compactMap(\.?.data).asDriver(onErrorJustReturn: [])
+        reviewsStorage.compactMap(\.?.data).asDriver(onErrorJustReturn: [])
+    }
+    
+    var animeRecommendationsObservable: Driver<[RecommendationInfo]> {
+        recommendationsStorage.compactMap(\.?.data).asDriver(onErrorJustReturn: [])
     }
     
     var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> {
@@ -86,7 +94,14 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
     func updateReviews(animeId: Int) {
         repository.getAnimeReviews(animeId: animeId)
             .asObservable()
-            .bind(to: reviewsStoreage)
+            .bind(to: reviewsStorage)
+            .disposed(by: disposeBag)
+    }
+    
+    func updateRecommendations(animeId: Int) {
+        repository.getAnimeRecommendations(animeId: animeId)
+            .asObservable()
+            .bind(to: recommendationsStorage)
             .disposed(by: disposeBag)
     }
     

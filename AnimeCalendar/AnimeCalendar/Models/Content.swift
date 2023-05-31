@@ -8,7 +8,8 @@
 import Foundation
 
 /**
-Content should be used directly. Replace the **id** on the subclass if needed. (Trailer uses a different field to identify itself).
+ Content should be used directly. Replace the **id** on the subclass if needed. (Trailer uses a different field to identify itself).
+ Use this superclass for all the **visible cell data**
  */
 class Content: Hashable, Decodable {
     // MARK: Parameters

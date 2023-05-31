@@ -158,4 +158,25 @@ final class AnimeRepository: GenericRepository {
             return Disposables.create()
         }
     }
+    
+    func getAnimeRecommendations(animeId: Int, responsible: RequestResponsibleType = .network) -> Single<JikanResult<RecommendationInfo>?> {
+        return .create { [weak self] (single) in
+            guard let strongSelf = self else { return Disposables.create() }
+            
+            let model = JikanResult<RecommendationInfo>.self
+            let requestResponsible: Requestable = strongSelf.requestsManager.getRequestResponsible(responsible)
+            
+            requestResponsible.makeRequest(model, .anime(.getAnimeRecommendations(animeId: animeId))) { result in
+                switch result {
+                    case .success(let animeResult):
+                        animeResult?.setDetailFeedSection(to: .animeRecommendations)
+                        single(.success(animeResult))
+                    case .failure(_):
+                        single(.success(nil))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
 }

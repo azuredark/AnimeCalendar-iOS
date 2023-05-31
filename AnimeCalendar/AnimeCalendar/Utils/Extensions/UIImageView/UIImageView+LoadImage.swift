@@ -19,7 +19,7 @@ extension UIImageView {
                    size: CGSize? = nil,
                    options: ImageRequest.Options = [],
                    completion: Completion? = nil) -> ImageTask? {
-        guard let path = path else { completion?(false); return nil }
+        guard let path = path, !path.isEmpty else { completion?(false); return nil }
 
         // Image processing
         var processors: [ImageProcessing] = []

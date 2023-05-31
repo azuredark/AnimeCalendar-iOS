@@ -9,13 +9,14 @@ import UIKit
 
 protocol FeedCell: UICollectionViewCell {
     /// Unique Identifier for properly reusing cells
-    static var reuseIdentifier: String { get set }
+    static var reuseIdentifier: String { get }
     /// Sets up the cell with **dynamic** values *(Will update depending on the cell)*.
     func setup()
     func getCoverImage() -> UIImage?
 }
 
 extension FeedCell {
+    static var reuseIdentifier: String { String(describing: Self.self) }
     func setup() { }
     func getCoverImage() -> UIImage? { return nil }
 }

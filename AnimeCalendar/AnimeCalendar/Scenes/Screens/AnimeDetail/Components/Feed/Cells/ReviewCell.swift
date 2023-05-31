@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ReviewCell: UICollectionViewCell, ACReusable {
+final class ReviewCell: UICollectionViewCell, FeedCell {
     // MARK: State
     weak var reviewInfo: ReviewInfo?
     

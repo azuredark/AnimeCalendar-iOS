@@ -12,15 +12,19 @@ protocol AnimeDetailPresentable: AnyObject {
     var anime: Driver<Anime> { get }
     var characters: Driver<[CharacterInfo]> { get }
     var reviews: Driver<[ReviewInfo]> { get }
+    var recommendations: Driver<[RecommendationInfo]> { get }
     var trailerLoaded: PublishRelay<Bool> { get }
     var didFinishLoadingAnimeAndTrailer: Driver<(Bool, Anime)> { get }
 
     /// Weak reference towards the view
     func start() -> Screen
     func setCoverImage(with image: UIImage?)
+    
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
     func updateReviews(animeId: Int)
+    func updateAnimeRecommendations(animeId: Int)
+        
     func disposeTrailerComponent()
     func cleanRequests()
 }
@@ -55,6 +59,10 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     var reviews: Driver<[ReviewInfo]> {
         interactor.animeReviewsObservable
     }
+    
+    var recommendations: Driver<[RecommendationInfo]> {
+        interactor.animeRecommendationsObservable
+    }
 
     /// Tracks when the **trailer** has loaded and will be displayed.
     var trailerLoaded: PublishRelay<Bool> {
@@ -87,6 +95,10 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     
     func updateReviews(animeId: Int) {
         interactor.updateReviews(animeId: animeId)
+    }
+    
+    func updateAnimeRecommendations(animeId: Int) {
+        interactor.updateRecommendations(animeId: animeId)
     }
 
     func disposeTrailerComponent() {

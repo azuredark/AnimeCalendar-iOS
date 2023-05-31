@@ -105,6 +105,7 @@ private extension AnimeDetailScreen {
                 self.configureNavigationTitle(with: anime.titleKanji)
                 self.presenter?.updateCharacters(animeId: Int(anime.id) ?? 49387)
                 self.presenter?.updateReviews(animeId: Int(anime.id) ?? 49387)
+                self.presenter?.updateAnimeRecommendations(animeId: Int(anime.id) ?? 49387)
             }).disposed(by: disposeBag)
     }
 }

@@ -94,7 +94,7 @@ final class SeasonAnimeCell: UICollectionViewCell, FeedCell {
 
 private extension SeasonAnimeCell {
     func setupCoverImage() {
-        let path: String? = anime?.imageType?.jpgImage.attemptToGetImageByResolution(.large)
+        let path: String? = anime?.imageType?.webpImage.attemptToGetImageByResolution(.large)
         coverImageView.loadImage(from: path, cellType: self) { [weak self] _ in
             self?.layoutCellTag()
 
