@@ -16,18 +16,25 @@ extension UIImageView {
     @discardableResult
     func loadImage(from path: String?,
                    cellType: (any FeedCell)? = nil,
+                   size: CGSize? = nil,
                    options: ImageRequest.Options = [],
                    completion: Completion? = nil) -> ImageTask? {
         guard let path = path else { completion?(false); return nil }
 
         // Image processing
-        let processors = ImageProcessor.getProcessors(for: cellType)
+        var processors: [ImageProcessing] = []
+        if let cellType {
+            processors.append(contentsOf: ImageProcessor.getProcessors(for: cellType))
+        } else if let size {
+            processors.append(contentsOf: ImageProcessor.getProcessors(for: size))
+        }
 
         // Image request
         let request = ImageRequest(url: URL(string: path),
                                    processors: processors,
                                    options: options)
 
+        // ImageLoadingOptions can be used to have custom placeholders in different locations.
         return Nuke.loadImage(with: request, into: self) { result in
             switch result {
                 case .success:

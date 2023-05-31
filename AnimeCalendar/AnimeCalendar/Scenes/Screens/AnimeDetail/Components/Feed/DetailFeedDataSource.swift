@@ -301,7 +301,7 @@ extension DetailFeedDataSource {
             .debounce(.microseconds(600))
             .drive(onNext: { [weak self] (reviews) in
                 guard let self else { return }
-                Logger.log(.info, msg: "Review tags: \(reviews.flatMap { $0.tags }.map { $0.rawValue } )")
+                Logger.log(.info, msg: "Review tags: \(reviews.flatMap { $0.tags }.map { $0.rawValue } )", active: false)
                 self.updateSnapshot(for: DetailFeedSection.animeReviews,
                                     with: reviews,
                                     animating: true,

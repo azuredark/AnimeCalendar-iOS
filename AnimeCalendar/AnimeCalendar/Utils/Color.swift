@@ -19,6 +19,7 @@ public enum Color {
     static var white: UIColor { UIColor(named: "App White")! }
     static var blue: UIColor { UIColor(red: 159, green: 189, blue: 255) ?? UIColor() }
     static var red: UIColor { UIColor(red: 255, green: 160, blue: 161) ?? UIColor() }
+    static var yellow: UIColor { UIColor(red: 255, green: 236, blue: 8) ?? UIColor() }
     static var placeholder: UIColor { UIColor(named: "App Placeholder")! }
     static var subtitle: UIColor { UIColor(named: "App Subtitle")! }
     

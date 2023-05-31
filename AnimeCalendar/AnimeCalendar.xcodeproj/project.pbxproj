@@ -54,7 +54,7 @@
 		A74F986828161291003A1073 /* MocksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74F986728161291003A1073 /* MocksManager.swift */; };
 		A74F986A2816129D003A1073 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74F98692816129D003A1073 /* CacheManager.swift */; };
 		A74F9874281624FC003A1073 /* Pods_AnimeCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28ADD1CAD4B24F96213C086B /* Pods_AnimeCalendar.framework */; };
-		A751BE582A248E050064745D /* ReviewTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751BE572A248E050064745D /* ReviewTagView.swift */; };
+		A751BE582A248E050064745D /* IconLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751BE572A248E050064745D /* IconLabelView.swift */; };
 		A751BE5B2A24A8170064745D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A751BE5A2A24A8170064745D /* UIColor+Extension.swift */; };
 		A75215042920BA0700E94104 /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75215032920BA0700E94104 /* DiscoverScreen.swift */; };
 		A75215062920BA1300E94104 /* DiscoverPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75215052920BA1300E94104 /* DiscoverPresenter.swift */; };
@@ -271,7 +271,7 @@
 		A74F986528161284003A1073 /* RequestsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsManager.swift; sourceTree = "<group>"; };
 		A74F986728161291003A1073 /* MocksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocksManager.swift; sourceTree = "<group>"; };
 		A74F98692816129D003A1073 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
-		A751BE572A248E050064745D /* ReviewTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTagView.swift; sourceTree = "<group>"; };
+		A751BE572A248E050064745D /* IconLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelView.swift; sourceTree = "<group>"; };
 		A751BE5A2A24A8170064745D /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		A75215032920BA0700E94104 /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
 		A75215052920BA1300E94104 /* DiscoverPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPresenter.swift; sourceTree = "<group>"; };
@@ -635,7 +635,7 @@
 		A751BE562A248DF40064745D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A751BE572A248E050064745D /* ReviewTagView.swift */,
+				A751BE572A248E050064745D /* IconLabelView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1634,7 +1634,7 @@
 				A7F91E0F28190F6D00FF59C0 /* TabBarManager.swift in Sources */,
 				A78E21412A22F8DA004412A3 /* AnimeDetailSeparatorView.swift in Sources */,
 				A752150C2920BA2B00E94104 /* DiscoverModule.swift in Sources */,
-				A751BE582A248E050064745D /* ReviewTagView.swift in Sources */,
+				A751BE582A248E050064745D /* IconLabelView.swift in Sources */,
 				A7A275ED292F2A7D00D1E61B /* ACFont.swift in Sources */,
 				A772E923284098280095FE4F /* NewAnimeSearchResultItem.swift in Sources */,
 				A7CC37A82931FA8E005102B3 /* PromoEndpoint.swift in Sources */,

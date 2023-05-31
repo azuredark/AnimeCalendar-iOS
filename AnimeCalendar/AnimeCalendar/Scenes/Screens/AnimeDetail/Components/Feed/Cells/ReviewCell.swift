@@ -21,11 +21,12 @@ final class ReviewCell: UICollectionViewCell, ACReusable {
         return view
     }()
     
+    private var authorImageViewSize: CGSize { CGSize(width: headerViewHeight, height: headerViewHeight) }
     private lazy var authorImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = Color.cobalt
+        imageView.backgroundColor = Color.lightGray
         imageView.layer.borderWidth = 1.0
         imageView.layer.borderColor = Color.cobalt.cgColor
         
@@ -46,26 +47,41 @@ final class ReviewCell: UICollectionViewCell, ACReusable {
     }()
     
     private lazy var reviewLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Color.lightGray
-        label.font = ACFont.medium1
-        label.numberOfLines = 0
-        label.textAlignment = .left
+        let textView = UILabel(frame: .zero)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textColor = Color.lightGray
+        textView.font = ACFont.medium1
+        textView.textAlignment = .left
+        textView.backgroundColor = .clear
+        textView.numberOfLines = 5
         
-        contentView.addSubview(label)
-        return label
+        contentView.addSubview(textView)
+        return textView
     }()
     
-    private var reviewTagView: ReviewTagView?
+    private lazy var reviewTagView: IconLabelView = {
+        let view = IconLabelView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        headerView.addSubview(view)
+        return view
+    }()
+    
+    private lazy var ratingView: IconLabelView = {
+        let view = IconLabelView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        headerView.addSubview(view)
+        return view
+    }()
 
     override func prepareForReuse() {
         super.prepareForReuse()
         authorNameLabel.text = nil
         reviewLabel.text = nil
         authorImageView.image = nil
-        
-        reviewTagView?.removeFromSuperview(); reviewTagView = nil
+        reviewTagView.reset()
+        ratingView.reset()
     }
     
     // MARK: Initializers
@@ -85,10 +101,12 @@ final class ReviewCell: UICollectionViewCell, ACReusable {
         reviewLabel.text = reviewInfo?.review
         
         let imagePath = reviewInfo?.user?.images?.jpgImage.attemptToGetImageByResolution(.small)
-        authorImageView.loadImage(from: imagePath, options: [.disableDiskCache, .disableMemoryCache])
+        authorImageView.loadImage(from: imagePath, size: authorImageViewSize, options: [.disableDiskCache, .disableMemoryCache])
         
         // ReviewTagView.
         configureReviewTagView()
+        // RatingView
+        configureRatingView()
     }
 }
 
@@ -96,11 +114,19 @@ private extension ReviewCell {
     func configureReviewTagView() {
         guard let reviewInfo else { return }
         
-        let allowedTags: [ReviewTag] = [.recommended, .mixedFeedlings, .notRecommended]
+        let allowedTags: [ReviewTag] = [.recommended, .mixedFeedlings, .notRecommended, .preliminary]
         
         guard let tag = reviewInfo.tags.first(where: { allowedTags.contains($0) }) else { return }
         
-        layoutReviewTagView(with: tag)
+        let model = IconLabelModel(iconLabelType: .tag(tag))
+        reviewTagView.setup(tagModel: model)
+    }
+    
+    func configureRatingView() {
+        guard let rating = reviewInfo?.score else { return }
+        
+        let model = IconLabelModel(iconLabelType: .rating(rating))
+        ratingView.setup(tagModel: model)
     }
 }
 
@@ -112,6 +138,8 @@ private extension ReviewCell {
         layoutHeaderView()
         layoutUserImageView()
         layoutAuthorNameLabel()
+        layoutReviewTagView()
+        layoutRatingView()
         
         // Content view.
         layoutReviewLabel()
@@ -130,7 +158,6 @@ private extension ReviewCell {
             headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             headerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: yPadding),
-            //            headerView.heightAnchor.constraint(equalToConstant: headerViewHeight)
         ])
     }
     
@@ -139,8 +166,8 @@ private extension ReviewCell {
         let yPadding: CGFloat = 5.0
         NSLayoutConstraint.activate([
             authorImageView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: xPadding),
-            authorImageView.widthAnchor.constraint(equalToConstant: headerViewHeight),
-            authorImageView.heightAnchor.constraint(equalToConstant: headerViewHeight),
+            authorImageView.widthAnchor.constraint(equalToConstant: authorImageViewSize.width),
+            authorImageView.heightAnchor.constraint(equalToConstant: authorImageViewSize.height),
             
             authorImageView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: yPadding),
             authorImageView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -yPadding)
@@ -157,11 +184,7 @@ private extension ReviewCell {
         ])
     }
     
-    func layoutReviewTagView(with tag: ReviewTag) {
-        let reviewTagView = ReviewTagView(tagModel: ReviewTagModel(tag: tag))
-        reviewTagView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(reviewTagView)
-        
+    func layoutReviewTagView() {
         // Constraint
         let xPadding: CGFloat = 10.0
         let yPadding: CGFloat = 3.0
@@ -169,8 +192,15 @@ private extension ReviewCell {
             reviewTagView.leadingAnchor.constraint(equalTo: authorImageView.trailingAnchor, constant: xPadding),
             reviewTagView.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: yPadding),
         ])
-        
-        self.reviewTagView = reviewTagView
+    }
+    
+    func layoutRatingView() {
+        let xPadding: CGFloat = 10.0
+        let yPadding: CGFloat = 5.0
+        NSLayoutConstraint.activate([
+            ratingView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -xPadding),
+            ratingView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: yPadding)
+        ])
     }
     
     // Content view.

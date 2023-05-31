@@ -21,4 +21,5 @@ enum ACIcon {
     static var faStarFilled: UIImage     { UIImage(named: "fa-star-filled") ?? UIImage() }
     static var faStarFilledHalf: UIImage { UIImage(named: "fa-star-filled-half") ?? UIImage() }
     static var faStar: UIImage           { UIImage(named: "fa-star") ?? UIImage() }
+    static var faClock: UIImage          { UIImage(named: "fa-clock") ?? UIImage() }
 }

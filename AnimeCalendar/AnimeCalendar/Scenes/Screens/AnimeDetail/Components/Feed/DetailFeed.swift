@@ -219,7 +219,7 @@ private extension DetailFeed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = [header]
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 8.0, trailing: 10)
         section.interGroupSpacing = 10.0
 
         return section
