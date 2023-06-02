@@ -236,9 +236,9 @@ extension DetailFeedDataSource {
     func configureBindings() {
         bindAnime()
         bindTrailer()
-//        bindCharacters()
-//        bindReviews()
-//        bindRecommendations()
+        bindCharacters()
+        bindReviews()
+        bindRecommendations()
         
         sendLoaders()
     }
