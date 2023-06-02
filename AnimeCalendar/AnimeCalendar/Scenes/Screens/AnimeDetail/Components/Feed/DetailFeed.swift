@@ -64,6 +64,11 @@ private extension DetailFeed {
             guard let content = self.dataSource.getDataSource()?.itemIdentifier(for: IndexPath(row: 0, section: sectionIndex)) as? Content else {
                 return nil
             }
+            
+            // Loader section.
+            if content is ACContentLoader {
+                return self.getLoaderSection()
+            }
 
             switch content.detailFeedSection {
                 case .animeTrailer:
@@ -76,26 +81,11 @@ private extension DetailFeed {
                     return self.getReviewsSection()
                 case .animeRecommendations:
                     return self.getRecommendedSection()
-                // Loader
-                case .spinner:
-                    return self.getSpinnerSection()
-                case .unknown: return nil
+                default: return nil
             }
         }
 
         return layout
-    }
-
-    /// Get the **correct** section for its corresponding layout.
-    ///
-    /// **Warning**: This is needed as the **TrailerCell** will appear afterwards and take first spot. Until that happens, the **sectionIndex** will be 0 and point to the **.animeTrailer** enum which is wrong as the first cell before **Trailer** will always be **BasicInfo**.
-    func getSection(from sectionIndex: Int) -> DetailFeedSection {
-        var section = DetailFeedSection.allCases[sectionIndex]
-        // If there is 1 section and it's wrongly pointing to .animeTrailer, manual-set it to animeBasicInfo.
-        if self.containerCollection.numberOfSections == 1, section == .animeTrailer {
-            section = .animeBasicInfo
-        }
-        return section
     }
 
     /// #  Trailer Section
@@ -142,7 +132,7 @@ private extension DetailFeed {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
         section.boundarySupplementaryItems = [header]
-        section.contentInsets = .init(top: 5.0, leading: 0, bottom: 0, trailing: 0)
+        section.contentInsets = .init(top: 5.0, leading: 0, bottom: 8.0, trailing: 0)
 
         return section
     }
@@ -179,7 +169,7 @@ private extension DetailFeed {
         return section
     }
 
-    func getSpinnerSection() -> NSCollectionLayoutSection? {
+    func getLoaderSection() -> NSCollectionLayoutSection? {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
@@ -193,7 +183,8 @@ private extension DetailFeed {
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none // Prevent scrolling
-
+        section.contentInsets = .init(top: 0, leading: 10.0, bottom: 8.0, trailing: 10.0)
+        
         return section
     }
 

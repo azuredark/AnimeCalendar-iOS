@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A70FF51428238E42007D4F64 /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FF51328238E42007D4F64 /* NSLayoutConstraint+Extension.swift */; };
 		A70FF51628239D77007D4F64 /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FF51528239D77007D4F64 /* Constraints.swift */; };
+		A71A8BE62A285DED003F6FF5 /* ACSectionLoaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A8BE52A285DED003F6FF5 /* ACSectionLoaderCell.swift */; };
+		A71A8BE82A28661C003F6FF5 /* ACContentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A8BE72A28661C003F6FF5 /* ACContentLoader.swift */; };
 		A720AA02295B3E9100FEB7EE /* DetailFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A720AA01295B3E9100FEB7EE /* DetailFeed.swift */; };
 		A720AA05295B430000FEB7EE /* DetailFeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A720AA04295B430000FEB7EE /* DetailFeedDataSource.swift */; };
 		A720AA08295B619100FEB7EE /* TrailerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A720AA07295B619100FEB7EE /* TrailerCell.swift */; };
@@ -229,6 +231,8 @@
 		28ADD1CAD4B24F96213C086B /* Pods_AnimeCalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AnimeCalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70FF51328238E42007D4F64 /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 		A70FF51528239D77007D4F64 /* Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
+		A71A8BE52A285DED003F6FF5 /* ACSectionLoaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACSectionLoaderCell.swift; sourceTree = "<group>"; };
+		A71A8BE72A28661C003F6FF5 /* ACContentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACContentLoader.swift; sourceTree = "<group>"; };
 		A720AA01295B3E9100FEB7EE /* DetailFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeed.swift; sourceTree = "<group>"; };
 		A720AA04295B430000FEB7EE /* DetailFeedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeedDataSource.swift; sourceTree = "<group>"; };
 		A720AA07295B619100FEB7EE /* TrailerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerCell.swift; sourceTree = "<group>"; };
@@ -1042,6 +1046,7 @@
 			isa = PBXGroup;
 			children = (
 				A7ACFD8629BC356200D8B892 /* ACLoaderCell.swift */,
+				A71A8BE52A285DED003F6FF5 /* ACSectionLoaderCell.swift */,
 			);
 			path = ACLoaderCell;
 			sourceTree = "<group>";
@@ -1300,6 +1305,7 @@
 				A78E21422A2316ED004412A3 /* ReviewInfo.swift */,
 				A7D09BBD2A2728BA004BD431 /* RecommendationInfo.swift */,
 				A78E21442A231B30004412A3 /* User.swift */,
+				A71A8BE72A28661C003F6FF5 /* ACContentLoader.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1642,6 +1648,7 @@
 				A7F91E0F28190F6D00FF59C0 /* TabBarManager.swift in Sources */,
 				A78E21412A22F8DA004412A3 /* AnimeDetailSeparatorView.swift in Sources */,
 				A752150C2920BA2B00E94104 /* DiscoverModule.swift in Sources */,
+				A71A8BE62A285DED003F6FF5 /* ACSectionLoaderCell.swift in Sources */,
 				A751BE582A248E050064745D /* IconLabelView.swift in Sources */,
 				A7A275ED292F2A7D00D1E61B /* ACFont.swift in Sources */,
 				A772E923284098280095FE4F /* NewAnimeSearchResultItem.swift in Sources */,
@@ -1654,6 +1661,7 @@
 				A77249DA293286C300487DE2 /* AnimeCellTag.swift in Sources */,
 				A76FFA0D290F202E007209E8 /* NewAnimeModule.swift in Sources */,
 				A7445F22292DC0A6008A4696 /* Feed.swift in Sources */,
+				A71A8BE82A28661C003F6FF5 /* ACContentLoader.swift in Sources */,
 				A751BE5B2A24A8170064745D /* UIColor+Extension.swift in Sources */,
 				A7DAC1D128447A6900583F39 /* Anime.swift in Sources */,
 				A78E213B2A229831004412A3 /* UIImageView+Filter.swift in Sources */,

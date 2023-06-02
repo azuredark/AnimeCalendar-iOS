@@ -8,7 +8,6 @@
 import Foundation
 
 final class LoadingSpinner: Content {
-    // MARK: Parameters
     // MARK: Initializers
     required init(from decoder: Decoder) throws {
         fatalError("init(from:) has not been implemented")

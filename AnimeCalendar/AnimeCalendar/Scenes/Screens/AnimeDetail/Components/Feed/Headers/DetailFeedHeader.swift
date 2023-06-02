@@ -8,9 +8,16 @@
 import UIKit
 
 final class DetailFeedHeader: UICollectionReusableView {
-    // MARK: State
+    // MARK: Public State
     static let reuseId = String(describing: DetailFeedHeader.self)
     
+    var hideViews: Bool = false {
+        didSet {
+            subviews.forEach { $0.isHidden = hideViews }
+        }
+    }
+    
+    // MARK: UI
     private lazy var separatorView: AnimeDetailSeparatorView = {
         let view = AnimeDetailSeparatorView()
         view.translatesAutoresizingMaskIntoConstraints = false

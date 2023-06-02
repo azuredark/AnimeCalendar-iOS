@@ -128,6 +128,7 @@ final class AnimeRepository: GenericRepository {
             requestResponsible.makeRequest(model, .anime(.getCharacters(animeId: animeId))) { result in
                 switch result {
                     case .success(let characterInfo):
+                        characterInfo?.setDetailFeedSection(to: .animeCharacters)
                         single(.success(characterInfo))
                     case .failure(_):
                         single(.success(nil))

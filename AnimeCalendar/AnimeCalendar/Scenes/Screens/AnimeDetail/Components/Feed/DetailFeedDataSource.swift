@@ -74,15 +74,16 @@ private extension DetailFeedDataSource {
             cell.reviewInfo = reviewInfo
             cell.setup()
         }
-        
+
         let recommendationCell = UICollectionView.CellRegistration<RecommendedCell, RecommendationInfo> {
             (cell, _, recommendationInfo) in
             cell.animeInfo = recommendationInfo
             cell.setup()
         }
 
-        let spinnerCell = UICollectionView.CellRegistration<SpinnerCell, AnyHashable> { cell, _, _ in
-            cell.setup()
+        let loaderCell = UICollectionView.CellRegistration<ACSectionLoaderCell, ACContentLoader> { (cell, _, content) in
+            let model = ACSectionLoaderModel(detailSection: content.detailFeedSection)
+            cell.setup(with: model)
         }
 
         guard let collectionView else { return }
@@ -90,6 +91,11 @@ private extension DetailFeedDataSource {
         // Dequeing cells.
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let item = item as? Content else { return nil }
+
+            // Loader
+            if let data = item as? ACContentLoader {
+                return loaderCell.cellProvider(collectionView, indexPath, data)
+            }
 
             let section = item.detailFeedSection
             switch section {
@@ -108,10 +114,7 @@ private extension DetailFeedDataSource {
                 case .animeRecommendations:
                     guard let recommendationInfo = item as? RecommendationInfo else { return nil }
                     return recommendationCell.cellProvider(collectionView, indexPath, recommendationInfo)
-                case .spinner:
-                    guard let data = item as? LoadingSpinner else { return nil }
-                    return spinnerCell.cellProvider(collectionView, indexPath, data)
-                case .unknown: return nil
+                default: return nil
             }
         }
 
@@ -142,6 +145,9 @@ private extension DetailFeedDataSource {
 private extension DetailFeedDataSource {
     func configureCollection() {
         // MARK: Cells
+        // ACSpinner Cell
+        collectionView?.register(ACSectionLoaderCell.self, forCellWithReuseIdentifier: ACSectionLoaderCell.reuseIdentifier)
+
         // Trailer Cell
         collectionView?.register(TrailerCell.self, forCellWithReuseIdentifier: TrailerCell.reuseIdentifier)
 
@@ -150,10 +156,10 @@ private extension DetailFeedDataSource {
 
         // Characters Cell
         collectionView?.register(CharacterCell.self, forCellWithReuseIdentifier: CharacterCell.reuseIdentifier)
-        
+
         // Reviews Cell
         collectionView?.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reuseIdentifier)
-        
+
         // Recommended Cell
         collectionView?.register(RecommendedCell.self, forCellWithReuseIdentifier: RecommendedCell.reuseIdentifier)
 
@@ -174,17 +180,21 @@ private extension DetailFeedDataSource {
 
 extension DetailFeedDataSource: FeedDataSourceable {
     #warning("Create methods x Model type (Anime, Promo, Trailer) instead of using Dynamic Dispatch (any Model)")
-    func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil, deleteLoaders: Bool = false) {
-        guard let section = section as? DetailFeedSection else { return }
-        let finalItems = setModelSection(for: section, with: items)
-        if sectionExists(section: section) { return }
+    func updateSnapshot<T: Hashable>(for section: DetailFeedSection,
+                                     with items: [T],
+                                     animating: Bool = true,
+                                     before: DetailFeedSection? = nil,
+                                     after: DetailFeedSection? = nil,
+                                     deleteLoaders: Bool = false) {
+        guard !items.isEmpty else { return }
+        guard var currentSnapshot = dataSource?.snapshot() else { return }
 
         // Append section only if it doesn't exist already.
-        if !sectionExists(section: section) {
+        if currentSnapshot.indexOfSection(section) == nil {
             // Insert before specific section if exists.
-            if let before = before as? DetailFeedSection, sectionExists(section: before) {
+            if let before, sectionExists(before, in: currentSnapshot) {
                 currentSnapshot.insertSections([section], beforeSection: before)
-            } else if let after = after as? DetailFeedSection, sectionExists(section: after) {
+            } else if let after, sectionExists(after, in: currentSnapshot) {
                 currentSnapshot.insertSections([section], afterSection: after)
             } else {
                 // Append to the stack in order instead.
@@ -192,50 +202,32 @@ extension DetailFeedDataSource: FeedDataSourceable {
             }
         }
 
-        currentSnapshot.appendItems(finalItems, toSection: section)
+        // Add items.
+        currentSnapshot.appendItems(items, toSection: section)
+
+        // Apply snapshot
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
-
-        // Removes the spinner after **CharacterSection & AnimeBasicInfo** has been loaded.
-        removeSpinnerIfNeeded()
     }
-
-    func updateSnapshot(completion: (_ snapshot: Snapshot) -> Snapshot) {
-        let newSnapshot = completion(currentSnapshot)
-        dataSource?.apply(newSnapshot, animatingDifferences: true)
-    }
-
-    func getItem<T: Hashable>(at indexPath: IndexPath) -> T? {
-        return nil
+    
+    func deleteSection(_ section: DetailFeedSection, animating: Bool = true) {
+        guard var snapshot = dataSource?.snapshot() else { return }
+        guard sectionExists(section, in: snapshot) else { return }
+        
+        // Delete section
+        snapshot.deleteSections([section])
+        
+        // Apply snapshot
+        dataSource?.apply(snapshot, animatingDifferences: animating)
     }
 
     func getDataSource() -> DiffableDataSource? {
         return dataSource
     }
-
-    func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable] {
-        guard let section = section as? DetailFeedSection else { return [] }
-
-        let items = items.compactMap { $0 as? Content }
-        items.indices.forEach { items[$0].detailFeedSection = section }
-
-        return items
-    }
-
-    func removeSpinnerIfNeeded() {
-        guard sectionExists(section: .spinner) else { return }
-        if sectionExists(section: .animeBasicInfo),
-           sectionExists(section: .animeCharacters) {
-            Task { @MainActor in
-                currentSnapshot.deleteSections([.spinner])
-                dataSource?.apply(currentSnapshot, animatingDifferences: true)
-            }
-        }
-    }
 }
 
 private extension DetailFeedDataSource {
-    func sectionExists(section: DetailFeedSection) -> Bool {
-        return currentSnapshot.indexOfSection(section) != nil
+    func sectionExists(_ section: DetailFeedSection, in snapshot: Snapshot) -> Bool {
+        return snapshot.indexOfSection(section) != nil
     }
 }
 
@@ -243,18 +235,33 @@ private extension DetailFeedDataSource {
 extension DetailFeedDataSource {
     func configureBindings() {
         bindAnime()
-        loadSpinner()
         bindTrailer()
-        bindCharacters()
-        bindReviews()
-        bindRecommendations()
+//        bindCharacters()
+//        bindReviews()
+//        bindRecommendations()
+        
+        sendLoaders()
     }
 
-    func loadSpinner() {
-        updateSnapshot(for: DetailFeedSection.spinner,
-                       with: [LoadingSpinner()],
-                       animating: true,
-                       after: DetailFeedSection.animeBasicInfo)
+    /// Add loader sections to the collection view (Snapshot).
+    ///
+    /// - Important: This also defines the order in which the sections will be layed out
+    func sendLoaders() {
+        // Characters
+        let charactersLoader = ACContentLoader(detailFeedSection: .animeCharacters)
+        updateSnapshot(for: .loader(forSection: .animeCharacters),
+                       with: [charactersLoader])
+        
+        // Recommendations
+        let recommendationsLoader = ACContentLoader(detailFeedSection: .animeRecommendations)
+        updateSnapshot(for: .loader(forSection: .animeRecommendations),
+                       with: [recommendationsLoader])
+
+        // Reviews
+        let reviewsLoader = ACContentLoader(detailFeedSection: .animeReviews)
+        updateSnapshot(for: .loader(forSection: .animeReviews),
+                       with: [reviewsLoader])
+
     }
 
     func bindAnime() {
@@ -299,7 +306,6 @@ extension DetailFeedDataSource {
         guard let presenter else { return }
 
         presenter.characters
-            .debounce(.milliseconds(200))
             .drive(onNext: { [weak self] (characters) in
                 guard let self = self else { return }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING CHARACTERS: \(characters.count)")
@@ -307,6 +313,7 @@ extension DetailFeedDataSource {
                                     with: characters,
                                     animating: true,
                                     after: .animeBasicInfo)
+                self.deleteSection(.loader(forSection: .animeCharacters))
             }).disposed(by: disposeBag)
     }
 
@@ -314,40 +321,56 @@ extension DetailFeedDataSource {
         guard let presenter else { return }
 
         presenter.reviews
-            .debounce(.microseconds(300))
             .drive(onNext: { [weak self] (reviews) in
                 guard let self else { return }
-                Logger.log(.info, msg: "Review tags: \(reviews.flatMap { $0.tags }.map { $0.rawValue } )", active: false)
+                Logger.log(.info, msg: "Review tags: \(reviews.flatMap { $0.tags }.map { $0.rawValue })", active: false)
                 self.updateSnapshot(for: DetailFeedSection.animeReviews,
                                     with: reviews,
                                     animating: true,
-                                    after: .animeCharacters)
+                                    after: .loader(forSection: .animeReviews))
+                self.deleteSection(.loader(forSection: .animeReviews))
             }).disposed(by: disposeBag)
     }
-    
+
     func bindRecommendations() {
         guard let presenter else { return }
         presenter.recommendations
-            .filter { !$0.isEmpty }
-            .debounce(.microseconds(400))
             .drive(onNext: { [weak self] (animesInfo) in
                 guard let self else { return }
-                Logger.log(.info, msg: "Recommended animes: \(animesInfo.map { $0.anime?.titleEng ?? ""})")
+                Logger.log(.info, msg: "Recommended animes: \(animesInfo.map { $0.anime?.titleEng ?? "" })")
                 self.updateSnapshot(for: DetailFeedSection.animeRecommendations,
                                     with: animesInfo,
                                     animating: true,
-                                    before: .animeReviews)
+                                    after: .loader(forSection: .animeRecommendations))
+                self.deleteSection(.loader(forSection: .animeRecommendations))
             }).disposed(by: disposeBag)
+    }
+    
+    @available(*, deprecated, message: "Not currently working...")
+    func startSpinners(_ charactersLoader: ACContentLoader, _ recommendationsLoader: ACContentLoader, _ reviewsLoader: ACContentLoader) {
+        // Get all loader cells
+        let indexPath1 = dataSource?.indexPath(for: charactersLoader)
+        let indexPath2 = dataSource?.indexPath(for: recommendationsLoader)
+        let indexPath3 = dataSource?.indexPath(for: reviewsLoader)
+        
+        let indexPaths = [indexPath1, indexPath2, indexPath3].compactMap { $0 }
+        
+        indexPaths.forEach { [weak self] (indexPath) in
+            guard let self, let collectionView = self.collectionView else { return }
+            guard let loaderCell = self.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ACSectionLoaderCell else { return }
+//            loaderCell.startSpinning()
+            loaderCell.contentView.layoutIfNeeded()
+        }
     }
 }
 
-enum DetailFeedSection: String, CaseIterable {
+indirect enum DetailFeedSection: Hashable {
     case animeTrailer
     case animeBasicInfo
-    case animeCharacters      = "Characters"
-    case animeReviews         = "Reviews"
-    case animeRecommendations = "Recommended"
-    case spinner
+    case animeCharacters      // = "Characters"
+    case animeReviews         // = "Reviews"
+    case animeRecommendations // = "Recommended"
+    case loader(forSection: DetailFeedSection? = nil)
     case unknown
 
     init(_ index: Int) {
@@ -357,8 +380,31 @@ enum DetailFeedSection: String, CaseIterable {
             case 2: self = .animeCharacters
             case 3: self = .animeReviews
             case 4: self = .animeRecommendations
-            case 5: self = .spinner
             default: self = .unknown
+        }
+    }
+
+    static func == (lhs: DetailFeedSection, rhs: DetailFeedSection) -> Bool {
+        switch (lhs, rhs) {
+            case (.animeTrailer, .animeTrailer): return true
+            case (.animeBasicInfo, .animeBasicInfo): return true
+            case (.animeCharacters, .animeCharacters): return true
+            case (.animeReviews, .animeReviews): return true
+            case (.animeRecommendations, .animeRecommendations): return true
+            case (.unknown, .unknown): return true
+            case (.loader(let section1), .loader(let section2)) where section1 == section2: return true
+            default: return false
+        }
+    }
+
+    var rawValue: String {
+        switch self {
+            case .animeTrailer: return "Trailer"
+            case .animeBasicInfo: return "Basic info."
+            case .animeCharacters: return "Characters"
+            case .animeReviews: return "Reviews"
+            case .animeRecommendations: return "Recommended"
+            default: return ""
         }
     }
 }

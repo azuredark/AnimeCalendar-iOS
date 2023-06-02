@@ -8,16 +8,23 @@
 import UIKit
 
 protocol FeedDataSourceable {
-    func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T?, after: T?, deleteLoaders: Bool)
     /// Sets the **section** for an specific item.
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable]
     func getItem<T: Hashable>(at indexPath: IndexPath) -> T?
+    func updateSnapshot<T: Hashable>(for section: DetailFeedSection,
+                                     with items: [T],
+                                     animating: Bool,
+                                     before: DetailFeedSection?,
+                                     after: DetailFeedSection?,
+                                     deleteLoaders: Bool)
 }
 
 extension FeedDataSourceable {
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable] {
         return [AnyHashable]()
     }
+    
+    func getItem<T: Hashable>(at indexPath: IndexPath) -> T? { nil }
 }
 
 final class FeedDataSource {
@@ -147,14 +154,14 @@ final class FeedDataSource {
     }
 }
 
-extension FeedDataSource: FeedDataSourceable {
+extension FeedDataSource {
     /// Updates the current snapshot
     /// - Parameter section: The section to update
     /// - Parameter animes: The animes to update for the specified section
     /// Updates the **items** for the current **section**
     func updateSnapshot<T: CaseIterable, O: Hashable>(for section: T, with items: [O], animating: Bool, before: T? = nil, after: T? = nil, deleteLoaders: Bool = false) {
         guard let section = section as? FeedSection else { return }
-        
+
         // Create new snapshot from the current one.
         guard var currentSnapshot = dataSource?.snapshot() else { return }
 
@@ -168,7 +175,7 @@ extension FeedDataSource: FeedDataSourceable {
 
         // Add items.
         currentSnapshot.appendItems(items, toSection: section)
-        
+
         // Apply the snapshot.
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
     }

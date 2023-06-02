@@ -141,7 +141,7 @@ private extension ACStack {
 
         switch spacer {
             case .empty:
-                currentView = layoutEmptySpacerView(space: space)
+                currentView = layoutEmptySpacerView()
             case .circle(let tint):
                 let image = ACStack.Image(image: ACIcon.circleFilled,
                                           tint: tint,
@@ -150,16 +150,16 @@ private extension ACStack {
         }
 
         // Add custom spacing
-        guard let currentView = currentView else { return }
+        guard let currentView else { return }
 
-        let neighbors: [SpacingNeighbor] = [.previous(spacing: space),
-                                            .next(spacing: space)]
+        let neighbors: [SpacingNeighbor] = [.previous(spacing: space * 0.5),
+                                            .next(spacing: space * 0.5)]
         addCustomSpacing(from: currentView, neighbors: neighbors)
     }
 
     /// Lays out an **empty** view with size **zero** as it will only be used to add custom spacing to it.
     @discardableResult
-    func layoutEmptySpacerView(space: CGFloat) -> UIView {
+    func layoutEmptySpacerView() -> UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.accessibilityIdentifier = AccessId.spacer

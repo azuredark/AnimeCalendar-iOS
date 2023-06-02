@@ -7,7 +7,15 @@
 
 import UIKit
 
-protocol FeedCell: UICollectionViewCell {
+protocol CellReusable: UICollectionViewCell {
+    static var reuseIdentifier: String { get }
+}
+
+extension CellReusable {
+    static var reuseIdentifier: String { String(describing: Self.self) }
+}
+
+protocol FeedCell: CellReusable {
     /// Unique Identifier for properly reusing cells
     static var reuseIdentifier: String { get }
     /// Sets up the cell with **dynamic** values *(Will update depending on the cell)*.
@@ -16,7 +24,6 @@ protocol FeedCell: UICollectionViewCell {
 }
 
 extension FeedCell {
-    static var reuseIdentifier: String { String(describing: Self.self) }
     func setup() { }
     func getCoverImage() -> UIImage? { return nil }
 }
