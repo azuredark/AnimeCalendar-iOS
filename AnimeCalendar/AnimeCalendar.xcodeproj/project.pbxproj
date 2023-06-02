@@ -37,7 +37,6 @@
 		A7445F2F292DCB75008A4696 /* SeasonAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F2E292DCB75008A4696 /* SeasonAnimeCell.swift */; };
 		A7445F31292DEDE4008A4696 /* SeasonEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */; };
 		A7445F33292E0369008A4696 /* FeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7445F32292E0369008A4696 /* FeedHeader.swift */; };
-		A745CF5D2962AC8A0039ABB1 /* Sequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A745CF5C2962AC8A0039ABB1 /* Sequence+Extension.swift */; };
 		A745CF5F2962C3160039ABB1 /* UIStackView+Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A745CF5E2962C3150039ABB1 /* UIStackView+Spacing.swift */; };
 		A745CF622962C38B0039ABB1 /* ACStack+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A745CF612962C38B0039ABB1 /* ACStack+Models.swift */; };
 		A745CF642962C3F70039ABB1 /* UIView+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A745CF632962C3F70039ABB1 /* UIView+Dimensions.swift */; };
@@ -160,6 +159,7 @@
 		A7B0E33B281F95E500A13CD6 /* HomeAnimeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B0E339281F95E500A13CD6 /* HomeAnimeItem.swift */; };
 		A7B0E33C281F95E500A13CD6 /* HomeAnimeItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7B0E33A281F95E500A13CD6 /* HomeAnimeItemView.xib */; };
 		A7B0E33F281F9B8800A13CD6 /* HomeAnime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B0E33E281F9B8800A13CD6 /* HomeAnime.swift */; };
+		A7B135662A29E6600058E712 /* Sequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B135652A29E6600058E712 /* Sequence+Extension.swift */; };
 		A7C18D07293157360047C6E8 /* GenericInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C18D06293157360047C6E8 /* GenericInteractor.swift */; };
 		A7C18D092931876C0047C6E8 /* GenericRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C18D082931876C0047C6E8 /* GenericRepository.swift */; };
 		A7C18D0B29318A600047C6E8 /* GenericPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C18D0A29318A600047C6E8 /* GenericPresenter.swift */; };
@@ -259,7 +259,6 @@
 		A7445F2E292DCB75008A4696 /* SeasonAnimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonAnimeCell.swift; sourceTree = "<group>"; };
 		A7445F30292DEDE4008A4696 /* SeasonEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonEndpoint.swift; sourceTree = "<group>"; };
 		A7445F32292E0369008A4696 /* FeedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeader.swift; sourceTree = "<group>"; };
-		A745CF5C2962AC8A0039ABB1 /* Sequence+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extension.swift"; sourceTree = "<group>"; };
 		A745CF5E2962C3150039ABB1 /* UIStackView+Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Spacing.swift"; sourceTree = "<group>"; };
 		A745CF612962C38B0039ABB1 /* ACStack+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACStack+Models.swift"; sourceTree = "<group>"; };
 		A745CF632962C3F70039ABB1 /* UIView+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Dimensions.swift"; sourceTree = "<group>"; };
@@ -381,6 +380,7 @@
 		A7B0E339281F95E500A13CD6 /* HomeAnimeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAnimeItem.swift; sourceTree = "<group>"; };
 		A7B0E33A281F95E500A13CD6 /* HomeAnimeItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeAnimeItemView.xib; sourceTree = "<group>"; };
 		A7B0E33E281F9B8800A13CD6 /* HomeAnime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAnime.swift; sourceTree = "<group>"; };
+		A7B135652A29E6600058E712 /* Sequence+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extension.swift"; sourceTree = "<group>"; };
 		A7C18D06293157360047C6E8 /* GenericInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericInteractor.swift; sourceTree = "<group>"; };
 		A7C18D082931876C0047C6E8 /* GenericRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRepository.swift; sourceTree = "<group>"; };
 		A7C18D0A29318A600047C6E8 /* GenericPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPresenter.swift; sourceTree = "<group>"; };
@@ -460,6 +460,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A71CA20E2A29E5B800812D59 /* Sequence */ = {
+			isa = PBXGroup;
+			children = (
+				A7B135652A29E6600058E712 /* Sequence+Extension.swift */,
+			);
+			path = Sequence;
+			sourceTree = "<group>";
+		};
 		A720AA03295B42EC00FEB7EE /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -1461,6 +1469,7 @@
 		A7FDF60C281E0338006057D7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A71CA20E2A29E5B800812D59 /* Sequence */,
 				A751BE592A24A8020064745D /* UIColor */,
 				A73AB1B12A241981004B1DD4 /* UIImage */,
 				A7D5E582297A6555008C412A /* UIImageView */,
@@ -1472,7 +1481,6 @@
 				A745CF5E2962C3150039ABB1 /* UIStackView+Spacing.swift */,
 				A7339F4C2876558000A000DB /* ScreenComponent+Extension.swift */,
 				A77AD118293065DE00299F33 /* UIButton+Extension.swift */,
-				A745CF5C2962AC8A0039ABB1 /* Sequence+Extension.swift */,
 				A782BF952985DFEE00D3E10D /* UILayoutPriority+Extension.swift */,
 			);
 			path = Extensions;
@@ -1674,7 +1682,6 @@
 				A764DC1228BEC500005A68B0 /* UserRepository.swift in Sources */,
 				A790348D29597B7D0046CB59 /* AnimeDetailInteractor.swift in Sources */,
 				A7D5031629D4084400E0CD23 /* AnimeGenre.swift in Sources */,
-				A745CF5D2962AC8A0039ABB1 /* Sequence+Extension.swift in Sources */,
 				A76D971528434CB700D5FCD7 /* Component.swift in Sources */,
 				A764DC2B28BF291D005A68B0 /* ParameterEncoding.swift in Sources */,
 				A70FF51628239D77007D4F64 /* Constraints.swift in Sources */,
@@ -1738,6 +1745,7 @@
 				A7D5031429D4080A00E0CD23 /* AnimeStudio.swift in Sources */,
 				A76FFA1F290F234C007209E8 /* CalendarRouter.swift in Sources */,
 				A75215082920BA1E00E94104 /* DiscoverInteractor.swift in Sources */,
+				A7B135662A29E6600058E712 /* Sequence+Extension.swift in Sources */,
 				A76D971D28435CA200D5FCD7 /* ComponentItem.swift in Sources */,
 				A7DCE5462932DF560045300C /* ACIcon.swift in Sources */,
 				A7D4F6CD2828D6AA004622A4 /* TabBarButton.swift in Sources */,

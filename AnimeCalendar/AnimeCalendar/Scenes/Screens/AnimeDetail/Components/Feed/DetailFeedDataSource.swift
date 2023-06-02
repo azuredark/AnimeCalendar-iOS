@@ -247,10 +247,15 @@ extension DetailFeedDataSource {
     ///
     /// - Important: This also defines the order in which the sections will be layed out
     func sendLoaders() {
+        guard let presenter else { return }
+        
         // Characters
         let charactersLoader = ACContentLoader(detailFeedSection: .animeCharacters)
         updateSnapshot(for: .loader(forSection: .animeCharacters),
                        with: [charactersLoader])
+        
+        let sectionsNotNeeded: [FeedSection] = [.animeUpcoming, .animePromos]
+        guard ![presenter.animeFeedSection].includes(sectionsNotNeeded) else { return }
         
         // Recommendations
         let recommendationsLoader = ACContentLoader(detailFeedSection: .animeRecommendations)

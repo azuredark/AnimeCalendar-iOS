@@ -8,6 +8,7 @@ import RxCocoa
 import RxSwift
 
 protocol AnimeDetailPresentable: AnyObject {
+    var animeFeedSection: FeedSection { get set }
     var playerComponent: TrailerCompatible? { get set }
     var anime: Driver<Anime> { get }
     var characters: Driver<[CharacterInfo]> { get }
@@ -44,8 +45,9 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
         self.router = router
         self.interactor = interactor
     }
+    
+    var animeFeedSection: FeedSection = .unknown
 
-    // MARK: Methods
     /// Tracks when a new **anime** event is fired.
     var anime: Driver<Anime> {
         interactor.animeObservable
@@ -75,6 +77,7 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
         interactor.didFinishLoadingTrailerObservable
     }
 
+    // MARK: Methods
     /// Ask router to create the main module **Screen**.
     func start() -> Screen {
         return router.start(presenter: self)
@@ -94,10 +97,18 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     }
     
     func updateReviews(animeId: Int) {
+        let notAllowedSections: [FeedSection] = [.animeUpcoming, .animePromos]
+        
+        guard !notAllowedSections.includes([animeFeedSection]) else { return }
+        
         interactor.updateReviews(animeId: animeId)
     }
     
     func updateAnimeRecommendations(animeId: Int) {
+        let notAllowedSections: [FeedSection] = [.animeUpcoming, .animePromos]
+        
+        guard !notAllowedSections.includes([animeFeedSection]) else { return }
+        
         interactor.updateRecommendations(animeId: animeId)
     }
 

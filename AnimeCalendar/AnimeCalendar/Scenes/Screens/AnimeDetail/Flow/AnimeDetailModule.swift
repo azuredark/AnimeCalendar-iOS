@@ -41,6 +41,7 @@ final class AnimeDetailModule: Modulable {
     func build(with anime: Anime) {
         anime.detailFeedSection = .animeBasicInfo
         anime.trailer?.detailFeedSection = .animeTrailer
+        presenter.animeFeedSection = anime.feedSection
         presenter.setCoverImage(with: anime.imageType?.coverImage)
         presenter.updateAnime(with: anime)
     }
