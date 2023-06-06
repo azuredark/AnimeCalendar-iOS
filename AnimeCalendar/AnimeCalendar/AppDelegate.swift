@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ImagePipeline.shared = pipeline
 
         // MARK: Setting-up Nuke ImageLoadingOptions
-        let options = ImageLoadingOptions(placeholder: UIImage(named: "image-loading-placeholder"),
+        let options = ImageLoadingOptions(placeholder: UIImage(named: "dark-placeholder"),
                                           transition: .fadeIn(duration: 0.4, options: .layoutSubviews),
                                           failureImage: UIImage(named: "new-anime-item-placeholder"),
                                           contentModes: .init(success: .scaleAspectFill,

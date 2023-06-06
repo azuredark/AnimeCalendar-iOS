@@ -50,7 +50,11 @@ extension DetailFeed {
     func getCollection() -> UICollectionView {
         return containerCollection
     }
-
+    
+    func getDataSource() -> DetailFeedDataSource {
+        return dataSource
+    }
+    
     func getTrailerComponent() -> TrailerCompatible? {
         return presenter?.playerComponent
     }

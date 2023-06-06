@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         /// - .calendar
         /// - .discover
         /// i.e.: bootManager.getRootController(.rootScreen(screen: .discoverScreen))
-        let rootController = bootManager.getRootController(.rootScreen(screen: .discoverScreen))
+        let rootController = bootManager.getRootController(.rootTabBar(screens: [.discoverScreen, .newAnimeScreen]))
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene

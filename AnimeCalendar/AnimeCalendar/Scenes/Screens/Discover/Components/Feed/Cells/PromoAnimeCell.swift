@@ -29,7 +29,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 24, weight: .medium)
+        label.font = ACFont.normal
         label.numberOfLines = 2
         label.textColor = Color.staticWhite
         label.textAlignment = .left
@@ -87,7 +87,7 @@ final class PromoAnimeCell: UICollectionViewCell, FeedCell {
 private extension PromoAnimeCell {
     func setupCoverImage() {
         let imagePath: String? = promo?.trailer.image.attemptToGetImageByResolution(.large)
-        coverImageView.loadImage(from: imagePath, cellType: self) { [weak self] _ in
+        coverImageView.loadImage(from: imagePath, cellType: self) { [weak self] (_, _) in
             guard let self else { return }
             UIView.animate(withDuration: 0.4) { [weak self] in
                 self?.titleLabel.isHidden = false

@@ -11,8 +11,9 @@ struct ACFont {
     static let bold = FontBold()
     
     // Fonts
-    static let medium1: UIFont = .systemFont(ofSize: 14.0, weight: .medium)
+    static let medium1: UIFont  = .systemFont(ofSize: 14.0, weight: .medium)
     static let regular1: UIFont = .systemFont(ofSize: 12.0, weight: .regular)
+    static let normal: UIFont   = .systemFont(ofSize: 18, weight: .medium)
 }
 
 struct FontBold {

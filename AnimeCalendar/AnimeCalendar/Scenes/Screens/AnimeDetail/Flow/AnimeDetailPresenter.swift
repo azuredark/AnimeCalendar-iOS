@@ -1,5 +1,6 @@
 //
-//  AnimeDetailPresenter.swift //  AnimeCalendar
+//  AnimeDetailPresenter.swift
+//  AnimeCalendar
 //
 //  Created by Leonardo  on 26/12/22.
 //
@@ -16,7 +17,7 @@ protocol AnimeDetailPresentable: AnyObject {
     var recommendations: Driver<[RecommendationInfo]> { get }
     var trailerLoaded: PublishRelay<Bool> { get }
     var didFinishLoadingAnimeAndTrailer: Driver<(Bool, Anime)> { get }
-
+    
     /// Weak reference towards the view
     func start() -> Screen
     func setCoverImage(with image: UIImage?)
@@ -25,9 +26,14 @@ protocol AnimeDetailPresentable: AnyObject {
     func updateCharacters(animeId: Int)
     func updateReviews(animeId: Int)
     func updateAnimeRecommendations(animeId: Int)
-        
+    
     func disposeTrailerComponent()
     func cleanRequests()
+    func handle(action: AnimeDetailAction)
+}
+
+protocol AnimeDetailPresentableFromView {
+    func getBaseNavigation() -> CustomNavigationController?
 }
 
 final class AnimeDetailPresenter: AnimeDetailPresentable {
@@ -37,9 +43,9 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     
     weak var view: AnimeDetailScreen?
     weak var playerComponent: TrailerCompatible?
-
+    
     private let disposeBag = DisposeBag()
-
+    
     // MARK: Initializers
     init(router: AnimeDetailRoutable, interactor: AnimeDetailInteractive) {
         self.router = router
@@ -47,12 +53,12 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     }
     
     var animeFeedSection: FeedSection = .unknown
-
+    
     /// Tracks when a new **anime** event is fired.
     var anime: Driver<Anime> {
         interactor.animeObservable
     }
-
+    
     /// Anime characters (Main & secondary)
     var characters: Driver<[CharacterInfo]> {
         interactor.animeCharactersObservable
@@ -65,18 +71,18 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     var recommendations: Driver<[RecommendationInfo]> {
         interactor.animeRecommendationsObservable
     }
-
+    
     /// Tracks when the **trailer** has loaded and will be displayed.
     var trailerLoaded: PublishRelay<Bool> {
         interactor.animeTrailerLoadedObservable
     }
-
+    
     /// Tracks when both the **anime** & **trailer** have finished loading and emits an event.
     /// This event fires up a new section being added into the **mainCollection**
     var didFinishLoadingAnimeAndTrailer: Driver<(Bool, Anime)> {
         interactor.didFinishLoadingTrailerObservable
     }
-
+    
     // MARK: Methods
     /// Ask router to create the main module **Screen**.
     func start() -> Screen {
@@ -86,12 +92,12 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     func setCoverImage(with image: UIImage?) {
         view?.coverImage = image
     }
-
+    
     /// Sends a new **anime** event.
     func updateAnime(with anime: Anime) {
         interactor.updateAnime(with: anime)
     }
-
+    
     func updateCharacters(animeId: Int) {
         interactor.updateCharacters(animeId: animeId)
     }
@@ -111,7 +117,7 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
         
         interactor.updateRecommendations(animeId: animeId)
     }
-
+    
     func disposeTrailerComponent() {
         let component = view?.getDetailFeed().getTrailerComponent()
         component?.disposePlayer()
@@ -119,5 +125,15 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     
     func cleanRequests() {
         interactor.cleanRequests()
+    }
+    
+    func handle(action: AnimeDetailAction) {
+        router.handle(action: action)
+    }
+}
+
+extension AnimeDetailPresenter: AnimeDetailPresentableFromView {
+    func getBaseNavigation() -> CustomNavigationController? {
+        return view?.getBaseNavigation()
     }
 }

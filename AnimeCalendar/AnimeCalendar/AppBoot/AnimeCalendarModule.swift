@@ -12,7 +12,7 @@ protocol AnimeCalendarModular {
     func getNewAnimeModule() -> NewAnimeModule
     func getCalendarModule() -> CalendarModule
     func getDiscoverModule() -> DiscoverModule
-    func getAnimeDetailModule() -> AnimeDetailModule
+    func getAnimeDetailModule(requiresNavigation: Bool) -> AnimeDetailModule
 }
 
 final class AnimeCalendarModule {
@@ -30,7 +30,6 @@ final class AnimeCalendarModule {
     private lazy var newAnimeModule = NewAnimeModule(animeRepository: animeRepository)
     private lazy var calendarModule = CalendarModule(animeRepository: animeRepository)
     private lazy var discoverModule = DiscoverModule(animeRepository: animeRepository)
-    private lazy var animeDetailModule = AnimeDetailModule(animeRepository: animeRepository)
 
     // MARK: Initializers
     private init() {}
@@ -45,7 +44,10 @@ extension AnimeCalendarModule: AnimeCalendarModular {
     
     func getDiscoverModule() -> DiscoverModule { discoverModule }
     
-    func getAnimeDetailModule() -> AnimeDetailModule { animeDetailModule }
+    /// This module re-creates on-demand instead of being saved in memory.
+    func getAnimeDetailModule(requiresNavigation: Bool = true) -> AnimeDetailModule {
+        return AnimeDetailModule(animeRepository: animeRepository, requiresNavigation: requiresNavigation)
+    }
 }
 
 protocol Modulable {

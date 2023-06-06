@@ -59,6 +59,10 @@ final class RecommendedCell: UICollectionViewCell, FeedCell {
         let imagePath = animeInfo?.anime?.imageType?.webpImage.attemptToGetImageByResolution(.normal)
         coverImageView.loadImage(from: imagePath, cellType: self, options: [.disableDiskCache])
     }
+    
+    func getCoverImage() -> UIImage? {
+        return coverImageView.image
+    }
 }
 
 private extension RecommendedCell {

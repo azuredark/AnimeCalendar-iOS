@@ -12,7 +12,7 @@ protocol DiscoverRoutable {
     /// - Parameter presenter: Home's presenter.
     /// - Returns: Screen
     func start(presenter: DiscoverPresentable) -> Screen
-
+    
     /// Handles **actions** made in the DiscoverScreen.
     /// - Parameter action: Action to execute.
     func handle(action: DiscoverAction)
@@ -33,7 +33,7 @@ extension DiscoverRouter: DiscoverRoutable {
     func start(presenter: DiscoverPresentable) -> Screen {
         return DiscoverScreen(presenter: presenter)
     }
-
+    
     func handle(action: DiscoverAction) {
         switch action {
             case .transition(let screen):

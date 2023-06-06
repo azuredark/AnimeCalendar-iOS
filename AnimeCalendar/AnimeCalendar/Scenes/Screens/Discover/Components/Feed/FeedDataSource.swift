@@ -10,13 +10,10 @@ import UIKit
 protocol FeedDataSourceable {
     /// Sets the **section** for an specific item.
     func setModelSection<T: CaseIterable, O: Hashable>(for section: T, with items: [O]) -> [AnyHashable]
-    func getItem<T: Hashable>(at indexPath: IndexPath) -> T?
-    func updateSnapshot<T: Hashable>(for section: DetailFeedSection,
-                                     with items: [T],
-                                     animating: Bool,
-                                     before: DetailFeedSection?,
-                                     after: DetailFeedSection?,
-                                     deleteLoaders: Bool)
+    func getItem(at indexPath: IndexPath) -> Content?
+    
+    associatedtype Section: Hashable
+    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>? { get }
 }
 
 extension FeedDataSourceable {
@@ -24,17 +21,19 @@ extension FeedDataSourceable {
         return [AnyHashable]()
     }
     
-    func getItem<T: Hashable>(at indexPath: IndexPath) -> T? { nil }
+    func getItem(at indexPath: IndexPath) -> Content? {
+        return dataSource?.itemIdentifier(for: indexPath) as? Content
+    }
 }
 
-final class FeedDataSource {
+final class FeedDataSource: FeedDataSourceable {
     // MARK: Aliases
-    private typealias DiffableDataSource = UICollectionViewDiffableDataSource<FeedSection, AnyHashable>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<FeedSection, AnyHashable>
+    typealias DiffableDataSource = UICollectionViewDiffableDataSource<FeedSection, AnyHashable>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<FeedSection, AnyHashable>
 
     // MARK: State
     private let collectionView: UICollectionView
-    private var dataSource: DiffableDataSource?
+    private(set) var dataSource: DiffableDataSource?
     private var currentSnapshot = Snapshot()
     private weak var presenter: DiscoverPresentable?
 
@@ -67,10 +66,12 @@ final class FeedDataSource {
             cell.setup()
         }
 
-        let topAnimeCell = UICollectionView.CellRegistration<TopAnimeCell, Anime> { [weak self] (cell, indexPath, anime) in
+        let topAnimeCell = UICollectionView.CellRegistration<TopAnimeCellV2, Anime> { (cell, indexPath, anime) in
+//            cell.anime = anime
+//            cell.index = indexPath.row + 1
+//            cell.presenter = self?.presenter
+            
             cell.anime = anime
-            cell.index = indexPath.row + 1
-            cell.presenter = self?.presenter
             cell.setup()
         }
 
@@ -122,7 +123,7 @@ final class FeedDataSource {
                                                                          for: indexPath) as? FeedHeader
 
             // If error, then send emptyheader
-            guard let item = self?.getItem(at: indexPath) as? Content else {
+            guard let item = self?.getItem(at: indexPath) else {
                 return collection.dequeueReusableSupplementaryView(ofKind: kind,
                                                                    withReuseIdentifier: EmptyHeader.reuseIdentifier,
                                                                    for: indexPath) as? EmptyHeader
@@ -178,17 +179,6 @@ extension FeedDataSource {
 
         // Apply the snapshot.
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
-    }
-
-    /// Get item at **index path**
-    /// - Parameter indexPath: Index path of the collection view.
-    /// - Returns: Item of the generic inferred type.
-    func getItem<T: Hashable>(at indexPath: IndexPath) -> T? {
-        return dataSource?.itemIdentifier(for: indexPath) as? T
-    }
-
-    func getItem(at indexPath: IndexPath) -> AnyHashable {
-        return dataSource?.itemIdentifier(for: indexPath)
     }
 
     func resetSnapshot() {

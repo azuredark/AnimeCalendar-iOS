@@ -10,17 +10,20 @@ import RxCocoa
 
 final class AnimeDetailScreen: UIViewController, Screen {
     // MARK: State
-    private weak var presenter: AnimeDetailPresentable?
+    private var presenter: AnimeDetailPresentable?
+    private var cellIsSelectable: Bool = true
+    
     weak var coverImage: UIImage?
-
+    
     /// # Navigation Bar
     private lazy var navigationBar: ScreenNavigationBar = {
         AnimeDetailNavigationBar(self)
     }()
-
+    
     /// # Main collection
     private lazy var detailFeed: DetailFeed = {
         let feed = DetailFeed(presenter: presenter)
+        feed.getCollection().delegate = self
         return feed
     }()
     
@@ -30,8 +33,18 @@ final class AnimeDetailScreen: UIViewController, Screen {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.image = coverImage
-        view.insertSubview(imageView, at: 0)
+        coverImageContainerView.addSubview(imageView)
         return imageView
+    }()
+    
+    private lazy var coverImageContainerView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.clipsToBounds = true
+        
+        self.view.insertSubview(view, at: 0)
+        return view
     }()
     
     private lazy var blurView: UIVisualEffectView = {
@@ -39,31 +52,36 @@ final class AnimeDetailScreen: UIViewController, Screen {
         let visualEffect = UIVisualEffectView(effect: blurEffect)
         visualEffect.translatesAutoresizingMaskIntoConstraints = false
         
-        view.insertSubview(visualEffect, aboveSubview: coverImageView)
+        view.insertSubview(visualEffect, aboveSubview: coverImageContainerView)
         return visualEffect
     }()
     
     private lazy var disposeBag = DisposeBag()
-
+    
     // MARK: Initializers
     init(presenter: AnimeDetailPresentable) {
         self.presenter = presenter
-
+        
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     deinit {
         print("senku [DEBUG] \(String(describing: type(of: self))) - DE-INTIALIZED")
         presenter?.cleanRequests()
     }
-
+    
+    // MARK: - Methods
     func getDetailFeed() -> DetailFeed {
         return detailFeed
+    }
+    
+    func getBaseNavigation() -> CustomNavigationController? {
+        return navigationController as? CustomNavigationController
     }
 }
 
@@ -92,6 +110,8 @@ private extension AnimeDetailScreen {
     func configureScreen() {
         configureNavigationItems()
         layoutCollection()
+        
+        layoutCoverImageContainerView()
         layoutCoverImageView()
         layoutBlurView()
     }
@@ -140,13 +160,16 @@ private extension AnimeDetailScreen {
         ])
     }
     
+    func layoutCoverImageContainerView() {
+        coverImageContainerView.fitViewTo(view)
+    }
+    
     func layoutCoverImageView() {
-        coverImageView.fitViewTo(view)
-        view.layoutIfNeeded()
+        coverImageView.fitViewTo(coverImageContainerView)
     }
     
     func layoutBlurView() {
-        blurView.fitViewTo(coverImageView)
+        blurView.fitViewTo(coverImageContainerView)
     }
 
     func configureNavigationTitle(with title: String) {
@@ -155,4 +178,41 @@ private extension AnimeDetailScreen {
 }
 
 // MARK: - Delegates
-extension AnimeDetailScreen {}
+extension AnimeDetailScreen: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        
+        guard cellIsSelectable else { return }
+        cellIsSelectable = false
+        
+        guard let content = detailFeed.getDataSource().getItem(at: indexPath) else { return }
+        
+        cell.expand(durationInSeconds: 0.15, end: .reset, toScale: 0.95) { [weak self] in
+            self?.cellIsSelectable = true
+        }
+        
+        switch cell {
+            case is RecommendedCell:
+                let anime = (content as? RecommendationInfo)?.anime
+                
+                let image: UIImage? = (cell as? FeedCell)?.getCoverImage() ?? UIImage(named: "new-anime-item-spyxfamily")
+                anime?.imageType?.coverImage = image
+                presenter?.handle(action: .transition(to: .anime(anime)))
+            default: break
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        UIView.animate(withDuration: 0.2) {
+            cell.transform = .init(scaleX: 0.95, y: 0.95)
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        UIView.animate(withDuration: 0.2) {
+            cell.transform = .identity
+        }
+    }
+}

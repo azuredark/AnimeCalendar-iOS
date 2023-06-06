@@ -127,9 +127,8 @@ extension DiscoverPresenter: DiscoverPresentable {
     }
 
     func deleteCache() {
-        Nuke.DataLoader.sharedUrlCache.removeAllCachedResponses()
+        ImagePipeline.shared.cache.removeAll(caches: .all)
     }
 }
 
-private extension DiscoverPresenter {
-}
+private extension DiscoverPresenter {}

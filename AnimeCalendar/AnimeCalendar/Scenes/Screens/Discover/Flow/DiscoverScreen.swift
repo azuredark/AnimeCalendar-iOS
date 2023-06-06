@@ -79,10 +79,10 @@ private extension DiscoverScreen {
         // 3. Update data (This determines the order
         // in which the sections will be displayed).
         Task(priority: .userInitiated) {
-            await presenter.updateRecentPromosAnime()
+            await presenter.updateTopAnime(by: .rank)
             await presenter.updateSeasonAnime()
             await presenter.updateUpcomingAnime()
-            await presenter.updateTopAnime(by: .rank)
+            await presenter.updateRecentPromosAnime()
         }
     }
 }

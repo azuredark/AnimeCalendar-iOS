@@ -151,8 +151,8 @@ final class AnimeRepository: GenericRepository {
                     case .success(let characterInfo):
                         characterInfo?.setDetailFeedSection(to: .animeReviews)
                         single(.success(characterInfo))
-                    case .failure(_):
-                        single(.success(nil))
+                    case .failure(let error):
+                        single(.failure(error))
                 }
             }
             

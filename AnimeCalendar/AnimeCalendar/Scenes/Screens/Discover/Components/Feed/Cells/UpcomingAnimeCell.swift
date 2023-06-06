@@ -29,8 +29,8 @@ final class UpcomingAnimeCell: UICollectionViewCell, FeedCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 18, weight: .medium)
-        label.numberOfLines = 3
+        label.font = ACFont.normal
+        label.numberOfLines = 2
         label.textColor = Color.staticWhite
         label.textAlignment = .left
         label.alpha = 0
@@ -84,7 +84,7 @@ final class UpcomingAnimeCell: UICollectionViewCell, FeedCell {
 private extension UpcomingAnimeCell {
     func setupCoverImageView() {
         let path: String? = anime?.imageType?.webpImage.attemptToGetImageByResolution(.large)
-        coverImageView.loadImage(from: path, cellType: self) { [weak self] _ in
+        coverImageView.loadImage(from: path, cellType: self) { [weak self] (_, _) in
             UIView.animate(withDuration: 0.4) { [weak self] in
                 guard let self else { return }
                 self.titleLabel.alpha = 1

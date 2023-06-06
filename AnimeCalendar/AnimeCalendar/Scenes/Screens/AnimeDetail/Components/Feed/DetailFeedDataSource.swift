@@ -32,7 +32,7 @@ final class DetailFeedDataSource {
     private let disposeBag = DisposeBag()
 
     private weak var collectionView: UICollectionView?
-    private var dataSource: DiffableDataSource?
+    private(set) var dataSource: DiffableDataSource?
     private(set) var currentSnapshot = Snapshot()
 
     // MARK: Initializers
@@ -47,6 +47,8 @@ final class DetailFeedDataSource {
     deinit {
         print("senku [DEBUG] \(String(describing: type(of: self))) - deinited")
     }
+    
+    // MARK: Methods
 }
 
 private extension DetailFeedDataSource {
@@ -208,14 +210,14 @@ extension DetailFeedDataSource: FeedDataSourceable {
         // Apply snapshot
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
     }
-    
+
     func deleteSection(_ section: DetailFeedSection, animating: Bool = true) {
         guard var snapshot = dataSource?.snapshot() else { return }
         guard sectionExists(section, in: snapshot) else { return }
-        
+
         // Delete section
         snapshot.deleteSections([section])
-        
+
         // Apply snapshot
         dataSource?.apply(snapshot, animatingDifferences: animating)
     }
@@ -239,7 +241,7 @@ extension DetailFeedDataSource {
         bindCharacters()
         bindReviews()
         bindRecommendations()
-        
+
         sendLoaders()
     }
 
@@ -248,15 +250,15 @@ extension DetailFeedDataSource {
     /// - Important: This also defines the order in which the sections will be layed out
     func sendLoaders() {
         guard let presenter else { return }
-        
+
         // Characters
         let charactersLoader = ACContentLoader(detailFeedSection: .animeCharacters)
         updateSnapshot(for: .loader(forSection: .animeCharacters),
                        with: [charactersLoader])
-        
+
         let sectionsNotNeeded: [FeedSection] = [.animeUpcoming, .animePromos]
         guard ![presenter.animeFeedSection].includes(sectionsNotNeeded) else { return }
-        
+
         // Recommendations
         let recommendationsLoader = ACContentLoader(detailFeedSection: .animeRecommendations)
         updateSnapshot(for: .loader(forSection: .animeRecommendations),
@@ -266,7 +268,6 @@ extension DetailFeedDataSource {
         let reviewsLoader = ACContentLoader(detailFeedSection: .animeReviews)
         updateSnapshot(for: .loader(forSection: .animeReviews),
                        with: [reviewsLoader])
-
     }
 
     func bindAnime() {
@@ -300,6 +301,9 @@ extension DetailFeedDataSource {
                 guard let self else { return }
                 guard let trailer = anime.trailer else  { return }
                 print("senku [DEBUG] \(String(describing: type(of: self))) - RX DID FINISH LOADING TRAILER")
+
+                guard let dataSource, dataSource.snapshot().indexOfSection(.animeTrailer) == nil else { return }
+
                 self.updateSnapshot(for: DetailFeedSection.animeTrailer,
                                     with: [trailer],
                                     animating: true,
@@ -342,7 +346,7 @@ extension DetailFeedDataSource {
         presenter.recommendations
             .drive(onNext: { [weak self] (animesInfo) in
                 guard let self else { return }
-                Logger.log(.info, msg: "Recommended animes: \(animesInfo.map { $0.anime?.titleEng ?? "" })")
+                Logger.log(.info, msg: "Recommended animes: \(animesInfo.map { $0.anime?.titleEng ?? "" })", active: false)
                 self.updateSnapshot(for: DetailFeedSection.animeRecommendations,
                                     with: animesInfo,
                                     animating: true,
@@ -350,16 +354,16 @@ extension DetailFeedDataSource {
                 self.deleteSection(.loader(forSection: .animeRecommendations))
             }).disposed(by: disposeBag)
     }
-    
+
     @available(*, deprecated, message: "Not currently working...")
     func startSpinners(_ charactersLoader: ACContentLoader, _ recommendationsLoader: ACContentLoader, _ reviewsLoader: ACContentLoader) {
         // Get all loader cells
         let indexPath1 = dataSource?.indexPath(for: charactersLoader)
         let indexPath2 = dataSource?.indexPath(for: recommendationsLoader)
         let indexPath3 = dataSource?.indexPath(for: reviewsLoader)
-        
+
         let indexPaths = [indexPath1, indexPath2, indexPath3].compactMap { $0 }
-        
+
         indexPaths.forEach { [weak self] (indexPath) in
             guard let self, let collectionView = self.collectionView else { return }
             guard let loaderCell = self.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ACSectionLoaderCell else { return }

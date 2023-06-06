@@ -11,7 +11,7 @@ import Nuke
 /// Lookup **AppDelegate.swift** for PipeLine configurations.
 // MARK: Can't use .withCheckedContinuation as Nuke.loadimage(:) completion sometimes doesn't callback.
 extension UIImageView {
-    typealias Completion = @MainActor(Bool) -> Void
+    typealias Completion = @MainActor(_ img: UIImage?, Bool) -> Void
 
     @discardableResult
     func loadImage(from path: String?,
@@ -19,7 +19,7 @@ extension UIImageView {
                    size: CGSize? = nil,
                    options: ImageRequest.Options = [],
                    completion: Completion? = nil) -> ImageTask? {
-        guard let path = path, !path.isEmpty else { completion?(false); return nil }
+        guard let path = path, !path.isEmpty else { completion?(nil, false); return nil }
 
         // Image processing
         var processors: [ImageProcessing] = []
@@ -37,11 +37,11 @@ extension UIImageView {
         // ImageLoadingOptions can be used to have custom placeholders in different locations.
         return Nuke.loadImage(with: request, into: self) { result in
             switch result {
-                case .success:
-                    completion?(true)
+                case .success(let value):
+                    completion?(value.image, true)
                 case .failure(let error):
                     print("senku [DEBUG] \(String(describing: type(of: self))) - loadImage(:) error: \(error)")
-                    completion?(false)
+                    completion?(nil, false)
             }
         }
     }

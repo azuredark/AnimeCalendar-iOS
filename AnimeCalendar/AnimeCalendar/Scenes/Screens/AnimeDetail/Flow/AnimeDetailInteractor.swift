@@ -94,7 +94,11 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
     func updateReviews(animeId: Int) {
         repository.getAnimeReviews(animeId: animeId)
             .asObservable()
-            .bind(to: reviewsStorage)
+            .subscribe(onNext: { [weak self] result in
+                self?.reviewsStorage.accept(result)
+            }, onError: { [weak self] _ in
+                self?.reviewsStorage.accept(JikanResult<ReviewInfo>())
+            })
             .disposed(by: disposeBag)
     }
     

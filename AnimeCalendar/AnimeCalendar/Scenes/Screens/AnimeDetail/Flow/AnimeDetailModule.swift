@@ -16,14 +16,13 @@ final class AnimeDetailModule: Modulable {
     }()
 
     // MARK: Initializers
-    init(animeRepository: AnimeRepository) {
-        let navigation = CustomNavigationController()
-        
-        let router = AnimeDetailRouter(baseController: navigation)
+    init(animeRepository: AnimeRepository, requiresNavigation: Bool) {
+        let router = AnimeDetailRouter()
         let interactor = AnimeDetailInteractor(repository: animeRepository)
         
         self.presenter = AnimeDetailPresenter(router: router, interactor: interactor)
         self.presenter.playerComponent = playerComponent
+        router.presenter = presenter
     }
     
     // MARK: Methods
@@ -35,6 +34,13 @@ final class AnimeDetailModule: Modulable {
         
         presenter.view = screen as? AnimeDetailScreen
         return baseNavigation
+    }
+    
+    func startViewControllerOnly() -> Screen {
+        let screen = presenter.start()
+        presenter.view = screen as? AnimeDetailScreen
+        
+        return screen
     }
     
     /// Builds with anime by **emiting** event.

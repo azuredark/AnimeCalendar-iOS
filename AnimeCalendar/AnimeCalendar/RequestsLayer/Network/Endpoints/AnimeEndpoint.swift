@@ -62,7 +62,7 @@ extension AnimeEndpoint: EndpointType {
     
     var headers: HTTPHeaders? { nil }
     
-    var retries: Int { 3 }
+    var retries: Int { 5 }
     
     var timeOut: CGFloat {
         if case .getCharacters = self { return 5.0 }

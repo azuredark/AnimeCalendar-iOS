@@ -104,7 +104,7 @@ extension TrailerComponent: TrailerCompatible {
 
         timeOut(for: ytVideoId)
         playerView?.load(withVideoId: id,
-                         playerVars: ["autoplay": 1,
+                         playerVars: ["autoplay": 0,
                                       "playsinline": 1,
                                       "cc_load_policy": 1,
                                       "cc_lang_pref": "en",
