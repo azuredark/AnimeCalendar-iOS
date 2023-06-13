@@ -73,6 +73,7 @@ extension GenreCollection: ACColllectionLayoutable {
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = .init(top: 0, leading: 10.0, bottom: 0, trailing: 0)
         section.interGroupSpacing = 8.0
 
         return section

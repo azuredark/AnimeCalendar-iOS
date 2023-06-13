@@ -6,7 +6,7 @@
 //
 
 protocol AnimeDetailRoutable {
-    func start(presenter: AnimeDetailPresentable) -> Screen
+    func start(presenter: AnimeDetailPresentable, animeIsPreloaded: Bool) -> Screen
     func handle(action: AnimeDetailAction)
 }
 
@@ -24,8 +24,8 @@ extension AnimeDetailRouter: AnimeDetailRoutable {
     /// Create **AnimeDetailScreen** view controller.
     /// - Parameter presenter: AnimeDetail presenter.
     /// - Returns: Main module screen view.
-    func start(presenter: AnimeDetailPresentable) -> Screen {
-        return AnimeDetailScreen(presenter: presenter)
+    func start(presenter: AnimeDetailPresentable, animeIsPreloaded: Bool) -> Screen {
+        return AnimeDetailScreen(presenter: presenter, animeIsPreloaded: animeIsPreloaded)
     }
 
     func handle(action: AnimeDetailAction) {
@@ -46,10 +46,12 @@ private extension AnimeDetailRouter {
     }
 
     func openDetailScreen(with anime: Anime?) {
-        guard let anime = anime else { return }
+        guard let anime else { return }
+        
         let module = AnimeCalendarModule.shared.getAnimeDetailModule()
         let controller = module.startViewControllerOnly()
-        module.build(with: anime)
+        
+        module.build(recommendedAnime: anime, detailFeedSection: .animeBasicInfo)
 
         let navigation = presenter?.getBaseNavigation()
         navigation?.pushViewController(controller, animated: true)

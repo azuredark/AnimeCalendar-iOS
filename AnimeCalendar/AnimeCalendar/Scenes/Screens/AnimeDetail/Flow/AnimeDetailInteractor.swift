@@ -16,6 +16,7 @@ protocol AnimeDetailInteractive {
     var animeRecommendationsObservable: Driver<[RecommendationInfo]> { get }
     var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> { get }
     
+    func findAnime(id: Int, detailSection: DetailFeedSection)
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
     func updateReviews(animeId: Int)
@@ -56,7 +57,7 @@ final class AnimeDetailInteractor: GenericInteractor<AnimeRepository> {
 
 extension AnimeDetailInteractor: AnimeDetailInteractive {
     var animeObservable: Driver<Anime> {
-        animeStorage.asDriver(onErrorJustReturn: Anime())
+        animeStorage.filter { $0.malId != nil } .asDriver(onErrorJustReturn: Anime())
     }
 
     var animeTrailerLoadedObservable: PublishRelay<Bool> {
@@ -78,8 +79,22 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
     var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> {
         didFinishLoadingTrailer.skip(1).asDriver(onErrorJustReturn: (false, Anime()))
     }
+    
+    func findAnime(id: Int, detailSection: DetailFeedSection) {
+        repository.getAnime(id: id, detailSection: detailSection)
+            .map(\.?.singleData)
+            .compactMap { $0 }
+            .asObservable()
+            .subscribe(onNext: { [weak self] (anime) in
+                self?.animeStorage.accept(anime)
+            }, onError: { [weak self] _ in
+                self?.animeStorage.accept(Anime())
+            })
+            .disposed(by: disposeBag)
+    }
 
     func updateAnime(with anime: Anime) {
+        guard anime.feedSection != .unknown else { return }
         animeStorage.accept(anime)
     }
 

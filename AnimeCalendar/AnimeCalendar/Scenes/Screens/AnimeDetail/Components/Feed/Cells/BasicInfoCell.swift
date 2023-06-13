@@ -22,8 +22,9 @@ final class BasicInfoCell: UICollectionViewCell, FeedCell {
 
     /// Stack containing **snynopsis**.
     private lazy var mainStack: ACStack = {
-        let stack = ACStack(axis: .vertical)
+        let stack = ACStack()
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
         stack.accessibilityIdentifier = AccessId.mainStack
         stack.backgroundColor = .clear
         stack.alignment = .center
@@ -120,7 +121,8 @@ private extension BasicInfoCell {
         /// # Stack Container
         // Components
         var components = [ACStackItem]()
-        let container = ACStack(axis: .vertical)
+        let container = ACStack()
+        container.axis = .vertical
         container.alignment = .leading
         container.distribution = .fill
         container.spacing = 0
@@ -158,7 +160,8 @@ private extension BasicInfoCell {
     
     func getSynopsisStack(with synopsis: String) -> ACStack {
         var components = [ACStackItem]()
-        let container = ACStack(axis: .vertical)
+        let container = ACStack()
+        container.axis = .vertical
         container.alignment = .leading
         container.distribution = .fill
         container.spacing = 0

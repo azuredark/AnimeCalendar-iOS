@@ -9,6 +9,7 @@ import Foundation
 
 final class JikanResult<DataModel: Content>: Decodable {
     var data: [DataModel] = []
+    var singleData: DataModel?
     var pagination: JikanPagination
     
     // MARK: Parameter mapping
@@ -34,7 +35,13 @@ final class JikanResult<DataModel: Content>: Decodable {
     // MARK: Decoding Technique
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = try container.decodeIfPresent([DataModel].self, forKey: .data) ?? [DataModel]()
+        data = (try? container.decodeIfPresent([DataModel].self, forKey: .data)) ?? [DataModel]()
+        
+        // If result is "single".
+        if data.isEmpty {
+            singleData = try container.decodeIfPresent(DataModel.self, forKey: .data)
+        }
+        
         pagination = try container.decodeIfPresent(JikanPagination.self, forKey: .pagination) ?? JikanPagination(hasNextPage: false)
     }
     

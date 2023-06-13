@@ -76,8 +76,9 @@ final class TopAnimeCell: UICollectionViewCell, FeedCell {
     }()
 
     private lazy var detailStack: ACStack = {
-        let stack = ACStack(axis: .horizontal)
+        let stack = ACStack()
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
         infoContainer.addSubview(stack)
         return stack
     }()

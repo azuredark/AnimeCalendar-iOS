@@ -53,10 +53,12 @@ private extension DiscoverRouter {
     }
 
     func openDetailScreen(with anime: Anime?) {
-        guard let anime = anime else { return }
+        guard let anime else { return }
+        
         let module = AnimeCalendarModule.shared.getAnimeDetailModule()
         let controller = module.start()
         controller.modalPresentationStyle = .formSheet
+        
         module.build(with: anime)
 
         baseNavigation?.present(controller, animated: true)

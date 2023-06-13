@@ -22,6 +22,7 @@ final class GenreCell: UICollectionViewCell, FeedCell {
         view.accessibilityIdentifier = AccessId.container
         view.layer.borderWidth = 1.0
         view.addCornerRadius(radius: 5.0)
+        
         contentView.addSubview(view)
         return view
     }()
@@ -34,6 +35,7 @@ final class GenreCell: UICollectionViewCell, FeedCell {
         label.font = .systemFont(ofSize: 16.0, weight: .medium)
         label.numberOfLines = 1
         label.textAlignment = .center
+        
         container.addSubview(label)
         return label
     }()
@@ -41,6 +43,7 @@ final class GenreCell: UICollectionViewCell, FeedCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         nameLabel.text = nil
+        container.layer.borderColor = UIColor.clear.cgColor
     }
 
     // MARK: Methods
@@ -54,7 +57,7 @@ final class GenreCell: UICollectionViewCell, FeedCell {
         
         // Make theme-color.
         anime?.imageType?.coverImage?.getThemeColor(completion: { [weak self] (color) in
-            guard let color = color else { return }
+            guard let color else { return }
             
             self?.configureThemeColor(color: color)
             self?.anime?.imageType?.themeColor = color
@@ -76,10 +79,10 @@ final class GenreCell: UICollectionViewCell, FeedCell {
 
 private extension GenreCell {
     func configureThemeColor(color: UIColor) {
-        Task { @MainActor in
-            container.layer.borderColor = color.cgColor
-            container.backgroundColor = color.withAlphaComponent(0.2)
-            nameLabel.textColor = Color.black
+        DispatchQueue.main.async { [weak self] in
+            self?.container.layer.borderColor = color.cgColor
+            self?.container.backgroundColor = color.withAlphaComponent(0.2)
+            self?.nameLabel.textColor = Color.black
         }
     }
 }

@@ -10,6 +10,15 @@ import UIKit
 enum SpacingNeighbor: Hashable {
     case previous(spacing: CGFloat)
     case next(spacing: CGFloat)
+
+    var spacing: CGFloat {
+        switch self {
+            case .previous(let spacing):
+                return spacing
+            case .next(let spacing):
+                return spacing
+        }
+    }
 }
 
 extension UIStackView {
@@ -27,14 +36,18 @@ extension UIStackView {
         // And ignores custom spacing for views that are not in the **arrangedSubiew** list.
         guard viewIsInStack(currentView) else { return }
 
+        /// If the item is the *initial* element, then there is no *previous-neighbor*, so account for the missing part.
+        let missingNeighborSpacing: CGFloat = (arrangedSubviewsCount == 1) ? getMissingNeighborSpacing(neighbors) : 0
+        
         neighbors.forEach { neighborView in
             switch neighborView {
                 case .next(let spacing):
                     // Get current view -> Add customSpacing(:after)
-                    addCustomNextSpacing(to: currentView, spacing: spacing)
-                case .previous(let spacing):
+                    addCustomNextSpacing(to: currentView, spacing: spacing + missingNeighborSpacing)
+                case .previous(let spacing) where neighbors.count > 1:
                     // Get previous subview -> Add customSpacing(:after)
                     addCustomPreviousSpacing(to: currentView, spacing: spacing)
+                default: break
             }
         }
     }
@@ -69,5 +82,23 @@ extension UIStackView {
             print("senku [❌] \(String(describing: type(of: self))) - Error: \(view) is not in \(self).")
         }
         return inStack
+    }
+    
+    var arrangedSubviewsCount: Int { self.arrangedSubviews.count }
+}
+
+private extension UIStackView {
+    func getMissingNeighborSpacing(_ neighbors: [SpacingNeighbor]) -> CGFloat {
+        /// The spacing value is being ignored when comparing them
+        var spacing: CGFloat = 0
+        for neighbor in neighbors {
+            // Ignores (let spacing) comparison.
+            if case .previous = neighbor {
+                spacing = neighbor.spacing
+                return spacing
+            }
+        }
+        
+        return spacing
     }
 }

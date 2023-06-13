@@ -34,10 +34,12 @@ final class DetailFeed: NSObject {
     private lazy var disposeBag = DisposeBag()
 
     // MARK: Initializers
-    init(presenter: AnimeDetailPresentable?) {
-        super.init()
+    init(presenter: AnimeDetailPresentable?, animeIsPreloaded: Bool) {
         self.presenter = presenter
-        dataSource.configureBindings()
+
+        super.init()
+        
+        dataSource.configureBindings(animePreLoaded: animeIsPreloaded)
     }
 
     deinit {
@@ -50,11 +52,11 @@ extension DetailFeed {
     func getCollection() -> UICollectionView {
         return containerCollection
     }
-    
+
     func getDataSource() -> DetailFeedDataSource {
         return dataSource
     }
-    
+
     func getTrailerComponent() -> TrailerCompatible? {
         return presenter?.playerComponent
     }
@@ -73,12 +75,14 @@ private extension DetailFeed {
             if content is ACContentLoader {
                 return self.getLoaderSection()
             }
-
+            
             switch content.detailFeedSection {
                 case .animeTrailer:
                     return self.getTrailerSection()
                 case .animeBasicInfo:
-                    return self.getBasicInfoSection()
+                    return self.getMainHeaderSection()
+                case .animeSynopsis:
+                    return self.getSynopsisSection()
                 case .animeCharacters:
                     return self.getCharactersSection()
                 case .animeReviews:
@@ -88,30 +92,30 @@ private extension DetailFeed {
                 default: return nil
             }
         }
-
+        
         return layout
     }
-
-    /// #  Trailer Section
+    
+    // MARK: - Trailer Section
     func getTrailerSection() -> NSCollectionLayoutSection {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         // Group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                heightDimension: .fractionalHeight(6 / 19))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none // Prevent scrolling
-
+        
         return section
     }
-
-    /// #  Basic Info. Section
+    
+    // MARK: - Basic Info. Section
     /// Layout for Basic Info.
     ///
     /// **Important**: The height dimension *estimated = 50* is used to indicate the height depends on its content. It works by having its only cell have the full size of the **Item & group**
@@ -120,42 +124,42 @@ private extension DetailFeed {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .estimated(50))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         // Group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                heightDimension: .estimated(50))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         // Header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: .estimated(70))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
                                                                  elementKind: Self.basicInfoHeaderKind,
                                                                  alignment: .top)
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
         section.boundarySupplementaryItems = [header]
         section.contentInsets = .init(top: 5.0, leading: 0, bottom: 8.0, trailing: 0)
-
+        
         return section
     }
-
-    /// # Characters Section
+    
+    // MARK: - Characters
     func getCharactersSection() -> NSCollectionLayoutSection? {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         // Group
-        let aspectRatio: CGFloat = 16/9
+        let aspectRatio: CGFloat = 16 / 9
         let widthRatio: CGFloat  = 0.25
         let heightRatio: CGFloat = widthRatio * aspectRatio
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(widthRatio),
                                                heightDimension: .fractionalWidth(heightRatio))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         // Header
         let headerWidth: CGFloat = UIScreen.main.bounds.size.width
         let headerSize = NSCollectionLayoutSize(widthDimension: .absolute(headerWidth),
@@ -163,27 +167,28 @@ private extension DetailFeed {
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
                                                                  elementKind: Self.feedHeaderKind,
                                                                  alignment: .top)
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.boundarySupplementaryItems = [header]
         section.contentInsets = .init(top: 0, leading: 10, bottom: 8.0, trailing: 10)
         section.interGroupSpacing = 10.0
-
+        
         return section
     }
-
+    
+    // MARK: - Loader
     func getLoaderSection() -> NSCollectionLayoutSection? {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         // Group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                heightDimension: .absolute(50.0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none // Prevent scrolling
@@ -191,14 +196,14 @@ private extension DetailFeed {
         
         return section
     }
-
-    /// # Reviews Section
+    
+    // MARK: - Reviews
     func getReviewsSection() -> NSCollectionLayoutSection? {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         // Group
         let height: CGFloat = 150.0
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.80),
@@ -219,10 +224,11 @@ private extension DetailFeed {
         section.boundarySupplementaryItems = [header]
         section.contentInsets = .init(top: 0, leading: 10, bottom: 8.0, trailing: 10)
         section.interGroupSpacing = 10.0
-
+        
         return section
     }
     
+    // MARK: - Recommended
     func getRecommendedSection() -> NSCollectionLayoutSection? {
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
@@ -230,7 +236,7 @@ private extension DetailFeed {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         // Group
-        let aspectRatio: CGFloat = 16/9
+        let aspectRatio: CGFloat = 16 / 9
         let widthRatio: CGFloat  = 0.20
         let titleHeight: CGFloat = 15.0 / UIScreen.main.bounds.size.height
         let heightRatio: CGFloat = (widthRatio * aspectRatio) + titleHeight
@@ -246,11 +252,61 @@ private extension DetailFeed {
                                                                  elementKind: Self.feedHeaderKind,
                                                                  alignment: .top)
         
+        // Section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [header]
         section.contentInsets = .init(top: 0, leading: 10, bottom: 8.0, trailing: 10)
         section.interGroupSpacing = 10.0
+        
+        return section
+    }
+    
+    // MARK: - Main Header
+    func getMainHeaderSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .estimated(20))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .estimated(20))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .none
+        section.contentInsets = .init(top: 0, leading: 0, bottom: 8.0, trailing: 0)
+        
+        return section
+    }
+    
+    // MARK: - Synopsis
+    func getSynopsisSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .estimated(20))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .estimated(20))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        // Header
+        let headerWidth: CGFloat = UIScreen.main.bounds.size.width
+        let headerSize = NSCollectionLayoutSize(widthDimension: .absolute(headerWidth),
+                                                heightDimension: .estimated(70))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: Self.feedHeaderKind,
+                                                                 alignment: .top)
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .none
+        section.boundarySupplementaryItems = [header]
+        section.contentInsets = .init(top: 0, leading: 10.0, bottom: 8.0, trailing: 10.0)
         
         return section
     }

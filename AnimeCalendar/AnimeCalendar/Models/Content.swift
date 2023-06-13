@@ -14,6 +14,7 @@ import Foundation
 class Content: Hashable, Decodable {
     // MARK: Parameters
     var id: String = UUID().uuidString
+    var malId: Int?
     var imageType: ContentImageType?
 
     // MARK: Parameter mapping
@@ -25,7 +26,11 @@ class Content: Hashable, Decodable {
     // MARK: Decoding Technique
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id        = String(try container.decodeIfPresent(Int.self, forKey: .id) ?? 0)
+        // malId
+        self.malId     = try container.decodeIfPresent(Int.self, forKey: .id)
+        
+        // id
+        if let malId { self.id = String(malId) }
         
         var imageType = try container.decodeIfPresent(ContentImageType.self, forKey: .imageType)
         imageType?.contentId = self.id
@@ -33,6 +38,11 @@ class Content: Hashable, Decodable {
     }
     
     init() {}
+    
+    init(feedSection: FeedSection = .unknown, detailFeedSection: DetailFeedSection = .unknown) {
+        self.feedSection = feedSection
+        self.detailFeedSection = detailFeedSection
+    }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

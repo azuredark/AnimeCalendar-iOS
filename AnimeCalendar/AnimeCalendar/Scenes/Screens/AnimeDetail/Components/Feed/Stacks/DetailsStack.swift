@@ -10,10 +10,13 @@ import UIKit
 final class DetailsStack: ACStackable {
     // MARK: State
     private(set) lazy var stack: ACStack = {
-        let _stack = ACStack(axis: .horizontal)
+        let _stack = ACStack()
         _stack.translatesAutoresizingMaskIntoConstraints = false
-        _stack.backgroundColor = .clear
+        _stack.axis = .horizontal
         _stack.alignment = .center
+        _stack.distribution = .fill
+        _stack.spacing = 4.0
+        _stack.backgroundColor = .clear
         return _stack
     }()
 
@@ -38,9 +41,13 @@ private extension DetailsStack {
         icon.size = .init(width: 14.0)
         icon.tint = Color.gray
 
-        let spacer: ACStackItem = .spacer(type: .circle(tint: Color.gray),
-                                          space: 5.0)
-
+        let spacer: ACStackItem = .spacer(type: .circle(tint: Color.gray), space: 10.0)
+        
+        let leadingSpacer: ACStackItem = .spacer(type: .empty, space: 10.0)
+        
+        // Leading spacer (Inset)
+        components.append(leadingSpacer)
+        
         // Show type
         components.append(contentsOf: [
             .text(value: anime.showType.rawValue, style: textStyle),

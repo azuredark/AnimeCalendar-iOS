@@ -29,13 +29,11 @@ final class ACStack: UIStackView, ACUIDesignable {
         didSet { configure() }
     }
 
-    init(axis: NSLayoutConstraint.Axis, frame: CGRect = .zero) {
-        super.init(frame: frame)
-        self.axis = axis
-        self.alignment = .center
-        self.spacing = 2.0
+    init() {
+        super.init(frame: .zero)
         self.accessibilityIdentifier = AccessId.stack
     }
+    
 
     @available(*, unavailable)
     required init(coder: NSCoder) {
@@ -57,7 +55,7 @@ final class ACStack: UIStackView, ACUIDesignable {
 private extension ACStack {
     func configure() {
         components.forEach { [weak self] component in
-            guard let self = self else { return }
+            guard let self else { return }
             switch component {
                 case .icon(let icon):
                     self.layoutImageView(with: icon)
@@ -74,32 +72,36 @@ private extension ACStack {
 
     /// Layout image view.
     @discardableResult
-    func layoutImageView(with icon: ACStack.Image) -> UIImageView {
+    func layoutImageView(with image: ACStack.Image) -> UIImageView {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.accessibilityIdentifier = AccessId.imageView
         imageView.contentMode = .scaleAspectFit
 
-        if let color = icon.tint {
-            imageView.image = icon.image.withRenderingMode(.alwaysTemplate)
+        if let color = image.tint {
+            imageView.image = image.image.withRenderingMode(.alwaysTemplate)
             imageView.tintColor = color
         } else {
-            imageView.image = icon.image
+            imageView.image = image.image
         }
-
-        // Depending on the **axis** either the **height** or **width** will **not** be set.
-        // As the **contentMode** is set to **.scaleAspectFit**.
-        if let width = icon.size.width, width != .zero {
-            let widthConstraint = imageView.widthAnchor.constraint(equalToConstant: width)
-            imageView.setPriorityForConstraints([widthConstraint], with: .defaultHigh)
+        
+        var constraints: [NSLayoutConstraint] = []
+        
+        if let width = image.size.width {
+            constraints.append(imageView.widthAnchor.constraint(equalToConstant: width))
         }
-
-        if let height = icon.size.height, height != .zero {
-            let heightConstraint = imageView.heightAnchor.constraint(equalToConstant: height)
-            imageView.setPriorityForConstraints([heightConstraint], with: .defaultHigh)
+        
+        if let height = image.size.height {
+            constraints.append(imageView.heightAnchor.constraint(equalToConstant: height))
         }
-
+        
+        /// **This is important to prevent AutoLayout warnings.**
+        constraints.forEach { $0.priority = .init(999) }
+        
+        NSLayoutConstraint.activate(constraints)
+        
         addArrangedSubview(imageView)
+        
         return imageView
     }
 
@@ -133,9 +135,11 @@ private extension ACStack {
 
     /// Creates an empty view which serves as a *spacer*.
     ///
-    /// - Warning: This will apply the **space** to both the **previous** and **next** neighbors.
-    /// Meaning it will be applied **twice** in total, once per each **neighbor**.
     /// - Parameter size: Size of the spacer.
+    /// - Parameter space: The space for **EACH** side (Left & Right).
+    ///
+    /// - Warning: This will apply the **space** to both the **previous** and **next** neighbors **1/2 on EACH**.
+    /// If it's the **first** or **last** element of the stack then all the padding will be applied to one neighbor.
     func layoutSpacer(_ spacer: SpacerType, space: CGFloat) {
         var currentView: UIView?
 

@@ -47,7 +47,7 @@ final class DetailFeedDataSource {
     deinit {
         print("senku [DEBUG] \(String(describing: type(of: self))) - deinited")
     }
-    
+
     // MARK: Methods
 }
 
@@ -62,8 +62,14 @@ private extension DetailFeedDataSource {
             cell.setup()
         }
 
-        let basicInfoCell = UICollectionView.CellRegistration<BasicInfoCell, Anime> { cell, _, anime in
+        let mainHeaderCell = UICollectionView.CellRegistration<DetailMainHeaderCell, Anime> { cell, _, anime in
             cell.anime = anime
+            cell.setup()
+        }
+
+        let synopsisCell = UICollectionView.CellRegistration<SynopsisCell, SynopsisContent> {
+            (cell, _, synopsisContent) in
+            cell.synopsisContent = synopsisContent
             cell.setup()
         }
 
@@ -90,7 +96,7 @@ private extension DetailFeedDataSource {
 
         guard let collectionView else { return }
 
-        // Dequeing cells.
+        // Cell dequeue.
         dataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let item = item as? Content else { return nil }
 
@@ -106,7 +112,10 @@ private extension DetailFeedDataSource {
                     return trailerCell.cellProvider(collectionView, indexPath, trailer)
                 case .animeBasicInfo:
                     guard let anime = item as? Anime else { return nil }
-                    return basicInfoCell.cellProvider(collectionView, indexPath, anime)
+                    return mainHeaderCell.cellProvider(collectionView, indexPath, anime)
+                case .animeSynopsis:
+                    guard let synopsis = item as? SynopsisContent else { return nil }
+                    return synopsisCell.cellProvider(collectionView, indexPath, synopsis)
                 case .animeCharacters:
                     guard let characterInfo = item as? CharacterInfo else { return nil }
                     return characterCell.cellProvider(collectionView, indexPath, characterInfo)
@@ -120,18 +129,9 @@ private extension DetailFeedDataSource {
             }
         }
 
+        // Supplementary view dequeue.
         dataSource?.supplementaryViewProvider = { [weak self] (collection, kind, indexPath) -> UICollectionReusableView? in
             guard let self, let content = self.dataSource?.itemIdentifier(for: indexPath) as? Content else { return nil }
-
-            if content.detailFeedSection == .animeBasicInfo, let anime = content as? Anime {
-                let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                             withReuseIdentifier: BasicInfoHeader.reuseIdentifier,
-                                                                             for: indexPath) as? BasicInfoHeader
-                headerView?.anime = anime
-                headerView?.setup()
-
-                return headerView
-            }
 
             let headerView = collection.dequeueReusableSupplementaryView(ofKind: kind,
                                                                          withReuseIdentifier: DetailFeedHeader.reuseId,
@@ -144,26 +144,37 @@ private extension DetailFeedDataSource {
     }
 }
 
+// MARK: - Cell Registration
 private extension DetailFeedDataSource {
     func configureCollection() {
         // MARK: Cells
         // ACSpinner Cell
-        collectionView?.register(ACSectionLoaderCell.self, forCellWithReuseIdentifier: ACSectionLoaderCell.reuseIdentifier)
+        collectionView?.register(ACSectionLoaderCell.self,
+                                 forCellWithReuseIdentifier: ACSectionLoaderCell.reuseIdentifier)
 
         // Trailer Cell
-        collectionView?.register(TrailerCell.self, forCellWithReuseIdentifier: TrailerCell.reuseIdentifier)
+        collectionView?.register(TrailerCell.self,
+                                 forCellWithReuseIdentifier: TrailerCell.reuseIdentifier)
 
-        // Basic info. Cell
-        collectionView?.register(BasicInfoCell.self, forCellWithReuseIdentifier: BasicInfoCell.reuseIdentifier)
+        // Main Header Cell
+        collectionView?.register(DetailMainHeaderCell.self,
+                                 forCellWithReuseIdentifier: DetailMainHeaderCell.reuseIdentifier)
+
+        // Synopsis Cell
+        collectionView?.register(SynopsisCell.self,
+                                 forCellWithReuseIdentifier: SynopsisCell.reuseIdentifier)
 
         // Characters Cell
-        collectionView?.register(CharacterCell.self, forCellWithReuseIdentifier: CharacterCell.reuseIdentifier)
+        collectionView?.register(CharacterCell.self,
+                                 forCellWithReuseIdentifier: CharacterCell.reuseIdentifier)
 
         // Reviews Cell
-        collectionView?.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reuseIdentifier)
+        collectionView?.register(ReviewCell.self,
+                                 forCellWithReuseIdentifier: ReviewCell.reuseIdentifier)
 
         // Recommended Cell
-        collectionView?.register(RecommendedCell.self, forCellWithReuseIdentifier: RecommendedCell.reuseIdentifier)
+        collectionView?.register(RecommendedCell.self,
+                                 forCellWithReuseIdentifier: RecommendedCell.reuseIdentifier)
 
         // MARK: Headers
         // Basic info. header (Anime title)
@@ -180,14 +191,13 @@ private extension DetailFeedDataSource {
     }
 }
 
+// MARK: - Snapshot operations
 extension DetailFeedDataSource: FeedDataSourceable {
-    #warning("Create methods x Model type (Anime, Promo, Trailer) instead of using Dynamic Dispatch (any Model)")
     func updateSnapshot<T: Hashable>(for section: DetailFeedSection,
                                      with items: [T],
                                      animating: Bool = true,
                                      before: DetailFeedSection? = nil,
-                                     after: DetailFeedSection? = nil,
-                                     deleteLoaders: Bool = false) {
+                                     after: DetailFeedSection? = nil) {
         guard !items.isEmpty else { return }
         guard var currentSnapshot = dataSource?.snapshot() else { return }
 
@@ -211,7 +221,7 @@ extension DetailFeedDataSource: FeedDataSourceable {
         dataSource?.apply(currentSnapshot, animatingDifferences: animating)
     }
 
-    func deleteSection(_ section: DetailFeedSection, animating: Bool = true) {
+    func deleteSectionIfNeeded(_ section: DetailFeedSection, animating: Bool = true) {
         guard var snapshot = dataSource?.snapshot() else { return }
         guard sectionExists(section, in: snapshot) else { return }
 
@@ -233,23 +243,30 @@ private extension DetailFeedDataSource {
     }
 }
 
-// MARK: - Delegate
+// MARK: - Bindings
 extension DetailFeedDataSource {
-    func configureBindings() {
+    func configureBindings(animePreLoaded: Bool = true) {
         bindAnime()
         bindTrailer()
         bindCharacters()
         bindReviews()
         bindRecommendations()
 
-        sendLoaders()
+        sendLoaders(animeIsPreloaded: animePreLoaded)
     }
 
     /// Add loader sections to the collection view (Snapshot).
     ///
     /// - Important: This also defines the order in which the sections will be layed out
-    func sendLoaders() {
+    func sendLoaders(animeIsPreloaded: Bool) {
         guard let presenter else { return }
+
+        // Anime (If needed)
+        if !animeIsPreloaded {
+            let animeLoader = ACContentLoader(detailFeedSection: .animeBasicInfo)
+            updateSnapshot(for: .loader(forSection: .animeBasicInfo),
+                           with: [animeLoader])
+        }
 
         // Characters
         let charactersLoader = ACContentLoader(detailFeedSection: .animeCharacters)
@@ -271,15 +288,20 @@ extension DetailFeedDataSource {
     }
 
     func bindAnime() {
-        guard let presenter = presenter else { return }
+        guard let presenter else { return }
 
         // Basic Info
         presenter.anime
             .drive(onNext: { [weak self] (anime) in
-                guard let self = self else { return }
-                self.updateSnapshot(for: DetailFeedSection.animeBasicInfo,
-                                    with: [anime],
-                                    animating: true)
+                guard let self else { return }
+                // The basic info loader might be there only if there no pre-loaded anime (Navigating from AnimeDetail screen)
+                self.updateSnapshot(for: .animeBasicInfo, with: [anime], after: .loader(forSection: .animeBasicInfo))
+
+                guard let synopsisContent = SynopsisContent(synopsis: anime.synopsis,
+                                                            detailSection: .animeSynopsis) else { return }
+                self.updateSnapshot(for: .animeSynopsis, with: [synopsisContent], after: .animeBasicInfo)
+                
+                self.deleteSectionIfNeeded(.loader(forSection: .animeBasicInfo))
             }).disposed(by: disposeBag)
 
         // Request trailer.
@@ -293,7 +315,7 @@ extension DetailFeedDataSource {
     }
 
     func bindTrailer() {
-        guard let presenter = presenter else { return }
+        guard let presenter else { return }
 
         // Wait for trailer finishing loading
         presenter.didFinishLoadingAnimeAndTrailer
@@ -321,8 +343,8 @@ extension DetailFeedDataSource {
                 self.updateSnapshot(for: DetailFeedSection.animeCharacters,
                                     with: characters,
                                     animating: true,
-                                    after: .animeBasicInfo)
-                self.deleteSection(.loader(forSection: .animeCharacters))
+                                    after: .loader(forSection: .animeCharacters))
+                self.deleteSectionIfNeeded(.loader(forSection: .animeCharacters))
             }).disposed(by: disposeBag)
     }
 
@@ -337,7 +359,7 @@ extension DetailFeedDataSource {
                                     with: reviews,
                                     animating: true,
                                     after: .loader(forSection: .animeReviews))
-                self.deleteSection(.loader(forSection: .animeReviews))
+                self.deleteSectionIfNeeded(.loader(forSection: .animeReviews))
             }).disposed(by: disposeBag)
     }
 
@@ -351,7 +373,7 @@ extension DetailFeedDataSource {
                                     with: animesInfo,
                                     animating: true,
                                     after: .loader(forSection: .animeRecommendations))
-                self.deleteSection(.loader(forSection: .animeRecommendations))
+                self.deleteSectionIfNeeded(.loader(forSection: .animeRecommendations))
             }).disposed(by: disposeBag)
     }
 
@@ -379,6 +401,7 @@ indirect enum DetailFeedSection: Hashable {
     case animeCharacters      // = "Characters"
     case animeReviews         // = "Reviews"
     case animeRecommendations // = "Recommended"
+    case animeSynopsis        // = "Synopsis"
     case loader(forSection: DetailFeedSection? = nil)
     case unknown
 
@@ -389,6 +412,7 @@ indirect enum DetailFeedSection: Hashable {
             case 2: self = .animeCharacters
             case 3: self = .animeReviews
             case 4: self = .animeRecommendations
+            case 5: self = .animeSynopsis
             default: self = .unknown
         }
     }
@@ -400,8 +424,9 @@ indirect enum DetailFeedSection: Hashable {
             case (.animeCharacters, .animeCharacters): return true
             case (.animeReviews, .animeReviews): return true
             case (.animeRecommendations, .animeRecommendations): return true
-            case (.unknown, .unknown): return true
+            case (.animeSynopsis, .animeSynopsis): return true
             case (.loader(let section1), .loader(let section2)) where section1 == section2: return true
+            case (.unknown, .unknown): return true
             default: return false
         }
     }
@@ -413,6 +438,7 @@ indirect enum DetailFeedSection: Hashable {
             case .animeCharacters: return "Characters"
             case .animeReviews: return "Reviews"
             case .animeRecommendations: return "Recommended"
+            case .animeSynopsis: return "Synopsis"
             default: return ""
         }
     }

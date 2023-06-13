@@ -37,7 +37,7 @@ final class AnimeDetailModule: Modulable {
     }
     
     func startViewControllerOnly() -> Screen {
-        let screen = presenter.start()
+        let screen = presenter.start(animeIsPreloaded: false)
         presenter.view = screen as? AnimeDetailScreen
         
         return screen
@@ -50,5 +50,14 @@ final class AnimeDetailModule: Modulable {
         presenter.animeFeedSection = anime.feedSection
         presenter.setCoverImage(with: anime.imageType?.coverImage)
         presenter.updateAnime(with: anime)
+    }
+    
+    /// Build without all the Anime info & requesting it.
+    func build(recommendedAnime: Anime, detailFeedSection: DetailFeedSection) {
+        guard let malId = recommendedAnime.malId else { return }
+        
+        presenter.findAnime(id: malId, section: detailFeedSection)
+        presenter.animeFeedSection = recommendedAnime.feedSection
+        presenter.setCoverImage(with: recommendedAnime.imageType?.coverImage)
     }
 }

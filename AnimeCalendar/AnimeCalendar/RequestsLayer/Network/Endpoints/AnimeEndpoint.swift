@@ -7,10 +7,9 @@
 
 import Foundation
 
-// https://api.jikan.moe/v4/anime
-// https://api.jikan.moe/v4/anime/44511/characters
 enum AnimeEndpoint: Equatable {
     case getAnime(name: String)
+    case getAnimeById(id: Int)
     case getAnimes
     case getCharacters(animeId: Int)
     case getReviews(animeId: Int)
@@ -19,6 +18,7 @@ enum AnimeEndpoint: Equatable {
     static func == (lhs: AnimeEndpoint, rhs: AnimeEndpoint) -> Bool {
         switch (lhs, rhs) {
             case (.getAnime, .getAnime): return true
+            case (.getAnimeById, .getAnimeById): return true
             case (.getAnimes, .getAnimes): return true
             case (.getCharacters, .getCharacters): return true
             case (.getReviews, .getReviews): return true
@@ -35,6 +35,8 @@ extension AnimeEndpoint: EndpointType {
         switch self {
             case .getAnime, .getAnimes:
                 return API.getAPI(.v4)+service
+            case .getAnimeById(let id):
+                return API.getAPI(.v4)+service+"/\(id)"
             case .getCharacters(let animeId):
                 return API.getAPI(.v4)+service+"/\(animeId)/characters"
             case .getReviews(let animeId):
@@ -46,7 +48,7 @@ extension AnimeEndpoint: EndpointType {
     
     var httpMethod: HTTPMethod {
         switch self {
-            case .getAnime, .getAnimes, .getCharacters, .getReviews, .getAnimeRecommendations:
+            case .getAnime, .getAnimeById, .getAnimes, .getCharacters, .getReviews, .getAnimeRecommendations:
                 return .get
         }
     }
@@ -55,7 +57,7 @@ extension AnimeEndpoint: EndpointType {
         switch self {
             case .getAnime(let name):
                 return .requestParameters(bodyParameters: nil, urlParameters: ["q": name])
-            case .getAnimes, .getCharacters, .getReviews, .getAnimeRecommendations:
+            case .getAnimes, .getAnimeById, .getCharacters, .getReviews, .getAnimeRecommendations:
                 return .request
         }
     }

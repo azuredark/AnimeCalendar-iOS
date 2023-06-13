@@ -10,8 +10,9 @@ import UIKit
 final class ACSectionLoaderCell: UICollectionViewCell, CellReusable {
     // MARK: State
     private lazy var stackView: UIStackView = {
-        let stack = ACStack(axis: .horizontal)
+        let stack = ACStack()
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
         stack.spacing = 20.0
         stack.alignment = .center
         stack.distribution = .fill
@@ -41,8 +42,8 @@ final class ACSectionLoaderCell: UICollectionViewCell, CellReusable {
         iconImageView?.removeFromSuperview()
         iconImageView = nil
         
-//        spinnerView?.stopAnimating()
-//        spinnerView = nil
+        spinnerView?.stopAnimating()
+        spinnerView = nil
     }
 
     // MARK: Methods
@@ -125,7 +126,7 @@ private extension ACSectionLoaderCell {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = model.icon
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
         
         let width: CGFloat = 30.0
@@ -164,14 +165,17 @@ struct ACSectionLoaderModel {
 private extension ACSectionLoaderModel {
     mutating func configureModel(with section: DetailFeedSection) {
         switch section {
+            case .animeBasicInfo:
+                text = "Details..."
+                icon = ACIcon.faInfo.withTintColor(iconColor, renderingMode: .alwaysOriginal)
             case .animeCharacters:
-                text = "Characters"
-                icon = ACIcon.peopleFilled.withTintColor(iconColor, renderingMode: .alwaysOriginal)
+                text = "Characters..."
+                icon = ACIcon.people.withTintColor(iconColor, renderingMode: .alwaysOriginal)
             case .animeReviews:
-                text = "Reviews"
+                text = "Reviews..."
                 icon = ACIcon.textQuote.withTintColor(iconColor, renderingMode: .alwaysOriginal)
             case .animeRecommendations:
-                text = "Recommendations"
+                text = "Recommendations..."
                 icon = ACIcon.tv.withTintColor(iconColor, renderingMode: .alwaysOriginal)
             default: break
         }

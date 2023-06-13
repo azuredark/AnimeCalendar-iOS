@@ -71,7 +71,7 @@ final class Anime: Content {
     // MARK: Decoding Technique
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        titleOrg      = try container.decode(String.self, forKey: .titleOrg)
+        titleOrg      = try container.decodeIfPresent(String.self, forKey: .titleOrg) ?? ""
         titleEng      = try container.decodeIfPresent(String.self, forKey: .titleEng) ?? titleOrg
         titleKanji    = try container.decodeIfPresent(String.self, forKey: .titleKanji) ?? titleOrg
         malURL        = try container.decodeIfPresent(String.self, forKey: .malURL) ?? ""

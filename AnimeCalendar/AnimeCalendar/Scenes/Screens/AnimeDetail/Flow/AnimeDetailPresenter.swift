@@ -19,9 +19,10 @@ protocol AnimeDetailPresentable: AnyObject {
     var didFinishLoadingAnimeAndTrailer: Driver<(Bool, Anime)> { get }
     
     /// Weak reference towards the view
-    func start() -> Screen
+    func start(animeIsPreloaded: Bool) -> Screen
     func setCoverImage(with image: UIImage?)
     
+    func findAnime(id: Int, section: DetailFeedSection)
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
     func updateReviews(animeId: Int)
@@ -85,12 +86,16 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
     
     // MARK: Methods
     /// Ask router to create the main module **Screen**.
-    func start() -> Screen {
-        return router.start(presenter: self)
+    func start(animeIsPreloaded: Bool = true) -> Screen {
+        return router.start(presenter: self, animeIsPreloaded: animeIsPreloaded)
     }
     
     func setCoverImage(with image: UIImage?) {
         view?.coverImage = image
+    }
+    
+    func findAnime(id: Int, section: DetailFeedSection) {
+        interactor.findAnime(id: id, detailSection: section)
     }
     
     /// Sends a new **anime** event.

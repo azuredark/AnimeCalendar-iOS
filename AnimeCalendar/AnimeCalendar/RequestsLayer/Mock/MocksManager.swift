@@ -55,23 +55,28 @@ private enum EndpointFile: String {
     case getCurrentSeason     = "seasons-now-page?1"
     case getRecentPromosAnime = "watch-promos-page?1"
     case getTopAinme          = "top-anime-order_by?rank-type?tv-page?1"
+    case getAnimeReviews      = "reviews-mock"
 
     /// Create and endpoint file name enum from an endpont type
     init(endpoint: EndpointType) {
-        if let endpoint = endpoint as? AnimeEndpoint, endpoint == .getAnime(name: "") {
+        if let endpoint = endpoint as? AnimeEndpoint, case .getAnime = endpoint {
             self = .getAnime; return
         }
 
-        if let endpoint = endpoint as? SeasonEndpoint, endpoint == .getCurrentSeasonAnime(page: 1) {
+        if let endpoint = endpoint as? SeasonEndpoint, case .getCurrentSeasonAnime = endpoint {
             self = .getCurrentSeason; return
         }
         
-        if let endpoint = endpoint as? PromoEndpoint, endpoint == .getRecentPromos(page: 1) {
+        if let endpoint = endpoint as? PromoEndpoint, case .getRecentPromos = endpoint {
             self = .getRecentPromosAnime; return
         }
         
-        if let endpoint = endpoint as? TopEndpoint, endpoint == .getTopAnime(orderBy: .rank, page: 1) {
+        if let endpoint = endpoint as? TopEndpoint, case .getTopAnime = endpoint {
             self = .getTopAinme; return
+        }
+        
+        if let endpoint = endpoint as? AnimeEndpoint, case .getReviews = endpoint {
+            self = .getAnimeReviews; return
         }
 
         self = .getAnime

@@ -12,6 +12,7 @@ final class AnimeDetailScreen: UIViewController, Screen {
     // MARK: State
     private var presenter: AnimeDetailPresentable?
     private var cellIsSelectable: Bool = true
+    private var animeIsPreLoaded: Bool
     
     weak var coverImage: UIImage?
     
@@ -22,7 +23,7 @@ final class AnimeDetailScreen: UIViewController, Screen {
     
     /// # Main collection
     private lazy var detailFeed: DetailFeed = {
-        let feed = DetailFeed(presenter: presenter)
+        let feed = DetailFeed(presenter: presenter, animeIsPreloaded: animeIsPreLoaded)
         feed.getCollection().delegate = self
         return feed
     }()
@@ -59,8 +60,9 @@ final class AnimeDetailScreen: UIViewController, Screen {
     private lazy var disposeBag = DisposeBag()
     
     // MARK: Initializers
-    init(presenter: AnimeDetailPresentable) {
+    init(presenter: AnimeDetailPresentable, animeIsPreloaded: Bool) {
         self.presenter = presenter
+        self.animeIsPreLoaded = animeIsPreloaded
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -119,8 +121,10 @@ private extension AnimeDetailScreen {
     func bindAnime() {
         presenter?.anime
             .drive(onNext: { [weak self] (anime) in
-                guard let self = self else { return }
+                guard let self else { return }
                 Logger.log(.info, msg: "RX DID LOAD ANIME: \(anime.titleEng)")
+                
+                if (anime.imageType?.coverImage.isNil ?? true) { anime.imageType?.coverImage = self.coverImage }
                 
                 self.configureNavigationTitle(with: anime.titleKanji)
                 self.presenter?.updateCharacters(animeId: Int(anime.id) ?? 49387)
@@ -183,13 +187,10 @@ extension AnimeDetailScreen: UICollectionViewDelegate {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         
         guard cellIsSelectable else { return }
-        cellIsSelectable = false
         
         guard let content = detailFeed.getDataSource().getItem(at: indexPath) else { return }
         
-        cell.expand(durationInSeconds: 0.15, end: .reset, toScale: 0.95) { [weak self] in
-            self?.cellIsSelectable = true
-        }
+        animateCellSelection(cell: cell)
         
         switch cell {
             case is RecommendedCell:
@@ -204,15 +205,37 @@ extension AnimeDetailScreen: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        UIView.animate(withDuration: 0.2) {
-            cell.transform = .init(scaleX: 0.95, y: 0.95)
-        }
+        animateCellHighlight(cell: cell, didHighlight: true)
     }
 
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        animateCellHighlight(cell: cell, didHighlight: false)
+    }
+}
+
+// MARK: - Animations
+private extension AnimeDetailScreen {
+    func animateCellHighlight(cell: UICollectionViewCell, didHighlight: Bool) {
+        guard checkCellIsValidForAnimation(cell: cell) else { return }
+        
         UIView.animate(withDuration: 0.2) {
-            cell.transform = .identity
+            cell.transform = didHighlight ? .init(scaleX: 0.95, y: 0.95) : .identity
         }
+    }
+    
+    func animateCellSelection(cell: UICollectionViewCell) {
+        guard checkCellIsValidForAnimation(cell: cell) else { return }
+        
+        cellIsSelectable = false
+        
+        cell.expand(durationInSeconds: 0.25, end: .reset, toScale: 0.95) { [weak self] in
+            self?.cellIsSelectable = true
+        }
+    }
+    
+    func checkCellIsValidForAnimation(cell: UICollectionViewCell) -> Bool {
+        if (cell is CharacterCell) || (cell is RecommendedCell) || (cell is ReviewCell) { return true }
+        return false
     }
 }

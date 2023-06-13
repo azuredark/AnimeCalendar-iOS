@@ -26,10 +26,35 @@ final class AnimeRepository: GenericRepository {
                 switch result {
                     case .success(let anime):
                         single(.success(anime))
-                    case .failure(_):
+                    case .failure:
                         single(.success(nil))
                 }
             }
+            return Disposables.create()
+        }
+    }
+    
+    func getAnime(id: Int,
+                  responsible: RequestResponsibleType = .network,
+                  detailSection: DetailFeedSection = .unknown) -> Single<JikanResult<Anime>?> {
+        return .create { [weak self] (single) in
+            guard let self else { return Disposables.create() }
+            
+            let model = JikanResult<Anime>.self
+            let requestResponsible: Requestable = self.requestsManager.getRequestResponsible(responsible)
+            
+            requestResponsible.makeRequest(model, .anime(.getAnimeById(id: id))) { result in
+                switch result {
+                    case .success(let result):
+                        let anime = result?.singleData
+                        anime?.detailFeedSection = detailSection
+                        anime?.trailer?.detailFeedSection = .animeTrailer
+                        single(.success(result))
+                    case .failure(let error):
+                        single(.failure(error))
+                }
+            }
+            
             return Disposables.create()
         }
     }
@@ -47,7 +72,7 @@ final class AnimeRepository: GenericRepository {
                         result?.setFeedSection(to: .animeSeason)
                         result?.pagination.page = page
                         single(.success(result))
-                    case .failure(_):
+                    case .failure:
                         single(.success(nil))
                 }
             }
@@ -68,7 +93,7 @@ final class AnimeRepository: GenericRepository {
                         anime?.setFeedSection(to: .animeUpcoming)
                         anime?.pagination.page = page
                         single(.success(anime))
-                    case .failure(_):
+                    case .failure:
                         single(.success(nil))
                 }
             }
@@ -89,7 +114,7 @@ final class AnimeRepository: GenericRepository {
                         promo?.setFeedSection(to: .animePromos)
                         promo?.pagination.page = page
                         single(.success(promo))
-                    case .failure(_):
+                    case .failure:
                         single(.success(nil))
                 }
             }
@@ -110,7 +135,7 @@ final class AnimeRepository: GenericRepository {
                         anime?.setFeedSection(to: .animeTop)
                         anime?.pagination.page = page
                         single(.success(anime))
-                    case .failure(_):
+                    case .failure:
                         single(.success(nil))
                 }
             }
@@ -130,7 +155,7 @@ final class AnimeRepository: GenericRepository {
                     case .success(let characterInfo):
                         characterInfo?.setDetailFeedSection(to: .animeCharacters)
                         single(.success(characterInfo))
-                    case .failure(_):
+                    case .failure:
                         single(.success(nil))
                 }
             }
@@ -172,7 +197,7 @@ final class AnimeRepository: GenericRepository {
                     case .success(let animeResult):
                         animeResult?.setDetailFeedSection(to: .animeRecommendations)
                         single(.success(animeResult))
-                    case .failure(_):
+                    case .failure:
                         single(.success(nil))
                 }
             }

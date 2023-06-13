@@ -10,8 +10,9 @@ import Foundation
 final class StudiosStack: ACStackable {
     // MARK: State
     private(set) lazy var stack: ACStack = {
-        let _stack = ACStack(axis: .horizontal)
+        let _stack = ACStack()
         _stack.translatesAutoresizingMaskIntoConstraints = false
+        _stack.axis = .horizontal
         _stack.backgroundColor = .clear
         _stack.alignment = .center
         _stack.distribution = .fill

@@ -48,7 +48,8 @@ final class BasicInfoHeader: UICollectionReusableView, FeedHeaderProtocol {
     
     /// Vertical stack with detail's and genres components.
     private lazy var basicInfoStack: ACStack = {
-        let stack = ACStack(axis: .vertical)
+        let stack = ACStack()
+        stack.axis = .vertical
         stack.spacing = 4.0
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.accessibilityIdentifier = AccessId.stack
