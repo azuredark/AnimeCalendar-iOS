@@ -56,7 +56,10 @@ final class AnimeDetailModule: Modulable {
     func build(recommendedAnime: Anime, detailFeedSection: DetailFeedSection) {
         guard let malId = recommendedAnime.malId else { return }
         
-        presenter.findAnime(id: malId, section: detailFeedSection)
+        presenter.findAnime(id: malId, section: detailFeedSection) { fullAnime in
+            fullAnime?.imageType?.themeColor = recommendedAnime.imageType?.themeColor
+        }
+        
         presenter.animeFeedSection = recommendedAnime.feedSection
         presenter.setCoverImage(with: recommendedAnime.imageType?.coverImage)
     }

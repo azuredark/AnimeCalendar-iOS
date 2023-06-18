@@ -296,6 +296,11 @@ extension Feed: UICollectionViewDelegate {
         if let anime = content as? Anime {
             let image: UIImage? = (cell as? FeedCell)?.getCoverImage() ?? UIImage(named: "new-anime-item-spyxfamily")
             anime.imageType?.coverImage = image
+            
+            if (anime.imageType?.themeColor.isNil ?? true) {
+                anime.imageType?.themeColor = image?.getThemeColor()
+            }
+            
             presenter.handle(action: .transition(to: .animeDetailScreen(anime: anime)))
         }
         #warning("Make it generic to work for Promos and other further types aswell.")

@@ -177,11 +177,6 @@ private extension DetailFeedDataSource {
                                  forCellWithReuseIdentifier: RecommendedCell.reuseIdentifier)
 
         // MARK: Headers
-        // Basic info. header (Anime title)
-        collectionView?.register(BasicInfoHeader.self,
-                                 forSupplementaryViewOfKind: DetailFeed.basicInfoHeaderKind,
-                                 withReuseIdentifier: BasicInfoHeader.reuseIdentifier)
-
         // Feed Header.
         collectionView?.register(DetailFeedHeader.self,
                                  forSupplementaryViewOfKind: DetailFeed.feedHeaderKind,

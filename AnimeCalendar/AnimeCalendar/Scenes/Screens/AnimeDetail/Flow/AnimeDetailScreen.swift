@@ -15,6 +15,7 @@ final class AnimeDetailScreen: UIViewController, Screen {
     private var animeIsPreLoaded: Bool
     
     weak var coverImage: UIImage?
+    var themeColor: UIColor?
     
     /// # Navigation Bar
     private lazy var navigationBar: ScreenNavigationBar = {
@@ -124,7 +125,14 @@ private extension AnimeDetailScreen {
                 guard let self else { return }
                 Logger.log(.info, msg: "RX DID LOAD ANIME: \(anime.titleEng)")
                 
-                if (anime.imageType?.coverImage.isNil ?? true) { anime.imageType?.coverImage = self.coverImage }
+                // Cover Image.
+                if (anime.imageType?.coverImage.isNil ?? true) {
+                    anime.imageType?.coverImage = self.coverImage
+                }
+                
+                // Theme Color
+//                anime.imageType?.themeColor = self.themeColor
+//                self.themeColor = nil
                 
                 self.configureNavigationTitle(with: anime.titleKanji)
                 self.presenter?.updateCharacters(animeId: Int(anime.id) ?? 49387)
@@ -198,6 +206,9 @@ extension AnimeDetailScreen: UICollectionViewDelegate {
                 
                 let image: UIImage? = (cell as? FeedCell)?.getCoverImage() ?? UIImage(named: "new-anime-item-spyxfamily")
                 anime?.imageType?.coverImage = image
+                if (anime?.imageType?.themeColor.isNil ?? true) {
+                    anime?.imageType?.themeColor = image?.getThemeColor()
+                }
                 presenter?.handle(action: .transition(to: .anime(anime)))
             default: break
         }

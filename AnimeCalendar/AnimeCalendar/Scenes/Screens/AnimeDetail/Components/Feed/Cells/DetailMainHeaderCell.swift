@@ -13,7 +13,7 @@ final class DetailMainHeaderCell: UICollectionViewCell, FeedCell {
     
     // MARK: Private State
     private typealias AccessId = BasicInfoCellIdentifiers
-    private var genreCollection: GenreCollection?
+    private var genresView: UIView?
     
     // MARK: UI
     private lazy var titleLabel: UILabel = {
@@ -44,7 +44,7 @@ final class DetailMainHeaderCell: UICollectionViewCell, FeedCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         titleLabel.text = nil
-        genreCollection = nil
+        genresView = nil
         basicInfoStack.reset()
     }
     
@@ -121,20 +121,40 @@ private extension DetailMainHeaderCell {
         // Genres
         guard let genres = anime?.genres, !genres.isEmpty else { return components }
         
-        let genresCollection = GenreCollection(anime: anime)
-        genresCollection.genres = genres
-        genresCollection.setup()
-        genresCollection.updateSnapshot()
-
-        let collectionView = genresCollection.getCollectionView()
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let genresStack = ACStack()
+        genresStack.translatesAutoresizingMaskIntoConstraints = false
+        genresStack.axis = .horizontal
+        genresStack.distribution = .fill
+        genresStack.alignment = .center
+        genresStack.backgroundColor = .clear
         
-        let width = UIScreen.main.bounds.size.width
-        collectionView.setSize(width: width, height: 30.0)
+        let themeColor = anime?.imageType?.themeColor ?? Color.red
         
-        components.append(.customView(collectionView))
-
-        genreCollection = genresCollection
+        var stackItems: [ACStackItem] = anime?.genres.flatMap { genre -> [ACStackItem] in
+            let textConfig = LabelBoxView.TextConfig(text: "\(genre.name)",
+                                                     color: Color.black,
+                                                     innerPadding: .init(top: 5, left: 5, bottom: 5, right: 5))
+            let boxConfig = LabelBoxView.BoxConfig(borderColor: themeColor,
+                                                   borderWidth: 2.0,
+                                                   cornerRadius: 5.0,
+                                                   backgroundColor: themeColor.withAlphaComponent(0.2))
+            
+            let genreView = LabelBoxView(boxConfig: boxConfig, textConfig: textConfig)
+            
+            return [.customView(genreView), .spacer(type: .empty, space: 10.0)]
+        } ?? []
+        
+        stackItems.insert(.spacer(type: .empty, space: 10.0), at: 0)
+        stackItems.insert(.spacer(type: .empty, space: 10.0), at: stackItems.count - 1)
+        
+        genresStack.setup(with: stackItems)
+        
+        let genresScrollView = ACSCroll(axis: .horizontal)
+        genresScrollView.setup(with: genresStack)
+        
+        components.append(.customView(genresScrollView))
+        
+        genresView = genresScrollView
         
         return components
     }

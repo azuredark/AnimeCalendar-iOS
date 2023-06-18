@@ -20,4 +20,11 @@ extension UIImage {
             }
         }
     }
+    
+    func getThemeColor() -> UIColor? {
+        let filter = ACFilterSource.shared[\.areaAverageColor].filter
+        guard let ciImage = CIImage(image: self) else { return nil }
+        
+        return filter.apply(inputCIImage: ciImage, additionalValues: [], completion: nil)
+    }
 }

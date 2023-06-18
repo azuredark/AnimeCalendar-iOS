@@ -21,8 +21,9 @@ protocol AnimeDetailPresentable: AnyObject {
     /// Weak reference towards the view
     func start(animeIsPreloaded: Bool) -> Screen
     func setCoverImage(with image: UIImage?)
+    func setThemeColor(with themeColor: UIColor?)
     
-    func findAnime(id: Int, section: DetailFeedSection)
+    func findAnime(id: Int, section: DetailFeedSection, configure: ((_ partialAnime: Anime?) -> Void)?)
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
     func updateReviews(animeId: Int)
@@ -94,8 +95,12 @@ final class AnimeDetailPresenter: AnimeDetailPresentable {
         view?.coverImage = image
     }
     
-    func findAnime(id: Int, section: DetailFeedSection) {
-        interactor.findAnime(id: id, detailSection: section)
+    func setThemeColor(with themeColor: UIColor?) {
+        view?.themeColor = themeColor
+    }
+    
+    func findAnime(id: Int, section: DetailFeedSection, configure: ((_ partialAnime: Anime?) -> Void)? = nil) {
+        interactor.findAnime(id: id, detailSection: section, configure: configure)
     }
     
     /// Sends a new **anime** event.

@@ -16,7 +16,7 @@ protocol AnimeDetailInteractive {
     var animeRecommendationsObservable: Driver<[RecommendationInfo]> { get }
     var didFinishLoadingTrailerObservable: Driver<(Bool, Anime)> { get }
     
-    func findAnime(id: Int, detailSection: DetailFeedSection)
+    func findAnime(id: Int, detailSection: DetailFeedSection, configure: ((_ partialAnime: Anime?) -> Void)?)
     func updateAnime(with anime: Anime)
     func updateCharacters(animeId: Int)
     func updateReviews(animeId: Int)
@@ -80,12 +80,13 @@ extension AnimeDetailInteractor: AnimeDetailInteractive {
         didFinishLoadingTrailer.skip(1).asDriver(onErrorJustReturn: (false, Anime()))
     }
     
-    func findAnime(id: Int, detailSection: DetailFeedSection) {
+    func findAnime(id: Int, detailSection: DetailFeedSection, configure: ((_ partialAnime: Anime?) -> Void)? = nil) {
         repository.getAnime(id: id, detailSection: detailSection)
             .map(\.?.singleData)
             .compactMap { $0 }
             .asObservable()
             .subscribe(onNext: { [weak self] (anime) in
+                configure?(anime)
                 self?.animeStorage.accept(anime)
             }, onError: { [weak self] _ in
                 self?.animeStorage.accept(Anime())
